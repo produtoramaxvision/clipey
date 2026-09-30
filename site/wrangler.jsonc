@@ -1,0 +1,14 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "clipey-site",
+  "compatibility_date": "2026-09-29",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    { "pattern": "clipey.com.br", "custom_domain": true },
+    { "pattern": "www.clipey.com.br", "custom_domain": true }
+  ]
+}
