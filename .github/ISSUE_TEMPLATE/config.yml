@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Segurança
+    url: https://github.com/produtoramaxvision/clipey/blob/main/SECURITY.md
+    about: Reporte vulnerabilidades por e-mail, não por issue.

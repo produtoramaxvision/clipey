@@ -1,0 +1,10 @@
+name: Sugestão
+description: Ideia ou melhoria
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: O que você gostaria que o Clipey fizesse?
+    validations:
+      required: true
