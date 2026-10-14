@@ -252,11 +252,13 @@ def main() -> None:
         out.write_text(page(lang, path, title, body), encoding="utf-8")
     not_found = '<h1>Página não encontrada</h1><p class="meta">Page not found.</p><p><a href="/">Voltar ao início</a> · <a href="/en/">Home</a></p>'
     (DIST / "404.html").write_text(page("pt", "", "Página não encontrada", not_found), encoding="utf-8")
-    for asset in ("clipey-256.png", "favicon.png"):
+    # announcements.json is read by the app (in-app news banner); robots.txt by crawlers.
+    for asset in ("clipey-256.png", "favicon.png", "announcements.json", "robots.txt"):
         shutil.copy2(ROOT / asset, DIST / asset)
     (DIST / "_headers").write_text(
         "/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n"
-        "  X-Frame-Options: DENY\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n",
+        "  X-Frame-Options: DENY\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n"
+        "/announcements.json\n  Cache-Control: public, max-age=300\n",
         encoding="utf-8",
     )
     print(f"built {len(PAGES)} pages into {DIST}")
