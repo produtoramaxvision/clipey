@@ -1,7 +1,7 @@
 # Third-party notices
 
-Clipey is built on OpenScreen (getopenscreen/openscreen), used under the MIT
-license reproduced at the end of this file. The installers additionally
+Clipey includes open-source code used under the MIT license reproduced at the
+end of this file. The installers additionally
 bundle the pre-built native components below. This file ships inside the
 application resources and satisfies the attribution and source-offer obligations
 that come with them.
@@ -111,7 +111,7 @@ distributed by their own registries, not redistributed inside our binaries.
 
 - **Components**: header sources under
   `electron/native/pipewire-capture/vendor/pipewire-1.0.5/include/`, compiled
-  into `openscreen-pipewire-helper` (the Linux cursor/capture helper) under
+  into the Linux cursor/capture helper under
   `resources/electron/native/bin/linux-*/`.
 - **License**: **MIT** — <https://gitlab.freedesktop.org/pipewire/pipewire>.
   Every vendored file keeps its upstream `SPDX-License-Identifier: MIT` header,
@@ -148,7 +148,7 @@ distributed by their own registries, not redistributed inside our binaries.
   - IBM Plex Mono 2.3 — Copyright © 2017 IBM Corp. `ofl/ibmplexmono/` of
     <https://github.com/google/fonts> at `23e54b51dd`.
 
-## OpenScreen native helpers
+## Native helpers
 
 `wgc-capture` (Windows Graphics Capture), the ScreenCaptureKit helper (macOS),
 the PipeWire helper (Linux) and the compositor addon are part of this repository
@@ -157,11 +157,11 @@ and are covered by [LICENSE](LICENSE).
 ---
 
 To report an omission or request source for anything bundled here, open an issue
-at <https://github.com/getopenscreen/openscreen/issues>.
+at <https://github.com/produtoramaxvision/clipey/issues>.
 
 ---
 
-## OpenScreen - MIT License
+## MIT License
 
 ```
 MIT License

@@ -37,7 +37,7 @@ Em desenvolvimento (ainda não disponível para uso geral): publicação direta 
 
 ## Licenças de terceiros
 
-O Clipey é baseado no [OpenScreen](https://github.com/getopenscreen/openscreen) (licença MIT) e inclui o FFmpeg (LGPL 2.1+) como bibliotecas dinâmicas. Detalhes e ofertas de código-fonte em [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+O Clipey inclui componentes de código aberto sob licenças permissivas e o FFmpeg (LGPL 2.1+) como bibliotecas dinâmicas. Avisos de copyright, licenças e ofertas de código-fonte em [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ---
 
