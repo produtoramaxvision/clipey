@@ -1014,6 +1014,581 @@ main.story {
 	}
 }
 
+/* Chapters: each one a stretch of the recording, titled by its timecode marker. */
+.chapter-section {
+	position: relative;
+	padding: 160px var(--gutter) 0;
+}
+
+.chapter-section--bleed {
+	padding-right: 0;
+	padding-left: 0;
+}
+
+.split {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	gap: 64px;
+	align-items: center;
+}
+
+.split--overlays {
+	grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+	gap: 56px;
+	align-items: stretch;
+}
+
+.split--vertical {
+	grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+	gap: 56px;
+}
+
+.copy {
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+}
+
+.marker {
+	margin: 0;
+	color: var(--accent-text);
+	font: 400 13px / 1.4 var(--font-mono);
+	text-transform: uppercase;
+}
+
+.marker--zoom {
+	color: var(--zoom-text);
+}
+
+.marker--annotation {
+	color: var(--annotation-text);
+}
+
+.marker--speed {
+	color: var(--speed-text);
+}
+
+.marker--neutral {
+	color: var(--meta);
+}
+
+.h2 {
+	margin: 0;
+	color: var(--title);
+	font: 650 clamp(40px, 4.45vw, 64px) / 0.98 var(--font-sans);
+	letter-spacing: -0.045em;
+	text-wrap: balance;
+}
+
+.h2--xl {
+	font-size: clamp(44px, 5.6vw, 80px);
+	line-height: 0.94;
+	letter-spacing: -0.05em;
+}
+
+.h2-muted {
+	color: var(--muted);
+}
+
+.lede {
+	max-width: 520px;
+	margin: 0;
+	color: var(--muted);
+	font-size: 17px;
+	line-height: 1.6;
+}
+
+.story figure {
+	margin: 0;
+}
+
+.story figure img,
+.dialogs img {
+	width: 100%;
+	height: auto;
+}
+
+.story figcaption {
+	color: var(--meta);
+	font: 400 11px / 1.5 var(--font-mono);
+}
+
+/* Record: the real recording bar, floating on the desktop. */
+#gravar {
+	padding-top: 140px;
+}
+
+.hud-figure {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 18px;
+	padding: 72px 24px;
+	border: 1px solid var(--line-soft);
+	border-radius: 20px;
+	background: radial-gradient(
+		ellipse at 50% 40%,
+		var(--surface),
+		var(--bg) 70%
+	);
+}
+
+/* Clicks: the real timeline, edge to edge, with a hand-drawn arrow at the zoom pills. */
+.clicks-head {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 32px;
+	align-items: end;
+	justify-content: space-between;
+	padding: 0 var(--gutter);
+}
+
+.clicks-head .copy {
+	max-width: 760px;
+}
+
+.clicks-head .lede {
+	max-width: 380px;
+}
+
+.story .timeline-figure {
+	position: relative;
+	margin-top: 48px;
+}
+
+.timeline-figure figcaption {
+	padding: 14px var(--gutter) 0;
+}
+
+.ink--timeline {
+	top: -120px;
+	right: 18%;
+	width: 420px;
+	height: 150px;
+}
+
+/* Overlays: a dotted stage where the visitor's own cursor shows the app's click effects. */
+.overlays-demo {
+	display: flex;
+	flex-direction: column;
+}
+
+.overlays-stage {
+	position: relative;
+	min-height: 560px;
+	overflow: hidden;
+	border: 1px solid var(--line-soft);
+	border-radius: 24px;
+	background-color: var(--bg);
+	background-image: radial-gradient(var(--line-soft) 1px, transparent 1px);
+	background-size: 22px 22px;
+	cursor: crosshair;
+}
+
+.overlays-copy {
+	position: absolute;
+	z-index: 1;
+	top: 36px;
+	left: 40px;
+	gap: 14px;
+	max-width: 480px;
+	pointer-events: none;
+}
+
+.overlays-copy .h2 {
+	font-size: clamp(36px, 3.9vw, 56px);
+}
+
+.pane-figure {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.pane-crop {
+	max-height: 600px;
+	overflow: hidden;
+	border: 1px solid var(--line);
+	border-radius: 16px;
+}
+
+/* Vertical: the 16:9 frame with its 9:16 crop, and the reframed result with its caption. */
+#vertical .h2,
+#seu-pc .h2 {
+	font-size: clamp(40px, 3.9vw, 56px);
+}
+
+.reframe {
+	display: flex;
+	gap: 28px;
+	align-items: center;
+	justify-content: center;
+}
+
+.reframe-wide,
+.reframe-tall {
+	position: relative;
+	display: block;
+	overflow: hidden;
+	border: 1px solid var(--line);
+}
+
+.reframe-wide {
+	width: 52%;
+	aspect-ratio: 16 / 10;
+	border-radius: 12px;
+}
+
+.reframe-tall {
+	width: 22%;
+	aspect-ratio: 9 / 16;
+	border-color: var(--line-strong);
+	border-radius: 18px;
+	box-shadow: 0 30px 80px -30px var(--shadow);
+}
+
+.story .reframe img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.reframe-tall img {
+	object-position: 50% 50%;
+}
+
+.reframe-mask {
+	position: absolute;
+	top: 0;
+	left: 38%;
+	width: 24%;
+	height: 100%;
+	border: 2px solid var(--speed);
+	box-shadow: 0 0 0 9999px var(--media-scrim-strong);
+}
+
+.reframe-caption {
+	position: absolute;
+	right: 0;
+	bottom: 18%;
+	left: 0;
+	padding: 0 6px;
+	color: var(--media-text);
+	font-size: 15px;
+	font-weight: 700;
+	text-align: center;
+	text-shadow: 0 2px 6px var(--media-text-shadow);
+}
+
+.reframe-caption em {
+	color: var(--accent);
+	font-style: normal;
+}
+
+.reframe-arrow {
+	flex: none;
+	width: 56px;
+	height: 24px;
+	fill: none;
+	stroke: var(--meta);
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+.dialogs {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 24px;
+	margin-top: 56px;
+}
+
+.dialogs img {
+	border: 1px solid var(--line);
+	border-radius: 14px;
+}
+
+/* Publish: the networks as one sentence, then three notes. */
+.publish-head {
+	max-width: 980px;
+}
+
+.notes {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 40px;
+	margin: 48px 0 0;
+	padding-top: 28px;
+	border-top: 1px solid var(--line-soft);
+}
+
+.note {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.note dt {
+	text-transform: uppercase;
+}
+
+.note dd {
+	margin: 0;
+	color: var(--text-soft);
+	font-size: 16px;
+	line-height: 1.6;
+}
+
+.settings-figure {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.settings-figure img {
+	border: 1px solid var(--line);
+	border-radius: 14px;
+}
+
+.link-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px 28px;
+	margin: 0;
+}
+
+.text-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	color: var(--accent-text);
+	font-size: 15px;
+	text-decoration: none;
+}
+
+.text-link:hover {
+	color: var(--title);
+}
+
+.text-link svg {
+	width: 15px;
+	height: 15px;
+}
+
+/* FAQ: native disclosure, one line per question. */
+.faq-section {
+	display: grid;
+	grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+	gap: 56px;
+	align-items: start;
+}
+
+.faq {
+	border-top: 1px solid var(--line-soft);
+}
+
+.faq-item {
+	border-bottom: 1px solid var(--line-soft);
+}
+
+.faq-item summary {
+	position: relative;
+	padding: 22px 40px 22px 0;
+	color: var(--text);
+	font-size: 18px;
+	font-weight: 550;
+	line-height: 1.4;
+	list-style: none;
+	cursor: pointer;
+}
+
+.faq-item summary::-webkit-details-marker {
+	display: none;
+}
+
+.faq-item summary::after {
+	position: absolute;
+	top: 22px;
+	right: 4px;
+	color: var(--meta);
+	font: 400 20px / 1.2 var(--font-mono);
+	content: "+";
+}
+
+.faq-item[open] summary::after {
+	content: "−";
+}
+
+.faq-item p {
+	max-width: 680px;
+	margin: 0;
+	padding: 0 0 24px;
+	color: var(--muted);
+	font-size: 16px;
+	line-height: 1.65;
+}
+
+/* Export: the last frame of the recording. */
+.export-section {
+	display: flex;
+	flex-direction: column;
+	gap: 28px;
+	margin: 180px var(--gutter) 0;
+	padding: 72px 0 120px;
+	border-top: 1px solid var(--line-soft);
+}
+
+.mega {
+	margin: 0;
+	color: var(--title);
+	font: 650 clamp(56px, 8.9vw, 128px) / 0.88 var(--font-sans);
+	letter-spacing: -0.06em;
+}
+
+.export-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 28px;
+	align-items: center;
+}
+
+.export-row .meta {
+	line-height: 1.7;
+}
+
+.export-note {
+	max-width: 620px;
+	margin: 0;
+	color: var(--muted);
+	font-size: 15px;
+	line-height: 1.6;
+}
+
+.story-footer {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 24px;
+	align-items: center;
+	padding: 32px var(--gutter) 48px;
+	border-top: 1px solid var(--line-soft);
+	color: var(--meta);
+	font-size: 13px;
+}
+
+.footer-brand {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	color: var(--text);
+	text-decoration: none;
+}
+
+.footer-brand img {
+	border-radius: 4px;
+}
+
+.footer-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px 24px;
+}
+
+.footer-links a {
+	color: var(--muted);
+	text-decoration: none;
+}
+
+.footer-links a:hover {
+	color: var(--title);
+}
+
+.footer-copy {
+	margin-left: auto;
+}
+
+@media (max-width: 1000px) {
+	.chapter-section {
+		padding-top: 112px;
+	}
+
+	.chapter-section--bleed {
+		padding-right: 0;
+		padding-left: 0;
+	}
+
+	.split,
+	.split--overlays,
+	.split--vertical,
+	.faq-section {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 40px;
+	}
+
+	.overlays-stage {
+		min-height: 440px;
+	}
+
+	.overlays-copy {
+		top: 24px;
+		right: 24px;
+		left: 24px;
+	}
+
+	.ink--timeline {
+		display: none;
+	}
+
+	.notes {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 28px;
+	}
+
+	.dialogs {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.export-section {
+		margin-top: 120px;
+		padding-bottom: 80px;
+	}
+
+	.footer-copy {
+		margin-left: 0;
+	}
+}
+
+@media (max-width: 640px) {
+	.reframe {
+		gap: 12px;
+	}
+
+	.reframe-wide {
+		width: 58%;
+	}
+
+	.reframe-tall {
+		width: 30%;
+	}
+
+	.reframe-arrow {
+		width: 28px;
+	}
+
+	.reframe-caption {
+		font-size: 11px;
+	}
+
+	.hud-figure {
+		padding: 40px 12px;
+	}
+
+	.export-btn--cta {
+		height: 56px;
+		padding: 0 20px;
+		font-size: 16px;
+	}
+}
+
 @media (prefers-reduced-motion: reduce) {
 	.rec-dot,
 	.click-ring,
