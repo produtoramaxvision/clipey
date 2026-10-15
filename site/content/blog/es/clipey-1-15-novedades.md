@@ -61,7 +61,7 @@ Un ajuste visual necesita eventos grabados. Por ejemplo, la superposición del g
 
 ## Sigue con una guía práctica
 
-Consulta [grabar la pantalla en Windows](/blog/es/grabar-pantalla-windows-cursor-clics/), [efectos de mouse](/blog/es/efectos-mouse-clics-halo-foco/) y [atajos de la línea de tiempo](/blog/es/atajos-productividad-linea-tiempo/). También puedes revisar las [funciones de Clipey](/es/#features).
+Consulta [grabar la pantalla en Windows](/blog/es/grabar-pantalla-windows-cursor-clics/), [efectos de mouse](/blog/es/efectos-mouse-clics-halo-foco/) y [atajos de la línea de tiempo](/blog/es/atajos-y-mejoras-rapidas-timeline/). También puedes revisar las [funciones de Clipey](/es/#features).
 
 ## Consejos
 

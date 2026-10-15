@@ -61,7 +61,7 @@ A visual setting needs matching recorded events. The gamepad overlay, for exampl
 
 ## Choose a next step
 
-For hands-on instructions, read [recording your screen on Windows](/blog/en/record-screen-windows-cursor-clicks/), [mouse effects](/blog/en/mouse-click-halo-spotlight-effects/) and [timeline shortcuts](/blog/en/timeline-shortcuts-productivity/). Browse the [feature overview](/en/#features) for the broader product workflow.
+For hands-on instructions, read [recording your screen on Windows](/blog/en/record-screen-windows-cursor-clicks/), [mouse effects](/blog/en/mouse-click-halo-spotlight-effects/) and [timeline shortcuts](/blog/en/timeline-shortcuts-and-quick-wins/). Browse the [feature overview](/en/#features) for the broader product workflow.
 
 ## Tips
 
