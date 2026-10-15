@@ -72,6 +72,9 @@ export const UI = {
 			emptyCategory: "Ainda não há artigos nesta categoria.",
 			shareEmail: "E-mail",
 			shareLink: "Link",
+			shortAnswer: "Resposta curta",
+			figureCaption: "Captura real do Clipey 1.15, com a interface em inglês",
+			readShort: "min",
 		},
 		notFound: {
 			code: "Erro 404",
@@ -158,6 +161,9 @@ export const UI = {
 			emptyCategory: "There are no articles in this category yet.",
 			shareEmail: "Email",
 			shareLink: "Link",
+			shortAnswer: "Short answer",
+			figureCaption: "Real Clipey 1.15 screenshot",
+			readShort: "min",
 		},
 		notFound: {
 			code: "Error 404",
@@ -244,6 +250,9 @@ export const UI = {
 			emptyCategory: "Todavía no hay artículos en esta categoría.",
 			shareEmail: "Correo",
 			shareLink: "Enlace",
+			shortAnswer: "Respuesta corta",
+			figureCaption: "Captura real de Clipey 1.15, con la interfaz en inglés",
+			readShort: "min",
 		},
 		notFound: {
 			code: "Error 404",
