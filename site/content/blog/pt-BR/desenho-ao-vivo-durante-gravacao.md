@@ -17,9 +17,9 @@ ogImage: "/blog/og/desenho-ao-vivo-durante-gravacao.png"
 appliesTo: "1.15"
 ---
 
-> **Aplica-se a:** Clipey 1.15. O desenho ao vivo é planejado para gravações no Windows; a exclusão dos traços da captura depende do método de captura do Windows.
+> **Aplica-se a:** Clipey 1.15. O desenho ao vivo é planejado para gravações no Windows; a exclusão dos traços da captura depende do método de captura do Windows e aguarda validação final.
 
-Quando você explica uma interface, às vezes o cursor não basta: é preciso circular um botão, apontar para uma região ou riscar uma forma. O desenho ao vivo do 1.15 foi planejado para permitir essas marcações durante a gravação e reapresentá-las depois, sincronizadas com o vídeo. Como ainda depende de implementação e validação, use este fluxo como orientação para a funcionalidade prevista, não como garantia de que os controles já estejam disponíveis na sua instalação.
+Para fazer anotações na tela durante uma gravação no Clipey, o fluxo previsto utiliza o atalho global Ctrl+Shift+D para abrir a barra de desenho com caneta, marca-texto, setas e formas. As anotações são capturadas como dados vetoriais temporizados fora dos pixels do vídeo, permitindo que apareçam sincronizadas e editáveis na linha do tempo. Como esse recurso depende de proteção de captura no Windows e ainda aguarda validação final, utilize este guia como referência para a funcionalidade planejada.
 
 ## Antes de desenhar
 
@@ -34,7 +34,7 @@ O atalho global previsto para entrar no modo de desenho é **Ctrl+Shift+D**. A t
 3. Na barra flutuante, escolha uma ferramenta: caneta, marca-texto, seta, retângulo ou elipse. Em seguida, selecione uma das seis cores da marca e uma das três espessuras previstas. Faça o traço deliberadamente e solte para terminá-lo.
 4. Use desfazer para remover o último traço. Use limpar para remover o conjunto atual quando quiser recomeçar; a especificação prevê uma segunda tecla para essa ação. **Esc** sai do modo de desenho sem encerrar a gravação.
 5. Volte ao modo normal para continuar usando o computador e retorne ao desenho quando necessário. Ao parar a gravação, os traços devem ser guardados com seus tempos para que o editor os associe ao trecho correto.
-6. Abra a gravação no editor e confira o trecho anotado. A seção **Drawings** (desenhos) prevista no inspetor deve permitir controlar a sobreposição e indicar quando o ativo não contém desenhos. Confira a prévia em movimento e também um quadro parado antes de exportar.
+6. Abra a gravação no editor e confira o trecho anotado. A seção de anotações e desenhos prevista no inspetor deve permitir controlar a sobreposição e indicar quando o ativo não contém desenhos. Confira a prévia em movimento e também um quadro parado antes de exportar.
 
 ## Escolha a ferramenta pelo objetivo
 
@@ -44,7 +44,7 @@ Se a demonstração exigir precisão, desenhe pausadamente e faça uma gravaçã
 
 ## O que revisar na edição
 
-Os desenhos devem ser reproduzidos como sobreposição vetorial rasterizada, alinhada ao tempo da gravação. A configuração **Drawings overlay** (sobreposição de desenhos) deverá controlar se a camada aparece, o esmaecimento e a animação de revelação do traço. Confira se uma anotação começa depois do corte pretendido e se permanece tempo suficiente para a pessoa ler. Acelerar ou aparar uma região também muda o tempo em que o traço aparece, pois ele acompanha o material editado.
+Os desenhos devem ser reproduzidos como sobreposição vetorial rasterizada, alinhada ao tempo da gravação. A sobreposição de desenhos deverá controlar se a camada aparece, o esmaecimento e a animação de revelação do traço. Confira se uma anotação começa depois do corte pretendido e se permanece tempo suficiente para a pessoa ler. Acelerar ou aparar uma região também muda o tempo em que o traço aparece, pois ele acompanha o material editado.
 
 Uma gravação sem traços não deve exibir controles que pareçam ativos. Se a seção mostrar estado vazio, volte à gravação e confira se o modo foi realmente acionado e se você desenhou durante um intervalo gravado. A sobreposição não cria anotações retroativas só porque foi ativada no inspetor.
 
@@ -64,4 +64,4 @@ Para contexto sobre o modo de cursor, leia [gravar a tela no Windows](/blog/grav
 
 ## Histórico desta página
 
-- {{RELEASE_DATE}}: published.
+- {{RELEASE_DATE}}: publicado.

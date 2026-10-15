@@ -19,7 +19,7 @@ appliesTo: "1.15"
 
 > **Aplica-se a:** Clipey 1.15 para Windows.
 
-“Local” só é uma informação útil quando você sabe a qual parte do fluxo ela se refere. O Clipey grava e edita no PC, e o reconhecimento de fala é executado no dispositivo. Algumas funções de IA, porém, podem usar um provedor externo; e um pacote de diagnóstico merece revisão antes de ser compartilhado. Este guia separa esses casos para ajudar você a decidir com clareza.
+No Clipey, todas as gravações de tela, edições de linha do tempo e transcrições de fala com modelos Whisper rodam inteiramente no seu computador sem enviar dados para a nuvem. Conexões externas ocorrem apenas se você configurar intencionalmente provedores remotos de IA ou acionar a publicação em redes sociais. Arquivos de diagnóstico gerados para suporte não contêm gravações de vídeo e devem ser inspecionados antes do envio para proteger dados do sistema.
 
 ## Gravações e arquivos do projeto
 

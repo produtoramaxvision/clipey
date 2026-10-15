@@ -19,7 +19,7 @@ appliesTo: "1.15"
 
 > **Aplica-se a:** Clipey 1.15 para Windows.
 
-Publicar em mais de uma rede costuma deixar o vídeo separado das legendas, do texto da postagem e da capa. O kit de publicação reúne os arquivos que já existem no projeto e a cópia preenchida para cada destino, facilitando revisar ou entregar tudo junto. Ele não cria uma nova arte nem publica o conteúdo por você.
+Para salvar um kit de publicação de vídeo no Clipey, conclua a exportação do seu arquivo e acesse a seção Kit de publicação e copy no painel de publicação. O recurso empacota o vídeo finalizado, a arte de capa existente, legendas sidecar e arquivos com os textos formatados para cada rede social em uma pasta local ou em um arquivo ZIP consolidado. Você também pode gerar títulos e legendas com o botão Sugerir copy com base na transcrição do clipe antes de exportar o pacote.
 
 ## O que entra no kit
 
@@ -30,17 +30,17 @@ Essa distinção evita uma surpresa comum: o kit organiza material pronto, mas n
 ## Salve uma pasta ou um ZIP
 
 1. Abra o projeto e finalize o vídeo. Use **Exportar** para criar o arquivo final antes de montar o pacote.
-2. Na seção de publicação, preencha e revise o título, a descrição e as hashtags disponíveis para cada rede. Não deixe no pacote um texto provisório que você não usaria publicamente.
-3. Escolha **Salvar kit de publicação**.
-4. Selecione uma pasta ou um arquivo ZIP. A pasta é a opção inicial; use ZIP quando quiser um único arquivo para anexar ou transferir.
-5. Escolha o destino e aguarde a indicação de progresso. Não feche o aplicativo enquanto o arquivo ZIP está sendo gravado.
+2. Na seção **Kit de publicação e copy**, preencha e revise o título, a descrição e as hashtags disponíveis para cada rede social. Se preferir, clique em **Sugerir copy** para gerar propostas automáticas fundamentadas na transcrição do clipe.
+3. Clique em **Salvar kit de publicação**.
+4. No campo **Formato do kit**, selecione entre **Pasta** ou **Arquivo ZIP**. A pasta é a opção inicial para edição rápida; use ZIP quando quiser um único arquivo comprimido para transferir ou arquivar.
+5. Escolha o destino em **Escolher destino** e aguarde a indicação de progresso. Não feche o aplicativo enquanto o arquivo ZIP está sendo gravado.
 6. Abra o destino e confira se o vídeo e os textos esperados estão presentes. Se tiver exportado legendas, confira também o arquivo lateral; se o projeto já tiver uma capa, verifique a imagem incluída.
 
 Os arquivos de texto são separados por plataforma para você copiar a versão correta sem misturar instruções. O `copy.json` reúne os mesmos dados em formato estruturado, útil quando outro fluxo de trabalho consome os campos sem copiar manualmente.
 
 ## Como revisar a cópia sugerida
 
-Quando a ação de sugestão estiver disponível, ela usa a transcrição e o trecho do clipe como base, e apresenta o texto como sugestão. Leia título, descrição e hashtags; corrija nomes próprios, contexto e chamadas para ação antes de salvar o kit. A sugestão não substitui sua revisão nem publica automaticamente.
+O botão **Sugerir copy** analisa a transcrição e o alcance do clipe selecionado para sugerir título, legenda e hashtags pertinentes ao tema. Leia os textos gerados e corrija nomes próprios, termos técnicos e chamadas para ação antes de salvar o kit. A sugestão automatiza a redação inicial, mantendo você no controle editorial de cada palavra.
 
 Uma boa checagem é comparar cada frase factual com o que realmente aparece no vídeo. Se a transcrição não contém o nome de uma marca ou pessoa, não presuma que a sugestão tenha acertado. Se você digitar uma correção própria, confira-a também no arquivo por plataforma depois de salvar.
 

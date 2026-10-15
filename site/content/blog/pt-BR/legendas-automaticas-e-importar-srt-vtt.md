@@ -19,20 +19,20 @@ appliesTo: "1.15"
 
 > **Aplica-se a:** Clipey 1.15 no Windows.
 
-Legendas ajudam a acompanhar uma gravação sem depender apenas do áudio, mas nem sempre é preciso transcrever tudo outra vez. O Clipey permite trabalhar com a transcrição do projeto, ajustar a apresentação das legendas e importar legendas existentes nos formatos SRT e VTT. A importação cria texto temporizado; não executa reconhecimento de fala.
+Para criar legendas ou importar arquivos SRT e VTT no Clipey, use o painel de transcrição do editor para transcrever a fala no dispositivo ou clique em Importar legendas para carregar um arquivo externo. O aplicativo mapeia os tempos dos blocos de texto diretamente para o projeto, com suporte a quebras inteligentes e ajuste de largura visual para caracteres CJK. Antes de exportar, você pode personalizar posição, cores e tamanho das fontes com visualização em tempo real.
 
 ## Gere ou confira uma transcrição
 
 1. Abra o projeto e selecione a gravação que contém a fala.
-2. No painel **Transcript**, escolha **Transcribe now** se ainda não houver transcrição. Espere a tarefa terminar antes de revisar palavras ou abrir os controles de legenda.
-3. Leia o texto e corrija nomes, números e termos técnicos. A transcrição é editável: uma legenda incorreta deve ser corrigida na origem antes de ajustar o estilo visual.
-4. Abra **Captions** no painel de transcrição para acessar as opções de apresentação. Esse controle abre a configuração no lugar do painel de transcrição; feche-a para voltar ao texto.
+2. No painel de transcrição, clique em **Transcrever** se ainda não houver texto gerado. Espere o modelo concluir a conversão antes de revisar as palavras ou abrir as configurações visuais.
+3. Leia o texto e corrija nomes, números e termos técnicos. A transcrição é editável diretamente no painel: corrigir a palavra na transcrição garante que a legenda e as ações de edição com IA reflitam o texto certo.
+4. Abra a seção de **Legendas** no painel lateral para acessar as opções de apresentação e estilo.
 
 Ao usar a transcrição gerada, o Clipey associa palavras a tempos e pode apresentar legendas no vídeo. As opções incluem exibir ou ocultar legendas, estilo, posição e quantidade de palavras por linha. Faça mudanças com o preview visível: uma configuração legível em um trecho pode cobrir um controle importante em outro.
 
 ## Importe um arquivo SRT ou VTT
 
-Se já recebeu uma faixa de legendas, use **Import subtitles** no painel de transcrição. Escolha o arquivo .srt ou .vtt. Quando existe uma transcrição no projeto, o Clipey pede confirmação antes de substituí-la; cancele se quiser manter o conteúdo atual. Se o Clipey detectar uma faixa sidecar com o mesmo nome-base do vídeo, ele mostra a opção de importá-la em vez de trocar a transcrição automaticamente.
+Se você já possui uma faixa de legendas pronta, use o botão **Importar legendas** no painel de transcrição. Escolha um arquivo `.srt` ou `.vtt`. Quando já existe uma transcrição no projeto, o Clipey abre a confirmação **Substituir transcrição?** alertando sobre a sobreposição do texto; clique em **Substituir** para prosseguir ou **Cancelar** para manter o texto atual. Se o Clipey detectar um arquivo sidecar com o mesmo nome do vídeo na pasta, ele exibe a opção **Importar arquivo anexo**.
 
 A importação interpreta os tempos dos blocos e cria uma transcrição a partir do texto. Isso é útil quando a fala já foi legendada por outro processo: você reutiliza os tempos e palavras sem iniciar reconhecimento de áudio. Ainda assim, compare pontos de sincronização ao começo, ao meio e ao final do vídeo. Uma faixa criada para outra versão da mídia pode começar alinhada e terminar fora de sincronia.
 
@@ -40,7 +40,7 @@ A importação interpreta os tempos dos blocos e cria uma transcrição a partir
 
 1. Reproduza o início e confirme se a primeira fala aparece no momento correto.
 2. Salte para o meio e para perto do final. Confira se a sincronização se mantém ao longo do arquivo.
-3. Revise blocos longos. Se a quebra de linha separar palavras de maneira ruim, ajuste o texto e as configurações de palavras por linha.
+3. Revise blocos longos. Se a quebra de linha separar palavras de maneira inadequada, ajuste o texto e as configurações de palavras por linha.
 4. Confira nomes próprios e pontuação. Arquivos importados preservam o texto fornecido, que pode ter erros, linhas extensas ou capitalização diferente do padrão desejado.
 5. Exporte um pequeno trecho de teste antes de concluir um trabalho longo e confira o resultado renderizado.
 
@@ -58,10 +58,21 @@ Para CJK (chinês, japonês e coreano), a quebra de linha precisa considerar que
 
 O Clipey não verifica se o conteúdo ou a tradução de um arquivo importado estão corretos. A importação aproveita texto e tempos já existentes; não reconhece automaticamente o áudio. Diferenças de duração ou edição entre o arquivo de vídeo e o SRT/VTT podem causar dessincronização. A transcrição automática também pode errar, então revise antes de exportar.
 
+## Perguntas frequentes
+
+### Quais formatos de arquivo de legenda são suportados para importação?
+O Clipey suporta arquivos nos formatos SubRip (`.srt`) e WebVTT (`.vtt`), preservando as marcações de tempo e o texto das falas.
+
+### A importação de legendas apaga as edições manuais feitas na transcrição?
+Sim. Ao importar um arquivo SRT ou VTT em um projeto com transcrição existente, o Clipey exibe uma confirmação e substitui o texto atual pelas novas falas importadas.
+
+### O Clipey consegue exportar arquivos de legenda separados do vídeo?
+Sim. Na janela de exportação, você pode marcar a opção para gerar arquivos de legenda sidecar (`.srt` ou `.vtt`) na mesma pasta de destino do arquivo de vídeo.
+
 Para editar pausas e palavras com auxílio do agente, leia [edição com IA](/blog/edicao-com-ia-cortes-zooms-silencio/). Para transformar uma gravação longa em candidatos curtos, veja [Auto Clip](/blog/auto-clip-shorts-de-videos-longos/). Saiba mais sobre [recursos de IA](/#ia).
 
 Próximo passo: importe uma faixa existente ou transcreva um trecho, corrija o texto e confira a sincronização no preview.
 
 ## Histórico desta página
 
-- {{RELEASE_DATE}}: published.
+- {{RELEASE_DATE}}: publicado.

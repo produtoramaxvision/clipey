@@ -19,15 +19,15 @@ appliesTo: "1.15"
 
 > **Aplica-se a:** Clipey 1.15 no Windows.
 
-Uma gravação de tela costuma conter pausas, tentativas e trechos que não ajudam a explicar o assunto. O agente de IA pode ajudar a transformar uma instrução em mudanças na edição. O resultado continua sendo um projeto que você revisa: peça uma alteração específica, confira a timeline e assista antes de exportar.
+Para editar gravações com IA no Clipey, use o agente integrado para transformar pedidos em linguagem natural em cortes precisos na linha do tempo, remoção de silêncios e aproximações de zoom. O fluxo combina a transcrição do áudio com a telemetria do cursor para identificar pausas e focar a câmera exatamente onde as ações acontecem. Você mantém o controle total da edição e pode revisar cada corte ou palavra removida antes de exportar o vídeo final.
 
 ## Prepare o projeto antes de pedir mudanças
 
-1. Abra a gravação no editor e espere a mídia carregar. Para pedir cortes baseados no que foi dito, transcreva o áudio primeiro; o painel de transcrição oferece **Transcribe now** quando ainda não há texto. A transcrição dá ao agente contexto textual, mas não substitui a revisão do vídeo.
+1. Abra a gravação no editor e espere a mídia carregar. Para pedir cortes baseados no que foi dito, transcreva o áudio primeiro; o painel de transcrição oferece a ação **Transcrever** quando ainda não há texto gerado. A transcrição fornece ao agente o contexto textual necessário para localizar falas e pausas.
 2. Abra a conversa do agente no editor. Se o projeto ainda não tem uma transcrição, experimente primeiro uma solicitação visual ou faça a transcrição antes de solicitar a remoção de pausas faladas.
 3. Descreva um objetivo por vez. Por exemplo: “remova a pausa longa depois da explicação e aproxime o zoom quando eu mostrar o menu”. Evite pedir uma edição inteira em uma frase vaga; instruções localizadas facilitam comparar a resposta com o trecho certo.
 
-O agente pode executar operações de edição como cortes e zooms, e o texto de boas-vindas também apresenta remoção de silêncios, redução de pausas e palavras de preenchimento como tarefas possíveis. Um corte de silêncio não deve ser tratado como uma decisão editorial infalível. Fala baixa, respirações e pausas intencionais podem ser importantes para o ritmo ou para o sentido.
+O agente pode executar operações de edição como cortes e zooms, além de remoção de silêncios e redução de pausas. Se o projeto incluir trilha de música de fundo, você também pode ativar a opção **Clareza da fala** no inspetor de áudio para atenuar frequências médias da música e destacar a voz durante as explicações. Um corte de silêncio não deve ser tratado como uma decisão editorial infalível: respirações e pausas intencionais podem ser importantes para o ritmo.
 
 ## Confira cada corte na transcrição e na timeline
 
@@ -59,4 +59,4 @@ Como próximo passo, abra uma gravação curta, faça uma alteração localizada
 
 ## Histórico desta página
 
-- {{RELEASE_DATE}}: published.
+- {{RELEASE_DATE}}: publicado.

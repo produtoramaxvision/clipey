@@ -19,23 +19,23 @@ appliesTo: "1.15"
 
 > **Aplica-se a:** Clipey 1.15 no Windows.
 
-Quando um vídeo que você tem permissão para usar está hospedado em um serviço online, importar por link evita baixar o arquivo separadamente para depois localizá-lo no projeto. O Clipey consulta as informações disponíveis, permite escolher uma qualidade e adiciona a mídia ao projeto. A importação não publica o vídeo, e você continua responsável por ter direito de baixar e reutilizar o conteúdo.
+Para importar um vídeo por link com segurança no Clipey, selecione Importar de link no editor, cole a URL pública desejada e clique em Inspecionar link para conferir duração, autor e licença. Escolha a resolução de download adequada (como Melhor até 1080p ou Apenas áudio) e confirme a operação para incluir a mídia diretamente no seu projeto. A importação ocorre sem transferir credenciais e cabe ao usuário garantir que possui os direitos necessários para baixar e reutilizar o material.
 
 ## Cole o link e confira a prévia
 
-1. Abra um projeto no editor ou comece pelo estado vazio e selecione **Import from link**.
-2. Cole o endereço do vídeo no campo. A ferramenta aceita links HTTP ou HTTPS compatíveis; não use caminhos locais, endereços privados ou links que exijam contornar controles de acesso.
-3. Aguarde a consulta dos metadados. Confira título, duração, miniatura e canal ou autor quando esses dados forem fornecidos pelo site.
-4. Leia a licença exibida. Se o serviço não informar uma licença, o Clipey deixa isso claro como **No licence information**; ausência de informação não significa que o conteúdo seja livre para reutilizar.
-5. Escolha uma das opções de qualidade e confirme a importação. A opção padrão busca a melhor qualidade até 1080p; também há opções até 720p, melhor qualidade disponível e somente áudio.
+1. Abra um projeto no editor ou comece pelo estado vazio e selecione **Importar de link**.
+2. Cole o endereço do vídeo no campo **Link do vídeo**. A ferramenta aceita links HTTP ou HTTPS compatíveis; não use caminhos locais nem endereços privados de rede.
+3. Clique em **Inspecionar link** e aguarde a consulta dos metadados. O painel apresenta título, duração, criador e a miniatura correspondente.
+4. Confira o aviso de direitos e a linha de **Licença**. Se o serviço não fornecer detalhes da licença, o Clipey exibe **Sem informações de licença**; a ausência de dados não significa que o conteúdo seja de domínio público.
+5. Escolha uma das opções em **Qualidade** e acione **Importar vídeo**. A opção padrão busca **Melhor até 1080p**; há também opções para **Melhor até 720p**, **Melhor disponível** e **Apenas áudio (m4a)**.
 
-O Clipey usa uma ferramenta de linha de comando para consultar e baixar a mídia. Primeiro recebe metadados e depois faz o download com a opção escolhida. Durante a transferência, acompanhe o progresso. Você pode cancelar se mudou de ideia ou colou o link errado. Ao terminar, o arquivo é adicionado aos recursos do projeto, como uma mídia importada.
+O Clipey baixa a mídia diretamente no seu computador através de ferramentas de linha de comando integradas. Durante a transferência, a interface mostra velocidade e tempo restante estimado, permitindo cancelar a qualquer instante. Ao concluir, o arquivo de mídia é adicionado aos recursos do projeto.
 
 ## Escolha a qualidade pelo uso
 
-Não escolha automaticamente a maior opção. Para consultar uma fala ou editar um corte curto, uma qualidade menor pode bastar e reduzir o tamanho do arquivo. Para usar a imagem em uma edição que exige mais detalhe, escolha a qualidade mais alta disponível que faça sentido para o seu projeto. **Best available** não significa que o serviço ofereça uma resolução específica: disponibilidade depende da fonte.
+Não escolha automaticamente a maior opção. Para consultar uma fala ou editar um corte curto, uma qualidade menor pode bastar e reduzir o tamanho do arquivo. Para usar a imagem em uma edição que exige mais detalhe, escolha a qualidade mais alta disponível que faça sentido para o seu projeto. **Melhor disponível** seleciona o formato de maior resolução oferecido pela fonte original.
 
-**Audio only** é apropriado quando você precisa trabalhar com a faixa de som, não com a imagem. Confira novamente a opção antes de iniciar para não baixar apenas áudio quando o objetivo era editar um vídeo.
+A opção **Apenas áudio (m4a)** é apropriada quando você precisa apenas da narração ou do som para transcrever e editar na linha do tempo. Confira novamente a opção antes de iniciar para não baixar apenas áudio quando o objetivo era editar um vídeo.
 
 Após a importação, localize o novo recurso na mídia do projeto e abra-o para conferir duração e reprodução. Uma prévia de metadados não garante que a fonte continuará acessível nem que o download será concluído: o vídeo pode estar privado, bloqueado por região ou exigir uma conta. Se houver um erro, confira o link, a rede e as permissões da fonte antes de tentar outra vez.
 
@@ -56,7 +56,18 @@ O arquivo importado fica no projeto para edição; isso não equivale a publicar
 
 ## Limitações
 
-O suporte depende do site e do acesso que ele oferece no momento. Vídeos privados, indisponíveis, bloqueados por região ou removidos podem falhar. Clipey mostra a licença apenas quando a fonte fornece essa informação e não decide se você tem direitos suficientes. Links não são uma forma de contornar autenticação ou restrições. A disponibilidade de formatos e resoluções depende da origem, e erros de rede ou de espaço em disco podem interromper a transferência.
+O suporte depende da compatibilidade com o site de origem. Vídeos privados, indisponíveis, bloqueados por região ou removidos não podem ser baixados. O Clipey mostra a licença apenas quando a fonte fornece essa informação e não avalia se você tem direitos autorais suficientes. Links não são uma forma de contornar autenticação ou proteções digitais de acesso.
+
+## Perguntas frequentes
+
+### Posso importar vídeos de qualquer site pela internet?
+O Clipey aceita links de sites suportados por meio de ferramentas públicas de download, mas vídeos privados, protegidos por autenticação ou bloqueados por geolocalização não podem ser importados.
+
+### O Clipey verifica automaticamente os direitos autorais do vídeo importado?
+Não. O aplicativo apenas exibe os dados de licença fornecidos pelo site de origem, cabendo inteiramente ao usuário garantir a posse ou autorização de uso do conteúdo antes de publicá-lo.
+
+### A importação por link envia minhas credenciais de login para a nuvem?
+Não. O download é executado localmente pelo aplicativo e nenhuma informação de conta pessoal ou credencial de acesso é compartilhada com servidores do Clipey.
 
 Depois de importar, veja [como transformar uma gravação longa em clipes curtos](/blog/auto-clip-shorts-de-videos-longos/) ou [prepare legendas com SRT/VTT](/blog/legendas-automaticas-e-importar-srt-vtt/). Para entender como proteger seus dados, consulte [privacidade](/#privacidade).
 
@@ -64,4 +75,4 @@ Próximo passo: importe somente um link autorizado, confira o arquivo no projeto
 
 ## Histórico desta página
 
-- {{RELEASE_DATE}}: published.
+- {{RELEASE_DATE}}: publicado.
