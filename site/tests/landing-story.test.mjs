@@ -16,7 +16,12 @@ import {
 	shotLocale,
 	shotSet,
 } from "../src/landing-shots.mjs";
-import { HERO_SHOT, STORY_SECTIONS } from "../src/landing-story.mjs";
+import {
+	EDITOR_SHOT,
+	EDITOR_SHOT_LIGHT,
+	HERO_SHOT,
+	STORY_SECTIONS,
+} from "../src/landing-story.mjs";
 import { renderSite } from "../src/render-site.mjs";
 
 const bundle = {
@@ -188,6 +193,23 @@ describe("v2 pt-BR landing structure", () => {
 			(match) => !match[1].includes("application/ld+json"),
 		);
 		expect(inline).toHaveLength(1);
+	});
+
+	it("heads the page with the timeline crop, never a recorded frame, and shows the editor further down", () => {
+		const locale = shotLocale(readShotManifest(), "pt-BR");
+		expect(HERO_SHOT).toBe("timeline-zoom-regions-dark");
+		const stage = main.slice(
+			main.indexOf('<figure class="hero-stage">'),
+			main.indexOf("</figure>", main.indexOf('<figure class="hero-stage">')),
+		);
+		expect(stage.match(/<img /g)).toHaveLength(1);
+		expect(stage).toContain(`/shots/${HERO_SHOT}-${locale}-poster.webp`);
+		expect(stage).not.toContain(EDITOR_SHOT);
+		const editor = main.indexOf(`/shots/${EDITOR_SHOT}-${locale}-poster.webp`);
+		expect(editor).toBeGreaterThan(
+			main.indexOf(`id="${STORY_SECTIONS.clicks.id}"`),
+		);
+		expect(main).toContain(`/shots/${EDITOR_SHOT_LIGHT}-${locale}-poster.webp`);
 	});
 
 	it("gives every image a size, and every one but the hero is lazy", () => {

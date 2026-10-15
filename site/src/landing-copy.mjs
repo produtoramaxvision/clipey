@@ -32,8 +32,8 @@ export const STORY = {
 			platform: "Windows 10 e 11 · 64 bits",
 			noAccount: "sem conta para gravar e editar",
 			imageAlt:
-				"Editor do Clipey com a linha do tempo, regiões de zoom e o painel de composição",
-			caption: "Interface real do Clipey 1.15",
+				"Linha do tempo do Clipey com as regiões de zoom criadas a partir dos cliques, em azul",
+			caption: "Linha do tempo real do Clipey 1.15",
 			zoomTag: "Zoom 1,8× · auto no clique",
 			drawNote: "desenhado ao vivo, Ctrl + Shift + D",
 		},
@@ -42,7 +42,7 @@ export const STORY = {
 			[
 				"00:00",
 				"A gravação crua",
-				"O editor real, parado. O playhead está no começo da linha do tempo.",
+				"A linha do tempo real do Clipey, parada. Nada aconteceu ainda.",
 			],
 			[
 				"00:02",
@@ -96,9 +96,9 @@ export const STORY = {
 			title: "Cada clique virou um zoom. Você não marcou nenhum.",
 			text: "As pílulas azuis são zooms criados a partir dos seus cliques. Arraste, apague ou mude o nível de cada um na linha do tempo.",
 			imageAlt:
-				"Linha do tempo do Clipey com regiões de zoom em azul e uma região de velocidade",
+				"Editor do Clipey com a linha do tempo, regiões de zoom e de velocidade e o painel de composição",
 			caption:
-				"Linha do tempo real · zoom, velocidade, anotação, corte e áudio em faixas separadas",
+				"Editor real · zoom, velocidade, anotação, corte e áudio em faixas separadas",
 		},
 		overlays: {
 			tc: "00:01:30 · Overlays",

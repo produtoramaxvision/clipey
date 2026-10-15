@@ -21,10 +21,15 @@ import { icon, renderHead, renderPage } from "./blog/shell.mjs";
 import { STORY } from "./landing-copy.mjs";
 import { pageShots, readShotManifest } from "./landing-shots.mjs";
 
-export const HERO_SHOT = "editor-full-speed-zoom-lanes-dark";
-/** The light theme shows the light editor; it stays lazy, so dark visitors never download it. */
-export const HERO_SHOT_LIGHT = "editor-full-light";
+/**
+ * The one picture of the hero: a real timeline crop with the zoom regions and no recording in it. The demo recording
+ * replaces it here, under this name; the overlay positions in landing.css (--hero-focus-*) follow the picture.
+ */
+export const HERO_SHOT = "timeline-zoom-regions-dark";
 export const HERO_SIZES = "(max-width: 1000px) 100vw, 60vw";
+/** The full editor further down; the light theme shows the light editor, lazy, so dark visitors never download it. */
+export const EDITOR_SHOT = "editor-full-speed-zoom-lanes-dark";
+export const EDITOR_SHOT_LIGHT = "editor-full-light";
 
 /** Section ids of the v2 page, and the older anchors (linked by the blog and the header) each section answers to. */
 export const STORY_SECTIONS = {
@@ -84,7 +89,6 @@ function heroStage(copy, shots) {
 				<div class="hero-shot">
 					<div class="hero-cam">
 						${shots.img(HERO_SHOT, { alt: hero.imageAlt, sizes: HERO_SIZES, className: "hero-img", priority: true })}
-						${shots.img(HERO_SHOT_LIGHT, { alt: hero.imageAlt, sizes: HERO_SIZES, className: "hero-img hero-img--light" })}
 						<span class="click-ring" aria-hidden="true"></span>
 					</div>
 					<span class="zoom-box" aria-hidden="true"><span class="zoom-tag">${esc(hero.zoomTag)}</span></span>
@@ -194,7 +198,8 @@ function clicksSection(copy, shots) {
 			</div>
 			<figure class="timeline-figure">
 				<svg class="ink ink--timeline" viewBox="0 0 420 150" aria-hidden="true"><path d="M20 20 C 140 10, 300 40, 360 120"/><path d="M344 112 l18 12 2 -22"/></svg>
-				${shots.img("timeline-zoom-regions-dark", { alt: s.imageAlt, sizes: "100vw" })}
+				${shots.img(EDITOR_SHOT, { alt: s.imageAlt, sizes: "(max-width: 1000px) 100vw, 92vw", className: "editor-img" })}
+				${shots.img(EDITOR_SHOT_LIGHT, { alt: s.imageAlt, sizes: "(max-width: 1000px) 100vw, 92vw", className: "editor-img editor-img--light" })}
 				<figcaption class="meta">${esc(s.caption)}</figcaption>
 			</figure>
 		</section>`;
@@ -232,9 +237,9 @@ function verticalSection(copy, shots) {
 					<p class="lede">${esc(s.text)}</p>
 				</div>
 				<div class="reframe">
-					<span class="reframe-wide">${shots.img(HERO_SHOT, { alt: s.wideAlt, sizes: "(max-width: 1000px) 50vw, 30vw" })}<span class="reframe-mask" aria-hidden="true"></span></span>
+					<span class="reframe-wide">${shots.img(EDITOR_SHOT, { alt: s.wideAlt, sizes: "(max-width: 1000px) 50vw, 30vw" })}<span class="reframe-mask" aria-hidden="true"></span></span>
 					<svg class="reframe-arrow" viewBox="0 0 56 24" aria-hidden="true"><path d="M2 12h48"/><path d="m42 4 9 8-9 8"/></svg>
-					<span class="reframe-tall">${shots.img(HERO_SHOT, { alt: s.tallAlt, sizes: "(max-width: 1000px) 60vw, 40vw" })}<span class="reframe-caption" aria-hidden="true">${esc(lead)} <em>${esc(keyword)}</em></span></span>
+					<span class="reframe-tall">${shots.img(EDITOR_SHOT, { alt: s.tallAlt, sizes: "(max-width: 1000px) 60vw, 40vw" })}<span class="reframe-caption" aria-hidden="true">${esc(lead)} <em>${esc(keyword)}</em></span></span>
 				</div>
 			</div>
 			<div class="dialogs">

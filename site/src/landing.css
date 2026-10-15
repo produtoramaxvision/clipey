@@ -656,6 +656,15 @@ main.story {
 	gap: 20px;
 }
 
+/*
+ * Where the hero zooms: the centre of one blue zoom pill of HERO_SHOT (x 1511, y 413 of 3200 x 784). The click
+ * ring, the zoom box and the zoom origin all follow it; a new hero picture only changes these.
+ */
+.story {
+	--hero-focus-x: 47.2%;
+	--hero-focus-y: 52.7%;
+}
+
 .hero-stage {
 	position: relative;
 }
@@ -671,7 +680,7 @@ main.story {
 
 .hero-cam {
 	position: relative;
-	transform-origin: 38.5% 37.5%;
+	transform-origin: var(--hero-focus-x) var(--hero-focus-y);
 }
 
 .hero-img {
@@ -679,12 +688,12 @@ main.story {
 	height: auto;
 }
 
-.hero-img--light,
-:root[data-theme="light"] .hero-img:not(.hero-img--light) {
+.editor-img--light,
+:root[data-theme="light"] .editor-img:not(.editor-img--light) {
 	display: none;
 }
 
-:root[data-theme="light"] .hero-img--light {
+:root[data-theme="light"] .editor-img--light {
 	display: block;
 }
 
@@ -696,8 +705,8 @@ main.story {
  */
 .click-ring {
 	position: absolute;
-	top: 37.5%;
-	left: 38.5%;
+	top: var(--hero-focus-y);
+	left: var(--hero-focus-x);
 	width: 64px;
 	height: 64px;
 	border: 3px solid var(--accent);
@@ -710,12 +719,13 @@ main.story {
 	display: none;
 }
 
+/* Around the cluster of zoom pills next to the focus (x 1227 to 1754, y 360 to 470 of the capture). */
 .zoom-box {
 	position: absolute;
-	top: 25%;
-	left: 27%;
-	width: 26%;
-	height: 22%;
+	top: 46%;
+	left: 38%;
+	width: 17%;
+	height: 14%;
 	border: 1.5px solid var(--zoom);
 	border-radius: 6px;
 	box-shadow: 0 0 0 9999px var(--media-scrim);
@@ -734,16 +744,17 @@ main.story {
 	white-space: nowrap;
 }
 
+/* Over the clip lane of the timeline (y 576 to 736 of 784). */
 .cut-strip {
 	position: absolute;
 	right: 0;
-	bottom: 0;
+	bottom: 6%;
 	left: 0;
 	display: flex;
 	gap: 4px;
 	align-items: center;
 	justify-content: center;
-	height: 26%;
+	height: 22%;
 	padding: 0 24px;
 	background: var(--media-scrim-strong);
 }
@@ -780,7 +791,7 @@ main.story {
 .burn-caption {
 	position: absolute;
 	right: 0;
-	bottom: 14%;
+	top: 12%;
 	left: 0;
 	color: var(--media-text);
 	font-size: clamp(16px, 2.1vw, 30px);
@@ -794,11 +805,12 @@ main.story {
 	font-style: normal;
 }
 
+/* A 9:16 crop of the full height: 784 x 9 / 16 = 441 of 3200 wide. */
 .vertical-mask {
 	position: absolute;
 	top: 0;
-	left: 39%;
-	width: 22%;
+	left: calc(var(--hero-focus-x) - 6.9%);
+	width: 13.8%;
 	height: 100%;
 	border: 2px solid var(--speed);
 	box-shadow: 0 0 0 9999px var(--media-scrim-strong);
@@ -837,7 +849,7 @@ main.story {
 
 .still-cam {
 	display: block;
-	transform-origin: 38.5% 37.5%;
+	transform-origin: var(--hero-focus-x) var(--hero-focus-y);
 }
 
 .still--3 .still-cam {
@@ -1255,13 +1267,22 @@ main.story {
 	max-width: 380px;
 }
 
+/* The full editor, framed inside the gutters like a window on the desktop. */
 .story .timeline-figure {
 	position: relative;
-	margin-top: 48px;
+	margin: 48px var(--gutter) 0;
+}
+
+.timeline-figure .editor-img {
+	width: 100%;
+	height: auto;
+	border: 1px solid var(--line);
+	border-radius: 14px;
+	box-shadow: 0 50px 140px -40px var(--shadow);
 }
 
 .timeline-figure figcaption {
-	padding: 14px var(--gutter) 0;
+	padding-top: 14px;
 }
 
 .ink--timeline {
