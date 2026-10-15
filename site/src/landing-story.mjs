@@ -19,7 +19,7 @@ import { escapeHtml as esc } from "./blog/content.mjs";
 import { UI } from "./blog/i18n.mjs";
 import { icon, renderHead, renderPage } from "./blog/shell.mjs";
 import { STORY } from "./landing-copy.mjs";
-import { readShotManifest, shotImg, shotSet } from "./landing-shots.mjs";
+import { pageShots, readShotManifest } from "./landing-shots.mjs";
 
 export const HERO_SHOT = "editor-full-speed-zoom-lanes-dark";
 /** The light theme shows the light editor; it stays lazy, so dark visitors never download it. */
@@ -77,14 +77,14 @@ const cutStrip = (copy, attrs = "") =>
 	`<span class="cut-strip"${attrs}><span class="cut-keep"></span><span class="cut-gap"></span><span class="cut-keep"></span><span class="cut-tag">${esc(copy.cutTag)}</span></span>`;
 
 /** The hero picture with the overlays the scroll story switches on: click rings, zoom box, cut, caption, 9:16 mask. */
-function heroStage(copy, manifest) {
+function heroStage(copy, shots) {
 	const hero = copy.hero;
 	const [lead, keyword] = copy.captionText;
 	return `<figure class="hero-stage">
 				<div class="hero-shot">
 					<div class="hero-cam">
-						${shotImg(manifest, HERO_SHOT, { alt: hero.imageAlt, sizes: HERO_SIZES, className: "hero-img", priority: true })}
-						${shotImg(manifest, HERO_SHOT_LIGHT, { alt: hero.imageAlt, sizes: HERO_SIZES, className: "hero-img hero-img--light" })}
+						${shots.img(HERO_SHOT, { alt: hero.imageAlt, sizes: HERO_SIZES, className: "hero-img", priority: true })}
+						${shots.img(HERO_SHOT_LIGHT, { alt: hero.imageAlt, sizes: HERO_SIZES, className: "hero-img hero-img--light" })}
 						<span class="click-ring" aria-hidden="true"></span>
 					</div>
 					<span class="zoom-box" aria-hidden="true"><span class="zoom-tag">${esc(hero.zoomTag)}</span></span>
@@ -112,12 +112,12 @@ const stillOverlay = (copy, index) => {
 };
 
 /** The six scroll states as captioned stills: the reduced-motion and no-support view, and the captions of the story. */
-function storyStills(copy, manifest) {
-	const set = shotSet(manifest, HERO_SHOT);
+function storyStills(copy, shots) {
+	const set = shots.set(HERO_SHOT);
 	return `<ol class="story-stills" aria-label="${esc(copy.storyAria)}">${copy.frames
 		.map(
 			([tc, title, text], index) => `<li class="still still--${index + 1}">
-					<span class="still-frame" aria-hidden="true"><span class="still-cam"><img src="/shots/${HERO_SHOT}-800.webp" width="${set.width}" height="${set.height}" alt="" loading="lazy" decoding="async"></span>${stillOverlay(copy, index)}<span class="still-tc">${esc(tc)}</span></span>
+					<span class="still-frame" aria-hidden="true"><span class="still-cam"><img src="${set.small}" width="${set.width}" height="${set.height}" alt="" loading="lazy" decoding="async"></span>${stillOverlay(copy, index)}<span class="still-tc">${esc(tc)}</span></span>
 					<span class="still-title">${esc(title)}</span>
 					<span class="still-text">${esc(text)}</span>
 				</li>`,
@@ -125,7 +125,7 @@ function storyStills(copy, manifest) {
 		.join("")}</ol>`;
 }
 
-function hero(copy, manifest) {
+function hero(copy, shots) {
 	const hero = copy.hero;
 	return `<section class="story-hero" id="topo" aria-labelledby="hero-title">
 			<div class="story-hero-grid">
@@ -142,9 +142,9 @@ function hero(copy, manifest) {
 						<p class="meta">${esc(hero.platform)}<br>${esc(hero.noAccount)}</p>
 					</div>
 				</div>
-				${heroStage(copy, manifest)}
+				${heroStage(copy, shots)}
 			</div>
-			${storyStills(copy, manifest)}
+			${storyStills(copy, shots)}
 		</section>`;
 }
 
@@ -165,7 +165,7 @@ function timeline(copy) {
 	</div>`;
 }
 
-function recordSection(copy, manifest) {
+function recordSection(copy, shots) {
 	const s = copy.record;
 	return `<section class="chapter-section split split--even" id="${STORY_SECTIONS.record.id}" aria-labelledby="record-title">
 			${aliasMarkers("record")}
@@ -175,13 +175,13 @@ function recordSection(copy, manifest) {
 				<p class="lede">${esc(s.text)}</p>
 			</div>
 			<figure class="hud-figure">
-				${shotImg(manifest, "launch-hud-recording-bar", { alt: s.imageAlt, sizes: "(max-width: 1000px) 90vw, 560px" })}
+				${shots.img("launch-hud-recording-bar", { alt: s.imageAlt, sizes: "(max-width: 1000px) 90vw, 560px" })}
 				<figcaption class="meta">${esc(s.caption)}</figcaption>
 			</figure>
 		</section>`;
 }
 
-function clicksSection(copy, manifest) {
+function clicksSection(copy, shots) {
 	const s = copy.clicks;
 	return `<section class="chapter-section chapter-section--bleed" id="${STORY_SECTIONS.clicks.id}" aria-labelledby="clicks-title">
 			${aliasMarkers("clicks")}
@@ -194,13 +194,13 @@ function clicksSection(copy, manifest) {
 			</div>
 			<figure class="timeline-figure">
 				<svg class="ink ink--timeline" viewBox="0 0 420 150" aria-hidden="true"><path d="M20 20 C 140 10, 300 40, 360 120"/><path d="M344 112 l18 12 2 -22"/></svg>
-				${shotImg(manifest, "timeline-zoom-regions-dark", { alt: s.imageAlt, sizes: "100vw" })}
+				${shots.img("timeline-zoom-regions-dark", { alt: s.imageAlt, sizes: "100vw" })}
 				<figcaption class="meta">${esc(s.caption)}</figcaption>
 			</figure>
 		</section>`;
 }
 
-function overlaysSection(copy, manifest) {
+function overlaysSection(copy, shots) {
 	const s = copy.overlays;
 	return `<section class="chapter-section split split--overlays" id="${STORY_SECTIONS.overlays.id}" aria-labelledby="overlays-title">
 			<div class="overlays-demo">
@@ -214,13 +214,13 @@ function overlaysSection(copy, manifest) {
 				<div class="overlays-controls" data-fx-controls></div>
 			</div>
 			<figure class="pane-figure">
-				<div class="pane-crop">${shotImg(manifest, "pane-mouse-effects-dark", { alt: s.imageAlt, sizes: "(max-width: 1000px) 90vw, 380px" })}</div>
+				<div class="pane-crop">${shots.img("pane-mouse-effects-dark", { alt: s.imageAlt, sizes: "(max-width: 1000px) 90vw, 380px" })}</div>
 				<figcaption class="meta">${esc(s.caption)}</figcaption>
 			</figure>
 		</section>`;
 }
 
-function verticalSection(copy, manifest) {
+function verticalSection(copy, shots) {
 	const s = copy.vertical;
 	const [lead, keyword] = s.captionText;
 	const half = "(max-width: 1000px) 90vw, 45vw";
@@ -232,14 +232,14 @@ function verticalSection(copy, manifest) {
 					<p class="lede">${esc(s.text)}</p>
 				</div>
 				<div class="reframe">
-					<span class="reframe-wide">${shotImg(manifest, HERO_SHOT, { alt: s.wideAlt, sizes: "(max-width: 1000px) 50vw, 30vw" })}<span class="reframe-mask" aria-hidden="true"></span></span>
+					<span class="reframe-wide">${shots.img(HERO_SHOT, { alt: s.wideAlt, sizes: "(max-width: 1000px) 50vw, 30vw" })}<span class="reframe-mask" aria-hidden="true"></span></span>
 					<svg class="reframe-arrow" viewBox="0 0 56 24" aria-hidden="true"><path d="M2 12h48"/><path d="m42 4 9 8-9 8"/></svg>
-					<span class="reframe-tall">${shotImg(manifest, HERO_SHOT, { alt: s.tallAlt, sizes: "(max-width: 1000px) 60vw, 40vw" })}<span class="reframe-caption" aria-hidden="true">${esc(lead)} <em>${esc(keyword)}</em></span></span>
+					<span class="reframe-tall">${shots.img(HERO_SHOT, { alt: s.tallAlt, sizes: "(max-width: 1000px) 60vw, 40vw" })}<span class="reframe-caption" aria-hidden="true">${esc(lead)} <em>${esc(keyword)}</em></span></span>
 				</div>
 			</div>
 			<div class="dialogs">
-				${shotImg(manifest, "export-dialog-presets-publish-dark", { alt: s.exportAlt, sizes: half })}
-				${shotImg(manifest, "export-dialog-tiktok-schedule-dark", { alt: s.scheduleAlt, sizes: half })}
+				${shots.img("export-dialog-presets-publish-dark", { alt: s.exportAlt, sizes: half })}
+				${shots.img("export-dialog-tiktok-schedule-dark", { alt: s.scheduleAlt, sizes: half })}
 			</div>
 		</section>`;
 }
@@ -260,13 +260,13 @@ function publishSection(copy) {
 		</section>`;
 }
 
-function localSection(lang, copy, manifest) {
+function localSection(lang, copy, shots) {
 	const s = copy.local;
 	const legal = LEGAL_PATHS[lang];
 	return `<section class="chapter-section split split--even" id="${STORY_SECTIONS.local.id}" aria-labelledby="local-title">
 			${aliasMarkers("local")}
 			<figure class="settings-figure">
-				${shotImg(manifest, "settings-transcription-media-dark", { alt: s.imageAlt, sizes: "(max-width: 1000px) 90vw, 45vw" })}
+				${shots.img("settings-transcription-media-dark", { alt: s.imageAlt, sizes: "(max-width: 1000px) 90vw, 45vw" })}
 				<figcaption class="meta">${esc(s.caption)}</figcaption>
 			</figure>
 			<div class="copy">
@@ -331,17 +331,17 @@ function footer(lang, copy) {
 export function renderStory(lang, { assets, alternates, jsonLd }) {
 	const ui = UI[lang];
 	const copy = STORY[lang];
-	const manifest = readShotManifest();
-	const lcp = shotSet(manifest, HERO_SHOT);
+	const shots = pageShots(readShotManifest(), lang);
+	const lcp = shots.set(HERO_SHOT);
 	const body = `<main id="main" class="story">
-		${hero(copy, manifest)}
+		${hero(copy, shots)}
 		${timeline(copy)}
-		${recordSection(copy, manifest)}
-		${clicksSection(copy, manifest)}
-		${overlaysSection(copy, manifest)}
-		${verticalSection(copy, manifest)}
+		${recordSection(copy, shots)}
+		${clicksSection(copy, shots)}
+		${overlaysSection(copy, shots)}
+		${verticalSection(copy, shots)}
 		${publishSection(copy)}
-		${localSection(lang, copy, manifest)}
+		${localSection(lang, copy, shots)}
 		${faqSection(copy)}
 		${exportSection(copy)}
 	</main>`;

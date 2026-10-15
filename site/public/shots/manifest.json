@@ -1,12 +1,17 @@
 {
+	"locales": {
+		"en": {
+			"total": 1893362
+		}
+	},
 	"previews": {
-		"editor-full-speed-zoom-lanes-dark": {
+		"editor-full-speed-zoom-lanes-dark-en": {
 			"x": 244,
 			"y": 148,
 			"width": 1842,
 			"height": 1036
 		},
-		"editor-full-light": {
+		"editor-full-light-en": {
 			"x": 244,
 			"y": 148,
 			"width": 1842,
@@ -14,236 +19,235 @@
 		}
 	},
 	"files": {
-		"editor-full-speed-zoom-lanes-dark-800.webp": {
+		"editor-full-speed-zoom-lanes-dark-en-800.webp": {
 			"width": 800,
 			"height": 500,
-			"bytes": 20244
+			"bytes": 19758
 		},
-		"editor-full-speed-zoom-lanes-dark-1400.webp": {
+		"editor-full-speed-zoom-lanes-dark-en-1400.webp": {
 			"width": 1400,
 			"height": 875,
-			"bytes": 40634
+			"bytes": 39696
 		},
-		"editor-full-speed-zoom-lanes-dark-2400.webp": {
+		"editor-full-speed-zoom-lanes-dark-en-2400.webp": {
 			"width": 2400,
 			"height": 1500,
-			"bytes": 79464
+			"bytes": 77642
 		},
-		"editor-full-speed-zoom-lanes-dark-poster.webp": {
+		"editor-full-speed-zoom-lanes-dark-en-poster.webp": {
 			"width": 1400,
 			"height": 875,
-			"bytes": 44752
+			"bytes": 43628
 		},
-		"timeline-zoom-regions-dark-800.webp": {
+		"timeline-zoom-regions-dark-en-800.webp": {
 			"width": 800,
 			"height": 196,
 			"bytes": 8978
 		},
-		"timeline-zoom-regions-dark-1400.webp": {
+		"timeline-zoom-regions-dark-en-1400.webp": {
 			"width": 1400,
 			"height": 343,
 			"bytes": 18048
 		},
-		"timeline-zoom-regions-dark-2400.webp": {
+		"timeline-zoom-regions-dark-en-2400.webp": {
 			"width": 2400,
 			"height": 588,
 			"bytes": 35120
 		},
-		"timeline-zoom-regions-dark-poster.webp": {
+		"timeline-zoom-regions-dark-en-poster.webp": {
 			"width": 1400,
 			"height": 343,
 			"bytes": 19968
 		},
-		"pane-mouse-effects-dark-800.webp": {
+		"pane-mouse-effects-dark-en-800.webp": {
 			"width": 800,
 			"height": 2267,
 			"bytes": 34358
 		},
-		"pane-mouse-effects-dark-1400.webp": {
+		"pane-mouse-effects-dark-en-1400.webp": {
 			"width": 868,
 			"height": 2460,
 			"bytes": 40962
 		},
-		"pane-mouse-effects-dark-2400.webp": {
+		"pane-mouse-effects-dark-en-2400.webp": {
 			"width": 868,
 			"height": 2460,
 			"bytes": 40962
 		},
-		"pane-mouse-effects-dark-poster.webp": {
+		"pane-mouse-effects-dark-en-poster.webp": {
 			"width": 868,
 			"height": 2460,
 			"bytes": 43822
 		},
-		"export-dialog-presets-publish-dark-800.webp": {
+		"export-dialog-presets-publish-dark-en-800.webp": {
 			"width": 800,
 			"height": 723,
 			"bytes": 26204
 		},
-		"export-dialog-presets-publish-dark-1400.webp": {
+		"export-dialog-presets-publish-dark-en-1400.webp": {
 			"width": 1400,
 			"height": 1266,
 			"bytes": 53534
 		},
-		"export-dialog-presets-publish-dark-2400.webp": {
+		"export-dialog-presets-publish-dark-en-2400.webp": {
 			"width": 1960,
 			"height": 1772,
 			"bytes": 83168
 		},
-		"export-dialog-presets-publish-dark-poster.webp": {
+		"export-dialog-presets-publish-dark-en-poster.webp": {
 			"width": 1400,
 			"height": 1266,
 			"bytes": 58342
 		},
-		"export-dialog-tiktok-schedule-dark-800.webp": {
+		"export-dialog-tiktok-schedule-dark-en-800.webp": {
 			"width": 800,
 			"height": 897,
 			"bytes": 31950
 		},
-		"export-dialog-tiktok-schedule-dark-1400.webp": {
+		"export-dialog-tiktok-schedule-dark-en-1400.webp": {
 			"width": 1400,
 			"height": 1570,
 			"bytes": 64412
 		},
-		"export-dialog-tiktok-schedule-dark-2400.webp": {
+		"export-dialog-tiktok-schedule-dark-en-2400.webp": {
 			"width": 1960,
 			"height": 2198,
 			"bytes": 100872
 		},
-		"export-dialog-tiktok-schedule-dark-poster.webp": {
+		"export-dialog-tiktok-schedule-dark-en-poster.webp": {
 			"width": 1400,
 			"height": 1570,
 			"bytes": 70306
 		},
-		"launch-hud-recording-bar-800.webp": {
+		"launch-hud-recording-bar-en-800.webp": {
 			"width": 800,
 			"height": 95,
 			"bytes": 4082
 		},
-		"launch-hud-recording-bar-1400.webp": {
+		"launch-hud-recording-bar-en-1400.webp": {
 			"width": 1382,
 			"height": 164,
 			"bytes": 7652
 		},
-		"launch-hud-recording-bar-2400.webp": {
+		"launch-hud-recording-bar-en-2400.webp": {
 			"width": 1382,
 			"height": 164,
 			"bytes": 7652
 		},
-		"launch-hud-recording-bar-poster.webp": {
+		"launch-hud-recording-bar-en-poster.webp": {
 			"width": 1382,
 			"height": 164,
 			"bytes": 8204
 		},
-		"settings-transcription-media-dark-800.webp": {
+		"settings-transcription-media-dark-en-800.webp": {
 			"width": 800,
 			"height": 429,
 			"bytes": 12924
 		},
-		"settings-transcription-media-dark-1400.webp": {
+		"settings-transcription-media-dark-en-1400.webp": {
 			"width": 1400,
 			"height": 751,
 			"bytes": 26330
 		},
-		"settings-transcription-media-dark-2400.webp": {
+		"settings-transcription-media-dark-en-2400.webp": {
 			"width": 1940,
 			"height": 1040,
 			"bytes": 41482
 		},
-		"settings-transcription-media-dark-poster.webp": {
+		"settings-transcription-media-dark-en-poster.webp": {
 			"width": 1400,
 			"height": 751,
 			"bytes": 28380
 		},
-		"pane-audio-voice-autoclip-dark-800.webp": {
+		"pane-audio-voice-autoclip-dark-en-800.webp": {
 			"width": 800,
 			"height": 2267,
 			"bytes": 42094
 		},
-		"pane-audio-voice-autoclip-dark-1400.webp": {
+		"pane-audio-voice-autoclip-dark-en-1400.webp": {
 			"width": 868,
 			"height": 2460,
 			"bytes": 49380
 		},
-		"pane-audio-voice-autoclip-dark-2400.webp": {
+		"pane-audio-voice-autoclip-dark-en-2400.webp": {
 			"width": 868,
 			"height": 2460,
 			"bytes": 49380
 		},
-		"pane-audio-voice-autoclip-dark-poster.webp": {
+		"pane-audio-voice-autoclip-dark-en-poster.webp": {
 			"width": 868,
 			"height": 2460,
 			"bytes": 53354
 		},
-		"editor-full-light-800.webp": {
+		"editor-full-light-en-800.webp": {
 			"width": 800,
 			"height": 500,
-			"bytes": 21562
+			"bytes": 20982
 		},
-		"editor-full-light-1400.webp": {
+		"editor-full-light-en-1400.webp": {
 			"width": 1400,
 			"height": 875,
-			"bytes": 43082
+			"bytes": 42180
 		},
-		"editor-full-light-2400.webp": {
+		"editor-full-light-en-2400.webp": {
 			"width": 2400,
 			"height": 1500,
-			"bytes": 85582
+			"bytes": 83074
 		},
-		"editor-full-light-poster.webp": {
+		"editor-full-light-en-poster.webp": {
 			"width": 1400,
 			"height": 875,
-			"bytes": 48052
+			"bytes": 46484
 		},
-		"pane-cursor-style-dark-800.webp": {
+		"pane-cursor-style-dark-en-800.webp": {
 			"width": 800,
 			"height": 2267,
 			"bytes": 43706
 		},
-		"pane-cursor-style-dark-1400.webp": {
+		"pane-cursor-style-dark-en-1400.webp": {
 			"width": 868,
 			"height": 2460,
 			"bytes": 52024
 		},
-		"pane-cursor-style-dark-2400.webp": {
+		"pane-cursor-style-dark-en-2400.webp": {
 			"width": 868,
 			"height": 2460,
 			"bytes": 52024
 		},
-		"pane-cursor-style-dark-poster.webp": {
+		"pane-cursor-style-dark-en-poster.webp": {
 			"width": 868,
 			"height": 2460,
 			"bytes": 56532
 		},
-		"settings-ai-assistant-mcp-dark-800.webp": {
+		"settings-ai-assistant-mcp-dark-en-800.webp": {
 			"width": 800,
 			"height": 718,
 			"bytes": 28814
 		},
-		"settings-ai-assistant-mcp-dark-1400.webp": {
+		"settings-ai-assistant-mcp-dark-en-1400.webp": {
 			"width": 1400,
 			"height": 1256,
 			"bytes": 58362
 		},
-		"settings-ai-assistant-mcp-dark-2400.webp": {
+		"settings-ai-assistant-mcp-dark-en-2400.webp": {
 			"width": 1940,
 			"height": 1740,
 			"bytes": 92326
 		},
-		"settings-ai-assistant-mcp-dark-poster.webp": {
+		"settings-ai-assistant-mcp-dark-en-poster.webp": {
 			"width": 1400,
 			"height": 1256,
 			"bytes": 62900
 		},
-		"launch-hud-recording-bar-2x.webp": {
+		"launch-hud-recording-bar-en-2x.webp": {
 			"width": 1382,
 			"height": 164,
 			"bytes": 7652
 		},
-		"launch-hud-recording-bar-1x.webp": {
+		"launch-hud-recording-bar-en-1x.webp": {
 			"width": 691,
 			"height": 82,
 			"bytes": 3658
 		}
-	},
-	"total": 1903290
+	}
 }

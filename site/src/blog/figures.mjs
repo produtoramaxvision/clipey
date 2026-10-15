@@ -8,12 +8,19 @@ const publicRoot = path.resolve(
 	"../../public",
 );
 
-/** Widths the screenshot pipeline writes as /shots/<name>-<width>.webp. */
+/** Widths the screenshot pipeline writes as /shots/<name>-<locale>-<width>.webp. */
 export const SHOT_WIDTHS = [800, 1400, 2400];
 
+/** The UI languages a shot may be captured in, best first for each article language (the app starts in English). */
+export const SHOT_LOCALES = {
+	"pt-BR": ["pt-BR", "en"],
+	en: ["en"],
+	es: ["es", "en"],
+};
+
 /**
- * The real app screenshot that shows the UI area an article walks through, with the size of the source capture
- * (the app shots are English UI). Articles about a screen that has no capture have no entry.
+ * The real app screenshot that shows the UI area an article walks through, with the size of the source capture.
+ * Articles about a screen that has no capture have no entry.
  */
 export const ARTICLE_FIGURES = {
 	"clipey-1-15-novidades": {
@@ -170,12 +177,13 @@ export const ARTICLE_FIGURES = {
 	},
 };
 
-const shotExists = (name, width) =>
-	fs.existsSync(path.join(publicRoot, "shots", `${name}-${width}.webp`));
+const shotExists = (file) =>
+	fs.existsSync(path.join(publicRoot, "shots", file));
 
 /**
- * The `<figure>` of an article, or "" when it has none or the screenshot files are not there yet.
- * `exists` is injectable so tests do not depend on the public folder.
+ * The `<figure>` of an article, or "" when it has none or the screenshot files are not there yet. The shot is in the
+ * article's UI language when it was captured in it, in English otherwise; one figure never mixes languages.
+ * `exists` (a file name under /shots/) is injectable so tests do not depend on the public folder.
  */
 export function articleFigure(
 	translationKey,
@@ -185,9 +193,13 @@ export function articleFigure(
 ) {
 	const figure = ARTICLE_FIGURES[translationKey];
 	if (!figure) return "";
-	const widths = SHOT_WIDTHS.filter((width) => exists(figure.shot, width));
-	if (!widths.length) return "";
-	const src = (width) => `/shots/${figure.shot}-${width}.webp`;
+	const fileOf = (locale, width) => `${figure.shot}-${locale}-${width}.webp`;
+	const locale = SHOT_LOCALES[lang].find((code) =>
+		SHOT_WIDTHS.some((width) => exists(fileOf(code, width))),
+	);
+	if (!locale) return "";
+	const widths = SHOT_WIDTHS.filter((width) => exists(fileOf(locale, width)));
+	const src = (width) => `/shots/${fileOf(locale, width)}`;
 	const tall = figure.height > figure.width;
 	const fallback = widths.includes(1400) ? 1400 : widths[0];
 	const height = Math.round((fallback * figure.height) / figure.width);

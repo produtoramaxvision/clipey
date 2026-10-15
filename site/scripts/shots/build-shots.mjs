@@ -1,26 +1,36 @@
 /**
- * Builds the product screenshots of the site from the real 2x app captures: the preview card of full editor captures is
- * replaced by a neutral placeholder, then every shot is exported as WebP at fixed widths plus a poster, and the
- * recording bar as a transparent overlay. Same inputs, same bytes.
+ * Builds the product screenshots of the site from the real 2x app captures, once per UI language: the preview card
+ * of full editor captures is replaced by a neutral placeholder labelled in that language, then every shot is exported
+ * as WebP at fixed widths plus a poster, and the recording bar as a transparent overlay. Same inputs, same bytes.
  *
- * Usage: SHOTS_SRC=<folder with the *@2x.png captures> npm run shots
+ * Usage: SHOTS_SRC=<folder> npm run shots, where <folder>/<locale>/ holds the *@2x.png captures of that UI language
+ * (pt-BR, en, es). Captures directly in <folder> are the English UI. A locale without captures is reported and skipped.
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import {
+	existsSync,
+	mkdirSync,
+	readdirSync,
+	readFileSync,
+	writeFileSync,
+} from "node:fs";
 import path from "node:path";
 import encodeWebp from "@jsquash/webp/encode.js";
 import { PNG } from "pngjs";
 import { ensureWebp } from "../blog-images/common.mjs";
 import {
 	HUD,
-	LABEL_FILE,
+	LOCALE_BUDGET,
+	LOCALES,
+	labelFile,
+	localeCaptures,
 	OUT_DIR,
 	PLACEHOLDER,
 	POSTER_BUDGET,
 	POSTER_QUALITIES,
 	POSTER_WIDTH,
 	QUALITY,
-	SHOTS,
-	TOTAL_BUDGET,
+	ROOT_LOCALE,
+	shotFileName,
 	WIDTHS,
 } from "./config.mjs";
 import {
@@ -89,43 +99,80 @@ function hidePreview(image, label) {
 	return rect;
 }
 
+const pngs = (folder) =>
+	existsSync(folder)
+		? readdirSync(folder).filter((file) => file.endsWith("@2x.png"))
+		: [];
+
 mkdirSync(OUT_DIR, { recursive: true });
 await ensureWebp();
-const label = readPng(LABEL_FILE);
 const previews = {};
+const locales = {};
+const skipped = [];
 
-for (const shot of SHOTS) {
-	const image = readPng(path.join(source, `${shot.name}@2x.png`));
-	if (shot.preview) previews[shot.name] = hidePreview(image, label);
-	for (const width of WIDTHS) {
-		const out = sized(image, width);
-		save(`${shot.name}-${width}.webp`, await webp(out, QUALITY), out);
+for (const locale of LOCALES) {
+	const localeDir = path.join(source, locale);
+	let folder = localeDir;
+	let shots = localeCaptures(locale, pngs(localeDir));
+	if (!shots && locale === ROOT_LOCALE) {
+		folder = source;
+		shots = localeCaptures(locale, pngs(source));
 	}
-	const poster = sized(image, POSTER_WIDTH);
-	let posterBytes = null;
-	for (const quality of POSTER_QUALITIES) {
-		posterBytes = await webp(poster, quality);
-		if (posterBytes.length <= POSTER_BUDGET) break;
+	if (!shots) {
+		skipped.push(locale);
+		continue;
 	}
-	if (posterBytes.length > POSTER_BUDGET)
-		throw new Error(`${shot.name} poster is ${posterBytes.length} bytes`);
-	save(`${shot.name}-poster.webp`, posterBytes, poster);
+	const label = readPng(labelFile(locale));
+	const first = outputs.length;
+	for (const shot of shots) {
+		const image = readPng(path.join(folder, `${shot.name}@2x.png`));
+		if (shot.preview)
+			previews[`${shot.name}-${locale}`] = hidePreview(image, label);
+		for (const width of WIDTHS) {
+			const out = sized(image, width);
+			save(
+				shotFileName(shot.name, locale, width),
+				await webp(out, QUALITY),
+				out,
+			);
+		}
+		const poster = sized(image, POSTER_WIDTH);
+		let posterBytes = null;
+		for (const quality of POSTER_QUALITIES) {
+			posterBytes = await webp(poster, quality);
+			if (posterBytes.length <= POSTER_BUDGET) break;
+		}
+		if (posterBytes.length > POSTER_BUDGET)
+			throw new Error(
+				`${shot.name} ${locale} poster is ${posterBytes.length} bytes`,
+			);
+		save(shotFileName(shot.name, locale, "poster"), posterBytes, poster);
+	}
+
+	const hud2x = readPng(path.join(folder, `${HUD}@2x.png`));
+	if (!opaqueBounds(hud2x))
+		throw new Error(`the ${locale} recording bar capture is empty`);
+	const hud1x = sized(hud2x, Math.round(hud2x.width / 2));
+	save(shotFileName(HUD, locale, "2x"), await webp(hud2x, QUALITY), hud2x);
+	save(shotFileName(HUD, locale, "1x"), await webp(hud1x, QUALITY), hud1x);
+
+	const total = outputs
+		.slice(first)
+		.reduce((sum, output) => sum + output.bytes, 0);
+	if (total > LOCALE_BUDGET)
+		throw new Error(
+			`the ${locale} shots weigh ${total} bytes, over ${LOCALE_BUDGET}`,
+		);
+	locales[locale] = { total };
 }
 
-const hud2x = readPng(path.join(source, `${HUD}@2x.png`));
-if (!opaqueBounds(hud2x)) throw new Error("the recording bar capture is empty");
-const hud1x = sized(hud2x, Math.round(hud2x.width / 2));
-save(`${HUD}-2x.webp`, await webp(hud2x, QUALITY), hud2x);
-save(`${HUD}-1x.webp`, await webp(hud1x, QUALITY), hud1x);
-
-const total = outputs.reduce((sum, output) => sum + output.bytes, 0);
-if (total > TOTAL_BUDGET)
-	throw new Error(`the shots weigh ${total} bytes, over ${TOTAL_BUDGET}`);
+if (!Object.keys(locales).length) throw new Error(`no captures in ${source}`);
 
 writeFileSync(
 	path.join(OUT_DIR, "manifest.json"),
 	`${JSON.stringify(
 		{
+			locales,
 			previews,
 			files: Object.fromEntries(
 				outputs.map(({ file, width, height, bytes }) => [
@@ -133,7 +180,6 @@ writeFileSync(
 					{ width, height, bytes },
 				]),
 			),
-			total,
 		},
 		null,
 		"\t",
@@ -142,4 +188,8 @@ writeFileSync(
 for (const { file, width, height, bytes } of outputs)
 	console.log(`${file}: ${width}x${height}, ${bytes} B`);
 console.log(`preview rectangles: ${JSON.stringify(previews)}`);
-console.log(`total: ${total} B`);
+console.log(`locales: ${JSON.stringify(locales)}`);
+if (skipped.length)
+	console.log(
+		`not captured yet (pages fall back to ${ROOT_LOCALE}): ${skipped.join(", ")}`,
+	);

@@ -94,7 +94,7 @@ describe("article figures", () => {
 		);
 		for (const width of SHOT_WIDTHS)
 			expect(html).toContain(
-				`/shots/editor-full-speed-zoom-lanes-dark-${width}.webp ${width}w`,
+				`/shots/editor-full-speed-zoom-lanes-dark-en-${width}.webp ${width}w`,
 			);
 		expect(html).toContain('width="1400" height="875"');
 		expect(html).toContain('loading="lazy"');
@@ -104,10 +104,24 @@ describe("article figures", () => {
 			"efeitos-de-mouse-cliques-halo-spotlight",
 			"es",
 			"c",
-			(_name, width) => width === 800,
+			(file) => file === "pane-mouse-effects-dark-en-800.webp",
 		);
 		expect(tall).toContain('class="shot shot--tall"');
-		expect(tall).toContain('src="/shots/pane-mouse-effects-dark-800.webp"');
+		expect(tall).toContain('src="/shots/pane-mouse-effects-dark-en-800.webp"');
+	});
+
+	it("shows a figure in the article's UI language when it was captured, never mixing languages", () => {
+		const own = articleFigure(
+			"efeitos-de-mouse-cliques-halo-spotlight",
+			"es",
+			"c",
+			(file) => /-(es|en)-\d+\.webp$/.test(file),
+		);
+		expect(own).toContain("pane-mouse-effects-dark-es-");
+		expect(own).not.toContain("-en-");
+		expect(articleFigure("clipey-1-15-novidades", "es", "c", () => false)).toBe(
+			"",
+		);
 	});
 });
 

@@ -8,9 +8,12 @@ import {
 import { getCompletePosts } from "../src/blog/content.mjs";
 import { STORY } from "../src/landing-copy.mjs";
 import {
+	pageShots,
 	readShotManifest,
+	SHOT_FALLBACK_LOCALE,
 	SHOT_WIDTHS,
 	shotImg,
+	shotLocale,
 	shotSet,
 } from "../src/landing-shots.mjs";
 import { HERO_SHOT, STORY_SECTIONS } from "../src/landing-story.mjs";
@@ -29,45 +32,72 @@ const main = html.slice(html.indexOf("<main"), html.indexOf("</main>"));
 const copy = STORY["pt-BR"];
 
 const manifest = {
+	locales: { en: { total: 1 }, es: { total: 1 } },
 	files: {
-		"wide-poster.webp": { width: 1400, height: 875 },
-		"wide-800.webp": { width: 800, height: 500 },
-		"wide-1400.webp": { width: 1400, height: 875 },
-		"wide-2400.webp": { width: 2400, height: 1500 },
-		"narrow-poster.webp": { width: 868, height: 2460 },
-		"narrow-800.webp": { width: 800, height: 2267 },
-		"narrow-1400.webp": { width: 868, height: 2460 },
-		"narrow-2400.webp": { width: 868, height: 2460 },
+		"wide-en-poster.webp": { width: 1400, height: 875 },
+		"wide-en-800.webp": { width: 800, height: 500 },
+		"wide-en-1400.webp": { width: 1400, height: 875 },
+		"wide-en-2400.webp": { width: 2400, height: 1500 },
+		"wide-es-poster.webp": { width: 1400, height: 875 },
+		"wide-es-800.webp": { width: 800, height: 500 },
+		"narrow-en-poster.webp": { width: 868, height: 2460 },
+		"narrow-en-800.webp": { width: 800, height: 2267 },
+		"narrow-en-1400.webp": { width: 868, height: 2460 },
+		"narrow-en-2400.webp": { width: 868, height: 2460 },
 	},
 };
 
 describe("landing shots", () => {
 	it("lists every width of a wide shot and reserves the poster box", () => {
-		expect(shotSet(manifest, "wide")).toEqual({
-			src: "/shots/wide-poster.webp",
+		expect(shotSet(manifest, "wide", "en")).toEqual({
+			src: "/shots/wide-en-poster.webp",
+			small: "/shots/wide-en-800.webp",
 			srcset:
-				"/shots/wide-800.webp 800w, /shots/wide-1400.webp 1400w, /shots/wide-2400.webp 2400w",
+				"/shots/wide-en-800.webp 800w, /shots/wide-en-1400.webp 1400w, /shots/wide-en-2400.webp 2400w",
 			width: 1400,
 			height: 875,
 		});
 	});
 
 	it("lists a capped width once when the source is narrower than 2400", () => {
-		expect(shotSet(manifest, "narrow").srcset).toBe(
-			"/shots/narrow-800.webp 800w, /shots/narrow-1400.webp 868w",
+		expect(shotSet(manifest, "narrow", "en").srcset).toBe(
+			"/shots/narrow-en-800.webp 800w, /shots/narrow-en-1400.webp 868w",
 		);
 	});
 
+	it("uses the page's UI language when it was captured and English otherwise", () => {
+		expect(shotLocale(manifest, "es")).toBe("es");
+		expect(shotLocale(manifest, "pt-BR")).toBe(SHOT_FALLBACK_LOCALE);
+		expect(shotSet(manifest, "wide", "es").src).toBe(
+			"/shots/wide-es-poster.webp",
+		);
+		expect(shotSet(manifest, "wide", "pt-BR").src).toBe(
+			"/shots/wide-en-poster.webp",
+		);
+		expect(
+			pageShots(manifest, "pt-BR").img("wide", { sizes: "1vw" }),
+		).toContain('src="/shots/wide-en-poster.webp"');
+	});
+
 	it("fails loudly for a shot the pipeline did not produce", () => {
-		expect(() => shotSet(manifest, "missing")).toThrow(/missing/);
+		expect(() => shotSet(manifest, "missing", "en")).toThrow(/missing/);
+		expect(() => shotSet(manifest, "narrow", "es")).toThrow(/narrow-es/);
 	});
 
 	it("is lazy below the fold and high priority for the hero", () => {
-		const lazy = shotImg(manifest, "wide", { alt: "A & B", sizes: "100vw" });
+		const lazy = shotImg(manifest, "wide", {
+			lang: "en",
+			alt: "A & B",
+			sizes: "100vw",
+		});
 		expect(lazy).toContain('loading="lazy"');
 		expect(lazy).toContain('alt="A &amp; B"');
 		expect(lazy).toContain('width="1400" height="875"');
-		const hero = shotImg(manifest, "wide", { sizes: "100vw", priority: true });
+		const hero = shotImg(manifest, "wide", {
+			lang: "en",
+			sizes: "100vw",
+			priority: true,
+		});
 		expect(hero).toContain('fetchpriority="high"');
 		expect(hero).not.toContain("loading=");
 	});
@@ -75,12 +105,18 @@ describe("landing shots", () => {
 	it("every shot the page uses exists in the real manifest", () => {
 		const real = readShotManifest();
 		const names = new Set(
-			[...html.matchAll(/\/shots\/([a-z0-9-]+?)-(?:poster|\d+)\.webp/g)].map(
-				(match) => match[1],
-			),
+			[
+				...html.matchAll(
+					/\/shots\/([a-z0-9-]+?)-(pt-BR|en|es)-(?:poster|\d+)\.webp/g,
+				),
+			].map((match) => `${match[1]}|${match[2]}`),
 		);
 		expect(names.size).toBeGreaterThan(5);
-		for (const name of names) expect(() => shotSet(real, name)).not.toThrow();
+		for (const entry of names) {
+			const [name, locale] = entry.split("|");
+			expect(locale).toBe(shotLocale(real, "pt-BR"));
+			expect(() => shotSet(real, name, "pt-BR")).not.toThrow();
+		}
 		expect(SHOT_WIDTHS).toEqual([800, 1400, 2400]);
 	});
 });
@@ -118,12 +154,13 @@ describe("v2 pt-BR landing structure", () => {
 	});
 
 	it("preloads the hero poster with its srcset and fetches it first", () => {
+		const hero = `${HERO_SHOT}-${shotLocale(readShotManifest(), "pt-BR")}`;
 		expect(html).toContain(
-			`<link rel="preload" as="image" href="/shots/${HERO_SHOT}-poster.webp" imagesrcset="/shots/${HERO_SHOT}-800.webp 800w,`,
+			`<link rel="preload" as="image" href="/shots/${hero}-poster.webp" imagesrcset="/shots/${hero}-800.webp 800w,`,
 		);
 		expect(main).toMatch(
 			new RegExp(
-				`<img class="hero-img" src="/shots/${HERO_SHOT}-poster.webp"[^>]*fetchpriority="high"`,
+				`<img class="hero-img" src="/shots/${hero}-poster.webp"[^>]*fetchpriority="high"`,
 			),
 		);
 	});

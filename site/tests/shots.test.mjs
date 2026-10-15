@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vitest";
 import {
+	LOCALES,
+	labelFile,
+	localeCaptures,
+	ROOT_LOCALE,
+	SHOTS,
+	shotFileName,
+} from "../scripts/shots/config.mjs";
+import {
 	CARD_RADIUS,
 	composite,
 	findPreviewRect,
@@ -190,5 +198,32 @@ describe("resize math", () => {
 		fill(image, { x: 2, y: 1, width: 3, height: 2 }, [9, 9, 9, 255]);
 		expect(opaqueBounds(image)).toEqual({ x: 2, y: 1, width: 3, height: 2 });
 		expect(opaqueBounds(blank(2, 2, [0, 0, 0, 0]))).toBeNull();
+	});
+});
+
+describe("shot locales", () => {
+	const all = SHOTS.map((shot) => `${shot.name}@2x.png`);
+
+	it("names every output and label after its UI language", () => {
+		expect(LOCALES).toEqual(["pt-BR", "en", "es"]);
+		expect(LOCALES).toContain(ROOT_LOCALE);
+		expect(shotFileName("timeline", "pt-BR", 800)).toBe(
+			"timeline-pt-BR-800.webp",
+		);
+		expect(shotFileName("timeline", "es", "poster")).toBe(
+			"timeline-es-poster.webp",
+		);
+		expect(labelFile("es")).toMatch(/placeholder-label-es@2x\.png$/);
+	});
+
+	it("skips a language with no captures and accepts a complete set", () => {
+		expect(localeCaptures("es", ["notes.txt"])).toBeNull();
+		expect(localeCaptures("es", [...all, "extra.png"])).toBe(SHOTS);
+	});
+
+	it("refuses a partial set so one page never mixes UI languages", () => {
+		expect(() => localeCaptures("pt-BR", all.slice(1))).toThrow(
+			`pt-BR captures are incomplete, missing: ${SHOTS[0].name}`,
+		);
 	});
 });
