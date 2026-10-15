@@ -83,6 +83,15 @@ function createRenderer(headings) {
 	};
 }
 
+/** Renders an article body with the guarded renderer (safe links/images, non-empty alt text); H2s are pushed into `headings`. */
+export function renderMarkdown(body, headings = []) {
+	return new Marked({
+		gfm: true,
+		breaks: false,
+		renderer: createRenderer(headings),
+	}).parse(body);
+}
+
 function parsePost(file, lang) {
 	const raw = fs.readFileSync(file, "utf8");
 	const match = raw.match(/^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/);
@@ -121,11 +130,7 @@ function parsePost(file, lang) {
 	data.updated = data.updated.replaceAll("{{RELEASE_DATE}}", RELEASE_DATE);
 	const body = match[2].replaceAll("{{RELEASE_DATE}}", RELEASE_DATE);
 	const headings = [];
-	const html = new Marked({
-		gfm: true,
-		breaks: false,
-		renderer: createRenderer(headings),
-	}).parse(body);
+	const html = renderMarkdown(body, headings);
 	if (/<script\b|javascript:/i.test(html))
 		throw new Error(`${file}: unsafe Markdown output`);
 	return {
