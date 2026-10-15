@@ -1,5 +1,5 @@
 ---
-title: "Como mostrar os botões do controle em uma gravação de gameplay"
+title: "Como mostrar comandos do controle no gameplay"
 description: "Entenda a captura e a sobreposição de gamepad previstas no Clipey 1.15, os estilos de exibição e como alinhar os comandos ao vídeo."
 slug: "overlay-de-gamepad-para-gameplay"
 lang: "pt-BR"
