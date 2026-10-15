@@ -4,8 +4,8 @@
  */
 
 /**
- * The v2 landing, "the site is a Clipey recording": a title bar, a hero told as a timeline, one section per chapter
- * and the export at the end. A language listed here renders the v2 page; the others keep the LANDING page below.
+ * The landing, "the site is a Clipey recording": a title bar, a hero told as a timeline, one section per chapter and
+ * the export at the end, in every site language. The translations make the same claims as pt-BR, worded naturally.
  */
 export const STORY = {
 	"pt-BR": {
@@ -14,9 +14,9 @@ export const STORY = {
 			recording: "Gravando",
 			chaptersAria: "Capítulos",
 			chapters: [
-				["gravar", "Gravar"],
-				["editar", "Editar"],
-				["publicar", "Publicar"],
+				["record", "Gravar"],
+				["clicks", "Editar"],
+				["publish", "Publicar"],
 			],
 			blog: "Blog",
 			export: "Exportar o Clipey",
@@ -193,127 +193,169 @@ export const STORY = {
 			],
 		],
 	},
-};
-
-export const LANDING = {
 	en: {
-		eyebrow: "Screen video, without the friction",
-		hero: "From the first click to a finished video.",
-		sub: "Record your screen, refine the edit and publish on your terms. A Windows video studio that keeps your files on your computer.",
-		download: "Download for Windows",
-		news: "See what’s new in 1.15",
-		note: ["Windows 10 and 11", "Free to download", "No usage telemetry"],
-		frameLabel: "Clipey editor preview",
-		frameCaption:
-			"Clipey 1.15 editor: recorded screen, timeline and captions in one project.",
-		framePending: "The editor capture goes here.",
-		sections: {
-			features: {
-				tc: "00:12",
-				kicker: "Features",
-				title: "One recording. A finished video.",
-				sub: "Capture clearly, refine the details and export without breaking your flow.",
-			},
-			ai: {
-				tc: "00:34",
-				kicker: "AI with you",
-				title: "AI that helps without taking over.",
-				sub: "Editable suggestions to help you reach the cut you want.",
-			},
-			publish: {
-				tc: "00:56",
-				kicker: "Publish",
-				title: "From edit to publish, on your terms.",
-				sub: "Prepare the details and choose when and where to publish.",
-			},
-			privacy: {
-				tc: "01:18",
-				kicker: "Privacy",
-				title: "Your work stays yours.",
-				sub: "Projects, recordings and local transcriptions stay on your computer. Clipey does not collect usage telemetry. Features that use external providers send them only the content needed, under your configuration.",
-				link: "How privacy works",
-				link2: "Data deletion",
-			},
-			requirements: {
-				tc: "01:40",
-				kicker: "Requirements",
-				title: "Built for Windows.",
-				sub: "Windows 10 or 11. Screen capture requires Windows 10 version 2004 (build 19041) or later. Video recording and editing benefit from a compatible GPU; performance varies by project and hardware.",
-			},
-			blog: {
-				tc: "02:02",
-				kicker: "Blog",
-				title: "Guides to get the most out of 1.15.",
-				sub: "Short tutorials that use the real control names.",
-				link: "See all articles",
-			},
-			faq: {
-				tc: "02:24",
-				kicker: "Questions",
-				title: "Frequently asked questions",
-			},
-			download: {
-				tc: "02:46",
-				kicker: "Clipey 1.15",
-				title: "Your next video starts here.",
-			},
+		bar: {
+			host: "clipey.com.br",
+			recording: "Recording",
+			chaptersAria: "Chapters",
+			chapters: [
+				["record", "Record"],
+				["clicks", "Edit"],
+				["publish", "Publish"],
+			],
+			blog: "Blog",
+			export: "Export Clipey",
 		},
-		features: [
-			[
-				"Record",
-				"Capture your screen and cursor on Windows. Keep cursor movement available for editing.",
+		hero: {
+			lines: [
+				["clip", "00:00:00", "Clip", "Record your screen."],
+				["zoom", "00:02:14", "Zoom 1.8×", "Clipey edits."],
+				["speed", "00:07:02", "Export", "You publish."],
 			],
-			["Edit", "Adjust cuts, zooms and captions on a visual timeline."],
+			sub: "A screen recorder and editor for Windows. Silence cuts, a zoom on every click, captions and publishing to YouTube, TikTok, Instagram and Facebook, all in one app.",
+			download: "Download for Windows",
+			platform: "Windows 10 and 11 · 64-bit",
+			noAccount: "no account needed to record and edit",
+			imageAlt:
+				"Clipey timeline with the zoom regions created from your clicks, in blue",
+			caption: "Real Clipey 1.15 timeline",
+			zoomTag: "Zoom 1.8× · auto on click",
+			drawNote: "drawn live, Ctrl + Shift + D",
+		},
+		frames: [
 			[
-				"Caption",
-				"Transcribe on your device and review captions before export.",
+				"00:00",
+				"The raw recording",
+				"The real Clipey timeline, standing still. Nothing has happened yet.",
 			],
-			["Export", "Prepare your video and check the final file before sharing."],
+			[
+				"00:02",
+				"The click",
+				"A green ripple shows where the cursor clicked, in the left button's colour.",
+			],
+			[
+				"00:04",
+				"The automatic zoom",
+				"The picture zooms 1.8× into the area of the click.",
+			],
+			[
+				"00:06",
+				"The silence goes",
+				"The stretch with no speech is marked on the timeline and left out of the cut.",
+			],
+			[
+				"00:08",
+				"The caption lights up",
+				"The transcript caption appears with its keyword highlighted.",
+			],
+			[
+				"00:10",
+				"It turns vertical",
+				"The frame goes 9:16, ready for Shorts, Reels and TikTok.",
+			],
 		],
-		ai: [
-			[
-				"Assisted editing",
-				"Ask the agent for cuts, zooms and removal of pauses, then review the result on the timeline.",
+		storyAria: "What Clipey does to a recording, frame by frame",
+		cutTag: "Silence 1.8 s · cut",
+		captionText: ["click", "Export"],
+		timeline: {
+			ticks: ["00:00", "00:30", "01:00", "01:30", "02:00", "02:30", "03:00"],
+			chapters: [
+				["clip", "Record"],
+				["zoom", "Clicks and zoom"],
+				["annotation", "Overlays"],
+				["speed", "Vertical"],
+				["clip", "Publish"],
 			],
-			[
-				"Short clips",
-				"Auto Clip finds 15 to 90 second moments and shows a score for each so you can choose.",
+		},
+		record: {
+			tc: "00:00:30 · Record",
+			title: ["One bar.", "No project to set up first."],
+			text: "Pick a screen or a window, turn on the camera and microphone, and record. Clipey keeps track of the cursor, every mouse button, scrolling and keystrokes, so the edit can use them later.",
+			imageAlt: "Clipey recording bar with the timer, pause and stop",
+			caption: "The real recording bar, as it sits over your desktop",
+		},
+		clicks: {
+			tc: "00:01:00 · Clicks and zoom",
+			title: "Every click became a zoom. You marked none of them.",
+			text: "The blue pills are zooms made from your clicks. Drag them, delete them or change the level of each one on the timeline.",
+			imageAlt:
+				"Clipey editor with the timeline, zoom and speed regions and the composition panel",
+			caption:
+				"Real editor · zoom, speed, annotation, trim and audio on separate lanes",
+		},
+		overlays: {
+			tc: "00:01:30 · Overlays",
+			title: "Click in this area.",
+			text: "Your cursor already has Clipey's effects on it: one style for each mouse button. Press some keys and they show up just as they would in the video.",
+			stageLabel: "Demo area: click with any mouse button or press some keys",
+			imageAlt:
+				"Clipey's Mouse effects panel: click effect, colour per button, halo and spotlight",
+			caption: "Real panel · Mouse effects",
+		},
+		vertical: {
+			tc: "00:02:00 · Vertical",
+			title: ["16:9 in.", "9:16 out."],
+			text: "Auto Clip suggests short moments with a score so you can choose, and reframing follows the face in vertical. The preset shows the resolution, bitrate and estimated size before you export.",
+			captionText: ["captions in the", "right place"],
+			wideAlt: "A 16:9 editor frame with the vertical area marked",
+			tallAlt: "The same frame cropped to 9:16 with a caption",
+			exportAlt: "Export dialog with presets, estimated size and publishing",
+			scheduleAlt: "Export dialog with the TikTok preset and the Schedule tab",
+		},
+		publish: {
+			tc: "00:02:30 · Publish",
+			title: "YouTube, TikTok, Instagram and Facebook.",
+			titleMuted: "Now, or whenever you choose.",
+			notes: [
+				[
+					"Publishing kit",
+					"A suggested title, description and hashtags for each platform, within each one's character limits.",
+				],
+				[
+					"Scheduling",
+					"The queue runs on your PC while Clipey is open or in the tray. If the time passes while the PC is off, the post is marked as missed and does not go out on its own.",
+				],
+				[
+					"Accounts",
+					"Connect each platform once through your browser. Clipey shows which accounts are connected.",
+				],
 			],
-			[
-				"Voice with the cost in view",
-				"See an estimated cost before generating cloud voice and set a per-session limit.",
-			],
-			[
-				"MCP agents",
-				"Connect compatible tools and request editor actions with your approval.",
-			],
-		],
-		publish: [
-			[
-				"Scheduling",
-				"Schedule posts to YouTube, TikTok and Instagram. Clipey must be running or in the system tray at the scheduled time.",
-			],
-			[
-				"Publishing kit",
-				"Generate a title, description and hashtags for each platform from your transcript, within each platform’s limits.",
-			],
-			[
-				"Export presets",
-				"Pick presets for TikTok, YouTube Shorts, Instagram Reels and YouTube, with a size estimate before you export.",
-			],
-			[
-				"Verification",
-				"After an MP4 export, Clipey checks duration, video, audio and decode errors and warns you if something is off.",
-			],
-		],
+		},
+		local: {
+			tc: "00:03:00 · Your PC",
+			title: "Transcription can run entirely on your computer.",
+			text: "No usage telemetry. Cloud services are optional and use your own key; cloud voice shows the estimated cost before it generates anything.",
+			imageAlt: "Clipey transcription and media settings",
+			caption: "Real settings · Transcription and media",
+			privacyLink: "How privacy works",
+			deletionLink: "Data deletion",
+		},
+		faqTc: "00:03:15 · Questions",
+		faqTitle: "Frequently asked questions",
+		export: {
+			tc: "00:03:30 · End of recording",
+			title: "Export.",
+			download: "Download Clipey for Windows",
+			platform: "Windows 10 and 11 · 64-bit",
+			version: "Version",
+			pricing:
+				"The download is free. Cloud features use your own API key or credits.",
+			requirements:
+				"Screen capture requires Windows 10 version 2004 (build 19041) or later.",
+		},
+		footer: {
+			blog: "Blog",
+			contact: "Contact",
+			releases: "Downloadable releases",
+		},
 		faq: [
 			[
 				"Is Clipey free?",
-				"Yes. The app is free to download. Some features may rely on external services you configure.",
+				"The download is free. Cloud features, such as voice and AI models, use your own API key or credits.",
 			],
 			[
-				"Which systems does it support?",
-				"Clipey 1.15 is for Windows 10 and 11. Capture features use Windows APIs.",
+				"Which systems does it run on?",
+				"Clipey 1.15 is for Windows 10 and 11, 64-bit. Capture features use Windows APIs.",
 			],
 			[
 				"Do I need an account?",
@@ -325,146 +367,185 @@ export const LANDING = {
 			],
 			[
 				"Does transcription work offline?",
-				"Local transcription uses models downloaded to your computer. Initial setup may require downloading model files.",
-			],
-			[
-				"Can I review AI suggestions?",
-				"Yes. Editing suggestions can be changed before export.",
+				"Local transcription uses models downloaded to your computer. The first setup may require downloading the model files.",
 			],
 			[
 				"Will scheduled posts publish when the app is closed?",
 				"No. Clipey or its tray icon must be running at the scheduled time.",
 			],
-			[
-				"Where can I find system requirements?",
-				"Capture requires Windows 10 build 19041 or later. Performance also depends on your GPU and project resolution.",
-			],
 		],
 	},
 	es: {
-		eyebrow: "Video de pantalla, sin fricción",
-		hero: "Del primer clic al video terminado.",
-		sub: "Graba tu pantalla, ajusta la edición y publica a tu manera. Un estudio de video para Windows que mantiene tus archivos en tu computadora.",
-		download: "Descargar para Windows",
-		news: "Ver novedades de la 1.15",
-		note: ["Windows 10 y 11", "Descarga gratuita", "Sin telemetría de uso"],
-		frameLabel: "Vista previa del editor de Clipey",
-		frameCaption:
-			"Editor de Clipey 1.15: pantalla grabada, línea de tiempo y subtítulos en un mismo proyecto.",
-		framePending: "Aquí va la captura del editor.",
-		sections: {
-			features: {
-				tc: "00:12",
-				kicker: "Funciones",
-				title: "Una grabación. Un video listo.",
-				sub: "Captura con claridad, ajusta los detalles y exporta sin salir de tu flujo.",
-			},
-			ai: {
-				tc: "00:34",
-				kicker: "IA contigo",
-				title: "IA que ayuda sin tomar el control.",
-				sub: "Sugerencias editables para llegar al corte que buscas.",
-			},
-			publish: {
-				tc: "00:56",
-				kicker: "Publicar",
-				title: "De la edición a la publicación, a tu manera.",
-				sub: "Prepara los detalles y elige cuándo y dónde publicar.",
-			},
-			privacy: {
-				tc: "01:18",
-				kicker: "Privacidad",
-				title: "Tu trabajo sigue siendo tuyo.",
-				sub: "Los proyectos, las grabaciones y las transcripciones locales permanecen en tu computadora. Clipey no recopila telemetría de uso. Las funciones que usan proveedores externos solo les envían el contenido necesario, según tu configuración.",
-				link: "Cómo funciona la privacidad",
-				link2: "Eliminación de datos (EN)",
-			},
-			requirements: {
-				tc: "01:40",
-				kicker: "Requisitos",
-				title: "Diseñado para Windows.",
-				sub: "Windows 10 u 11. La captura de pantalla requiere Windows 10 versión 2004 (compilación 19041) o posterior. La grabación y edición de video se benefician de una GPU compatible; el rendimiento depende del proyecto y del equipo.",
-			},
-			blog: {
-				tc: "02:02",
-				kicker: "Blog",
-				title: "Guías para sacar partido a la 1.15.",
-				sub: "Tutoriales breves con los nombres reales de los controles.",
-				link: "Ver todos los artículos",
-			},
-			faq: { tc: "02:24", kicker: "Preguntas", title: "Preguntas frecuentes" },
-			download: {
-				tc: "02:46",
-				kicker: "Clipey 1.15",
-				title: "Tu próximo video empieza aquí.",
-			},
+		bar: {
+			host: "clipey.com.br",
+			recording: "Grabando",
+			chaptersAria: "Capítulos",
+			chapters: [
+				["record", "Grabar"],
+				["clicks", "Editar"],
+				["publish", "Publicar"],
+			],
+			blog: "Blog",
+			export: "Exportar Clipey",
 		},
-		features: [
+		hero: {
+			lines: [
+				["clip", "00:00:00", "Clip", "Graba la pantalla."],
+				["zoom", "00:02:14", "Zoom 1,8×", "Clipey edita."],
+				["speed", "00:07:02", "Exportar", "Tú publicas."],
+			],
+			sub: "Grabador y editor de pantalla para Windows. Cortes de silencio, zoom en cada clic, subtítulos y publicación en YouTube, TikTok, Instagram y Facebook, en la misma app.",
+			download: "Descargar para Windows",
+			platform: "Windows 10 y 11 · 64 bits",
+			noAccount: "sin cuenta para grabar y editar",
+			imageAlt:
+				"Línea de tiempo de Clipey con las regiones de zoom creadas a partir de los clics, en azul",
+			caption: "Línea de tiempo real de Clipey 1.15",
+			zoomTag: "Zoom 1,8× · auto al hacer clic",
+			drawNote: "dibujado en vivo, Ctrl + Shift + D",
+		},
+		frames: [
 			[
-				"Graba",
-				"Captura la pantalla y el cursor en Windows. Conserva los movimientos para editarlos después.",
+				"00:00",
+				"La grabación en bruto",
+				"La línea de tiempo real de Clipey, quieta. Todavía no pasó nada.",
 			],
 			[
-				"Edita",
-				"Ajusta cortes, zooms y subtítulos en una línea de tiempo visual.",
+				"00:02",
+				"El clic",
+				"La onda verde aparece donde el cursor hizo clic, con el color del botón izquierdo.",
 			],
 			[
-				"Subtitula",
-				"Transcribe en tu dispositivo y revisa los subtítulos antes de exportar.",
+				"00:04",
+				"El zoom automático",
+				"La imagen se acerca 1,8× a la zona del clic.",
 			],
 			[
-				"Exporta",
-				"Prepara el video y comprueba el archivo final antes de compartirlo.",
-			],
-		],
-		ai: [
-			[
-				"Edición asistida",
-				"Pide al agente cortes, zooms y la eliminación de pausas, y revisa el resultado en la línea de tiempo.",
+				"00:06",
+				"El silencio desaparece",
+				"El tramo sin voz queda marcado en la línea de tiempo y sale del corte.",
 			],
 			[
-				"Clips cortos",
-				"Auto Clip encuentra momentos de 15 a 90 segundos y muestra una puntuación para que elijas.",
+				"00:08",
+				"El subtítulo se enciende",
+				"El subtítulo de la transcripción aparece con la palabra clave resaltada.",
 			],
 			[
-				"Voz con el costo a la vista",
-				"Consulta el costo estimado antes de generar voz en la nube y fija un límite por sesión.",
-			],
-			[
-				"Agentes MCP",
-				"Conecta herramientas compatibles y solicita acciones en el editor con tu autorización.",
-			],
-		],
-		publish: [
-			[
-				"Programación",
-				"Programa publicaciones en YouTube, TikTok e Instagram. Clipey debe estar abierto o en la bandeja del sistema a la hora programada.",
-			],
-			[
-				"Kit de publicación",
-				"Genera título, descripción y hashtags para cada plataforma a partir de la transcripción, dentro de los límites de cada una.",
-			],
-			[
-				"Ajustes de exportación",
-				"Elige ajustes para TikTok, YouTube Shorts, Instagram Reels y YouTube, con una estimación de tamaño antes de exportar.",
-			],
-			[
-				"Verificación",
-				"Tras exportar un MP4, Clipey revisa la duración, el video, el audio y los errores de decodificación, y avisa si algo no cuadra.",
+				"00:10",
+				"Pasa a vertical",
+				"El cuadro pasa a 9:16, listo para Shorts, Reels y TikTok.",
 			],
 		],
+		storyAria: "Lo que Clipey hace con una grabación, cuadro a cuadro",
+		cutTag: "Silencio 1,8 s · cortado",
+		captionText: ["haz clic en", "Exportar"],
+		timeline: {
+			ticks: ["00:00", "00:30", "01:00", "01:30", "02:00", "02:30", "03:00"],
+			chapters: [
+				["clip", "Grabar"],
+				["zoom", "Clics y zoom"],
+				["annotation", "Overlays"],
+				["speed", "Vertical"],
+				["clip", "Publicar"],
+			],
+		},
+		record: {
+			tc: "00:00:30 · Grabar",
+			title: ["Una barra.", "Ningún proyecto que crear antes."],
+			text: "Elige la pantalla o la ventana, activa la cámara y el micrófono, y graba. Clipey registra el cursor, cada botón del ratón, el desplazamiento y las teclas, para que la edición los use después.",
+			imageAlt: "Barra de grabación de Clipey con tiempo, pausa y detener",
+			caption:
+				"La barra de grabación real, tal como aparece sobre tu escritorio",
+		},
+		clicks: {
+			tc: "00:01:00 · Clics y zoom",
+			title: "Cada clic se volvió un zoom. No marcaste ninguno.",
+			text: "Las píldoras azules son zooms creados a partir de tus clics. Arrástralos, bórralos o cambia el nivel de cada uno en la línea de tiempo.",
+			imageAlt:
+				"Editor de Clipey con la línea de tiempo, regiones de zoom y de velocidad y el panel de composición",
+			caption:
+				"Editor real · zoom, velocidad, anotación, recorte y audio en pistas separadas",
+		},
+		overlays: {
+			tc: "00:01:30 · Overlays",
+			title: "Haz clic en esta zona.",
+			text: "Tu cursor ya tiene los efectos de Clipey: un estilo para cada botón del ratón. Pulsa teclas y aparecen igual que en el video.",
+			stageLabel:
+				"Zona de demostración: haz clic con cualquier botón del ratón o pulsa teclas",
+			imageAlt:
+				"Panel Efectos del ratón de Clipey: efecto de clic, color por botón, halo y foco",
+			caption: "Panel real · Efectos del ratón",
+		},
+		vertical: {
+			tc: "00:02:00 · Vertical",
+			title: ["Entra 16:9.", "Sale 9:16."],
+			text: "Auto Clip sugiere momentos cortos con una puntuación para que elijas, y el reencuadre sigue el rostro en vertical. El ajuste muestra la resolución, la tasa de bits y el tamaño estimado antes de exportar.",
+			captionText: ["subtítulo en el", "lugar justo"],
+			wideAlt: "Cuadro 16:9 del editor con la zona vertical marcada",
+			tallAlt: "El mismo cuadro recortado a 9:16 con subtítulo",
+			exportAlt: "Diálogo Exportar con ajustes, tamaño estimado y publicación",
+			scheduleAlt:
+				"Diálogo Exportar con el ajuste de TikTok y la pestaña Programar",
+		},
+		publish: {
+			tc: "00:02:30 · Publicar",
+			title: "YouTube, TikTok, Instagram y Facebook.",
+			titleMuted: "Ahora o a la hora que elijas.",
+			notes: [
+				[
+					"Kit de publicación",
+					"Título, descripción y hashtags sugeridos para cada red, dentro de los límites de caracteres de cada una.",
+				],
+				[
+					"Programación",
+					"La cola se ejecuta en tu PC con Clipey abierto o en la bandeja. Si la hora pasa con el PC apagado, la publicación queda marcada como perdida y no sale sola.",
+				],
+				[
+					"Cuentas",
+					"Conecta cada red una vez desde el navegador. Clipey muestra qué cuentas están conectadas.",
+				],
+			],
+		},
+		local: {
+			tc: "00:03:00 · Tu PC",
+			title:
+				"La transcripción puede ejecutarse por completo en tu computadora.",
+			text: "Sin telemetría de uso. Los servicios en la nube son opcionales y usan tu propia clave; la voz en la nube muestra el costo estimado antes de generar.",
+			imageAlt: "Ajustes de transcripción y medios de Clipey",
+			caption: "Ajustes reales · Transcripción y medios",
+			privacyLink: "Cómo funciona la privacidad",
+			deletionLink: "Eliminación de datos (EN)",
+		},
+		faqTc: "00:03:15 · Preguntas",
+		faqTitle: "Preguntas frecuentes",
+		export: {
+			tc: "00:03:30 · Fin de la grabación",
+			title: "Exportar.",
+			download: "Descargar Clipey para Windows",
+			platform: "Windows 10 y 11 · 64 bits",
+			version: "Versión",
+			pricing:
+				"La descarga es gratuita. Las funciones en la nube usan tu propia clave de API o créditos.",
+			requirements:
+				"La captura de pantalla requiere Windows 10 versión 2004 (compilación 19041) o posterior.",
+		},
+		footer: {
+			blog: "Blog",
+			contact: "Contacto",
+			releases: "Versiones para descargar",
+		},
 		faq: [
 			[
 				"¿Clipey es gratis?",
-				"Sí. La aplicación se descarga gratis. Algunas funciones pueden depender de servicios externos que configures.",
+				"La descarga es gratuita. Las funciones en la nube, como la voz y los modelos de IA, usan tu propia clave de API o créditos.",
 			],
 			[
-				"¿Qué sistemas admite?",
-				"Clipey 1.15 es para Windows 10 y 11. Las funciones de captura usan las API de Windows.",
+				"¿En qué sistemas funciona?",
+				"Clipey 1.15 es para Windows 10 y 11, 64 bits. Las funciones de captura usan las API de Windows.",
 			],
 			[
 				"¿Necesito una cuenta?",
-				"No necesitas una cuenta de Clipey para grabar y editar localmente. Sí necesitas cuentas de las plataformas para publicar.",
+				"No necesitas una cuenta de Clipey para grabar y editar localmente. Sí necesitas cuentas de las plataformas para publicar en ellas.",
 			],
 			[
 				"¿Mis videos se suben a la nube?",
@@ -472,19 +553,11 @@ export const LANDING = {
 			],
 			[
 				"¿La transcripción funciona sin conexión?",
-				"La transcripción local usa modelos descargados en tu computadora. La primera configuración puede requerir descargar esos archivos.",
+				"La transcripción local usa modelos descargados en tu computadora. La primera configuración puede requerir descargar los archivos del modelo.",
 			],
 			[
-				"¿Puedo revisar las sugerencias de IA?",
-				"Sí. Puedes cambiar las sugerencias de edición antes de exportar.",
-			],
-			[
-				"¿Se publicarán las publicaciones programadas con la aplicación cerrada?",
+				"¿Se publican las publicaciones programadas con la aplicación cerrada?",
 				"No. Clipey o su icono de la bandeja deben estar en ejecución a la hora programada.",
-			],
-			[
-				"¿Dónde encuentro los requisitos?",
-				"La captura requiere Windows 10 compilación 19041 o posterior. El rendimiento también depende de la GPU y la resolución del proyecto.",
 			],
 		],
 	},

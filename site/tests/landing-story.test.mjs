@@ -2,8 +2,11 @@ import { describe, expect, it } from "vitest";
 import {
 	APP_VERSION,
 	LANDING_ANCHORS,
+	LANDING_PATH,
+	LANGUAGES,
 	LEGAL_PATHS,
 	RELEASES_URL,
+	SITE_URL,
 } from "../src/blog/config.mjs";
 import { getCompletePosts } from "../src/blog/content.mjs";
 import { STORY } from "../src/landing-copy.mjs";
@@ -20,7 +23,8 @@ import {
 	EDITOR_SHOT,
 	EDITOR_SHOT_LIGHT,
 	HERO_SHOT,
-	STORY_SECTIONS,
+	SECTION_IDS,
+	sectionAliases,
 } from "../src/landing-story.mjs";
 import { renderSite } from "../src/render-site.mjs";
 
@@ -29,12 +33,12 @@ const bundle = {
 	font: "/assets/Geist-Variable.woff2",
 	script: "/assets/landing.js",
 };
-const html = renderSite(getCompletePosts(), {
-	landing: bundle,
-	blog: bundle,
-}).get("index.html");
-const main = html.slice(html.indexOf("<main"), html.indexOf("</main>"));
-const copy = STORY["pt-BR"];
+const site = renderSite(getCompletePosts(), { landing: bundle, blog: bundle });
+const pageOf = (lang) => site.get(`${LANDING_PATH[lang].slice(1)}index.html`);
+const mainOf = (page) =>
+	page.slice(page.indexOf("<main"), page.indexOf("</main>"));
+const html = pageOf("pt-BR");
+const main = mainOf(html);
 
 const manifest = {
 	locales: { en: { total: 1 }, es: { total: 1 } },
@@ -126,94 +130,133 @@ describe("landing shots", () => {
 	});
 });
 
-describe("v2 pt-BR landing structure", () => {
+describe.each(LANGUAGES)("%s landing structure", (lang) => {
+	const page = pageOf(lang);
+	const body = mainOf(page);
+	const ids = SECTION_IDS[lang];
+
 	it("has one h1, a main landmark, a header and a footer", () => {
-		expect(html.match(/<h1[\s>]/g)).toHaveLength(1);
-		expect(html.match(/<main id="main" class="story">/g)).toHaveLength(1);
-		expect(html).toContain('<header class="titlebar" data-header>');
-		expect(html).toContain('<footer class="story-footer">');
-		expect(html).toContain('aria-label="Capítulos"');
+		expect(page).toContain(`<html lang="${lang}"`);
+		expect(page.match(/<h1[\s>]/g)).toHaveLength(1);
+		expect(page.match(/<main id="main" class="story">/g)).toHaveLength(1);
+		expect(page).toContain('<header class="titlebar" data-header>');
+		expect(page).toContain('<footer class="story-footer">');
+		expect(page).toContain(`aria-label="${STORY[lang].bar.chaptersAria}"`);
 	});
 
 	it("renders the chapters in the artboard order", () => {
-		const order = [
-			"topo",
-			...Object.values(STORY_SECTIONS).map((section) => section.id),
-		];
-		const positions = order.map((id) => main.indexOf(`id="${id}"`));
+		const positions = Object.values(ids).map((id) =>
+			body.indexOf(`id="${id}"`),
+		);
 		for (const position of positions) expect(position).toBeGreaterThan(-1);
 		expect([...positions].sort((a, b) => a - b)).toEqual(positions);
 	});
 
-	it("keeps every landing anchor the blog and the header link to", () => {
-		for (const id of Object.values(LANDING_ANCHORS["pt-BR"]).filter(
+	it("keeps every landing anchor the blog and older links use, each id once", () => {
+		for (const id of Object.values(LANDING_ANCHORS[lang]).filter(
 			(id) => id !== "blog",
 		))
-			expect(html).toContain(`id="${id}"`);
+			expect(page).toContain(`id="${id}"`);
+		const all = [...page.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);
+		expect(new Set(all).size).toBe(all.length);
+	});
+
+	it("links the title bar chapters and the export buttons to this page's sections", () => {
+		const bar = page.slice(
+			page.indexOf('<header class="titlebar"'),
+			page.indexOf("</header>"),
+		);
+		for (const [chapter] of STORY[lang].bar.chapters)
+			expect(bar).toContain(`href="#${ids[chapter]}"`);
+		expect(bar).toContain(`href="#${ids.export}"`);
+		expect(bar).toContain(`href="#${ids.hero}"`);
 	});
 
 	it("links the legal pages from the footer", () => {
-		const footer = html.slice(html.indexOf('<footer class="story-footer">'));
-		for (const url of Object.values(LEGAL_PATHS["pt-BR"]))
+		const footer = page.slice(page.indexOf('<footer class="story-footer">'));
+		for (const url of Object.values(LEGAL_PATHS[lang]))
 			expect(footer).toContain(`href="${url}"`);
 	});
 
+	it("declares every language as an hreflang alternate, x-default on pt-BR", () => {
+		for (const code of LANGUAGES)
+			expect(page).toContain(
+				`<link rel="alternate" hreflang="${code}" href="${SITE_URL}${LANDING_PATH[code]}">`,
+			);
+		expect(page).toContain(
+			`<link rel="alternate" hreflang="x-default" href="${SITE_URL}${LANDING_PATH["pt-BR"]}">`,
+		);
+		expect(page).toContain(
+			`<link rel="canonical" href="${SITE_URL}${LANDING_PATH[lang]}">`,
+		);
+	});
+
+	it("switches language to the other landings and marks the current one", () => {
+		const group = page.match(/<div class="lang-switch"[\s\S]*?<\/div>/)[0];
+		for (const code of LANGUAGES)
+			expect(group).toMatch(
+				new RegExp(
+					`<a href="${LANDING_PATH[code]}" lang="${code}" hreflang="${code}"${code === lang ? ' aria-current="page"' : ""}>`,
+				),
+			);
+		expect(group.match(/aria-current/g)).toHaveLength(1);
+	});
+
+	it("shows the screenshots in this language's UI when captured, in English otherwise", () => {
+		const locale = shotLocale(readShotManifest(), lang);
+		const used = [
+			...body.matchAll(/\/shots\/[a-z0-9-]+?-(pt-BR|en|es)-[a-z0-9]+\.webp/g),
+		].map((m) => m[1]);
+		expect(used.length).toBeGreaterThan(5);
+		expect(new Set(used)).toEqual(new Set([locale]));
+	});
+
 	it("preloads the hero poster with its srcset and fetches it first", () => {
-		const hero = `${HERO_SHOT}-${shotLocale(readShotManifest(), "pt-BR")}`;
-		expect(html).toContain(
+		const hero = `${HERO_SHOT}-${shotLocale(readShotManifest(), lang)}`;
+		expect(page).toContain(
 			`<link rel="preload" as="image" href="/shots/${hero}-poster.webp" imagesrcset="/shots/${hero}-800.webp 800w,`,
 		);
-		expect(main).toMatch(
+		expect(body).toMatch(
 			new RegExp(
 				`<img class="hero-img" src="/shots/${hero}-poster.webp"[^>]*fetchpriority="high"`,
 			),
 		);
 	});
 
-	it("downloads from the latest release and shows the one version constant", () => {
-		const cta = main.slice(main.indexOf('id="exportar"'));
-		expect(cta).toContain(`href="${RELEASES_URL}"`);
-		expect(cta).toContain("Windows 10 e 11 · 64 bits");
-		expect(cta).toContain(`Versão ${APP_VERSION}`);
-		expect(cta).not.toMatch(/\d+(,\d+)?\s?MB/);
+	it("heads the page with the timeline crop, never a recorded frame, and shows the editor further down", () => {
+		const locale = shotLocale(readShotManifest(), lang);
+		expect(HERO_SHOT).toBe("timeline-zoom-regions-dark");
+		const start = body.indexOf('<figure class="hero-stage">');
+		const stage = body.slice(start, body.indexOf("</figure>", start));
+		expect(stage.match(/<img /g)).toHaveLength(1);
+		expect(stage).toContain(`/shots/${HERO_SHOT}-${locale}-poster.webp`);
+		expect(stage).not.toContain(EDITOR_SHOT);
+		expect(
+			body.indexOf(`/shots/${EDITOR_SHOT}-${locale}-poster.webp`),
+		).toBeGreaterThan(body.indexOf(`id="${ids.clicks}"`));
+		expect(body).toContain(`/shots/${EDITOR_SHOT_LIGHT}-${locale}-poster.webp`);
 	});
 
-	it("never says the whole product is free", () => {
-		const text = main.replace(/<[^>]+>/g, " ");
-		expect(text).toContain("O download é gratuito");
-		expect(text).not.toMatch(
-			/Clipey é gratuito\.|totalmente gratuito|100% grátis/i,
-		);
-		expect(copy.export.pricing).toMatch(/própria chave/);
+	it("downloads from the latest release and shows the one version constant", () => {
+		const cta = body.slice(body.indexOf(`id="${ids.export}"`));
+		expect(cta).toContain(`href="${RELEASES_URL}"`);
+		expect(cta).toContain(STORY[lang].export.platform);
+		expect(cta).toContain(`${STORY[lang].export.version} ${APP_VERSION}`);
+		expect(cta).not.toMatch(/\d+([.,]\d+)?\s?MB/);
 	});
 
 	it("has no inline style attributes and no inline script besides the theme bootstrap", () => {
-		expect(html).not.toMatch(/\sstyle="/);
-		const inline = [...html.matchAll(/<script(?![^>]*\bsrc=)([^>]*)>/g)].filter(
+		expect(page).not.toMatch(/\sstyle="/);
+		expect(page).not.toMatch(/<style[\s>]/);
+		expect(page).not.toMatch(/\son[a-z]+="/);
+		const inline = [...page.matchAll(/<script(?![^>]*\bsrc=)([^>]*)>/g)].filter(
 			(match) => !match[1].includes("application/ld+json"),
 		);
 		expect(inline).toHaveLength(1);
 	});
 
-	it("heads the page with the timeline crop, never a recorded frame, and shows the editor further down", () => {
-		const locale = shotLocale(readShotManifest(), "pt-BR");
-		expect(HERO_SHOT).toBe("timeline-zoom-regions-dark");
-		const stage = main.slice(
-			main.indexOf('<figure class="hero-stage">'),
-			main.indexOf("</figure>", main.indexOf('<figure class="hero-stage">')),
-		);
-		expect(stage.match(/<img /g)).toHaveLength(1);
-		expect(stage).toContain(`/shots/${HERO_SHOT}-${locale}-poster.webp`);
-		expect(stage).not.toContain(EDITOR_SHOT);
-		const editor = main.indexOf(`/shots/${EDITOR_SHOT}-${locale}-poster.webp`);
-		expect(editor).toBeGreaterThan(
-			main.indexOf(`id="${STORY_SECTIONS.clicks.id}"`),
-		);
-		expect(main).toContain(`/shots/${EDITOR_SHOT_LIGHT}-${locale}-poster.webp`);
-	});
-
 	it("gives every image a size, and every one but the hero is lazy", () => {
-		const images = [...main.matchAll(/<img [^>]*>/g)].map((match) => match[0]);
+		const images = [...body.matchAll(/<img [^>]*>/g)].map((match) => match[0]);
 		for (const image of images) {
 			expect(image).toMatch(/width="\d+" height="\d+"/);
 			if (!image.includes("hero-img"))
@@ -222,8 +265,96 @@ describe("v2 pt-BR landing structure", () => {
 	});
 
 	it("marks the overlay stage for the live demo", () => {
-		expect(main).toContain("data-fx-stage");
-		expect(main).toContain("data-fx-controls");
+		expect(body).toContain("data-fx-stage");
+		expect(body).toContain("data-fx-controls");
+	});
+
+	it("puts the FAQ in the JSON-LD in this language", () => {
+		const ld = JSON.parse(
+			page.match(
+				/<script type="application\/ld\+json">([\s\S]*?)<\/script>/,
+			)[1],
+		);
+		const faq = ld["@graph"].find((node) => node["@type"] === "FAQPage");
+		expect(faq.mainEntity.map((q) => q.name)).toEqual(
+			STORY[lang].faq.map(([question]) => question),
+		);
+	});
+});
+
+describe("landing section anchors", () => {
+	it("answers every older anchor from one chapter, never repeating a section id", () => {
+		for (const lang of LANGUAGES) {
+			const own = new Set(Object.values(SECTION_IDS[lang]));
+			const aliases = Object.keys(SECTION_IDS[lang]).flatMap((chapter) =>
+				sectionAliases(lang, chapter),
+			);
+			expect(new Set(aliases).size).toBe(aliases.length);
+			for (const alias of aliases) expect(own.has(alias)).toBe(false);
+		}
+		expect(sectionAliases("pt-BR", "export")).toEqual([
+			"requisitos",
+			"download",
+		]);
+		expect(sectionAliases("es", "local")).toEqual(["privacidad", "privacy"]);
+		expect(sectionAliases("en", "publish")).toEqual(["publishing"]);
+	});
+});
+
+describe("landing copy in every language", () => {
+	const shape = (value) =>
+		Array.isArray(value)
+			? value.map(shape)
+			: value && typeof value === "object"
+				? Object.fromEntries(
+						Object.entries(value).map(([key, item]) => [key, shape(item)]),
+					)
+				: typeof value;
+
+	it("has the same structure as pt-BR", () => {
+		for (const lang of LANGUAGES)
+			expect(shape(STORY[lang])).toEqual(shape(STORY["pt-BR"]));
+	});
+
+	it("keeps the platform, the own key or credits and the build requirement", () => {
+		const platform = {
+			"pt-BR": "Windows 10 e 11 · 64 bits",
+			en: "Windows 10 and 11 · 64-bit",
+			es: "Windows 10 y 11 · 64 bits",
+		};
+		const credits = {
+			"pt-BR": /própria chave de API ou créditos/,
+			en: /own API key or credits/,
+			es: /propia clave de API o créditos/,
+		};
+		for (const lang of LANGUAGES) {
+			const story = STORY[lang];
+			expect(story.hero.platform).toBe(platform[lang]);
+			expect(story.export.platform).toBe(platform[lang]);
+			expect(story.export.pricing).toMatch(credits[lang]);
+			expect(story.faq[0][1]).toMatch(credits[lang]);
+			expect(story.export.requirements).toContain("2004");
+			expect(story.export.requirements).toContain("19041");
+		}
+	});
+
+	it("never calls the whole product free, only the download", () => {
+		const free = /\b(gratuit[oa]|gratis|grátis|free)\b/i;
+		const strings = (value) =>
+			typeof value === "string"
+				? [value]
+				: Object.values(value).flatMap(strings);
+		for (const lang of LANGUAGES) {
+			const { faq, ...rest } = STORY[lang];
+			const answers = faq.map(([, answer]) => answer);
+			const sentences = [...strings(rest), ...answers].flatMap((text) =>
+				text.split(/(?<=[.!?])\s+/),
+			);
+			const claims = sentences.filter((sentence) => free.test(sentence));
+			expect(claims.length).toBeGreaterThan(0);
+			for (const sentence of claims)
+				expect(sentence).toMatch(/^(O download|The download|La descarga)\b/);
+		}
 	});
 });
 

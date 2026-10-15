@@ -1,384 +1,6 @@
 /* Landing page. Colours come from tokens.css only. */
-@import "./frames.css";
-
-main {
-	width: var(--page);
-	margin: 0 auto;
-}
-
-.anchor-alias {
-	display: block;
-	height: 0;
-	scroll-margin-top: 96px;
-}
-
-.section,
-.download,
-.hero {
-	scroll-margin-top: 80px;
-}
-
-/* Hero */
-.hero {
-	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-	gap: 56px;
-	align-items: center;
-	padding: 88px 0 72px;
-}
-
-.hero-copy {
-	display: grid;
-	gap: 26px;
-	justify-items: start;
-}
-
-.hero-title {
-	max-width: 12ch;
-	margin: 0;
-	font: 650 clamp(48px, 7.2vw, 104px) / 0.94 var(--font-sans);
-	letter-spacing: -0.06em;
-	text-wrap: balance;
-}
-
-.hero-sub {
-	max-width: 52ch;
-	margin: 0;
-	color: var(--muted);
-	font-size: 20px;
-}
-
-.hero-actions {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 12px;
-}
-
-.hero-notes {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 8px 24px;
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-/* The editor capture is a request: until the file exists the frame keeps its 16:9 box. */
-.hero-frame {
-	display: grid;
-	gap: 14px;
-	margin: 0;
-}
-
-.hero-frame .frame-empty {
-	position: relative;
-}
-
-.frame-track {
-	position: absolute;
-	left: 8%;
-	height: 10px;
-	border-radius: 3px;
-}
-
-.frame-track--video {
-	bottom: 28%;
-	width: 62%;
-	border: 1px solid var(--accent);
-	background: var(--accent-soft);
-}
-
-.frame-track--audio {
-	bottom: 16%;
-	width: 78%;
-	background: var(--line-strong);
-}
-
-.frame-playhead {
-	position: absolute;
-	top: 14%;
-	bottom: 10%;
-	left: 46%;
-	width: 2px;
-	background: var(--accent);
-}
-
-/* Sections */
-.section {
-	padding: 96px 0 0;
-}
-
-.section-head {
-	display: grid;
-	gap: 16px;
-	justify-items: start;
-	margin-bottom: 44px;
-}
-
-.section-title {
-	max-width: 18ch;
-	margin: 0;
-	font: 650 clamp(34px, 5vw, 64px) / 1 var(--font-sans);
-	letter-spacing: -0.055em;
-	text-wrap: balance;
-}
-
-.section-sub {
-	max-width: 62ch;
-	margin: 0;
-	color: var(--muted);
-	font-size: 18px;
-}
-
-.section--split .section-head {
-	max-width: 760px;
-	padding: 40px;
-	border: 1px solid var(--line);
-	border-radius: var(--radius-l);
-	background: var(--surface);
-}
-
-.link-row {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 8px 28px;
-	margin: 8px 0 0;
-}
-
-.text-link {
-	display: inline-flex;
-	align-items: center;
-	gap: 8px;
-	color: var(--accent-text);
-	font-weight: 600;
-	text-underline-offset: 4px;
-}
-
-.text-link svg {
-	width: 16px;
-	height: 16px;
-	transition: transform 0.2s var(--ease);
-}
-
-.text-link:hover svg {
-	transform: translateX(3px);
-}
-
-/* Feature tiles */
-.tiles {
-	display: grid;
-	grid-template-columns: repeat(4, minmax(0, 1fr));
-	gap: 16px;
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-.tile {
-	display: grid;
-	gap: 10px;
-	align-content: start;
-	padding: 26px 24px 28px;
-	border: 1px solid var(--line);
-	border-radius: var(--radius);
-	background: var(--surface);
-	transition: border-color 0.2s;
-}
-
-.tile:hover {
-	border-color: var(--line-strong);
-}
-
-.tile-glyph {
-	display: grid;
-	place-items: center;
-	width: 44px;
-	height: 44px;
-	margin-bottom: 12px;
-	border: 1px solid var(--line-strong);
-	border-radius: 12px;
-	color: var(--accent-text);
-}
-
-.tile-glyph svg {
-	width: 22px;
-	height: 22px;
-}
-
-.tile-title {
-	margin: 0;
-	font: 650 20px / 1.2 var(--font-sans);
-	letter-spacing: -0.03em;
-}
-
-.tile-text {
-	margin: 0;
-	color: var(--muted);
-	font-size: 15.5px;
-}
-
-/* Blog teasers */
-.teasers {
-	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 16px;
-	margin: 0 0 28px;
-	padding: 0;
-	list-style: none;
-}
-
-.teaser a {
-	display: grid;
-	gap: 10px;
-	align-content: start;
-	height: 100%;
-	padding: 24px;
-	border: 1px solid var(--line);
-	border-radius: var(--radius);
-	color: var(--text);
-	text-decoration: none;
-	transition:
-		border-color 0.2s,
-		transform 0.3s var(--ease);
-}
-
-.teaser a:hover {
-	border-color: var(--accent);
-	transform: translateY(-2px);
-}
-
-.teaser-title {
-	font: 650 21px / 1.2 var(--font-sans);
-	letter-spacing: -0.03em;
-}
-
-.teaser-text {
-	color: var(--muted);
-	font-size: 15.5px;
-}
-
-/* Questions */
-.faq {
-	display: grid;
-	max-width: 880px;
-	border-top: 1px solid var(--line);
-}
-
-.faq-item {
-	border-bottom: 1px solid var(--line);
-}
-
-.faq-item summary {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 24px;
-	padding: 22px 0;
-	font: 600 19px / 1.3 var(--font-sans);
-	letter-spacing: -0.02em;
-	cursor: pointer;
-	list-style: none;
-}
-
-.faq-item summary::-webkit-details-marker {
-	display: none;
-}
-
-.faq-item summary svg {
-	flex: none;
-	width: 20px;
-	height: 20px;
-	color: var(--muted);
-	transition: transform 0.25s var(--ease);
-}
-
-.faq-item[open] summary svg {
-	transform: rotate(180deg);
-}
-
-.faq-item p {
-	max-width: 68ch;
-	margin: 0 0 24px;
-	color: var(--muted);
-	font-size: 16.5px;
-}
-
-/* Download band */
-.download {
-	display: grid;
-	gap: 18px;
-	justify-items: start;
-	margin: 112px 0 0;
-	padding: 56px;
-	border: 1px solid var(--line-strong);
-	border-radius: var(--radius-l);
-	background: var(--surface);
-}
-
-.download-title {
-	max-width: 16ch;
-	margin: 0;
-	font: 650 clamp(34px, 5vw, 64px) / 1 var(--font-sans);
-	letter-spacing: -0.055em;
-	text-wrap: balance;
-}
-
-.download-sub {
-	max-width: 60ch;
-	margin: 0;
-	color: var(--muted);
-	font-size: 17px;
-}
-
-.download-actions {
-	margin-top: 8px;
-}
-
-@media (max-width: 1000px) {
-	.hero {
-		grid-template-columns: 1fr;
-		gap: 40px;
-		padding-top: 56px;
-	}
-
-	.tiles {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-	}
-
-	.teasers {
-		grid-template-columns: 1fr;
-	}
-}
-
-@media (max-width: 640px) {
-	.hero {
-		padding: 40px 0 48px;
-	}
-
-	.hero-sub {
-		font-size: 18px;
-	}
-
-	.section {
-		padding-top: 72px;
-	}
-
-	.section--split .section-head {
-		padding: 24px;
-	}
-
-	.tiles {
-		grid-template-columns: 1fr;
-	}
-
-	.download {
-		margin-top: 80px;
-		padding: 32px 22px;
-	}
-}
-
 /*
- * v2 landing ("the site is a Clipey recording"): src/landing-story.mjs. The page runs edge to edge with a gutter;
+ * The landing ("the site is a Clipey recording"): src/landing-story.mjs. The page runs edge to edge with a gutter;
  * lane colours appear only as timeline semantics (clip lime, zoom blue, speed orange, annotation amber).
  */
 /* Shared by the title bar (outside main) and the sticky timeline under it. */
@@ -392,6 +14,12 @@ main.story {
 	width: auto;
 	margin: 0;
 	overflow-x: clip;
+}
+
+/* An older anchor (linked by the blog) that lands on the section right after it. */
+.anchor-alias {
+	display: block;
+	height: 0;
 }
 
 .story :target,
@@ -1240,7 +868,7 @@ main.story {
 }
 
 /* Record: the real recording bar, floating on the desktop. */
-#gravar {
+.record-section {
 	padding-top: 140px;
 }
 
@@ -1348,8 +976,8 @@ main.story {
 }
 
 /* Vertical: the 16:9 frame with its 9:16 crop, and the reframed result with its caption. */
-#vertical .h2,
-#seu-pc .h2 {
+.vertical-section .h2,
+.local-section .h2 {
 	font-size: clamp(40px, 3.9vw, 56px);
 }
 
@@ -1919,16 +1547,8 @@ main.story {
 		animation: none;
 	}
 
-	.text-link svg,
-	.faq-item summary svg,
-	.teaser a,
 	.export-btn {
 		transition: none;
-	}
-
-	.text-link:hover svg,
-	.teaser a:hover {
-		transform: none;
 	}
 
 	.ink {

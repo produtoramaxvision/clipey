@@ -1,5 +1,5 @@
 /**
- * The v2 landing, "the site is a Clipey recording": a title bar, the hero told as a timeline over the real editor,
+ * The v2 landing, "the site is a Clipey recording": a title bar, the hero told over a real Clipey timeline,
  * a sticky timeline whose chapters are the sections, and the export at the end. Server-side HTML only:
  * no inline styles and no inline scripts (the CSP forbids both), every colour comes from tokens.css.
  */
@@ -7,6 +7,8 @@ import {
 	APP_VERSION,
 	blogBase,
 	CONTACT_EMAIL,
+	LANDING_ALIASES,
+	LANDING_ANCHORS,
 	LANDING_PATH,
 	LANGUAGE_LABEL,
 	LANGUAGES,
@@ -31,20 +33,70 @@ export const HERO_SIZES = "(max-width: 1000px) 100vw, 60vw";
 export const EDITOR_SHOT = "editor-full-speed-zoom-lanes-dark";
 export const EDITOR_SHOT_LIGHT = "editor-full-light";
 
-/** Section ids of the v2 page, and the older anchors (linked by the blog and the header) each section answers to. */
-export const STORY_SECTIONS = {
-	record: { id: "gravar", aliases: ["recursos"] },
-	clicks: { id: "editar", aliases: ["ia"] },
-	overlays: { id: "overlays", aliases: [] },
-	vertical: { id: "vertical", aliases: [] },
-	publish: { id: "publicar", aliases: [] },
-	local: { id: "seu-pc", aliases: ["privacidade"] },
-	faq: { id: "faq", aliases: [] },
-	export: { id: "exportar", aliases: ["download", "requisitos"] },
+/** Section ids of the v2 page in each language, keyed by chapter. */
+export const SECTION_IDS = {
+	"pt-BR": {
+		hero: "topo",
+		record: "gravar",
+		clicks: "editar",
+		overlays: "overlays",
+		vertical: "vertical",
+		publish: "publicar",
+		local: "seu-pc",
+		faq: "faq",
+		export: "exportar",
+	},
+	en: {
+		hero: "top",
+		record: "record",
+		clicks: "edit",
+		overlays: "overlays",
+		vertical: "vertical",
+		publish: "publish",
+		local: "your-pc",
+		faq: "faq",
+		export: "export",
+	},
+	es: {
+		hero: "inicio",
+		record: "grabar",
+		clicks: "editar",
+		overlays: "overlays",
+		vertical: "vertical",
+		publish: "publicar",
+		local: "tu-pc",
+		faq: "faq",
+		export: "exportar",
+	},
 };
 
-const aliasMarkers = (key) =>
-	STORY_SECTIONS[key].aliases
+/** The chapter that answers each landing anchor the blog and older links use (LANDING_ANCHORS keys). */
+const ANCHOR_CHAPTER = {
+	features: "record",
+	ai: "clicks",
+	publish: "publish",
+	privacy: "local",
+	requirements: "export",
+	download: "export",
+	faq: "faq",
+};
+
+/** The older anchors a chapter also answers to in one language, without its own id and without repeats. */
+export function sectionAliases(lang, chapter) {
+	const ids = Object.entries(ANCHOR_CHAPTER)
+		.filter(([, target]) => target === chapter)
+		.flatMap(([key]) => [
+			LANDING_ANCHORS[lang][key],
+			...(LANDING_ALIASES[lang][key] ?? []),
+		]);
+	return [...new Set(ids)].filter((id) => id !== SECTION_IDS[lang][chapter]);
+}
+
+/** The id attribute of a chapter section, with the alias markers in front of it. */
+const sectionAnchor = (lang, chapter) => `id="${SECTION_IDS[lang][chapter]}"`;
+
+const aliasMarkers = (lang, chapter) =>
+	sectionAliases(lang, chapter)
 		.map((id) => `<span id="${id}" class="anchor-alias"></span>`)
 		.join("");
 
@@ -59,20 +111,20 @@ function titleBar(lang, copy, alternates) {
 			`<a href="${alternates[code]}" lang="${code}" hreflang="${code}"${code === lang ? ' aria-current="page"' : ""}>${LANGUAGE_LABEL[code]}</a>`,
 	).join("");
 	return `<header class="titlebar" data-header>
-		<a class="titlebar-brand" href="#topo" aria-label="${esc(ui.homeLabel)}"><img src="/clipey-256.png" width="24" height="24" alt=""><span>Clipey</span></a>
+		<a class="titlebar-brand" href="#${SECTION_IDS[lang].hero}" aria-label="${esc(ui.homeLabel)}"><img src="/clipey-256.png" width="24" height="24" alt=""><span>Clipey</span></a>
 		<span class="titlebar-sep" aria-hidden="true"></span>
 		<span class="titlebar-host">${esc(bar.host)}<span class="rec-dot" role="img" aria-label="${esc(bar.recording)}"></span></span>
 		<nav class="chapters" aria-label="${esc(bar.chaptersAria)}">${bar.chapters
 			.map(
-				([id, label]) =>
-					`<a class="chapter" href="#${id}" data-chapter="${id}">${esc(label)}</a>`,
+				([chapter, label]) =>
+					`<a class="chapter" href="#${SECTION_IDS[lang][chapter]}">${esc(label)}</a>`,
 			)
 			.join("")}</nav>
 		<div class="titlebar-actions">
 			<div class="lang-switch" role="group" aria-label="${esc(ui.langLabel)}">${switcher}</div>
 			<button type="button" class="icon-btn" data-theme-toggle aria-label="${esc(ui.themeToLight)}" data-label-light="${esc(ui.themeToLight)}" data-label-dark="${esc(ui.themeToDark)}">${icon("moon")}${icon("sun")}</button>
 			<a class="titlebar-link" href="${blogBase(lang)}">${esc(bar.blog)}</a>
-			<a class="export-btn export-btn--bar" href="#${STORY_SECTIONS.export.id}">${icon("download")}<span>${esc(bar.export)}</span></a>
+			<a class="export-btn export-btn--bar" href="#${SECTION_IDS[lang].export}">${icon("download")}<span>${esc(bar.export)}</span></a>
 		</div>
 	</header>`;
 }
@@ -129,9 +181,9 @@ function storyStills(copy, shots) {
 		.join("")}</ol>`;
 }
 
-function hero(copy, shots) {
+function hero(lang, copy, shots) {
 	const hero = copy.hero;
-	return `<section class="story-hero" id="topo" aria-labelledby="hero-title">
+	return `<section class="story-hero" ${sectionAnchor(lang, "hero")} aria-labelledby="hero-title">
 			<div class="story-hero-grid">
 				<div class="story-copy">
 					<h1 class="stair" id="hero-title">${hero.lines
@@ -142,7 +194,7 @@ function hero(copy, shots) {
 						.join(" ")}</h1>
 					<p class="story-sub">${esc(hero.sub)}</p>
 					<div class="story-actions">
-						<a class="export-btn export-btn--hero" href="#${STORY_SECTIONS.export.id}">${esc(hero.download)}</a>
+						<a class="export-btn export-btn--hero" href="#${SECTION_IDS[lang].export}">${esc(hero.download)}</a>
 						<p class="meta">${esc(hero.platform)}<br>${esc(hero.noAccount)}</p>
 					</div>
 				</div>
@@ -169,10 +221,10 @@ function timeline(copy) {
 	</div>`;
 }
 
-function recordSection(copy, shots) {
+function recordSection(lang, copy, shots) {
 	const s = copy.record;
-	return `<section class="chapter-section split split--even" id="${STORY_SECTIONS.record.id}" aria-labelledby="record-title">
-			${aliasMarkers("record")}
+	return `<section class="chapter-section record-section split split--even" ${sectionAnchor(lang, "record")} aria-labelledby="record-title">
+			${aliasMarkers(lang, "record")}
 			<div class="copy">
 				${marker(s.tc, "clip")}
 				<h2 class="h2" id="record-title">${s.title.map(esc).join("<br>")}</h2>
@@ -185,10 +237,10 @@ function recordSection(copy, shots) {
 		</section>`;
 }
 
-function clicksSection(copy, shots) {
+function clicksSection(lang, copy, shots) {
 	const s = copy.clicks;
-	return `<section class="chapter-section chapter-section--bleed" id="${STORY_SECTIONS.clicks.id}" aria-labelledby="clicks-title">
-			${aliasMarkers("clicks")}
+	return `<section class="chapter-section chapter-section--bleed" ${sectionAnchor(lang, "clicks")} aria-labelledby="clicks-title">
+			${aliasMarkers(lang, "clicks")}
 			<div class="clicks-head">
 				<div class="copy">
 					${marker(s.tc, "zoom")}
@@ -205,9 +257,9 @@ function clicksSection(copy, shots) {
 		</section>`;
 }
 
-function overlaysSection(copy, shots) {
+function overlaysSection(lang, copy, shots) {
 	const s = copy.overlays;
-	return `<section class="chapter-section split split--overlays" id="${STORY_SECTIONS.overlays.id}" aria-labelledby="overlays-title">
+	return `<section class="chapter-section split split--overlays" ${sectionAnchor(lang, "overlays")} aria-labelledby="overlays-title">
 			<div class="overlays-demo">
 				<div class="overlays-stage" data-fx-stage role="group" aria-label="${esc(s.stageLabel)}">
 					<div class="copy overlays-copy">
@@ -225,11 +277,11 @@ function overlaysSection(copy, shots) {
 		</section>`;
 }
 
-function verticalSection(copy, shots) {
+function verticalSection(lang, copy, shots) {
 	const s = copy.vertical;
 	const [lead, keyword] = s.captionText;
 	const half = "(max-width: 1000px) 90vw, 45vw";
-	return `<section class="chapter-section" id="${STORY_SECTIONS.vertical.id}" aria-labelledby="vertical-title">
+	return `<section class="chapter-section vertical-section" ${sectionAnchor(lang, "vertical")} aria-labelledby="vertical-title">
 			<div class="split split--vertical">
 				<div class="copy">
 					${marker(s.tc, "speed")}
@@ -249,9 +301,10 @@ function verticalSection(copy, shots) {
 		</section>`;
 }
 
-function publishSection(copy) {
+function publishSection(lang, copy) {
 	const s = copy.publish;
-	return `<section class="chapter-section" id="${STORY_SECTIONS.publish.id}" aria-labelledby="publish-title">
+	return `<section class="chapter-section" ${sectionAnchor(lang, "publish")} aria-labelledby="publish-title">
+			${aliasMarkers(lang, "publish")}
 			<div class="copy publish-head">
 				${marker(s.tc, "clip")}
 				<h2 class="h2 h2--xl" id="publish-title">${esc(s.title)} <span class="h2-muted">${esc(s.titleMuted)}</span></h2>
@@ -268,8 +321,8 @@ function publishSection(copy) {
 function localSection(lang, copy, shots) {
 	const s = copy.local;
 	const legal = LEGAL_PATHS[lang];
-	return `<section class="chapter-section split split--even" id="${STORY_SECTIONS.local.id}" aria-labelledby="local-title">
-			${aliasMarkers("local")}
+	return `<section class="chapter-section local-section split split--even" ${sectionAnchor(lang, "local")} aria-labelledby="local-title">
+			${aliasMarkers(lang, "local")}
 			<figure class="settings-figure">
 				${shots.img("settings-transcription-media-dark", { alt: s.imageAlt, sizes: "(max-width: 1000px) 90vw, 45vw" })}
 				<figcaption class="meta">${esc(s.caption)}</figcaption>
@@ -283,8 +336,9 @@ function localSection(lang, copy, shots) {
 		</section>`;
 }
 
-function faqSection(copy) {
-	return `<section class="chapter-section faq-section" id="${STORY_SECTIONS.faq.id}" aria-labelledby="faq-title">
+function faqSection(lang, copy) {
+	return `<section class="chapter-section faq-section" ${sectionAnchor(lang, "faq")} aria-labelledby="faq-title">
+			${aliasMarkers(lang, "faq")}
 			<div class="copy">
 				${marker(copy.faqTc, "neutral")}
 				<h2 class="h2" id="faq-title">${esc(copy.faqTitle)}</h2>
@@ -298,10 +352,10 @@ function faqSection(copy) {
 		</section>`;
 }
 
-function exportSection(copy) {
+function exportSection(lang, copy) {
 	const s = copy.export;
-	return `<section class="chapter-section export-section" id="${STORY_SECTIONS.export.id}" aria-labelledby="export-title">
-			${aliasMarkers("export")}
+	return `<section class="chapter-section export-section" ${sectionAnchor(lang, "export")} aria-labelledby="export-title">
+			${aliasMarkers(lang, "export")}
 			${marker(s.tc, "neutral")}
 			<h2 class="mega" id="export-title">${esc(s.title)}</h2>
 			<div class="export-row">
@@ -332,23 +386,23 @@ function footer(lang, copy) {
 	</footer>`;
 }
 
-/** The whole v2 page for a language that has STORY copy. `jsonLd` is built by the caller, shared with the other layout. */
+/** The landing page of one language. `jsonLd` is built by the caller. */
 export function renderStory(lang, { assets, alternates, jsonLd }) {
 	const ui = UI[lang];
 	const copy = STORY[lang];
 	const shots = pageShots(readShotManifest(), lang);
 	const lcp = shots.set(HERO_SHOT);
 	const body = `<main id="main" class="story">
-		${hero(copy, shots)}
+		${hero(lang, copy, shots)}
 		${timeline(copy)}
-		${recordSection(copy, shots)}
-		${clicksSection(copy, shots)}
-		${overlaysSection(copy, shots)}
-		${verticalSection(copy, shots)}
-		${publishSection(copy)}
+		${recordSection(lang, copy, shots)}
+		${clicksSection(lang, copy, shots)}
+		${overlaysSection(lang, copy, shots)}
+		${verticalSection(lang, copy, shots)}
+		${publishSection(lang, copy)}
 		${localSection(lang, copy, shots)}
-		${faqSection(copy)}
-		${exportSection(copy)}
+		${faqSection(lang, copy)}
+		${exportSection(lang, copy)}
 	</main>`;
 	const head = renderHead({
 		lang,

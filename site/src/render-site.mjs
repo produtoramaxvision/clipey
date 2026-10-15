@@ -160,7 +160,7 @@ export function renderSite(posts, legalOrAssets, maybeAssets) {
 	for (const lang of LANGUAGES) {
 		files.set(
 			fileForUrl(LANDING_PATH[lang]),
-			renderLanding(lang, posts, assets.landing),
+			renderLanding(lang, assets.landing),
 		);
 		files.set(
 			fileForUrl(blogBase(lang)),
