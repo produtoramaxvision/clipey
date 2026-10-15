@@ -180,7 +180,7 @@ export function renderHeader({ lang, switchUrls, current }) {
 export function renderFooter({ lang }) {
 	const ui = UI[lang];
 	const legal = LEGAL_PATHS[lang];
-	const year = SITE_NAME && new Date("2026-09-29T12:00:00Z").getUTCFullYear();
+	const year = new Date().getUTCFullYear();
 	return `<footer class="site-footer">
 		<div class="footer-grid">
 			<div>

@@ -14,7 +14,6 @@ import {
 	LANGUAGES,
 	LEGAL_PATHS,
 	OWNER,
-	RELEASE_DATE,
 	RELEASES_URL,
 } from "./blog/config.mjs";
 import { escapeHtml as esc } from "./blog/content.mjs";
@@ -372,7 +371,7 @@ function footer(lang, copy) {
 	const ui = UI[lang];
 	const legal = LEGAL_PATHS[lang];
 	const f = copy.footer;
-	const year = new Date(`${RELEASE_DATE}T12:00:00Z`).getUTCFullYear();
+	const year = new Date().getUTCFullYear();
 	return `<footer class="story-footer">
 		<a class="footer-brand" href="${LANDING_PATH[lang]}" aria-label="${esc(ui.homeLabel)}"><img src="/clipey-256.png" width="18" height="18" alt=""><span>Clipey</span></a>
 		<nav class="footer-links" aria-label="${esc(ui.footerAria)}">
