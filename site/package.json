@@ -6,6 +6,7 @@
 		"dev": "vite",
 		"build": "vite build",
 		"preview": "vite preview",
+		"images": "node scripts/blog-images/covers.mjs",
 		"deploy": "vite build && wrangler deploy"
 	},
 	"devDependencies": {
