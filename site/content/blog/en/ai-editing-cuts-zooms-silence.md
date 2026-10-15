@@ -19,15 +19,15 @@ appliesTo: "1.15"
 
 > **Applies to:** Clipey 1.15 on Windows.
 
-A screen recording often contains pauses, retries and moments that do not help explain the subject. Clipey’s AI agent can turn a specific instruction into editing changes. Treat the result as a draft to review: ask for one focused change, inspect the timeline and watch the edit before exporting.
+To edit videos with AI in Clipey, instruct the built-in AI agent using natural language to perform cuts, tighten pauses, remove silences, and place cursor-guided zooms. The agent references on-device speech transcription and cursor telemetry to pinpoint moments on the timeline without uploading footage to cloud servers. You retain full control to preview suggested edits, fine-tune cuts in the transcript pane, and verify every transition before exporting.
 
 ## Prepare the project
 
-1. Open the recording in the editor and let the media load. For requests based on spoken content, transcribe the audio first. The transcript pane offers **Transcribe now** when no transcript is present. Text gives the agent useful context, but it is not a substitute for checking the video.
+1. Open the recording in the editor and let the media load. For requests based on spoken content, transcribe the audio first. The transcript pane offers **Transcribe** when no transcript is present. Text gives the agent useful context, but it is not a substitute for checking the video.
 2. Open the agent conversation in the editor. If the project has no transcript, start with a visual request or transcribe before asking it to remove spoken pauses.
 3. State one goal at a time. For example: “remove the long pause after the explanation, then zoom in when I show the menu.” A local instruction is easier to verify than a vague request to make the whole video more dynamic.
 
-The agent can perform editing operations such as cuts and zooms. Its welcome text also presents silence removal, tightening pauses and removing filler words as possible tasks. Do not assume that every silence is disposable: quiet speech, a breath or an intentional pause can matter to meaning and pacing.
+The agent can perform editing operations such as cuts and zooms, as well as silence removal and pause tightening. If your project includes background music, enable **Speech clarity** in the audio inspector to duck 2.5 kHz midrange frequencies and enhance vocal prominence. Do not assume that every silence is disposable: quiet speech, a breath or an intentional pause can matter to meaning and pacing.
 
 ## Review cuts against the transcript
 

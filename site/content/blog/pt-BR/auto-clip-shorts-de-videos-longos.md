@@ -19,16 +19,16 @@ appliesTo: "1.15"
 
 > **Aplica-se a:** Clipey 1.15 no Windows.
 
-Uma gravação longa pode conter várias explicações aproveitáveis, mas percorrer tudo manualmente leva tempo. O Auto Clip procura momentos que podem funcionar como clipes independentes. Use-o como uma triagem: configure uma faixa de duração, compare as sugestões e assista a cada início e final antes de publicar.
+Para encontrar trechos curtos em uma gravação longa no Clipey, abra o Clipey Studio e utilize a ferramenta Auto Clip a partir da transcrição do projeto. O recurso avalia o vídeo em quatro critérios (Gancho, Coerência, Valor e Compartilhamento) dentro de faixas de duração predefinidas, como 15–30s ou 30–60s, alinhando os cortes aos limites das frases. Você pode comparar os clipes sugeridos, ajustar o enquadramento e aplicar as melhores partes diretamente como novos projetos prontos para publicação.
 
 ## Configure a busca no Clipey Studio
 
 1. Abra no editor o projeto que contém a gravação e a transcrição. A busca depende do conteúdo falado; se ainda não houver transcrição, gere-a primeiro no painel de transcrição.
-2. Abra o Clipey Studio e localize o grupo **Auto Clip**. Os controles permitem definir o comprimento mínimo e máximo dos trechos, quantos resultados procurar e se o foco em rostos deve ser usado.
+2. Abra o Clipey Studio e localize o grupo **Auto Clip**. Os controles permitem escolher faixas de duração como **15–30s (Shorts/Reels)**, **30–60s (Padrão)** ou **60–90s (Aprofundado)**, definir o limite em **Máx. de clipes (até 20)** e ativar **Enquadrar no rosto de quem fala**.
 3. Escolha uma faixa compatível com o destino, em vez de começar pelo maior número de cortes. A faixa de duração limita cada candidato; a quantidade define quantas sugestões o processo tentará apresentar. Ajuste uma coisa por vez para entender o efeito.
-4. Inicie a análise e espere os candidatos aparecerem. A geração pode usar um provedor de IA configurado no app; confira a configuração do provedor antes de executar se não quiser enviar texto a um serviço externo.
+4. Inicie a análise e espere os candidatos aparecerem. A geração analisa a transcrição e identifica limites naturais de sentenças.
 
-O Auto Clip considera o texto transcrito e procura segmentos que tenham potencial de funcionar como vídeos curtos. Nas sugestões, a avaliação separa aspectos como abertura, coerência, valor e possibilidade de compartilhamento e pode incluir uma justificativa breve. Uma nota ajuda a comparar candidatos, mas não prevê visualizações nem garante que o público vá gostar.
+O Auto Clip pontua os segmentos considerando quatro eixos principais: **Gancho**, **Coerência**, **Valor** e **Compartilhamento**, exibindo justificativas contextuais para cada trecho. Quando um segmento relevante fica logo abaixo do limiar estrito de pontuação, o Clipey pode exibi-lo com o selo **Recuperado** para que você decida se deseja aproveitá-lo.
 
 ## Leia a sugestão como hipótese
 
@@ -36,7 +36,7 @@ Comece pela primeira frase. Um trecho que abre no meio de um pronome ou depende 
 
 Depois, observe o fim. O corte deve encerrar a ideia, não apenas atingir a duração escolhida. Caso a frase final dependa da próxima fala, rejeite a sugestão ou volte ao projeto principal para corrigir os limites. O sistema procura limites de frases para evitar cortes no meio de uma sentença, mas isso não resolve todos os problemas de contexto: a frase isolada ainda pode depender do que veio antes.
 
-Se a sugestão fizer sentido, aceite-a e revise o enquadramento. Com o foco em rosto habilitado, a composição pode considerar os pontos focais disponíveis; confira o resultado em movimento e não apenas em um quadro. Um bom trecho falado pode ainda precisar de título ou contexto antes de ser publicado.
+Se a sugestão fizer sentido, aceite-a e revise o enquadramento. Se o rastreamento facial não estiver disponível no sistema, o Clipey mantém os cortes centralizados sem interromper a geração. Um bom trecho falado pode ainda precisar de título ou contexto antes de ser publicado.
 
 ## Faça uma seleção editorial
 
@@ -56,7 +56,7 @@ Se a sugestão fizer sentido, aceite-a e revise o enquadramento. Com o foco em r
 
 ## Limitações
 
-O resultado depende da transcrição e do provedor disponível. Ruído, fala sobreposta, pausas expressivas e assuntos que exigem contexto podem gerar limites inadequados. A análise não assegura que todo vídeo produza um clipe forte nem prevê alcance, retenção ou engajamento. O foco em rosto também deve ser conferido no preview. Antes de compartilhar, confirme direitos, privacidade e informações exibidas na tela.
+O resultado depende da transcrição e da clareza do áudio original. Ruído, fala sobreposta, pausas expressivas e assuntos que exigem contexto podem gerar limites que precisem de leve ajuste manual. A análise não assegura que todo vídeo produza um clipe forte nem prevê alcance, retenção ou engajamento. Antes de compartilhar, confirme direitos, privacidade e informações exibidas na tela.
 
 Para editar manualmente os cortes e zooms depois da seleção, leia [edição com IA no projeto](/blog/edicao-com-ia-cortes-zooms-silencio/). Para preparar legendas, veja [transcrição e importação de SRT/VTT](/blog/legendas-automaticas-e-importar-srt-vtt/). Consulte os [recursos de IA](/#ia).
 
@@ -64,4 +64,4 @@ Próximo passo: escolha uma gravação com transcrição, gere alguns candidatos
 
 ## Histórico desta página
 
-- {{RELEASE_DATE}}: published.
+- {{RELEASE_DATE}}: publicado.

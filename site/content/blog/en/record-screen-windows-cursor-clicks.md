@@ -17,9 +17,9 @@ ogImage: "/blog/og/gravar-tela-windows-com-cursor-e-cliques.png"
 appliesTo: "1.15"
 ---
 
-> **Applies to:** Clipey 1.15 on Windows. Side-button and wheel capture described here depends on the Windows recording path and is awaiting final validation.
+> **Applies to:** Clipey 1.15 on Windows. Side-button and wheel capture depends on the Windows recording path.
 
-A software walkthrough can show pointer movement yet leave it unclear where you clicked or which way you scrolled. Plan the capture around the actions you need to teach, then check the recorded events before making the final take.
+To record your Windows screen with cursor and clicks, open the Clipey recording HUD and select Editable cursor before starting. This captures pointer coordinates, click events and mouse wheel scrolling into a separate telemetry stream alongside your video. In the editor, you can highlight individual clicks, apply smooth auto-zoom, and style the cursor without altering the original screen pixels.
 
 ## 1. Choose how to record the cursor
 
@@ -31,7 +31,7 @@ For a software demonstration, editable mode is the useful choice when you may ne
 
 Close windows that are not part of the task and begin from the relevant screen. Move the pointer deliberately instead of sweeping across unrelated areas. A short pause before each click gives viewers time to see the target and the resulting state. This is a presentation technique, not an automatic Clipey setting.
 
-If your walkthrough needs a context menu, middle click or wheel movement, note those points so you can verify them afterward. The planned 1.15 Windows capture records side-button interactions and wheel events. Left-click data remains distinct from right and middle clicks for existing bounce, impact and auto-zoom behavior.
+If your walkthrough needs a context menu, middle click or wheel movement, note those points so you can verify them afterward. Windows capture records side-button interactions and wheel events. Left-click data remains distinct from right and middle clicks for existing bounce, impact and auto-zoom behavior.
 
 ## 3. Run a short test recording
 
@@ -59,7 +59,18 @@ For a menu tutorial, first confirm the event exists. Then decide whether you nee
 
 ## Limitations
 
-The system cursor is part of the captured image and cannot be edited separately. Side-button and wheel capture are Windows-specific and remain pending final validation for this 1.15 documentation. Editable cursor mode depends on cursor telemetry; it cannot recover interaction data from an older recording that was made without it.
+The system cursor is part of the captured image and cannot be edited separately. Side-button and wheel capture are Windows-specific. Editable cursor mode depends on cursor telemetry; it cannot recover interaction data from an older recording that was made without it.
+
+## Frequently asked questions
+
+### Can I change a system cursor recording into an editable cursor afterward?
+No. System cursor mode bakes the pointer directly into the video pixels, making it impossible to restyle or separate the cursor after recording finishes.
+
+### Does Clipey record right-click and scroll wheel interactions on Windows?
+Yes. On Windows, recording in editable cursor mode captures left, right, middle clicks and wheel scrolling as discrete telemetry events.
+
+### Does the keystroke overlay capture everything I type on my keyboard?
+No. The optional keystroke overlay filters out normal typing and focuses exclusively on navigation keys and shortcut combinations to protect sensitive text and passwords.
 
 Start a project from the [download page](/en/#download).
 

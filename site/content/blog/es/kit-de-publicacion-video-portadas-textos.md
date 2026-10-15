@@ -19,7 +19,7 @@ appliesTo: "1.15"
 
 > **Aplica a:** Clipey 1.15 para Windows.
 
-Publicar en varias redes puede dejar el vídeo, los subtítulos, el texto y la portada en lugares distintos. El kit de publicación reúne los archivos que ya existen en el proyecto y los textos para cada destino, para que puedas revisarlos o entregarlos juntos. No crea diseños nuevos ni publica por ti.
+Para guardar un kit de publicación de vídeo en Clipey, finaliza la exportación de tu archivo y entra en la sección Kit de publicación y textos del panel de publicación. Esta función empaqueta tu video final, la portada existente, los subtítulos sidecar y los textos adaptados a cada red social en una carpeta local o un archivo ZIP comprimido. También puedes generar automáticamente títulos y descripciones pulsando Sugerir texto a partir de la transcripción antes de guardar el lote.
 
 ## Qué incluye el kit
 
@@ -30,17 +30,17 @@ La diferencia es importante: el kit organiza material preparado, pero no es un e
 ## Guarda una carpeta o un ZIP
 
 1. Abre el proyecto y termina el vídeo. Usa **Exportar** para crear el archivo final antes de preparar el kit.
-2. En la sección de publicación, completa y revisa el título, la descripción y las etiquetas de cada red. No dejes un texto provisional en un paquete que compartirás públicamente.
+2. En la sección **Kit de publicación y textos**, completa y revisa el título, la descripción y los hashtags de cada red. Puedes pulsar **Sugerir texto** para generar propuestas automáticas fundamentadas en la transcripción del clip.
 3. Elige **Guardar kit de publicación**.
-4. Selecciona una carpeta o un archivo ZIP. La carpeta es la opción predeterminada; elige ZIP si quieres un solo archivo para adjuntar o transferir.
-5. Elige el destino y espera el indicador de progreso. Mantén abierta la aplicación mientras se escribe el ZIP.
-6. Abre el destino y confirma que estén el vídeo y los textos esperados. Si exportaste subtítulos, revisa también el archivo adicional; si el proyecto ya tenía portada, comprueba que esté incluida.
+4. En **Formato del kit**, selecciona **Carpeta** o **Paquete ZIP**. La carpeta es la opción predeterminada para edición inmediata; elige Paquete ZIP si quieres un solo archivo para adjuntar o transferir.
+5. Haz clic en **Elegir destino** y espera el indicador de progreso. Mantén abierta la aplicación mientras se escribe el ZIP.
+6. Abre el destino y confirma que estén el vídeo, los archivos de subtítulos, la imagen de portada y los textos esperados.
 
 Los textos se separan por plataforma para que puedas copiar la versión correcta sin mezclar indicaciones. `copy.json` reúne la misma información en un formato estructurado, útil cuando otro flujo consume los campos en lugar de copiarlos manualmente.
 
 ## Revisa el texto sugerido
 
-Cuando estén disponibles las sugerencias, se basan en la transcripción y el fragmento del vídeo, y siguen siendo sugerencias. Lee cada título, descripción y etiqueta. Comprueba los nombres propios, el contexto y las llamadas a la acción antes de guardar el kit. Las sugerencias no sustituyen tu revisión ni se publican automáticamente.
+La acción **Sugerir texto** analiza la transcripción y el intervalo del clip seleccionado para generar títulos, descripciones y hashtags relevantes. Lee cada propuesta generada y corrige nombres propios, términos técnicos y llamadas a la acción antes de guardar el kit. Esta herramienta acelera la redacción inicial manteniéndote al frente de cada decisión editorial.
 
 Compara las afirmaciones con lo que realmente aparece en el vídeo. Si la transcripción no menciona una persona o marca, no des por hecho que la sugerencia haya acertado el nombre. Después de guardar, revisa también tus cambios en el archivo de cada plataforma.
 

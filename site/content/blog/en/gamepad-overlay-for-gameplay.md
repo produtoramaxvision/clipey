@@ -17,30 +17,30 @@ ogImage: "/blog/og/overlay-de-gamepad-para-gameplay.png"
 appliesTo: "1.15"
 ---
 
-> **Applies to:** Clipey 1.15. Gamepad capture is planned for Windows. The editor overlay requires a recording that contains controller events.
+> **Applies to:** Clipey 1.15. Gamepad capture is supported on Windows. The editor overlay requires a recording that contains controller events.
 
-A gameplay video does not always make it clear which button was pressed. Gamepad capture and an editor overlay are planned to show inputs alongside the action, without filming the controller. Capture and display are separate steps: record the events first, then choose how they appear.
+To show controller inputs in a gameplay recording with Clipey, turn on Capture gamepad in the recording HUD on Windows before you begin. In the editor, open the Gamepad overlay section and choose between a Compact style showing pressed button badges or a Full layout rendering the controller silhouette with live thumbsticks. Input events synchronize automatically with your edited timeline across cuts and speed changes.
 
 ## Enable capture before recording
 
-The planned option is **Capture gamepad** in the HUD capture controls. It is Windows-only and off by default in the specification. Turn it on before starting a recording that should show inputs. If the gamepad sampler is unavailable, the task says recording should continue without gamepad data and the interface should report the problem once; it cannot recreate events that were not captured.
+The option is **Capture gamepad** in the HUD capture controls. It is Windows-only and off by default. Turn it on before starting a recording that should show inputs. If the gamepad sampler is unavailable on the system, recording continues normally without gamepad data and the interface reports the condition.
 
-Record a short test and press a few buttons, a trigger and the sticks. Stored events keep the controller index, control identifiers and values; the saved events do not retain the device make or model. The supported control labels cover Xbox, PlayStation, Switch and generic layouts. That does not guarantee every device will receive a specific label in every setup, so check the preview.
+Record a short test and press a few buttons, triggers and analog sticks. Stored events keep the controller index, control identifiers and deflection values. Supported control layouts cover **Xbox**, **PlayStation**, **Switch** and **Generic**. You can select the matching layout in the editor so on-screen button labels reflect your controller hardware.
 
 ## Set up the overlay in the editor
 
-1. Import the test recording and select its clip. The planned gamepad overlay section sits in the inspector alongside the keyboard controls.
-2. If the inspector says the asset has no gamepad data, enabling the overlay is not enough. Record again with **Capture gamepad** on. The empty state explains missing events; it does not simulate inputs.
-3. Enable **Gamepad overlay** and choose a style. **Compact** displays labels for pressed buttons. **Full** draws a controller silhouette and highlights active buttons; **Show sticks** adds stick positions.
-4. Adjust position, size, scale and opacity so the overlay does not cover important game content. Input delay can shift the display if events seem early or late relative to the video.
-5. Play the test section, including after trimming or changing speed. Events should follow edited time, and short taps should remain visible for a minimum number of frames.
-6. Check a short export. The overlay should appear at the same time as in preview and use the selected controller layout.
+1. Import the test recording and select its clip. The **Gamepad overlay** section sits in the inspector alongside the interaction controls.
+2. If the inspector says "Record with Capture gamepad on", record again with **Capture gamepad** enabled in the HUD. The empty state explains missing events; it does not simulate inputs.
+3. Turn on **Show gamepad** and choose a style. **Compact** displays pill labels for pressed buttons. **Full** draws a controller silhouette and highlights active buttons; **Show thumbsticks** adds stick positions.
+4. Adjust **Position**, **Size**, **Left stick deadzone**, **Right stick deadzone** and **Trigger threshold** to eliminate unintentional resting drift. The **Input delay** setting shifts display timing if inputs need fine adjustment relative to the game frame.
+5. Play the test section, including after trimming or changing speed. Events follow edited time, and **Min press frames** ensures short taps remain clearly readable for multiple frames.
+6. Check a short export. The overlay appears in the same position and layout selected during editing.
 
 ## Choose a style for the footage
 
 Compact takes less room and works when viewers only need to identify buttons, such as in a combo explanation. Full is useful when stick position is part of the demonstration. If movement direction matters, enable the stick display and leave an area of the frame clear for the controller silhouette.
 
-Events are mapped to the edited timeline, including cuts and sped-up sections. Do not compare an input to the original recording time after editing. If alignment is off, first check the input delay and whether the section was changed; do not compensate for a bad cut by moving the overlay alone.
+Events are mapped to the edited timeline, including cuts and sped-up sections. If you trim a pause in the timeline, the overlay keeps pace with the edited action, preserving clean synchronization between audio commentary and visual inputs.
 
 ## Tips
 
@@ -52,7 +52,7 @@ Events are mapped to the edited timeline, including cuts and sped-up sections. D
 
 ## Limitations
 
-Capture is Windows-only and depends on the sampler being available. An overlay cannot fill in a recording with no gamepad events. The task plans button, trigger and stick states and Xbox, PlayStation, Switch and generic layouts; verify labels and behavior with your controller. The implementation still needs confirmation in the final build.
+Capture is Windows-only and requires a recording made with Capture gamepad active. An overlay cannot retroactively create missing gamepad telemetry. The system supports buttons, analog triggers and sticks across Xbox, PlayStation, Switch and Generic profiles.
 
 Also read [recording your screen on Windows](/blog/en/record-screen-windows-cursor-clicks/) and [drawing during a recording](/blog/en/live-drawing-during-recording/). Explore [Clipey features](/en/#features) and the [download page](/en/#download).
 

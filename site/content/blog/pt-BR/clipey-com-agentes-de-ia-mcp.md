@@ -17,25 +17,25 @@ ogImage: "/blog/og/clipey-com-agentes-de-ia-mcp.png"
 appliesTo: "1.15"
 ---
 
-> **Aplica-se a:** Clipey 1.15 para Windows. Os passos de configuração variam conforme o cliente MCP.
+> **Aplica-se a:** Clipey 1.15 para Windows.
 
-Um cliente compatível com MCP pode pedir ao Clipey informações ou ações sobre um projeto. A integração não dá acesso irrestrito ao computador: ela apresenta ferramentas específicas, e o servidor HTTP integrado fica desativado até você habilitá-lo. A permissão para alterar projetos também é separada da conexão. Este guia ajuda a escolher entre o modo local da aplicação e o processo stdio iniciado pelo cliente.
+Para conectar agentes de IA ao Clipey usando MCP, abra a seção Servidor MCP nas configurações do editor e ative o servidor HTTP local ou configure o transporte via stdio no cliente de sua preferência (como Claude Code ou Codex). A integração opera em 127.0.0.1 mediante autenticação por token de acesso, mantendo a permissão de edição desativada por padrão para leitura segura do projeto. Ao habilitar o acesso de gravação e edição, o agente pode inspecionar mídias, aplicar cortes na linha do tempo e disparar exportações locais.
 
 ## Escolha um transporte
 
 O servidor MCP da aplicação usa HTTP local em `127.0.0.1`, uma porta configurada e um token. Ele é útil quando você quer que o cliente alcance o Clipey que já está aberto e trabalhando com um projeto. O MCP por stdio, por outro lado, é iniciado como um processo próprio pelo cliente. A configuração de cada modo tem de ser feita no cliente; não use um token real em documentação ou em um arquivo que será compartilhado.
 
-O servidor HTTP vem desativado por padrão. Ative-o somente quando for usar a conexão, proteja o token e desative-o depois se não precisar dele. As opções e nomes exatos no cliente variam, então consulte o guia de configuração incluído com a versão instalada antes de colar um bloco.
+O servidor HTTP vem desativado por padrão. Ative-o somente quando for usar a conexão, proteja o token e desative-o depois se não precisar dele. As opções e comandos específicos variam conforme o cliente adotado.
 
 ## Configuração geral
 
 1. Atualize e abra o Clipey 1.15; mantenha aberto o projeto que o agente deverá consultar.
 2. Abra **Servidor MCP** nas configurações de IA e ative **Ativar servidor MCP** para usar HTTP. Confirme o estado **Em execução** e confira o campo **Porta**.
-3. Use o comando exibido na seção **Claude Code** ou **Codex**, conforme o cliente que você usa. O servidor integrado apresenta comandos para esses clientes; para Cursor, VS Code ou outro host, consulte a documentação MCP do próprio cliente e configure a URL local e o token sem compartilhar o segredo.
+3. Use o comando exibido na seção **Claude Code** ou **Codex**, conforme o cliente que você usa. O servidor integrado apresenta comandos para esses clientes; para Cursor, VS Code ou outro host, consulte a documentação MCP do próprio cliente e configure a URL local e o token sem expor o segredo.
 4. Recarregue o cliente e confira se Clipey aparece conectado. Comece com uma pergunta de leitura sobre o projeto aberto.
 5. Mantenha **Permitir que clientes MCP editem seus projetos, gravem e exportem** desligado até precisar dessas ações. Se o ligar, revise cada alteração no editor; as mudanças são salvas assim que chegam.
 
-No HTTP, o servidor integrado usa o endereço local, a porta e o token de acesso que aparecem no painel **Servidor MCP**. O botão para mostrar o token permite revelá-lo temporariamente; **Copiar** o envia à área de transferência, e **Regenerar** invalida o token anterior e desconecta os clientes que o usam. Em stdio, o cliente inicia um processo separado, com ciclo de vida diferente do editor. Não configure os dois modos ao mesmo tempo sem uma razão: isso pode deixar pouco claro qual conexão está atendendo o agente.
+No HTTP, o servidor integrado usa o endereço local, a porta e o token de acesso que aparecem no painel **Servidor MCP**. O botão para mostrar o token permite revelá-lo temporariamente; **Copiar** o envia à área de transferência, e **Gerar novo** invalida o token anterior e desconecta os clientes que o usam. Em stdio, o cliente inicia um processo separado, com ciclo de vida diferente do editor. Não configure os dois modos ao mesmo tempo sem uma razão: isso pode deixar pouco claro qual conexão está atendendo o agente.
 
 ## O que pedir ao agente
 
@@ -47,7 +47,7 @@ Leia as descrições e as permissões das ferramentas mostradas pelo cliente. Al
 
 - Comece sem permitir edição e amplie permissões somente quando o fluxo exigir.
 - Mantenha o token fora de prompts, capturas e repositórios. Se suspeitar de exposição, gere outro nas configurações do Clipey.
-- Depois de regenerar o token, atualize as configurações locais de cada cliente; as conexões que guardam o token anterior deixam de funcionar.
+- Depois de gerar um novo token, atualize as configurações locais de cada cliente; as conexões que guardam o token anterior deixam de funcionar.
 - Ao usar HTTP, mantenha o endereço restrito a `127.0.0.1`; não exponha a porta na rede.
 - No modo stdio, encerre o cliente que iniciou o processo quando terminar de usar a conexão.
 - Se o projeto não aparecer, verifique se o editor está aberto, se o HTTP está habilitado ou se o cliente iniciou o transporte correto.

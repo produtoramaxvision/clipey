@@ -17,17 +17,17 @@ ogImage: "/blog/og/reenquadramento-vertical-por-rosto.png"
 appliesTo: "1.15"
 ---
 
-> **Aplica-se a:** Clipey 1.15 no Windows.
+> **Aplica-se a:** Clipey 1.15. O enquadramento facial e o fundo desfocado estão disponíveis no editor para formatos de saída fixos.
 
-Uma gravação de tela pode ter sido feita em formato largo, mesmo quando o destino é um vídeo vertical. O reenquadramento por rosto ajuda a manter a pessoa visível dentro do novo quadro. Ele não transforma automaticamente toda gravação em um vídeo pronto: revise o movimento, escolha o que acontece quando o rosto não é encontrado e confira o conteúdo que ficará fora do recorte.
+Para reenquadrar uma gravação verticalmente pelo rosto no Clipey, escolha um formato fixo, como 9:16, e ative **Enquadramento facial**. O Clipey analisa o vídeo localmente para criar uma trilha que acompanha o rosto, com opções de **Suavização** e **Alternativa** para **Cursor** ou **Centro** quando nenhum rosto é encontrado. Em formatos fixos, **Fundo desfocado** preenche as laterais com uma versão ampliada e desfocada da fonte.
 
 ## Prepare o formato de saída
 
 1. Abra o projeto com o vídeo que deseja adaptar e confirme que a mídia está carregada.
 2. No painel de formato, escolha a proporção vertical, como 9:16. Observe o preview: o quadro fixo seleciona apenas parte da imagem original.
-3. Ative **Face reframe**. O Clipey analisa a mídia para construir uma trajetória de foco. Essa análise ocorre quando o recurso é ativado ou quando o ativo ainda não tem uma trilha; o objetivo não é detectar rostos a cada quadro durante a reprodução.
-4. Ajuste a suavização para equilibrar acompanhamento e estabilidade. Uma resposta mais suave reduz mudanças bruscas, mas pode demorar a acompanhar um deslocamento rápido. Reproduza trechos em que a pessoa muda de posição antes de decidir.
-5. Se nenhum rosto estiver disponível em parte do vídeo, escolha o fallback: seguir o cursor ou centralizar o quadro. Reproduza o intervalo sem rosto e confira se a alternativa mantém informação útil.
+3. Ative **Enquadramento facial**. O Clipey analisa o vídeo para construir uma trajetória de foco. A análise ocorre ao ativar o recurso ou quando o ativo ainda não tem uma trajetória; os rostos não são detectados a cada quadro durante a reprodução.
+4. Ajuste **Suavização** para equilibrar acompanhamento e estabilidade. Uma resposta mais suave reduz mudanças bruscas, mas pode demorar a acompanhar um deslocamento rápido. Reproduza trechos em que a pessoa muda de posição antes de decidir.
+5. Se nenhum rosto for detectado, escolha a **Alternativa**: seguir o cursor ou centralizar o quadro. Reproduza o intervalo sem rosto e confira se essa opção mantém informação útil.
 
 ## Revise o movimento do quadro
 
@@ -37,7 +37,7 @@ O preview e a exportação devem refletir o reenquadramento. Ainda assim, reveja
 
 ## Escolha como preencher as laterais
 
-Ao converter uma fonte horizontal para 9:16, é comum que sobrem áreas vazias ou que seja necessário cortar bastante. O modo **Blurred backdrop** preenche as laterais com uma versão ampliada e desfocada da própria imagem, mantendo a fonte principal centralizada e inteira. Compare esse modo com o preenchimento que corta a imagem: o fundo desfocado preserva o contexto do vídeo, mas pode deixar elementos da interface pouco legíveis.
+Ao converter uma fonte horizontal para 9:16, é comum que sobrem áreas vazias ou que seja necessário cortar bastante. O modo de fundo desfocado preenche as laterais com uma versão ampliada e desfocada da própria imagem, mantendo a fonte principal centralizada e inteira. Compare esse modo com o preenchimento que corta a imagem: o fundo desfocado preserva o contexto do vídeo, mas pode deixar elementos da interface pouco legíveis.
 
 Use a opção conforme a finalidade do conteúdo. Para uma pessoa falando, o fundo desfocado pode evitar barras pretas sem ampliar a área principal além do necessário. Para ensinar um detalhe da tela, cortar para preencher pode esconder controles; o fundo desfocado também não torna o texto de fundo legível. Confira o resultado com movimento e com legendas ligadas.
 
@@ -52,7 +52,7 @@ Use a opção conforme a finalidade do conteúdo. Para uma pessoa falando, o fun
 
 ## Limitações
 
-O reenquadramento depende de detecção facial no dispositivo e de uma trilha de foco gerada para o ativo. Não é garantia de que todos os rostos serão detectados em todas as condições, nem identifica automaticamente qual elemento da interface importa. O recurso acompanha um rosto escolhido, e não necessariamente a pessoa que está falando. Em períodos sem detecção, o comportamento de fallback é usado. O fundo desfocado pode reduzir a legibilidade de conteúdo visual e não substitui uma edição manual para cenas complexas.
+O enquadramento facial depende da detecção de rostos no dispositivo e de uma trilha gerada para o ativo. Não garante detectar todos os rostos em todas as condições nem identifica qual elemento da interface é importante. Ele acompanha um rosto detectado, que pode não ser a pessoa falando. Quando não há detecção, usa a alternativa configurada. O fundo desfocado pode reduzir a legibilidade do conteúdo visual e não substitui a edição manual em cenas complexas.
 
 Para selecionar momentos curtos da gravação, leia [como revisar clipes do Auto Clip](/blog/auto-clip-shorts-de-videos-longos/). Para trabalhar com cortes e zooms, veja [edição com IA](/blog/edicao-com-ia-cortes-zooms-silencio/). Consulte também os [recursos do Clipey](/#recursos).
 
@@ -60,4 +60,4 @@ Próximo passo: aplique o reenquadramento a um trecho curto, confira o fallback 
 
 ## Histórico desta página
 
-- {{RELEASE_DATE}}: published.
+- {{RELEASE_DATE}}: publicado.

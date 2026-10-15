@@ -19,15 +19,15 @@ appliesTo: "1.15"
 
 > **Aplica a:** Clipey 1.15 en Windows.
 
-Una grabación de pantalla suele incluir pausas, intentos y momentos que no ayudan a explicar el tema. El agente de IA de Clipey puede convertir una instrucción concreta en cambios de edición. Considera el resultado como un borrador que debes revisar: pide un cambio localizado, comprueba la timeline y reproduce el montaje antes de exportar.
+Para editar grabaciones con IA en Clipey, utiliza el agente integrado para convertir instrucciones en lenguaje natural en cortes precisos en la línea de tiempo, recortes de silencios y aproximaciones con zoom. El sistema analiza la transcripción generada localmente y la telemetría del cursor para localizar momentos clave sin enviar tus archivos a la nube. Tienes el control total para revisar cada corte sugerido, reajustar palabras en el panel de transcripción y confirmar las transiciones antes de exportar.
 
 ## Prepara el proyecto
 
-1. Abre la grabación en el editor y espera a que cargue el medio. Para solicitudes basadas en lo que se dijo, transcribe el audio primero. El panel de transcripción ofrece **Transcribe now** cuando todavía no hay texto. La transcripción aporta contexto al agente, pero no reemplaza la revisión del video.
+1. Abre la grabación en el editor y espera a que cargue el medio. Para solicitudes basadas en lo que se dijo, transcribe el audio primero. El panel de transcripción ofrece **Transcribir** cuando todavía no hay texto generado. La transcripción aporta contexto al agente, pero no reemplaza la revisión del video.
 2. Abre la conversación del agente en el editor. Si el proyecto no tiene transcripción, empieza con una solicitud visual o transcribe antes de pedir que quite pausas habladas.
 3. Indica un objetivo cada vez. Por ejemplo: “quita la pausa larga después de la explicación y acerca el zoom cuando muestre el menú”. Una instrucción localizada es más fácil de verificar que pedir, de forma general, que todo el video sea más dinámico.
 
-El agente puede realizar operaciones de edición como cortes y zooms. El texto de bienvenida también presenta la eliminación de silencios, el ajuste de pausas y la retirada de muletillas como tareas posibles. No des por hecho que todo silencio sobra: una voz baja, una respiración o una pausa intencional pueden ser importantes para el sentido y el ritmo.
+El agente puede realizar operaciones de edición como cortes y zooms, además de recortar silencios y reducir pausas. Si tu proyecto incluye música de fondo, activa **Claridad de voz** en el inspector de audio para atenuar frecuencias medias de la música y resaltar la voz hablada. No des por hecho que todo silencio sobra: una voz baja, una respiración o una pausa intencional pueden ser importantes para el sentido y el ritmo.
 
 ## Revisa los cortes con la transcripción
 
@@ -59,4 +59,4 @@ Como siguiente paso, prueba un cambio concreto en una grabación corta y reprodu
 
 ## Historial de esta página
 
-- {{RELEASE_DATE}}: published.
+- {{RELEASE_DATE}}: publicado.

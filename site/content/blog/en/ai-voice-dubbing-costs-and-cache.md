@@ -19,29 +19,29 @@ appliesTo: "1.15"
 
 > **Applies to:** Clipey 1.15 on Windows.
 
-Dubbing may take several attempts before pronunciation, pacing and delivery fit the video. Clipey Studio brings voice generation and speech controls into the project. Choose a provider carefully and review the script before generating. For a cloud provider, a cost estimate helps you understand possible spend, but it is not a final bill.
+To generate AI voice and dubbing with cost estimates in Clipey, select your transcript lines in Clipey Studio and choose a synthesis voice. The app calculates real-time estimated charges in USD from character counts and a versioned pricing table, letting you set an optional session budget to prevent surprise cloud bills. Generated voice lines are cached per sentence based on text, voice, provider, and speed settings, reusing existing audio automatically without incurring redundant costs.
 
 ## Prepare your script and voice track
 
 1. Open the project and confirm the transcript you want to use as a basis. Correct wording, punctuation and names first; punctuation affects pauses and how a line sounds.
-2. In **Clipey Studio**, choose a provider and voice options. The app offers different synthesis providers; some choices, such as recording with a microphone, do not synthesise text.
+2. In **Clipey Studio**, choose a provider and voice options. Local models display **Free (on-device)**, while remote services show clear cost estimates.
 3. Select a voice and review short lines. A long sentence may sound different when divided into smaller units, so check transitions and timing against the video.
-4. Before a cloud run, review its cost estimate and the amount of text or audio shown. If you set a session budget, make sure the run fits within it.
+4. Before a cloud run, review its **Estimated cost** and character count. If you enable **Limit session spend**, configure a **Budget ($)** to track the remaining allowance.
 5. Generate the voice and listen in the context of the project. Adjust pronunciation or pacing, then regenerate only the lines that need a change.
 
 ## Read the estimate and budget correctly
 
-Cloud voice or transcription estimates use a versioned price table and are indicative. The actual amount can vary with provider, model, billable usage and external price changes. Use an estimate to compare choices and plan a session, not as a guaranteed charge.
+Cloud voice or transcription estimates use a versioned price table within the application and are indicative. The actual amount billed by your external API provider can vary slightly with taxes, rounding or external rate updates. Use the estimate to plan and manage session expenses before submitting requests.
 
-The per-session budget is optional. When enabled, it blocks a cloud operation that would exceed the limit and explains that you need to revise the request. It should not block local providers. If a run is blocked, shorten the text or number of lines, select another option, or consciously adjust the limit before trying again.
+The **Session budget** control is optional. When enabled, it blocks cloud operations that would exceed the configured ceiling, displaying **Budget limit reached** with the remaining budget. Importantly, budget limits never block free local synthesis or microphone recording on your computer.
 
-Characters and minutes are different measures. Text synthesis is generally estimated by characters or text units, while transcription may use audio duration. A short line can be priced differently depending on the selected provider. Check the chosen model and the estimate for that specific operation.
+Characters and audio minutes represent different charging models. Text synthesis prices by character count, while audio transcription estimates by audio duration. A short sentence reflects a small character footprint with units detailed in the interface.
 
 ## Avoid regenerating unchanged lines
 
-When voice is generated per line, keep approved wording and change only the line that needs work. The audio cache can reuse a line when its combination of text, voice, provider, model, speed and other synthesis settings has not changed. Changing the voice or a synthesis setting requires new audio for that line; editing another line should not require redoing the untouched ones.
+When voice is generated per line, Clipey caches each synthesized audio line based on a hash of text, voice, provider, model and speaking speed. Changing one line in a scene leaves the others intact, and the interface reports how many cached lines were reused without re-billing or re-downloading audio.
 
-This can save time and avoid repeating a remote generation, but it does not mean every audio file is kept forever. Project audio follows the lifetime of the elements that reference the voice track. Before removing media or clearing project data, make sure you have an exported copy of any result you need to keep.
+This granular caching accelerates iterative script refinement. Switching a voice timbre requires generating new audio for affected lines, but neighboring lines remain safely cached.
 
 ## Tips for more natural dubbing
 

@@ -19,7 +19,7 @@ appliesTo: "1.15"
 
 > **Aplica a:** Clipey 1.15 para Windows.
 
-Decir que algo es local solo resulta útil si sabes a qué parte del proceso se refiere. Clipey graba y edita en tu PC, y el reconocimiento de voz se ejecuta en el dispositivo. Sin embargo, algunas funciones de IA pueden usar un proveedor externo y conviene revisar un paquete de diagnóstico antes de compartirlo. Aquí se distinguen esos casos para que puedas decidir con criterio.
+En Clipey, las grabaciones de pantalla, las ediciones en la línea de tiempo y las transcripciones de voz con modelos Whisper se procesan íntegramente en tu computadora Windows sin enviar audio ni video a servidores en la nube. Las solicitudes externas se limitan a los proveedores de IA que decidas configurar expresamente o al publicar en redes sociales. Los paquetes de diagnóstico generados para soporte técnico no incluyen videos y deben revisarse manualmente antes de enviarlos para proteger datos del sistema.
 
 ## Grabaciones y archivos del proyecto
 
@@ -33,11 +33,11 @@ Algunas operaciones de IA utilizan el proveedor configurado en Clipey. Antes de 
 
 ## Trata con cuidado las exportaciones de diagnóstico
 
-Los diagnósticos ayudan a investigar problemas, pero pueden incluir información del equipo o de una sesión. Antes de compartir un paquete, usa el flujo de exportación y revisa los archivos incluidos. En el árbol de código de esta versión 1.15, las reglas ampliadas para ocultar claves de API, tokens bearer y OAuth, correos electrónicos, nombres de usuario de Windows en rutas y texto transcrito están especificadas para el sistema de diagnóstico, pero todavía no aparecen en la implementación publicada. No confíes en una redacción aún no verificada para omitir la revisión.
+Los diagnósticos ayudan a investigar problemas. Antes de escribir el paquete, Clipey oculta automáticamente secretos reconocidos, tokens bearer y OAuth, correos electrónicos, nombres de usuario de Windows en rutas y texto de transcripciones. La transcripción se excluye de forma predeterminada; puedes elegir incluirla al exportar. La redacción se basa en patrones y no elimina toda información identificable, así que revisa el archivo antes de compartirlo.
 
 1. Exporta diagnósticos solo cuando sean necesarios para soporte o resolución de problemas.
 2. Abre el archivo generado y revisa su contenido antes de adjuntarlo.
-3. Retira archivos que no hagan falta y oculta manualmente cualquier secreto que encuentres.
+3. Confirma que la transcripción se haya incluido solo si es necesaria y retira cualquier dato identificable que siga presente.
 4. Envíalo únicamente por el canal de soporte que pretendías utilizar.
 
 ## Consejos
@@ -49,7 +49,7 @@ Los diagnósticos ayudan a investigar problemas, pero pueden incluir informació
 
 ## Limitaciones
 
-La transcripción en el dispositivo no significa que todas las funciones trabajen sin conexión. La IA de proveedores requiere el servicio configurado y puede necesitar cuenta o conexión. La redacción avanzada de diagnósticos figura como trabajo en curso en el árbol de esta versión; no se debe dar por disponible hasta que se confirme en una versión integrada.
+La transcripción en el dispositivo no significa que todas las funciones trabajen sin conexión. La IA de proveedores requiere el servicio configurado y puede necesitar cuenta o conexión. La redacción automática solo reconoce ciertos patrones de secretos y rutas; no garantiza anonimizar todo el paquete. Comprueba el archivo exportado antes de compartirlo.
 
 Para conectar agentes, consulta [configuración y permisos MCP](/blog/es/clipey-agentes-ia-mcp/). Para empezar con una grabación local, lee [primeros pasos con Clipey](/blog/es/primeros-pasos-con-clipey/). Revisa la [información de privacidad](/es/#privacidad).
 

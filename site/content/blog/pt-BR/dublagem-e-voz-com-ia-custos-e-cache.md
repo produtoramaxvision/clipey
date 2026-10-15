@@ -19,29 +19,29 @@ appliesTo: "1.15"
 
 > **Aplica-se a:** Clipey 1.15 no Windows.
 
-Uma dublagem pode exigir várias tentativas até que a pronúncia, o ritmo e a interpretação combinem com o vídeo. O Clipey Studio reúne geração de voz e controles de fala no projeto. Antes de gerar, escolha o provedor com atenção e revise o texto. Quando o provedor é remoto, a estimativa ajuda a entender o possível custo, mas não é uma cobrança final.
+Para gerar voz e dublagem com estimativa de custo no Clipey, selecione o texto desejado no Clipey Studio e escolha a voz e o provedor pretendidos. A interface calcula automaticamente o custo previsto em dólares com base na contagem de caracteres e na tabela de preços versionada, permitindo definir um orçamento por sessão para evitar gastos acidentais. O sistema também armazena em cache cada linha de áudio sintetizada, reutilizando trechos inalterados sem custos extras ou regerações desnecessárias.
 
 ## Prepare o texto e a faixa de voz
 
-1. Abra o projeto e confirme a transcrição que servirá de base. Corrija palavras, pontuação e nomes antes de gerar fala; pontuação influencia pausas e a forma como uma frase soa.
-2. No painel **Clipey Studio**, configure o provedor e as opções de voz. O aplicativo oferece provedores de síntese diferentes; algumas opções, como gravação com microfone, não sintetizam texto.
-3. Escolha a voz e confira o texto em segmentos curtos. Uma frase longa pode soar diferente da mesma fala dividida em unidades menores, então revise as transições e o sincronismo com o vídeo.
-4. Antes de iniciar uma execução na nuvem, confira a estimativa de custo e a quantidade de texto ou áudio indicada. Se tiver configurado um limite de sessão, confirme que a execução fica dentro dele.
-5. Gere a fala e ouça o resultado no contexto do projeto. Ajuste a pronúncia ou o ritmo e regenere apenas os trechos que realmente precisam de mudança.
+1. Abra o projeto e confirme a transcrição que servirá de base. Corrija palavras, pontuação e nomes antes de gerar fala; a pontuação influencia pausas e a cadência da frase.
+2. No painel **Clipey Studio**, configure o provedor e as opções de voz. Provedores locais exibem o aviso **Gratuito (no dispositivo)**, enquanto serviços remotos mostram previsões de custo.
+3. Escolha a voz e confira o texto em segmentos curtos. Uma frase longa pode soar diferente da mesma fala dividida em unidades menores; revise transições e sincronismo com a imagem.
+4. Antes de iniciar a síntese em nuvem, confira o valor em **Custo est.** e a contagem de caracteres. Se ativar **Limitar gastos da sessão**, defina o valor em **Orçamento ($)** para acompanhar o saldo restante.
+5. Gere a fala e ouça o resultado no contexto do projeto. Ajuste pronúncia ou velocidade apenas nas falas necessárias.
 
 ## Entenda a estimativa e o limite
 
-As estimativas de serviços de voz ou transcrição na nuvem são calculadas com uma tabela de preços versionada e são indicativas. O valor real pode variar conforme o provedor, o modelo, a contagem faturável e alterações de preço externas. Use a estimativa para comparar opções e dimensionar uma sessão, não como garantia de cobrança.
+As estimativas de serviços de voz na nuvem são calculadas a partir de uma tabela de preços versionada no aplicativo. O valor real faturado pelo seu provedor externo pode variar por impostos, arredondamentos ou alterações tarifárias da API. Use a estimativa para planejar e controlar seus gastos antes de disparar o processamento.
 
-O orçamento por sessão é opcional. Quando ativado, ele impede uma operação em nuvem que ultrapassaria o limite configurado e mostra um aviso para que você possa rever o pedido. Esse limite não deve bloquear provedores locais. Se uma ação for barrada, reduza o texto ou o número de falas, selecione outra opção ou altere o limite conscientemente antes de tentar de novo.
+O recurso **Orçamento da sessão** é opcional. Quando ativado, ele bloqueia chamadas que ultrapassariam o teto definido e exibe o aviso **Limite de orçamento atingido** com o montante restante. Importante: esse limite nunca bloqueia sínteses locais ou gravação por microfone, que operam sempre de graça no computador.
 
-Observe a diferença entre caracteres e minutos. Síntese de texto costuma calcular por caracteres ou unidade de texto, enquanto transcrição pode estimar minutos de áudio. Uma linha curta pode ser cobrada de forma diferente dependendo do provedor escolhido. Consulte o modelo selecionado e a estimativa apresentada para aquela operação.
+Observe a diferença entre contagem de caracteres e minutos de áudio. A síntese de voz calcula custos pelo número de caracteres processados, enquanto modelos de transcrição costumam orçar pelo tempo total de áudio. Uma linha curta gera custo proporcional reduzido e exibe o detalhamento em unidades na interface.
 
 ## Evite gerar novamente o que não mudou
 
-Quando a fala é gerada por linha, mantenha o texto aprovado e altere somente a linha necessária. O cache de áudio pode reaproveitar uma linha cuja combinação de texto, voz, provedor, modelo, velocidade e demais ajustes não mudou. Trocar a voz ou uma configuração de síntese faz a linha precisar de novo áudio; editar outra fala não deve exigir refazer as linhas intactas.
+Quando a fala é gerada linha por linha, o Clipey armazena em cache cada segmento sintetizado a partir do hash do texto, voz, provedor e taxa de fala. Se você alterar apenas a terceira linha de uma cena, as demais falas permanecem intactas e a interface exibe a confirmação de linhas em cache reutilizadas, sem novo consumo de cota ou recálculo financeiro.
 
-Essa distinção economiza tempo e pode evitar geração remota repetida, mas não significa que todo áudio fica disponível indefinidamente. Os arquivos associados ao projeto seguem o ciclo de vida dos elementos que ainda usam a faixa de voz. Antes de remover mídia ou limpar dados do projeto, confirme se há uma cópia exportada do resultado que você precisa manter.
+Essa arquitetura de cache acelera o refinamento de roteiros extensos. Trocar o timbre da voz ou o modelo exige novo áudio para as linhas afetadas, mas edições em trechos vizinhos não invalidam o cache das frases prontas.
 
 ## Dicas para uma dublagem mais natural
 
@@ -54,7 +54,7 @@ Essa distinção economiza tempo e pode evitar geração remota repetida, mas n�
 
 ## Limitações
 
-Vozes sintéticas podem pronunciar nomes e abreviações de modo inesperado, e a estimativa depende das informações disponíveis para o provedor e modelo selecionados. Valores de preço são estimativas, não cotações garantidas. A dublagem não traduz nem adapta automaticamente toda a intenção cultural do roteiro: revise o texto e o resultado falado. Voz gravada com microfone é diferente de síntese e não segue o mesmo cálculo de caracteres.
+Vozes sintéticas podem pronunciar nomes e abreviações de modo inesperado, e a estimativa depende das informações disponíveis para o provedor e modelo selecionados. Valores de preço são estimativas informativas, não faturas contratuais garantidas. A dublagem sintetizada substitui áudio gravado, mas não traduz automaticamente intenções culturais ou ritmo sem conferência humana.
 
 Para preparar legendas que acompanhem a fala, veja [transcrição e importação de SRT/VTT](/blog/legendas-automaticas-e-importar-srt-vtt/). Para revisar pausas e cortes no vídeo, leia [edição com IA](/blog/edicao-com-ia-cortes-zooms-silencio/). Saiba mais sobre [privacidade](/#privacidade).
 
@@ -62,4 +62,4 @@ Próximo passo: teste uma linha, escute-a no projeto e só então gere o restant
 
 ## Histórico desta página
 
-- {{RELEASE_DATE}}: published.
+- {{RELEASE_DATE}}: publicado.

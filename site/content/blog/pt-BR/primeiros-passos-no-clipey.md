@@ -19,7 +19,7 @@ appliesTo: "1.15"
 
 > **Aplica-se a:** Clipey 1.15 para Windows.
 
-Na primeira gravação, é fácil capturar a tela errada, esquecer uma fonte de áudio ou exportar sem conferir o arquivo. Faça um teste curto antes de gravar algo importante. Assim você valida as permissões, entende onde ficam os controles e aprende o caminho até a exportação.
+Para começar a gravar e exportar vídeos com o Clipey no Windows, selecione sua tela ou janela no assistente de gravação e ajuste os dispositivos de microfone e câmera. Após concluir a captura, use o editor integrado para aparar trechos indesejados e abrir a janela Exportar, escolhendo um preset de formato com estimativas de tamanho e verificação técnica de arquivo. Todo o fluxo inicial opera localmente no seu computador sem exigir cadastro de conta ou conexão constante à internet.
 
 ## Instale e abra o app
 

@@ -19,33 +19,33 @@ appliesTo: "1.15"
 
 > **Aplica-se a:** Clipey 1.15 para Windows.
 
-Agendar não é o mesmo que enviar o arquivo para um serviço de nuvem. O Clipey mantém uma fila local e envia o vídeo quando o horário chega. Por isso, o computador e o aplicativo precisam estar disponíveis. Este guia mostra como preparar um MP4 ou MOV, escolher o destino e conferir a fila antes de fechar o editor.
+Para agendar publicações de vídeo no Clipey, conclua a exportação do arquivo e acesse a aba Agendar no painel de publicação para YouTube, TikTok, Instagram ou Facebook. Escolha um horário local com pelo menos dois minutos de antecedência e acompanhe o status da entrega diretamente na Fila de agendamentos. Como a fila é gerenciada localmente no computador, o Clipey ou seu processo na bandeja do Windows deve estar em execução no momento programado para concluir o envio.
 
 ## Antes de marcar um horário
 
 Conclua a edição e exporte o vídeo primeiro. A publicação agendada usa o arquivo exportado e os campos de título e descrição do painel de publicação. Os destinos exibidos são YouTube, Facebook, Instagram e TikTok; cada rede exige uma conta conectada e pode pedir opções adicionais. A disponibilidade de uma conta não significa que todas as páginas ou perfis estejam prontos: o Clipey mostra estados como conta desconectada, sessão expirada ou ausência de página do Instagram.
 
-Também escolha um horário que faça sentido no fuso local do computador. A interface mostra o nome do fuso detectado e a data é escolhida em um campo de data e hora local. Não copie um horário de outro fuso sem convertê-lo antes.
+Também escolha um horário que faça sentido no fuso local do computador. A interface mostra o nome do fuso detectado e a data é escolhida em **Data e hora de publicação**. Horários com menos de dois minutos de antecedência são recusados para garantir tempo hábil de agendamento.
 
 ## Passo a passo
 
 1. No editor, finalize o projeto e escolha **Exportar**. Espere o arquivo terminar de ser criado.
 2. Na etapa de publicação, conecte a rede desejada se ainda não estiver conectada. O login é feito no navegador padrão; depois, volte ao Clipey e confirme que a conta aparece como conectada.
-3. Preencha **Título** e **Descrição**. Revise o texto e selecione a privacidade ou a página quando essas opções aparecerem para a rede escolhida.
-4. Abra a aba **Agendar**. O campo **Data e hora** mostra a data no horário local. Escolha um horário pelo menos dois minutos à frente; horários inválidos ou próximos demais são recusados.
-5. Se desejar que o Clipey abra junto com o Windows, marque **Abrir ao iniciar**. Isso ajuda a retomar a fila após reiniciar, mas não substitui manter o aplicativo funcionando quando a publicação vencer.
-6. Acione o agendamento para a rede pretendida. A linha muda para um estado agendado e a publicação passa a aparecer na fila.
-7. Confira a **Fila de agendamentos**. Cada item mostra a rede, o título, o estado e o horário. Use **Atualizar fila** se quiser buscar novamente os dados.
+3. Preencha título e descrição. Revise o texto e selecione a privacidade ou a página quando essas opções aparecerem para a rede escolhida.
+4. Abra a aba **Agendar**. No campo **Data e hora de publicação**, defina o momento desejado no seu horário local.
+5. Se desejar que o aplicativo inicialize com o sistema, marque a opção para abrir o Clipey na inicialização do Windows (minimizado na bandeja). Isso ajuda a manter a fila ativa em segundo plano sem ocupar a tela.
+6. Clique em **Agendar**. A publicação passa a constar na fila local com o status correspondente.
+7. Confira a seção **Fila de agendamentos**. Cada item mostra a rede, o título, o estado e o horário programado. Use **Atualizar fila** se quiser sincronizar a lista.
 
-Na fila, um item agendado pode ser cancelado ou remarcado. Itens com falha, publicação perdida ou necessidade de reconexão podem oferecer **Publicar agora** ou **Reagendar**, dependendo do estado. Se a sessão expirou, reconecte a conta antes de tentar de novo.
+Na fila, um item com status **Agendado** pode ser cancelado ou remarcado. Itens com status **Falhou**, **Perdido** ou **Reconexão necessária** exibem as ações **Publicar agora**, **Reagendar** ou **Reconectar**, permitindo resolver problemas de autenticação sem refazer o agendamento do zero.
 
 ## O que acontece quando chega a hora
 
-O Clipey verifica a fila enquanto está em execução e tenta publicar o item vencido. A tela pode exibir progresso de envio, processamento, sucesso ou uma mensagem de falha. A publicação também depende da rede social aceitar o arquivo, a conta e as permissões; o agendamento não garante que a plataforma aprove o conteúdo.
+O Clipey verifica a fila enquanto está em execução e tenta publicar o item vencido. A tela exibe o progresso de envio e processamento até a conclusão com sucesso ou mensagem de erro detalhada. A entrega depende de a rede social aceitar o formato e as credenciais; o agendamento local organiza os disparos técnicos.
 
 Se o computador suspender, desligar ou o aplicativo for encerrado, não conte com um envio em segundo plano na nuvem. A política de recuperação não publica automaticamente itens vencidos enquanto o app estava fechado: ao iniciar, eles são marcados como **Perdido** para revisão. Isso evita publicar um vídeo num horário inesperado depois de uma longa interrupção.
 
-O comportamento da bandeja importa: fechar a janela principal pode deixar o Clipey na bandeja do Windows, mas sair pelo menu do ícone encerra o aplicativo. Antes de um agendamento importante, confira se o aplicativo continua na bandeja e se o Windows não está programado para dormir.
+O comportamento da bandeja do Windows é fundamental: fechar a janela principal mantém o Clipey rodando minimizado na bandeja, pronto para cumprir os horários agendados. Sair explicitamente pelo menu de contexto do ícone encerra o processo do aplicativo e pausa a fila.
 
 ## Dicas
 
@@ -57,7 +57,18 @@ O comportamento da bandeja importa: fechar a janela principal pode deixar o Clip
 
 ## Limitações
 
-O agendamento é local ao Clipey e exige que o app esteja em execução no horário. **Abrir ao iniciar** é uma conveniência do Windows, não um serviço remoto nem uma garantia de que o computador permanecerá acordado. Itens vencidos durante um período fechado são marcados como perdidos em vez de publicados automaticamente. As redes podem rejeitar conteúdo, exigir nova autorização ou impor regras próprias de formato e conta.
+O agendamento é local ao Clipey e exige que o app esteja em execução no horário programado. A opção de inicialização do Windows é uma conveniência local, não um serviço remoto de nuvem nem uma garantia contra suspensão do sistema. Itens vencidos durante um período em que o aplicativo esteve fechado são marcados como perdidos em vez de publicados sem autorização.
+
+## Perguntas frequentes
+
+### A publicação programada ocorre se o Clipey estiver fechado?
+Não. O Clipey ou seu ícone minimizado na bandeja do Windows deve estar em execução no horário programado. Postagens cujo horário expirou com o app fechado são marcadas como "Perdido" para que você decida se prefere publicar ou reagendar.
+
+### O agendamento envia meu vídeo para a nuvem antes do horário de postagem?
+Não. A fila de agendamento do Clipey é estritamente local; o arquivo de vídeo permanece no seu computador até o momento exato em que a publicação é disparada para a rede social.
+
+### O que acontece se uma publicação falhar por erro de rede ou sessão expirada?
+O Clipey retém a publicação na fila com status "Falhou" ou "Reconexão necessária", permitindo reconectar a conta da rede social e tentar novamente com "Publicar agora" ou "Reagendar".
 
 Para preparar um pacote de arquivos antes de publicar, leia [como salvar um kit de publicação](/blog/kit-de-publicacao-video-capas-textos/). Para conferir o arquivo final antes de enviá-lo, veja [presets e verificação da exportação](/blog/exportacao-confiavel-presets-e-verificacao/). Consulte também os [recursos de publicação](/#publicar).
 
