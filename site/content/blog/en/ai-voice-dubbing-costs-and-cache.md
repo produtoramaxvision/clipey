@@ -56,7 +56,7 @@ This can save time and avoid repeating a remote generation, but it does not mean
 
 Synthetic voices may pronounce names and abbreviations unexpectedly, and estimates depend on information available for the selected provider and model. Price figures are estimates, not guaranteed quotes. Dubbing does not automatically translate or culturally adapt every part of a script; review both the words and spoken result. Microphone recording is different from synthesis and does not use the same character estimate.
 
-For captions to accompany speech, read [transcripts and SRT/VTT import](/blog/en/automatic-captions-and-srt-vtt-import/). To review pauses and cuts in the video, see [AI editing](/blog/en/ai-editing-cuts-zooms-silence). Learn about [privacy](/en/#privacy).
+For captions to accompany speech, read [transcripts and SRT/VTT import](/blog/en/automatic-captions-and-srt-vtt-import/). To review pauses and cuts in the video, see [AI editing](/blog/en/ai-editing-cuts-zooms-silence/). Learn about [privacy](/en/#privacy).
 
 Next, test one line, listen in the project and generate the rest only after it sounds right.
 

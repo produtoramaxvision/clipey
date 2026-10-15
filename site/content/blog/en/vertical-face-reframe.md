@@ -54,7 +54,7 @@ Choose the treatment for the content. For a talking head, blur can avoid black b
 
 Face reframe relies on on-device face detection and a focus track generated for the asset. It cannot guarantee that every face will be detected in every condition, and it does not identify which interface element matters. It follows a selected face, not necessarily the person speaking. The configured fallback applies when detection is unavailable. A blurred backdrop can reduce the readability of visual content and is not a replacement for manual editing in complex scenes.
 
-To find short moments in a recording, read [reviewing Auto Clip suggestions](/blog/en/auto-clip-shorts-from-long-videos/). For trims and zooms, see [AI editing](/blog/en/ai-editing-cuts-zooms-silence). Browse the [Clipey features](/en/#features).
+To find short moments in a recording, read [reviewing Auto Clip suggestions](/blog/en/auto-clip-shorts-from-long-videos/). For trims and zooms, see [AI editing](/blog/en/ai-editing-cuts-zooms-silence/). Browse the [Clipey features](/en/#features).
 
 Next, apply the reframe to a short section, check the fallback and review the export before processing the full video.
 
