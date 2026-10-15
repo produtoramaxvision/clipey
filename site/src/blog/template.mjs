@@ -1,4 +1,9 @@
 import {
+	insertBeforeSecondSection,
+	markShortAnswer,
+	markShortcuts,
+} from "./article-html.mjs";
+import {
 	blogBase,
 	CATEGORIES,
 	CATEGORY_KEYS,
@@ -12,6 +17,7 @@ import {
 	SITE_URL,
 } from "./config.mjs";
 import { escapeHtml as esc } from "./content.mjs";
+import { articleFigure } from "./figures.mjs";
 import { UI } from "./i18n.mjs";
 import {
 	icon,
@@ -68,20 +74,44 @@ function frame(
 	</span>`;
 }
 
-function postCard(post, lang, total) {
-	const item = post.content[lang];
-	const category = CATEGORIES[post.categoryKey][lang].label;
-	return `<article class="card" data-category="${post.categoryKey}">
-			<a class="card-link" href="${item.url}">
-				${frame(post, lang, { total })}
-				<span class="card-cat">${esc(category)}</span>
-				<h3 class="card-title">${esc(item.title)}</h3>
-				<p class="card-desc">${esc(item.description)}</p>
-				<span class="card-meta">${esc(formatDate(post.date, lang))}</span>
-			</a>
-		</article>`;
+/** Short date for the timecode column: "29 set. 2026". */
+export function formatShortDate(isoDate, lang) {
+	return new Date(`${isoDate}T12:00:00Z`)
+		.toLocaleDateString(DATE_LOCALE[lang], {
+			year: "numeric",
+			month: "short",
+			day: "2-digit",
+			timeZone: "UTC",
+		})
+		.replace(/ de /g, " ");
 }
 
+/** The Geist Mono meta of a row: date · reading time · category. */
+function entryMeta(post, lang) {
+	const ui = UI[lang];
+	return [
+		formatShortDate(post.date, lang),
+		`${post.content[lang].readMinutes} ${ui.blog.readShort}`,
+		CATEGORIES[post.categoryKey][lang].label,
+	]
+		.map((part) => `<span>${esc(part)}</span>`)
+		.join("");
+}
+
+/** One row of the editorial list: a timecode-like meta column, the title in large type and a one-line description. */
+function entryRow(post, lang) {
+	const item = post.content[lang];
+	return `<li class="entry" data-category="${post.categoryKey}">
+				<a class="entry-link" href="${item.url}">
+					<span class="entry-tc" aria-hidden="true">${padOrder(post.order)}</span>
+					<span class="entry-meta">${entryMeta(post, lang)}</span>
+					<h3 class="entry-title">${esc(item.title)}</h3>
+					<span class="entry-desc">${esc(item.description)}</span>
+				</a>
+			</li>`;
+}
+
+/** The closing call to action, with the download link styled as the app's Export button. */
 function closeBand(lang) {
 	const ui = UI[lang].blog;
 	return `<section class="close-band" aria-labelledby="close-title">
@@ -89,8 +119,8 @@ function closeBand(lang) {
 		<h2 id="close-title" class="close-title">${esc(ui.closeTitle)}</h2>
 		<p class="close-sub">${esc(ui.closeSub)}</p>
 		<div class="close-actions">
-			<a class="btn btn--primary" href="${RELEASES_URL}" rel="noopener noreferrer">${icon("download")}${esc(ui.closeDownload)}</a>
-			<a class="btn btn--ghost" href="${blogBase(lang)}rss.xml">${esc(ui.closeRss)}</a>
+			<a class="export-btn" href="${RELEASES_URL}" rel="noopener noreferrer">${icon("download")}${esc(ui.closeDownload)}</a>
+			<a class="close-rss" href="${blogBase(lang)}rss.xml">${esc(ui.closeRss)}</a>
 		</div>
 	</section>`;
 }
@@ -98,13 +128,13 @@ function closeBand(lang) {
 function categoryNav(lang, posts, active) {
 	const ui = UI[lang].blog;
 	const links = [
-		`<a href="${blogBase(lang)}" class="pill"${active === "all" ? ' aria-current="page"' : ""}>${esc(ui.all)}</a>`,
+		`<a href="${blogBase(lang)}" class="seg-item"${active === "all" ? ' aria-current="page"' : ""}>${esc(ui.all)}</a>`,
 		...usedCategories(posts).map(
 			(key) =>
-				`<a href="${categoryUrl(lang, key)}" class="pill"${active === key ? ' aria-current="page"' : ""}>${esc(CATEGORIES[key][lang].label)}</a>`,
+				`<a href="${categoryUrl(lang, key)}" class="seg-item"${active === key ? ' aria-current="page"' : ""}>${esc(CATEGORIES[key][lang].label)}</a>`,
 		),
 	];
-	return `<nav class="pills" aria-label="${esc(ui.categoriesNav)}">${links.join("")}</nav>`;
+	return `<nav class="seg" aria-label="${esc(ui.categoriesNav)}">${links.join("")}</nav>`;
 }
 
 function searchBar(lang) {
@@ -188,7 +218,7 @@ export function renderBlogIndex(lang, posts, assets, categoryKey = "all") {
 		categoryKey === "all"
 			? (posts.find((post) => post.featured) ?? posts[0])
 			: undefined;
-	const grid = featured ? shown.filter((post) => post !== featured) : shown;
+	const list = featured ? shown.filter((post) => post !== featured) : shown;
 	const label =
 		categoryKey === "all" ? copy.title : CATEGORIES[categoryKey][lang].label;
 	const canonical =
@@ -203,34 +233,32 @@ export function renderBlogIndex(lang, posts, assets, categoryKey = "all") {
 	const description =
 		categoryKey === "all" ? copy.description : `${label}: ${copy.description}`;
 	const featuredItem = featured?.content[lang];
-	const body = `<main class="blog" id="main">
+	const body = `<main class="blog blog-index" id="main">
 		<section class="blog-hero" aria-labelledby="blog-title">
-			<p class="tc"><span class="tc-dot" aria-hidden="true"></span>${esc(copy.kicker)}</p>
-			<h1 id="blog-title" class="display">${categoryKey === "all" ? esc(copy.heroTitle) : esc(label)}</h1>
-			<p class="blog-lede">${esc(description)}</p>
-			<div class="blog-hero-actions">
-				${featured ? `<a class="btn btn--primary" href="${featuredItem.url}">${esc(copy.readLatest)}${icon("arrow")}</a>` : ""}
+			<div class="blog-hero-copy">
+				<p class="tc"><span class="tc-dot" aria-hidden="true"></span>${esc(copy.kicker)}</p>
+				<h1 id="blog-title" class="display">${categoryKey === "all" ? esc(copy.heroTitle) : esc(label)}</h1>
+				<p class="blog-lede">${esc(description)}</p>
 			</div>
 			${searchBar(lang)}
 		</section>
-		<div class="pills-bar">${categoryNav(lang, posts, categoryKey)}</div>
+		<div class="filter-bar">${categoryNav(lang, posts, categoryKey)}<span class="filter-count tc" aria-hidden="true">${padOrder(shown.length)}/${padOrder(total)}</span></div>
 		${
 			featured
 				? `<article class="featured" aria-labelledby="featured-title">
-			<a class="featured-frame" href="${featuredItem.url}" tabindex="-1" aria-hidden="true">${frame(featured, lang, { eager: true, sizes: "(max-width: 900px) 100vw, 640px", total })}</a>
+			<a class="featured-frame" href="${featuredItem.url}" tabindex="-1" aria-hidden="true">${frame(featured, lang, { eager: true, sizes: "(max-width: 900px) 100vw, 760px", total })}</a>
 			<div class="featured-copy">
-				<p class="tc"><span class="tc-dot" aria-hidden="true"></span>${esc(copy.featured)} / ${esc(CATEGORIES[featured.categoryKey][lang].label)}</p>
+				<p class="entry-meta"><span>${esc(copy.featured)}</span>${entryMeta(featured, lang)}</p>
 				<h2 id="featured-title" class="featured-title"><a href="${featuredItem.url}">${esc(featuredItem.title)}</a></h2>
 				<p class="featured-desc">${esc(featuredItem.description)}</p>
-				<p class="card-meta">${esc(formatDate(featured.date, lang))} · ${featuredItem.readMinutes} ${esc(ui.readTime)}</p>
-				<a class="btn btn--ghost btn--small" href="${featuredItem.url}">${esc(copy.readArticle)}${icon("arrow")}</a>
+				<a class="featured-more" href="${featuredItem.url}">${esc(copy.readArticle)}${icon("arrow")}</a>
 			</div>
 		</article>`
 				: ""
 		}
-		<section class="grid" aria-labelledby="grid-title">
-			<h2 id="grid-title" class="sr-only">${esc(categoryKey === "all" ? copy.allPosts : label)}</h2>
-			${grid.length ? grid.map((post) => postCard(post, lang, total)).join("\n\t\t\t") : `<p class="empty">${esc(copy.emptyCategory)}</p>`}
+		<section class="entries" aria-labelledby="entries-title">
+			<h2 id="entries-title" class="sr-only">${esc(categoryKey === "all" ? copy.allPosts : label)}</h2>
+			${list.length ? `<ol class="entry-list">${list.map((post) => entryRow(post, lang)).join("\n\t\t\t")}</ol>` : `<p class="empty">${esc(copy.emptyCategory)}</p>`}
 		</section>
 		${closeBand(lang)}
 	</main>`;
@@ -315,7 +343,7 @@ function related(post, lang, posts) {
 		.slice(0, 3);
 	return `<section class="related" aria-labelledby="related-title">
 		<h2 id="related-title" class="related-title">${esc(ui.continueReading)}</h2>
-		<div class="grid grid--three">${others.map((other) => postCard(other, lang, posts.length)).join("\n\t\t\t")}</div>
+		<ol class="entry-list entry-list--compact">${others.map((other) => entryRow(other, lang)).join("\n\t\t\t")}</ol>
 	</section>`;
 }
 
@@ -401,6 +429,19 @@ function articleJsonLd(post, lang) {
 	};
 }
 
+/** The article HTML with the short-answer panel, keystroke pills and the screenshot of the UI area it covers. */
+function articleBody(post, lang) {
+	const ui = UI[lang].blog;
+	const html = markShortAnswer(
+		markShortcuts(post.content[lang].html),
+		ui.shortAnswer,
+	);
+	return insertBeforeSecondSection(
+		html,
+		articleFigure(post.translationKey, lang, ui.figureCaption),
+	);
+}
+
 export function renderBlogArticle(post, lang, posts, assets) {
 	const item = post.content[lang];
 	const ui = UI[lang];
@@ -425,11 +466,11 @@ export function renderBlogArticle(post, lang, posts, assets) {
 				${shareBlock(item, lang)}
 				${languageLinks(post, lang)}
 			</aside>
-			<article class="prose">${item.html}</article>
+			<article class="prose">${articleBody(post, lang)}</article>
 		</div>
-		${closeBand(lang)}
-		${neighbours(post, lang, posts)}
 		${related(post, lang, posts)}
+		${neighbours(post, lang, posts)}
+		${closeBand(lang)}
 	</main>`;
 	return renderPage({
 		lang,
