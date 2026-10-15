@@ -160,6 +160,37 @@ function blogJsonLd(lang, posts, canonical, categoryKey = "all") {
 		categoryKey === "all"
 			? ui.description
 			: `${CATEGORIES[categoryKey][lang].label}: ${ui.description}`;
+	const breadcrumbItems = [
+		{
+			"@type": "ListItem",
+			position: 1,
+			name: SITE_NAME,
+			item: `${SITE_URL}${LANDING_PATH[lang]}`,
+		},
+	];
+	if (categoryKey === "all") {
+		breadcrumbItems.push({
+			"@type": "ListItem",
+			position: 2,
+			name: ui.title,
+			item: `${SITE_URL}${canonical}`,
+		});
+	} else {
+		breadcrumbItems.push(
+			{
+				"@type": "ListItem",
+				position: 2,
+				name: ui.title,
+				item: `${SITE_URL}${blogBase(lang)}`,
+			},
+			{
+				"@type": "ListItem",
+				position: 3,
+				name: CATEGORIES[categoryKey][lang].label,
+				item: `${SITE_URL}${canonical}`,
+			},
+		);
+	}
 	return {
 		"@context": "https://schema.org",
 		"@graph": [
@@ -201,6 +232,11 @@ function blogJsonLd(lang, posts, canonical, categoryKey = "all") {
 					})),
 				},
 			},
+			{
+				"@type": "BreadcrumbList",
+				"@id": `${SITE_URL}${canonical}#breadcrumb`,
+				itemListElement: breadcrumbItems,
+			},
 		],
 	};
 }
@@ -233,7 +269,18 @@ export function renderBlogIndex(lang, posts, assets, categoryKey = "all") {
 	const description =
 		categoryKey === "all" ? copy.description : `${label}: ${copy.description}`;
 	const featuredItem = featured?.content[lang];
+	const breadcrumb = categoryKey === "all"
+		? `<nav class="breadcrumb" aria-label="${esc(copy.breadcrumbAria)}">
+			<a href="${LANDING_PATH[lang]}">${SITE_NAME}</a><span aria-hidden="true">/</span>
+			<span aria-current="page">Blog</span>
+		</nav>`
+		: `<nav class="breadcrumb" aria-label="${esc(copy.breadcrumbAria)}">
+			<a href="${LANDING_PATH[lang]}">${SITE_NAME}</a><span aria-hidden="true">/</span>
+			<a href="${blogBase(lang)}">Blog</a><span aria-hidden="true">/</span>
+			<span aria-current="page">${esc(label)}</span>
+		</nav>`;
 	const body = `<main class="blog blog-index" id="main">
+		${breadcrumb}
 		<section class="blog-hero" aria-labelledby="blog-title">
 			<div class="blog-hero-copy">
 				<p class="tc"><span class="tc-dot" aria-hidden="true"></span>${esc(copy.kicker)}</p>
