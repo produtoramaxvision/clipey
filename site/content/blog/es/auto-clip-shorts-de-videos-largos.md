@@ -7,8 +7,8 @@ translationKey: "auto-clip-shorts-de-videos-longos"
 category: "tutoriales"
 tags: ["Edición con IA", "Grabación", "Publicación"]
 author: "Equipo Clipey"
-date: "{{RELEASE_DATE}}"
-updated: "{{RELEASE_DATE}}"
+date: "2026-10-15"
+updated: "2026-10-15"
 featured: false
 order: 8
 cover: "/blog/covers/auto-clip-shorts-de-videos-longos.webp"

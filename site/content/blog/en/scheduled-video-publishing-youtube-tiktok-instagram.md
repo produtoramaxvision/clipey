@@ -7,8 +7,8 @@ translationKey: "publicacao-agendada-youtube-tiktok-instagram"
 category: "tutorials"
 tags: ["Publishing", "Windows"]
 author: "Clipey Team"
-date: "{{RELEASE_DATE}}"
-updated: "{{RELEASE_DATE}}"
+date: "2026-10-15"
+updated: "2026-10-15"
 featured: false
 order: 13
 cover: "/blog/covers/publicacao-agendada-youtube-tiktok-instagram.webp"

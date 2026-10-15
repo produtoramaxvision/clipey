@@ -7,8 +7,8 @@ translationKey: "kit-de-publicacao-video-capas-textos"
 category: "tutoriais"
 tags: ["Publicação", "Exportação"]
 author: "Equipe Clipey"
-date: "{{RELEASE_DATE}}"
-updated: "{{RELEASE_DATE}}"
+date: "2026-10-15"
+updated: "2026-10-15"
 featured: false
 order: 14
 cover: "/blog/covers/kit-de-publicacao-video-capas-textos.webp"

@@ -7,8 +7,8 @@ translationKey: "reenquadramento-vertical-por-rosto"
 category: "tutorials"
 tags: ["AI editing", "Recording", "Privacy"]
 author: "Clipey Team"
-date: "{{RELEASE_DATE}}"
-updated: "{{RELEASE_DATE}}"
+date: "2026-10-15"
+updated: "2026-10-15"
 featured: false
 order: 11
 cover: "/blog/covers/reenquadramento-vertical-por-rosto.webp"

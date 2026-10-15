@@ -7,8 +7,8 @@ translationKey: "gravar-tela-windows-com-cursor-e-cliques"
 category: "tutoriales"
 tags: ["Grabación", "Windows", "Edición con IA"]
 author: "Equipo Clipey"
-date: "{{RELEASE_DATE}}"
-updated: "{{RELEASE_DATE}}"
+date: "2026-10-15"
+updated: "2026-10-15"
 featured: false
 order: 2
 cover: "/blog/covers/gravar-tela-windows-com-cursor-e-cliques.webp"

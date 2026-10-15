@@ -7,8 +7,8 @@ translationKey: "clipey-1-15-novidades"
 category: "news"
 tags: ["Recording", "AI editing", "Export"]
 author: "Clipey Team"
-date: "{{RELEASE_DATE}}"
-updated: "{{RELEASE_DATE}}"
+date: "2026-10-15"
+updated: "2026-10-15"
 featured: true
 order: 1
 cover: "/blog/covers/clipey-1-15-novidades.webp"

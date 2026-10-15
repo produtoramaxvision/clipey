@@ -7,8 +7,8 @@ translationKey: "atalhos-e-produtividade-na-timeline"
 category: "tutoriales"
 tags: ["Edición con IA", "Atajos", "Grabación"]
 author: "Equipo Clipey"
-date: "{{RELEASE_DATE}}"
-updated: "{{RELEASE_DATE}}"
+date: "2026-10-15"
+updated: "2026-10-15"
 featured: false
 order: 6
 cover: "/blog/covers/atalhos-e-produtividade-na-timeline.webp"

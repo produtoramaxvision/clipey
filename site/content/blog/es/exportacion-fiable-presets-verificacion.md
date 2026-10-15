@@ -7,8 +7,8 @@ translationKey: "exportacao-confiavel-presets-e-verificacao"
 category: "tutoriales"
 tags: ["Exportación", "Edición con IA"]
 author: "Equipo Clipey"
-date: "{{RELEASE_DATE}}"
-updated: "{{RELEASE_DATE}}"
+date: "2026-10-15"
+updated: "2026-10-15"
 featured: false
 order: 15
 cover: "/blog/covers/exportacao-confiavel-presets-e-verificacao.webp"

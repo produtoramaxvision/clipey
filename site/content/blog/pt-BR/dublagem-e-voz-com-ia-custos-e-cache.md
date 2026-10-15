@@ -7,8 +7,8 @@ translationKey: "dublagem-e-voz-com-ia-custos-e-cache"
 category: "guias"
 tags: ["Voz e áudio", "Edição com IA", "Privacidade"]
 author: "Equipe Clipey"
-date: "{{RELEASE_DATE}}"
-updated: "{{RELEASE_DATE}}"
+date: "2026-10-15"
+updated: "2026-10-15"
 featured: false
 order: 10
 cover: "/blog/covers/dublagem-e-voz-com-ia-custos-e-cache.webp"

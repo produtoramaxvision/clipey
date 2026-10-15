@@ -7,8 +7,8 @@ translationKey: "legendas-automaticas-e-importar-srt-vtt"
 category: "tutoriales"
 tags: ["Subtítulos", "Edición con IA", "Exportación"]
 author: "Equipo Clipey"
-date: "{{RELEASE_DATE}}"
-updated: "{{RELEASE_DATE}}"
+date: "2026-10-15"
+updated: "2026-10-15"
 featured: false
 order: 9
 cover: "/blog/covers/legendas-automaticas-e-importar-srt-vtt.webp"

@@ -7,8 +7,8 @@ translationKey: "efeitos-de-mouse-cliques-halo-spotlight"
 category: "tutoriais"
 tags: ["Edição com IA", "Gravação", "Windows"]
 author: "Equipe Clipey"
-date: "{{RELEASE_DATE}}"
-updated: "{{RELEASE_DATE}}"
+date: "2026-10-15"
+updated: "2026-10-15"
 featured: false
 order: 3
 cover: "/blog/covers/efeitos-de-mouse-cliques-halo-spotlight.webp"

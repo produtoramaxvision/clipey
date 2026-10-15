@@ -7,8 +7,8 @@ translationKey: "edicao-com-ia-cortes-zooms-silencio"
 category: "tutoriais"
 tags: ["Edição com IA", "Gravação", "Atalhos"]
 author: "Equipe Clipey"
-date: "{{RELEASE_DATE}}"
-updated: "{{RELEASE_DATE}}"
+date: "2026-10-15"
+updated: "2026-10-15"
 featured: false
 order: 7
 cover: "/blog/covers/edicao-com-ia-cortes-zooms-silencio.webp"

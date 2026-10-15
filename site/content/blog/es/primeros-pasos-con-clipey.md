@@ -7,8 +7,8 @@ translationKey: "primeiros-passos-no-clipey"
 category: "tutoriales"
 tags: ["Grabación", "Exportación", "Windows"]
 author: "Equipo Clipey"
-date: "{{RELEASE_DATE}}"
-updated: "{{RELEASE_DATE}}"
+date: "2026-10-15"
+updated: "2026-10-15"
 featured: false
 order: 18
 cover: "/blog/covers/primeiros-passos-no-clipey.webp"
