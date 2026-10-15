@@ -193,6 +193,7 @@ function hero(lang, copy, shots) {
 						)
 						.join(" ")}</h1>
 					<p class="story-sub">${esc(hero.sub)}</p>
+					<p class="story-def">${esc(hero.definition)}</p>
 					<div class="story-actions">
 						<a class="export-btn export-btn--hero" href="#${SECTION_IDS[lang].export}">${esc(hero.download)}</a>
 						<p class="meta">${esc(hero.platform)}<br>${esc(hero.noAccount)}</p>

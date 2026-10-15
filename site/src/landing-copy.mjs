@@ -28,6 +28,7 @@ export const STORY = {
 				["speed", "00:07:02", "Exportar", "Você publica."],
 			],
 			sub: "Gravador e editor de tela para Windows. Cortes de silêncio, zoom em cada clique, legendas e publicação no YouTube, TikTok, Instagram e Facebook, no mesmo app.",
+			definition: "Clipey é um aplicativo de gravação e edição de vídeo de tela para Windows que reúne captura de cursor e cliques, edição com cortes e zooms automáticos e publicação em redes sociais.",
 			download: "Baixar para Windows",
 			platform: "Windows 10 e 11 · 64 bits",
 			noAccount: "sem conta para gravar e editar",
@@ -172,6 +173,10 @@ export const STORY = {
 				"O download é gratuito. Recursos na nuvem, como voz e modelos de IA, usam a sua própria chave de API ou créditos.",
 			],
 			[
+				"Como funcionam os recursos na nuvem?",
+				"A gravação e a edição local não precisam de conta nem de conexão. Para legendas e voz na nuvem, você configura a sua própria chave de API ou usa créditos; o custo estimado é exibido antes de gerar.",
+			],
+			[
 				"Em quais sistemas funciona?",
 				"O Clipey 1.15 é para Windows 10 e 11, 64 bits. Recursos de captura usam APIs do Windows.",
 			],
@@ -213,6 +218,7 @@ export const STORY = {
 				["speed", "00:07:02", "Export", "You publish."],
 			],
 			sub: "A screen recorder and editor for Windows. Silence cuts, a zoom on every click, captions and publishing to YouTube, TikTok, Instagram and Facebook, all in one app.",
+			definition: "Clipey is a screen recording and editing app for Windows that combines cursor and click capture, automatic cuts and zooms, and publishing to social media.",
 			download: "Download for Windows",
 			platform: "Windows 10 and 11 · 64-bit",
 			noAccount: "no account needed to record and edit",
@@ -354,6 +360,10 @@ export const STORY = {
 				"The download is free. Cloud features, such as voice and AI models, use your own API key or credits.",
 			],
 			[
+				"How do cloud features work?",
+				"Local recording and editing need no account or internet connection. For cloud captions and voice, you set up your own API key or use credits; the estimated cost is shown before generating.",
+			],
+			[
 				"Which systems does it run on?",
 				"Clipey 1.15 is for Windows 10 and 11, 64-bit. Capture features use Windows APIs.",
 			],
@@ -395,6 +405,7 @@ export const STORY = {
 				["speed", "00:07:02", "Exportar", "Tú publicas."],
 			],
 			sub: "Grabador y editor de pantalla para Windows. Cortes de silencio, zoom en cada clic, subtítulos y publicación en YouTube, TikTok, Instagram y Facebook, en la misma app.",
+			definition: "Clipey es una aplicación de grabación y edición de video de pantalla para Windows que combina captura de cursor y clics, cortes y zooms automáticos y publicación en redes sociales.",
 			download: "Descargar para Windows",
 			platform: "Windows 10 y 11 · 64 bits",
 			noAccount: "sin cuenta para grabar y editar",
@@ -538,6 +549,10 @@ export const STORY = {
 			[
 				"¿Clipey es gratis?",
 				"La descarga es gratuita. Las funciones en la nube, como la voz y los modelos de IA, usan tu propia clave de API o créditos.",
+			],
+			[
+				"¿Cómo funcionan las funciones en la nube?",
+				"La grabación y la edición local no necesitan cuenta ni conexión a internet. Para subtítulos y voz en la nube, configuras tu propia clave de API o usas créditos; el costo estimado se muestra antes de generar.",
 			],
 			[
 				"¿En qué sistemas funciona?",
