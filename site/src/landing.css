@@ -665,8 +665,13 @@ main.story {
 	--hero-focus-y: 52.7%;
 }
 
-.hero-stage {
+/*
+ * As on the artboard, the picture runs 120px past the right edge (main.story clips it, so nothing scrolls sideways).
+ * `.story` outranks the `.story figure` margin reset.
+ */
+.story .hero-stage {
 	position: relative;
+	margin-right: -120px;
 }
 
 .hero-shot {
@@ -1081,8 +1086,13 @@ main.story {
 		padding-left: 40px;
 	}
 
-	.hero-stage {
-		margin-right: calc(-1 * var(--gutter));
+	.story .hero-stage {
+		margin-right: 0;
+	}
+
+	.hero-shot {
+		border-right: 1px solid var(--line);
+		border-radius: 14px;
 	}
 
 	.ink--hero,
