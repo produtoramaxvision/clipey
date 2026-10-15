@@ -58,7 +58,7 @@ El archivo importado queda disponible para editar dentro del proyecto; eso no eq
 
 La compatibilidad depende del sitio y del acceso que ofrezca en ese momento. Los videos privados, no disponibles, bloqueados por región o eliminados pueden fallar. Clipey solo muestra la licencia cuando la fuente proporciona información y no determina si tienes derechos suficientes. Un enlace no permite eludir autenticación ni restricciones. Los formatos y resoluciones disponibles dependen del origen, y errores de red o falta de espacio pueden interrumpir la descarga.
 
-Después de importar, lee [cómo convertir una grabación larga en clips breves](/blog/es/auto-clip-shorts-de-videos-largos/) o [prepara subtítulos SRT/VTT](/blog/es/subtitulos-automaticos-e-importar-srt-vtt/). Para conocer el tratamiento de datos, consulta [privacidad](/es/#privacidad).
+Después de importar, lee [cómo convertir una grabación larga en clips breves](/blog/es/auto-clip-shorts-de-videos-largos/) o [prepara subtítulos SRT/VTT](/blog/es/subtitulos-automaticos-e-importar-srt-vtt/). Consulta también las [funciones de Clipey](/es/#features) y el tratamiento de [privacidad](/es/#privacy).
 
 Siguiente paso: importa solo un enlace autorizado, comprueba el archivo dentro del proyecto y revisa los derechos antes de exportar o compartir.
 

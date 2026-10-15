@@ -56,7 +56,7 @@ Esto puede ahorrar tiempo y evitar repetir una generación remota, pero no signi
 
 Las voces sintéticas pueden pronunciar de forma inesperada nombres y abreviaturas; las estimaciones dependen de la información del proveedor y del modelo. Los precios son estimativos, no cotizaciones garantizadas. El doblaje no traduce ni adapta automáticamente toda la intención cultural de un guion: revisa el texto y el resultado de voz. La grabación con micrófono es distinta de la síntesis y no usa el mismo cálculo por caracteres.
 
-Para añadir subtítulos a la voz, consulta [transcripciones e importación SRT/VTT](/blog/es/subtitulos-automaticos-e-importar-srt-vtt/). Para revisar pausas y cortes, lee [edición con IA](/blog/es/edicion-ia-cortes-zooms-silencios/). Más información sobre [privacidad](/es/#privacidad).
+Para añadir subtítulos a la voz, consulta [transcripciones e importación SRT/VTT](/blog/es/subtitulos-automaticos-e-importar-srt-vtt/). Para revisar pausas y cortes, lee [edición con IA](/blog/es/edicion-ia-cortes-zooms-silencios/). Explora también las [funciones de Clipey](/es/#features).
 
 Siguiente paso: prueba una línea, escúchala en el proyecto y genera el resto del guion cuando estés conforme.
 
