@@ -19,7 +19,7 @@ appliesTo: "1.15"
 
 > **Aplica a:** Clipey 1.15 para Windows.
 
-En la primera grabación es fácil capturar la pantalla equivocada, olvidar una fuente de audio o exportar sin revisar el archivo. Haz una prueba breve antes de grabar algo importante. Así podrás comprobar los permisos, localizar los controles y practicar el recorrido desde la grabación hasta la exportación.
+Para dar tus primeros pasos y grabar y exportar con Clipey en Windows, selecciona la pantalla o ventana que deseas capturar y configura las fuentes de audio y cámara en el asistente inicial. Tras completar la grabación, utiliza el editor para recortar fragmentos innecesarios y abre la ventana Exportar, seleccionando un ajuste preestablecido de plataforma con estimación de tamaño y comprobación técnica de integridad. Todo el proceso básico opera localmente en tu equipo sin requerir inicio de sesión ni conexión constante a internet.
 
 ## Instala y abre la aplicación
 

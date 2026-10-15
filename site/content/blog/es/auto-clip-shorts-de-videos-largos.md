@@ -19,16 +19,16 @@ appliesTo: "1.15"
 
 > **Aplica a:** Clipey 1.15 en Windows.
 
-Una grabación larga puede contener varias explicaciones útiles, pero recorrerla completa lleva tiempo. Auto Clip busca momentos que podrían funcionar por separado. Úsalo como una primera selección: define una duración, compara los candidatos y reproduce el comienzo y el final de cada uno antes de publicar.
+Para encontrar clips breves dentro de una grabación larga en Clipey, abre Clipey Studio y ejecuta la herramienta Auto Clip a partir de la transcripción del proyecto. El sistema evalúa los segmentos bajo cuatro criterios clave (Gancho, Coherencia, Valor y Compartibilidad) dentro de intervalos de duración predefinidos (como 15–30s o 30–60s), ajustando los cortes a los límites naturales de las oraciones. Puedes comparar las sugerencias destacadas, revisar el encuadre del orador y generar nuevos proyectos verticales listos para publicar.
 
 ## Configura Auto Clip
 
 1. Abre el proyecto con la grabación y la transcripción. La búsqueda utiliza el contenido hablado; si aún no hay transcripción, créala desde el panel correspondiente.
-2. Abre Clipey Studio y busca el grupo **Auto Clip**. Sus controles permiten definir la duración mínima y máxima, cuántos resultados buscar y si se usa el enfoque en rostros.
+2. Abre Clipey Studio y busca el grupo **Auto Clip**. Los controles permiten elegir intervalos de duración como **15–30s (Shorts/Reels)**, **30–60s (Estándar)** o **60–90s (Profundo)**, definir el límite en **Máx. de clips (hasta 20)** y activar el encuadre automático.
 3. Elige un intervalo que sirva para el destino en vez de pedir el lote más grande. Los límites de duración acotan cada candidato y la cantidad determina cuántas sugerencias intentará mostrar el proceso. Cambia un ajuste cada vez para entender el resultado.
-4. Inicia el análisis y espera a que aparezcan los candidatos. Puede usar el proveedor de IA configurado en la aplicación; comprueba esa configuración antes si no quieres enviar texto a un servicio externo.
+4. Inicia el análisis y espera a que aparezcan los candidatos. La herramienta analiza el texto para ubicar oraciones con autonomía narrativa.
 
-Auto Clip analiza el texto de la transcripción para encontrar segmentos con potencial como videos breves. La evaluación separa aspectos como gancho, coherencia, valor y posibilidad de compartir, y puede añadir un motivo corto. La puntuación sirve para comparar; no pronostica reproducciones ni garantiza la reacción de la audiencia.
+Auto Clip clasifica los fragmentos examinando cuatro ejes fundamentales: **Gancho**, **Coherencia**, **Valor** y **Compartibilidad**, acompañados de breves explicaciones para cada candidato. Cuando un clip interesante queda ligeramente por debajo de la nota de corte estricta, el sistema puede presentarlo con la insignia **Recuperado** para que valores si deseas conservarlo.
 
 ## Considera cada candidato una hipótesis
 
@@ -36,7 +36,7 @@ Empieza por la primera frase. Si el clip comienza con un pronombre o depende de 
 
 Después revisa el final. Un buen corte completa la idea, no solo alcanza la duración elegida. Si la última frase depende de lo que viene después, descarta la sugerencia o ajusta sus límites en el proyecto principal. El sistema intenta respetar límites de frase, pero una frase completa también puede necesitar contexto.
 
-Si el candidato funciona, revisa el encuadre. Con el enfoque en rostros activado, la composición puede aprovechar los puntos focales disponibles; compruébala durante la reproducción y no solo en una imagen fija. Un segmento claro todavía puede necesitar un título o contexto antes de publicarse.
+Si el candidato funciona, revisa el encuadre. Si el seguimiento facial del orador no estuviera disponible, Clipey mantiene los cortes centrados sin detener la generación de candidatos. Un segmento claro todavía puede necesitar un título o contexto antes de publicarse.
 
 ## Elige con criterio editorial
 
@@ -56,7 +56,7 @@ Si el candidato funciona, revisa el encuadre. Con el enfoque en rostros activado
 
 ## Limitaciones
 
-El resultado depende de la transcripción y del proveedor disponible. El ruido, las voces superpuestas, las pausas expresivas y los temas que requieren contexto pueden producir límites débiles. El análisis no garantiza un clip sólido ni predice alcance, retención o interacción. Revisa también el encuadre con seguimiento de rostro. Antes de compartir, verifica los derechos, la privacidad y la información visible en pantalla.
+El resultado depende de la transcripción y la nitidez del audio original. El ruido ambiente, las voces superpuestas, las pausas expresivas y los temas que requieren contexto pueden producir límites que requieran un leve ajuste manual. El análisis no garantiza el alcance o la interacción futura del video en redes sociales.
 
 Para ajustar cortes y zooms manualmente, consulta [edición con IA en el proyecto](/blog/es/edicion-ia-cortes-zooms-silencios/). Para subtítulos, lee [transcripciones e importación SRT/VTT](/blog/es/subtitulos-automaticos-e-importar-srt-vtt/). Explora las [funciones de IA](/es/#ia).
 
@@ -64,4 +64,4 @@ Siguiente paso: elige una grabación transcrita, genera candidatos y reproduce c
 
 ## Historial de esta página
 
-- {{RELEASE_DATE}}: published.
+- {{RELEASE_DATE}}: publicado.

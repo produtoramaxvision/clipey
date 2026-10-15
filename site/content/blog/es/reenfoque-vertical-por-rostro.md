@@ -17,9 +17,9 @@ ogImage: "/blog/og/reenquadramento-vertical-por-rosto.png"
 appliesTo: "1.15"
 ---
 
-> **Aplica a:** Clipey 1.15 en Windows.
+> **Aplica a:** Clipey 1.15 en Windows. El reenfoque facial y el fondo difuminado son funciones previstas que todavía aguardan validación técnica final.
 
-Una grabación de pantalla puede ser horizontal aunque el destino sea vertical. El reenfoque por rostro ayuda a mantener a una persona dentro del nuevo encuadre. No convierte automáticamente cualquier grabación en un video listo para redes: revisa el movimiento, decide qué hacer cuando no se encuentra un rostro y comprueba lo que queda fuera del recorte.
+Para reencuadrar una grabación vertical siguiendo un rostro en Clipey, cambia la proporción del proyecto a 9:16 y activa la opción prevista de reenfoque facial en el dispositivo. La función está diseñada para calcular localmente una trayectoria de seguimiento suavizada que mantiene centrada a la persona, ofreciendo alternativas para seguir el cursor o centrar el encuadre cuando no haya rostros visibles. Dado que el reenfoque facial y el fondo difuminado permanecen en fase de validación técnica, utiliza este artículo como orientación sobre los controles proyectados.
 
 ## Configura el formato de salida
 
@@ -60,4 +60,4 @@ Siguiente paso: prueba el reenfoque en un fragmento corto, comprueba el fallback
 
 ## Historial de esta página
 
-- {{RELEASE_DATE}}: published.
+- {{RELEASE_DATE}}: publicado.

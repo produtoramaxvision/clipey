@@ -17,9 +17,9 @@ ogImage: "/blog/og/desenho-ao-vivo-durante-gravacao.png"
 appliesTo: "1.15"
 ---
 
-> **Aplica a:** Clipey 1.15. El dibujo en vivo está previsto para grabaciones en Windows; excluir los trazos del video capturado depende de la protección de captura de Windows.
+> **Aplica a:** Clipey 1.15. El dibujo en vivo está previsto para grabaciones en Windows; excluir los trazos del video capturado depende de la protección de captura de Windows y aguarda validación final.
 
-Al explicar una interfaz, a veces el cursor no alcanza: quizá necesites rodear un botón, señalar una zona o dibujar una forma. El dibujo en vivo de la versión 1.15 está previsto para hacer estas marcas durante la grabación y reproducirlas después sincronizadas con el video. La función todavía requiere implementación y validación, así que esta guía describe el comportamiento previsto, no garantiza que todos los controles ya estén disponibles en tu instalación.
+Para anotar la pantalla durante una grabación en Clipey, el flujo planificado utiliza el atajo global Ctrl+Shift+D para activar una barra de dibujo con lápiz, resaltador, flechas y figuras geométricas. Los trazos se registran como datos vectoriales temporizados fuera de los píxeles del video capturado, permitiendo su edición y sincronización en la línea de tiempo. Como esta función depende de la protección de captura de Windows y continúa en fase de validación técnica, utiliza esta guía como referencia para la funcionalidad proyectada.
 
 ## Antes de dibujar
 
@@ -64,4 +64,4 @@ Para entender la captura del cursor, lee [grabar la pantalla en Windows](/blog/e
 
 ## Historial de esta página
 
-- {{RELEASE_DATE}}: published.
+- {{RELEASE_DATE}}: publicado.

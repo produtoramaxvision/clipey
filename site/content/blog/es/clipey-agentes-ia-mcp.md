@@ -19,7 +19,7 @@ appliesTo: "1.15"
 
 > **Aplica a:** Clipey 1.15 para Windows. La configuración depende del cliente MCP.
 
-Un cliente MCP puede consultar un proyecto en Clipey y, si lo permites, utilizar herramientas de edición. El servidor local está desactivado de forma predeterminada y el permiso para editar se controla por separado. Esta guía explica el servidor HTTP integrado y el proceso stdio independiente sin dar por hecho que todos los clientes configuran la conexión igual.
+Para conectar un agente de IA a Clipey mediante MCP, abre la sección Servidor MCP en los ajustes del editor y activa el servidor HTTP local o configura el transporte por stdio en tu cliente de preferencia (como Claude Code o Codex). La integración opera en 127.0.0.1 mediante autenticación por token de acceso, manteniendo los permisos de edición desactivados por defecto para lectura segura del proyecto. Al habilitar los permisos de escritura, el agente puede inspeccionar archivos, realizar recortes en la línea de tiempo y solicitar exportaciones locales.
 
 ## Elige la conexión
 
