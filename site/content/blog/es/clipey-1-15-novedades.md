@@ -1,6 +1,6 @@
 ---
 title: "Clipey 1.15: novedades para grabar y editar"
-description: "Conoce los cambios previstos para Clipey 1.15, dónde encontrarlos y qué funciones son exclusivas de Windows o aún esperan la validación final."
+description: "Conoce las funciones de grabación y edición de Clipey 1.15 y qué flujos tienen requisitos de plataforma."
 slug: "clipey-1-15-novedades"
 lang: "es"
 translationKey: "clipey-1-15-novidades"
@@ -17,7 +17,7 @@ ogImage: "/blog/og/clipey-1-15-novidades.png"
 appliesTo: "1.15"
 ---
 
-> **Aplica a:** Clipey 1.15. La grabación principal está dirigida a Windows; el dibujo en vivo todavía requiere validación técnica final.
+> **Aplica a:** Clipey 1.15. A continuación se indican los requisitos de las funciones de grabación para Windows y de la superposición protegida de dibujo.
 
 Clipey 1.15 incorpora grabación con cursor editable y efectos de clics, superposición de mando para gameplay, atajos rápidos en la línea de tiempo y generación automática de clips cortos con Auto Clip. La actualización también añade importación de subtítulos y enlaces, servidor local MCP para agentes de IA y ajustes preestablecidos de exportación con verificación técnica del archivo de salida. Todas las herramientas de captura y edición continúan ejecutándose localmente en tu computadora sin enviar tus videos a servidores externos.
 
@@ -31,7 +31,7 @@ En Windows, la captura de interacciones incluye los clics de los botones lateral
 
 Los efectos del ratón combinan estilos de animación de clic (**Onda**, **Anillos**, **Pulso**), un indicador de desplazamiento, una estela de arrastre, un halo suave y un foco. La opción **Movimiento reducido** sustituye los desplazamientos animados por una transición breve de opacidad. Conviene activar solo los elementos necesarios para no sobrecargar visualmente el contenido de la pantalla.
 
-El dibujo en vivo está diseñado para realizar anotaciones rápidas durante la grabación con lápiz, resaltador, flechas, rectángulos y elipses desde una barra flotante. Los trazos se guardan como datos vectoriales fuera de los píxeles capturados para reproducirse sincronizados en el editor. Al depender de protecciones de captura de Windows, esta función permanece en fase de validación técnica final.
+El dibujo en vivo permite crear anotaciones temporizadas durante una grabación activa mediante una superposición protegida. El atajo global predeterminado es **Ctrl+Shift+D**; la barra flotante ofrece **Bolígrafo**, **Resaltador**, **Flecha**, **Rectángulo** y **Elipse**, además de controles de color y grosor. Los trazos protegidos quedan fuera de la pantalla capturada y se reproducen en el editor. En Windows, la superposición requiere Windows 11 22H2 (compilación 22621) o posterior; las versiones anteriores la desactivan porque no permiten una captura protegida con la ventana permeable a los clics. En macOS 26 también se desactiva la protección porque las ventanas protegidas no se muestran.
 
 Para grabaciones de juegos, la **Superposición de mando** muestra los botones activos en estilo **Compacto** con etiquetas o en estilo **Completo** con la silueta del control. La vista completa también permite mostrar los sticks analógicos con **Mostrar palancas**. Los eventos se sincronizan con la línea de tiempo editada, manteniendo la precisión tras recortes o cambios de velocidad.
 
@@ -44,7 +44,7 @@ Usa Shift para una colocación puntual sin ajuste. Usa un marcador si quieres re
 ## Una prueba breve antes del proyecto final
 
 1. Haz una grabación corta en Windows y elige **Cursor editable** si luego quieres recolocar o destacar el puntero.
-2. Prueba algunos clics e movimentos de rueda, y activa **Capturar mando** si vas a mostrar partidas con control. Para el dibujo en vivo planificado, el atajo estándar previsto es **Ctrl+Shift+D**, con **Esc** para salir.
+2. Prueba algunos clics y movimientos de rueda, y activa **Capturar mando** si vas a mostrar partidas con control. Para anotar, usa **Ctrl+Shift+D** para activar o desactivar el dibujo en vivo y **Esc** para salir, siempre que el sistema permita la captura protegida de la superposición.
 3. Abre la grabación en el editor. Comprueba que los eventos aparezcan en los puntos correctos antes de activar varias superposiciones. Cambia el retardo de entrada o el estilo solo si detectas un desfase.
 4. Prueba un recorte manteniendo Shift y añade un marcador en el cabezal con **M**. Cambia su nombre para que la lista siga siendo clara durante las revisiones.
 5. Exporta un tramo corto y comprueba la legibilidad mientras se reproduce. Así puedes descubrir efectos que tapen texto o anotaciones que aparezcan fuera de tiempo.
@@ -71,7 +71,7 @@ Consulta [grabar la pantalla en Windows](/blog/es/grabar-pantalla-windows-cursor
 
 ## Limitaciones
 
-La captura de mando, botones laterales y rueda está dirigida a Windows. Los efectos del ratón, la superposición de mando y las mejoras de la línea de tiempo forman parte de Clipey 1.15. La herramienta de dibujo en vivo durante la grabación se mantiene en validación técnica final.
+La captura de mando, botones laterales y rueda está dirigida a Windows. El dibujo en vivo requiere una superposición protegida disponible; en Windows esto significa Windows 11 22H2 (compilación 22621) o posterior y no está disponible en macOS 26. El reencuadre facial está disponible para la salida vertical y el fondo desenfocado se ofrece en formatos fijos.
 
 Visita la página de [descarga](/es/#download) para obtener Clipey y consultar la versión actual.
 
