@@ -66,6 +66,8 @@ function createRenderer(headings) {
 			return `<a href="${escapeHtml(token.href)}"${external ? ' rel="noopener noreferrer"' : ""}>${this.parser.parseInline(token.tokens)}</a>`;
 		},
 		image(token) {
+			if (!token.text || !token.text.trim())
+				throw new Error(`empty image alt text for: ${token.href}`);
 			if (
 				!/^\/blog\/(covers|og|img)\/[a-zA-Z0-9._/-]+$/.test(token.href) ||
 				token.href.includes("..")
