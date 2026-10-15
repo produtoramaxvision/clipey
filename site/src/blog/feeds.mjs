@@ -21,8 +21,9 @@ const decodeEntities = (text) =>
 			],
 	);
 
-export function renderRss(lang, posts) {
+export function renderRss(lang, posts, selfUrl) {
 	const blog = UI[lang].blog;
+	const feedHref = selfUrl ?? `${SITE_URL}${blogBase(lang)}feed.xml`;
 	const items = posts
 		.filter((post) => post.content[lang])
 		.map((post) => {
@@ -45,10 +46,53 @@ export function renderRss(lang, posts) {
 		<link>${SITE_URL}${blogBase(lang)}</link>
 		<description>${xmlEscape(blog.description)}</description>
 		<language>${lang}</language>
-		<atom:link href="${SITE_URL}${blogBase(lang)}rss.xml" rel="self" type="application/rss+xml"/>
+		<atom:link href="${feedHref}" rel="self" type="application/rss+xml"/>
 ${items}
 	</channel>
 </rss>
+`;
+}
+
+export function renderAtom(lang, posts, selfUrl) {
+	const blog = UI[lang].blog;
+	const feedHref = selfUrl ?? `${SITE_URL}${blogBase(lang)}atom.xml`;
+	const blogHref = `${SITE_URL}${blogBase(lang)}`;
+	const filtered = posts.filter((post) => post.content[lang]);
+	const latestUpdated = filtered.length
+		? `${filtered[0].updated}T12:00:00Z`
+		: `${RELEASE_DATE}T12:00:00Z`;
+
+	const entries = filtered
+		.map((post) => {
+			const item = post.content[lang];
+			const url = `${SITE_URL}${item.url}`;
+			const published = `${post.date}T12:00:00Z`;
+			const updated = `${post.updated}T12:00:00Z`;
+			return `\t<entry>
+		<title>${xmlEscape(item.title)}</title>
+		<link href="${url}" rel="alternate" type="text/html"/>
+		<id>${url}</id>
+		<published>${published}</published>
+		<updated>${updated}</updated>
+		<summary>${xmlEscape(item.description)}</summary>
+		<author>
+			<name>${xmlEscape(item.author)}</name>
+		</author>
+		<category term="${CATEGORIES[post.categoryKey][lang].slug}" label="${xmlEscape(CATEGORIES[post.categoryKey][lang].label)}"/>
+	</entry>`;
+		})
+		.join("\n");
+
+	return `<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<title>${xmlEscape(blog.title)}</title>
+	<subtitle>${xmlEscape(blog.description)}</subtitle>
+	<link href="${feedHref}" rel="self" type="application/atom+xml"/>
+	<link href="${blogHref}" rel="alternate" type="text/html"/>
+	<id>${blogHref}</id>
+	<updated>${latestUpdated}</updated>
+${entries}
+</feed>
 `;
 }
 
@@ -90,7 +134,10 @@ function entry(loc, alternates, lastmod = RELEASE_DATE) {
 
 /** Every public page: the landing in three languages, the blog, its categories, all articles and the legal texts. */
 export function sitemapEntries(posts) {
-	const withDefault = (pairs) => [...pairs, ["x-default", pairs[0][1]]];
+	const withDefault = (pairs) => {
+		const ptBr = pairs.find(([code]) => code === "pt-BR")?.[1] ?? pairs[0][1];
+		return [...pairs, ["x-default", ptBr]];
+	};
 	const entries = [];
 	const landing = LANGUAGES.map((lang) => [lang, LANDING_PATH[lang]]);
 	for (const [, loc] of landing) entries.push(entry(loc, withDefault(landing)));

@@ -6,7 +6,10 @@ import {
 	LANDING_PATH,
 	LANGUAGES,
 	LEGAL_PATHS,
+	OWNER,
 	RELEASES_URL,
+	SITE_NAME,
+	SITE_URL,
 } from "./blog/config.mjs";
 import { escapeHtml as esc } from "./blog/content.mjs";
 import { UI } from "./blog/i18n.mjs";
@@ -149,20 +152,56 @@ function downloadBand(lang, copy) {
 
 function jsonLd(lang, canonical) {
 	const ui = UI[lang];
-	return [
-		{
-			"@context": "https://schema.org",
-			"@type": "SoftwareApplication",
-			name: "Clipey",
-			applicationCategory: "MultimediaApplication",
-			operatingSystem: "Windows 10, Windows 11",
-			description: ui.landing.description,
-			inLanguage: lang,
-			url: `https://clipey.com.br${canonical}`,
-			downloadUrl: RELEASES_URL,
-			offers: { "@type": "Offer", price: "0", priceCurrency: "BRL" },
-		},
-	];
+	return {
+		"@context": "https://schema.org",
+		"@graph": [
+			{
+				"@type": "Organization",
+				"@id": `${SITE_URL}/#organization`,
+				name: OWNER,
+				url: `${SITE_URL}/`,
+				logo: {
+					"@type": "ImageObject",
+					"@id": `${SITE_URL}/#logo`,
+					url: `${SITE_URL}/clipey-256.png`,
+					caption: SITE_NAME,
+				},
+			},
+			{
+				"@type": "WebSite",
+				"@id": `${SITE_URL}/#website`,
+				name: SITE_NAME,
+				url: `${SITE_URL}/`,
+				publisher: { "@id": `${SITE_URL}/#organization` },
+				inLanguage: lang,
+			},
+			{
+				"@type": "SoftwareApplication",
+				"@id": `${SITE_URL}${canonical}#software`,
+				name: SITE_NAME,
+				applicationCategory: "MultimediaApplication",
+				operatingSystem: "Windows 10, Windows 11",
+				description: ui.landing.description,
+				inLanguage: lang,
+				url: `${SITE_URL}${canonical}`,
+				downloadUrl: RELEASES_URL,
+				author: { "@id": `${SITE_URL}/#organization` },
+				publisher: { "@id": `${SITE_URL}/#organization` },
+			},
+			{
+				"@type": "FAQPage",
+				"@id": `${SITE_URL}${canonical}#faq`,
+				mainEntity: LANDING[lang].faq.map(([question, answer]) => ({
+					"@type": "Question",
+					name: question,
+					acceptedAnswer: {
+						"@type": "Answer",
+						text: answer,
+					},
+				})),
+			},
+		],
+	};
 }
 
 export function renderLanding(lang, posts, assets) {
@@ -209,7 +248,8 @@ export function renderLanding(lang, posts, assets) {
 		alternates,
 		assets,
 		jsonLd: jsonLd(lang, canonical),
-		feed: `${blogBase(lang)}rss.xml`,
+		feedRss: `${blogBase(lang)}feed.xml`,
+		feedAtom: `${blogBase(lang)}atom.xml`,
 	});
 	return renderPage({
 		lang,

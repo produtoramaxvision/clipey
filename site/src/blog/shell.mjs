@@ -61,9 +61,12 @@ export function renderHead({
 	ogType = "website",
 	ogImage,
 	ogImageAlt,
-	jsonLd = [],
+	jsonLd,
 	robots,
+	feedRss,
+	feedAtom,
 	feed,
+	lcpImage,
 }) {
 	const ui = UI[lang];
 	const hreflang = alternates
@@ -85,21 +88,29 @@ export function renderHead({
 	const image = ogImage
 		? `${SITE_URL}${ogImage}`
 		: `${SITE_URL}/og/landing.png`;
-	const ld = jsonLd
-		.map(
-			(entry) =>
-				`<script type="application/ld+json">${jsonForScript(entry)}</script>`,
-		)
-		.join("\n\t\t");
+
+	let ldBlock = "";
+	if (jsonLd) {
+		const payload = Array.isArray(jsonLd)
+			? { "@context": "https://schema.org", "@graph": jsonLd }
+			: jsonLd;
+		ldBlock = `<script type="application/ld+json">${jsonForScript(payload)}</script>`;
+	}
+
 	const fullTitle = title.includes(SITE_NAME)
 		? title
 		: `${title} | ${SITE_NAME}`;
+
+	const rssHref = feedRss ?? feed;
+	const atomHref = feedAtom;
+
 	return `<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>${esc(fullTitle)}</title>
 		<meta name="description" content="${esc(description)}">
-		<meta name="theme-color" content="#0c0d0b">
+		<meta name="theme-color" media="(prefers-color-scheme: light)" content="#eaeef3">
+		<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0c0d0b">
 		${robots ? `<meta name="robots" content="${robots}">` : `<link rel="canonical" href="${SITE_URL}${canonical}">`}
 		${hreflang}
 		<meta property="og:type" content="${ogType}">
@@ -117,13 +128,16 @@ export function renderHead({
 		<meta name="twitter:title" content="${esc(title)}">
 		<meta name="twitter:description" content="${esc(description)}">
 		<meta name="twitter:image" content="${image}">
-		<link rel="icon" type="image/png" href="/favicon.png">
-		<link rel="apple-touch-icon" href="/clipey-256.png">
-		${feed ? `<link rel="alternate" type="application/rss+xml" title="${esc(ui.blog.title)}" href="${feed}">` : ""}
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="64x64" href="/favicon.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		${rssHref ? `<link rel="alternate" type="application/rss+xml" title="${esc(ui.blog.title)} (RSS)" href="${rssHref}">` : ""}
+		${atomHref ? `<link rel="alternate" type="application/atom+xml" title="${esc(ui.blog.title)} (Atom)" href="${atomHref}">` : ""}
 		<link rel="preload" href="${assets.font}" as="font" type="font/woff2" crossorigin>
+		${lcpImage ? `<link rel="preload" as="image" href="${lcpImage}" fetchpriority="high">` : ""}
 		<script>${THEME_SCRIPT}</script>
 		${assets.css.map((href) => `<link rel="stylesheet" href="${href}">`).join("\n\t\t")}
-		${ld}
+		${ldBlock}
 	</head>`;
 }
 
@@ -174,7 +188,7 @@ export function renderFooter({ lang }) {
 				<h2>${esc(ui.footer.product)}</h2>
 				<ul>
 					<li><a href="${blogBase(lang)}">${esc(ui.footer.blog)}</a></li>
-					<li><a href="${blogBase(lang)}rss.xml">${esc(ui.footer.rss)}</a></li>
+					<li><a href="${blogBase(lang)}feed.xml">${esc(ui.footer.rss)}</a></li>
 					<li><a href="${RELEASES_URL}" rel="noopener noreferrer">${esc(ui.footer.releases)}</a></li>
 					<li><a href="${REPO_URL}" rel="noopener noreferrer">${esc(ui.footer.repo)}</a></li>
 				</ul>

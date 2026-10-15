@@ -4,7 +4,7 @@ import { defineConfig } from "vite";
 import { LANGUAGES } from "./src/blog/config.mjs";
 import { getCompletePosts, getPosts } from "./src/blog/content.mjs";
 import { missingCaptures, readCaptureManifest } from "./src/blog/manifest.mjs";
-import { fileForUrl, readLegalPages, renderSite } from "./src/render-site.mjs";
+import { fileForUrl, renderSite } from "./src/render-site.mjs";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const publicDir = path.join(root, "public");
@@ -12,7 +12,6 @@ const publicDir = path.join(root, "public");
 const ENTRIES = {
 	landing: "src/entry-landing.js",
 	blog: "src/entry-blog.js",
-	pages: "src/entry-pages.js",
 };
 
 const FONT_FILE = "Geist-Variable";
@@ -90,11 +89,6 @@ function checkCaptures(posts) {
 }
 
 function sitePlugin() {
-	let legalPages;
-	const legal = () => {
-		legalPages ??= readLegalPages();
-		return legalPages;
-	};
 	return {
 		name: "clipey-site",
 		configureServer(server) {
@@ -104,7 +98,7 @@ function sitePlugin() {
 					pathname.endsWith("/") || pathname.includes(".")
 						? pathname
 						: `${pathname}/`;
-				const files = renderSite(getCompletePosts(), legal(), devAssets());
+				const files = renderSite(getCompletePosts(), devAssets());
 				const source = files.get(fileForUrl(url));
 				if (source === undefined || !fileForUrl(url).endsWith(".html"))
 					return next();
@@ -122,7 +116,7 @@ function sitePlugin() {
 				);
 			const posts = getCompletePosts();
 			checkCaptures(posts);
-			const files = renderSite(posts, legal(), builtAssets(bundle));
+			const files = renderSite(posts, builtAssets(bundle));
 			for (const [fileName, source] of files)
 				this.emitFile({ type: "asset", fileName, source });
 		},

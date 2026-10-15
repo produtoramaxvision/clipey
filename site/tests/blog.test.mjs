@@ -16,17 +16,24 @@ import {
 import { renderSitemap } from "../src/blog/feeds.mjs";
 import { missingCaptures, readCaptureManifest } from "../src/blog/manifest.mjs";
 import { THEME_SCRIPT, THEME_SCRIPT_HASH } from "../src/blog/shell.mjs";
-import { fileForUrl, readLegalPages, renderSite } from "../src/render-site.mjs";
+import {
+	fileForUrl,
+	LEGAL_OUTPUT_FILES,
+	renderSite,
+} from "../src/render-site.mjs";
 
 const assets = {
 	css: ["/assets/x.css"],
 	font: "/assets/font.woff2",
 	script: "/assets/x.js",
 };
-const bundles = { landing: assets, blog: assets, pages: assets };
+const bundles = { landing: assets, blog: assets };
 const posts = getCompletePosts();
-const files = renderSite(posts, readLegalPages(), bundles);
+const files = renderSite(posts, bundles);
 const htmlFiles = [...files].filter(([name]) => name.endsWith(".html"));
+const renderedHtmlFiles = htmlFiles.filter(
+	([name]) => !LEGAL_OUTPUT_FILES.includes(name),
+);
 
 describe("blog pure helpers", () => {
 	it("estimates reading time with a one-minute floor", () => {
@@ -134,7 +141,7 @@ describe("the generated site", () => {
 
 	it("loads nothing from another origin", () => {
 		const own = new URL(SITE_URL).host;
-		for (const [name, html] of htmlFiles) {
+		for (const [name, html] of renderedHtmlFiles) {
 			const resources = [
 				...html.matchAll(
 					/<(?:link|script|img|iframe|source|video|audio)\b[^>]*>/g,
@@ -155,7 +162,7 @@ describe("the generated site", () => {
 	});
 
 	it("keeps every inline script to the theme bootstrap", () => {
-		for (const [name, html] of htmlFiles) {
+		for (const [name, html] of renderedHtmlFiles) {
 			const inline = [
 				...html.matchAll(/<script(?![^>]*\bsrc=)([^>]*)>([\s\S]*?)<\/script>/g),
 			];
@@ -176,7 +183,7 @@ describe("the generated site", () => {
 			.find((part) => part.trim().startsWith("script-src"));
 		expect(scriptSrc).toContain(`'${THEME_SCRIPT_HASH}'`);
 		expect(csp).not.toMatch(/https?:/);
-		for (const [name, html] of htmlFiles) {
+		for (const [name, html] of renderedHtmlFiles) {
 			const bootstrap = html.match(/<script>([^<]*)<\/script>/)?.[1];
 			expect(bootstrap, name).toBeDefined();
 			expect(

@@ -1,22 +1,20 @@
-import { execFileSync } from "node:child_process";
+import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
 	blogBase,
+	CATEGORIES,
 	categoryUrl,
 	LANDING_PATH,
 	LANGUAGES,
-	LEGAL_PATHS,
+	SITE_URL,
 } from "./blog/config.mjs";
-import { escapeHtml as esc } from "./blog/content.mjs";
-import { renderRss, renderSearchIndex, renderSitemap } from "./blog/feeds.mjs";
-import { UI } from "./blog/i18n.mjs";
 import {
-	renderFooter,
-	renderHead,
-	renderHeader,
-	renderPage,
-} from "./blog/shell.mjs";
+	renderAtom,
+	renderRss,
+	renderSearchIndex,
+	renderSitemap,
+} from "./blog/feeds.mjs";
 import {
 	renderBlogArticle,
 	renderBlogIndex,
@@ -24,95 +22,141 @@ import {
 } from "./blog/template.mjs";
 import { renderHeaders } from "./headers.mjs";
 import { renderLanding } from "./landing.mjs";
+import { LANDING } from "./landing-copy.mjs";
 
 const siteRoot = path.resolve(
 	path.dirname(fileURLToPath(import.meta.url)),
 	"..",
 );
+const legalSourceDir = path.join(siteRoot, "legal-source");
 
-/** Legal texts as `{ lang, path, title, body }`, produced by build.py from the source of truth. */
-export function readLegalPages() {
-	return JSON.parse(
-		execFileSync("python3", [path.join(siteRoot, "build.py")], {
-			cwd: siteRoot,
-			encoding: "utf8",
-		}),
-	);
-}
+export const LEGAL_OUTPUT_FILES = [
+	"privacidade/index.html",
+	"termos/index.html",
+	"exclusao-de-dados/index.html",
+	"en/privacy/index.html",
+	"en/terms/index.html",
+	"en/data-deletion/index.html",
+	"404.html",
+	"announcements.json",
+];
 
 /** The file a public URL is served from: `/blog/` is `blog/index.html`. */
 export function fileForUrl(url) {
 	return url.endsWith("/") ? `${url.slice(1)}index.html` : url.slice(1);
 }
 
-function summary(body) {
-	const first = body.match(/<p>([\s\S]*?)<\/p>/)?.[1] ?? "";
-	const text = first
-		.replace(/<[^>]+>/g, "")
-		.replace(/\s+/g, " ")
-		.trim();
-	if (text.length <= 155) return text;
-	return `${text.slice(0, 155).replace(/\s+\S*$/, "")}…`;
+/** Generates /llms.txt adhering strictly to the llmstxt.org specification. */
+export function renderLlms(posts) {
+	const landingPt = `${SITE_URL}/`;
+	const landingEn = `${SITE_URL}/en/`;
+	const landingEs = `${SITE_URL}/es/`;
+
+	const formatPosts = (lang) =>
+		posts
+			.filter((p) => p.content[lang])
+			.map(
+				(p) =>
+					`- [${p.content[lang].title}](${SITE_URL}${p.content[lang].url}): ${p.content[lang].description}`,
+			)
+			.join("\n");
+
+	return `# Clipey
+
+> Clipey é um aplicativo desktop para Windows que reúne gravação de tela com captura de cursor e cliques, edição assistida por IA na timeline e publicação para YouTube, TikTok e Instagram. Os projetos, arquivos de mídia e transcrições ficam guardados no computador do usuário.
+
+Clipey funciona no Windows 10 e Windows 11. O aplicativo é offline-first, sem telemetria de uso, com suporte a modelos Whisper locais para transcrição e conexão com ferramentas MCP para automação de tarefas de edição.
+
+## Páginas Principais
+
+- [Clipey (Português)](${landingPt}): Página inicial oficial com visão geral dos recursos, IA assistida, kit de publicação e requisitos.
+- [Clipey (English)](${landingEn}): Official English landing page with features, AI editing tools, publishing workflows, and requirements.
+- [Clipey (Español)](${landingEs}): Página oficial en español con funciones, herramientas de IA, flujo de publicación y requisitos.
+
+## Blog e Tutoriais (Português)
+
+${formatPosts("pt-BR")}
+
+## Blog and Tutorials (English)
+
+${formatPosts("en")}
+
+## Blog y Tutoriales (Español)
+
+${formatPosts("es")}
+
+## Informações Legais
+
+- [Política de privacidade](${SITE_URL}/privacidade/): Tratamento de dados, armazenamento local e direitos do usuário.
+- [Termos de uso](${SITE_URL}/termos/): Termos e condições de uso do aplicativo Clipey.
+- [Exclusão de dados](${SITE_URL}/exclusao-de-dados/): Procedimentos para desconexão de contas e remoção de dados locais.
+- [Privacy Policy (EN)](${SITE_URL}/en/privacy/): Clipey privacy policy in English.
+- [Terms of Service (EN)](${SITE_URL}/en/terms/): Clipey terms of service in English.
+- [Data Deletion (EN)](${SITE_URL}/en/data-deletion/): Data deletion instructions in English.
+
+## Documentação Completa
+
+- [llms-full.txt](${SITE_URL}/llms-full.txt): Texto completo da página inicial e dos 18 artigos em português para modelos de linguagem.
+`;
 }
 
-/** One legal page. `pairs` maps both legal languages to the URL of the same text; Spanish reads the English text. */
-function legalPage(page, pairs, assets) {
-	const lang = page.lang;
-	const switchUrls = { ...pairs, es: pairs.en };
-	return renderPage({
-		lang,
-		head: renderHead({
-			lang,
-			title: page.title,
-			description: summary(page.body),
-			canonical: page.path,
-			alternates: pairs,
-			assets,
-		}),
-		header: renderHeader({ lang, switchUrls }),
-		body: `<main class="page-main legal" id="main">
-		${page.body}
-	</main>`,
-		footer: renderFooter({ lang }),
-		script: assets.script,
-	});
-}
+/** Generates /llms-full.txt: plain-text concatenation of the landing copy and the 18 pt-BR articles. */
+export function renderLlmsFull(posts) {
+	const copy = LANDING["pt-BR"];
+	const parts = [];
 
-function notFoundPage(assets) {
-	const lang = "pt-BR";
-	const copy = UI[lang].notFound;
-	const switchUrls = LANDING_PATH;
-	return renderPage({
-		lang,
-		head: renderHead({
-			lang,
-			title: copy.title,
-			description: copy.text,
-			canonical: "/",
-			assets,
-			robots: "noindex",
-		}),
-		header: renderHeader({ lang, switchUrls }),
-		body: `<main class="page-main not-found" id="main">
-		<p class="tc"><span class="tc-dot" aria-hidden="true"></span>${esc(copy.code)}</p>
-		<h1>${esc(copy.title)}</h1>
-		<p>${esc(copy.text)}</p>
-		<div class="not-found-actions">
-			<a class="btn btn--primary" href="${LANDING_PATH[lang]}">${esc(copy.home)}</a>
-			<a class="btn btn--ghost" href="${blogBase(lang)}">${esc(copy.blog)}</a>
-		</div>
-	</main>`,
-		footer: renderFooter({ lang }),
-		script: assets.script,
-	});
+	parts.push(`================================================================================
+CLIPEY: ESTÚDIO DE VÍDEO PARA WINDOWS
+${copy.hero}
+${copy.sub}
+================================================================================
+
+RECURSOS DE GRAVAÇÃO E EDIÇÃO:
+${copy.features.map(([title, text]) => `- ${title}: ${text}`).join("\n")}
+
+RECURSOS DE IA:
+${copy.ai.map(([title, text]) => `- ${title}: ${text}`).join("\n")}
+
+RECURSOS DE PUBLICAÇÃO:
+${copy.publish.map(([title, text]) => `- ${title}: ${text}`).join("\n")}
+
+PRIVACIDADE:
+${copy.sections.privacy.title}
+${copy.sections.privacy.sub}
+
+REQUISITOS DO SISTEMA:
+${copy.sections.requirements.title}
+${copy.sections.requirements.sub}
+
+PERGUNTAS FREQUENTES (FAQ):
+${copy.faq.map(([q, a]) => `P: ${q}\nR: ${a}`).join("\n\n")}`);
+
+	for (const post of posts) {
+		const item = post.content["pt-BR"];
+		if (!item) continue;
+		parts.push(`================================================================================
+ARTIGO ${post.order}: ${item.title.toUpperCase()}
+Categoria: ${CATEGORIES[post.categoryKey]["pt-BR"].label}
+Tags: ${item.tags.join(", ")}
+Autor: ${item.author}
+Data: ${post.date}
+URL: ${SITE_URL}${item.url}
+Descrição: ${item.description}
+--------------------------------------------------------------------------------
+${item.markdown.trim()}`);
+	}
+
+	return parts.join("\n\n");
 }
 
 /**
  * Every generated file of the site as `fileName -> source`.
- * `assets` is `{ landing, blog, pages }`, each `{ css: [urls], font, script }`.
+ * `assets` is `{ landing, blog }`, each `{ css: [urls], font, script }`.
  */
-export function renderSite(posts, legalPages, assets) {
+export function renderSite(posts, legalOrAssets, maybeAssets) {
+	const assets = maybeAssets ?? legalOrAssets;
 	const files = new Map();
+
 	for (const lang of LANGUAGES) {
 		files.set(
 			fileForUrl(LANDING_PATH[lang]),
@@ -134,28 +178,31 @@ export function renderSite(posts, legalPages, assets) {
 				renderBlogArticle(post, lang, posts, assets.blog),
 			);
 		}
+		const baseDir = fileForUrl(blogBase(lang)).replace("index.html", "");
 		files.set(
-			`${fileForUrl(blogBase(lang)).replace("index.html", "")}rss.xml`,
-			renderRss(lang, posts),
+			`${baseDir}feed.xml`,
+			renderRss(lang, posts, `${SITE_URL}${blogBase(lang)}feed.xml`),
 		);
 		files.set(
-			`${fileForUrl(blogBase(lang)).replace("index.html", "")}search-index.json`,
-			renderSearchIndex(lang, posts),
+			`${baseDir}rss.xml`,
+			renderRss(lang, posts, `${SITE_URL}${blogBase(lang)}rss.xml`),
 		);
+		files.set(
+			`${baseDir}atom.xml`,
+			renderAtom(lang, posts, `${SITE_URL}${blogBase(lang)}atom.xml`),
+		);
+		files.set(`${baseDir}search-index.json`, renderSearchIndex(lang, posts));
 	}
-	for (const kind of Object.keys(LEGAL_PATHS.en)) {
-		const pairs = {
-			"pt-BR": LEGAL_PATHS["pt-BR"][kind],
-			en: LEGAL_PATHS.en[kind],
-		};
-		for (const page of legalPages.filter((entry) =>
-			Object.values(pairs).includes(entry.path),
-		)) {
-			files.set(fileForUrl(page.path), legalPage(page, pairs, assets.pages));
-		}
+
+	for (const fileName of LEGAL_OUTPUT_FILES) {
+		const source = fs.readFileSync(path.join(legalSourceDir, fileName), "utf8");
+		files.set(fileName, source);
 	}
-	files.set("404.html", notFoundPage(assets.pages));
+
 	files.set("sitemap.xml", renderSitemap(posts));
+	files.set("llms.txt", renderLlms(posts));
+	files.set("llms-full.txt", renderLlmsFull(posts));
 	files.set("_headers", renderHeaders());
+
 	return files;
 }

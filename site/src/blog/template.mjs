@@ -120,24 +120,59 @@ function searchBar(lang) {
 	</div>`;
 }
 
-function blogJsonLd(lang, posts, canonical) {
+function blogJsonLd(lang, posts, canonical, categoryKey = "all") {
 	const ui = UI[lang].blog;
-	return [
-		{
-			"@context": "https://schema.org",
-			"@type": "Blog",
-			name: ui.title,
-			description: ui.description,
-			url: `${SITE_URL}${canonical}`,
-			inLanguage: lang,
-			publisher: { "@type": "Organization", name: OWNER, url: SITE_URL },
-			blogPost: posts.map((post) => ({
-				"@type": "BlogPosting",
-				headline: post.content[lang].title,
-				url: `${SITE_URL}${post.content[lang].url}`,
-			})),
-		},
-	];
+	const title =
+		categoryKey === "all"
+			? ui.title
+			: `${CATEGORIES[categoryKey][lang].label} | ${ui.title}`;
+	const description =
+		categoryKey === "all"
+			? ui.description
+			: `${CATEGORIES[categoryKey][lang].label}: ${ui.description}`;
+	return {
+		"@context": "https://schema.org",
+		"@graph": [
+			{
+				"@type": "Organization",
+				"@id": `${SITE_URL}/#organization`,
+				name: OWNER,
+				url: `${SITE_URL}/`,
+				logo: {
+					"@type": "ImageObject",
+					"@id": `${SITE_URL}/#logo`,
+					url: `${SITE_URL}/clipey-256.png`,
+					caption: SITE_NAME,
+				},
+			},
+			{
+				"@type": "WebSite",
+				"@id": `${SITE_URL}/#website`,
+				name: SITE_NAME,
+				url: `${SITE_URL}/`,
+				publisher: { "@id": `${SITE_URL}/#organization` },
+				inLanguage: lang,
+			},
+			{
+				"@type": "CollectionPage",
+				"@id": `${SITE_URL}${canonical}#collection`,
+				url: `${SITE_URL}${canonical}`,
+				name: title,
+				description,
+				isPartOf: { "@id": `${SITE_URL}/#website` },
+				inLanguage: lang,
+				mainEntity: {
+					"@type": "ItemList",
+					itemListElement: posts.map((post, index) => ({
+						"@type": "ListItem",
+						position: index + 1,
+						url: `${SITE_URL}${post.content[lang].url}`,
+						name: post.content[lang].title,
+					})),
+				},
+			},
+		],
+	};
 }
 
 /** The blog index (`categoryKey` "all") or one category page. Every page lists the same posts in the three languages. */
@@ -208,8 +243,10 @@ export function renderBlogIndex(lang, posts, assets, categoryKey = "all") {
 			canonical,
 			alternates,
 			assets,
-			jsonLd: blogJsonLd(lang, shown, canonical),
-			feed: `${blogBase(lang)}rss.xml`,
+			jsonLd: blogJsonLd(lang, shown, canonical, categoryKey),
+			feedRss: `${blogBase(lang)}feed.xml`,
+			feedAtom: `${blogBase(lang)}atom.xml`,
+			lcpImage: featuredItem?.cover || undefined,
 		}),
 		header: renderHeader({ lang, switchUrls: alternates, current: "blog" }),
 		body,
@@ -286,51 +323,82 @@ function articleJsonLd(post, lang) {
 	const item = post.content[lang];
 	const ui = UI[lang].blog;
 	const url = `${SITE_URL}${item.url}`;
-	return [
-		{
-			"@context": "https://schema.org",
-			"@type": "BlogPosting",
-			headline: item.title,
-			description: item.description,
-			url,
-			datePublished: post.date,
-			dateModified: post.updated,
-			inLanguage: lang,
-			wordCount: item.wordCount,
-			articleSection: CATEGORIES[post.categoryKey][lang].label,
-			keywords: item.tags.join(", "),
-			author: { "@type": "Organization", name: item.author, url: SITE_URL },
-			publisher: {
+	return {
+		"@context": "https://schema.org",
+		"@graph": [
+			{
 				"@type": "Organization",
+				"@id": `${SITE_URL}/#organization`,
 				name: OWNER,
-				url: SITE_URL,
-				logo: { "@type": "ImageObject", url: `${SITE_URL}/clipey-256.png` },
+				url: `${SITE_URL}/`,
+				logo: {
+					"@type": "ImageObject",
+					"@id": `${SITE_URL}/#logo`,
+					url: `${SITE_URL}/clipey-256.png`,
+					caption: SITE_NAME,
+				},
 			},
-			mainEntityOfPage: { "@type": "WebPage", "@id": url },
-			image: item.ogImage
-				? `${SITE_URL}${item.ogImage}`
-				: `${SITE_URL}/og/landing.png`,
-		},
-		{
-			"@context": "https://schema.org",
-			"@type": "BreadcrumbList",
-			itemListElement: [
-				{
-					"@type": "ListItem",
-					position: 1,
-					name: SITE_NAME,
-					item: `${SITE_URL}${LANDING_PATH[lang]}`,
+			{
+				"@type": "WebSite",
+				"@id": `${SITE_URL}/#website`,
+				name: SITE_NAME,
+				url: `${SITE_URL}/`,
+				publisher: { "@id": `${SITE_URL}/#organization` },
+				inLanguage: lang,
+			},
+			{
+				"@type": "BlogPosting",
+				"@id": `${url}#article`,
+				headline: item.title,
+				description: item.description,
+				url,
+				datePublished: post.date,
+				dateModified: post.updated,
+				inLanguage: lang,
+				wordCount: item.wordCount,
+				articleSection: CATEGORIES[post.categoryKey][lang].label,
+				keywords: item.tags.join(", "),
+				author: {
+					"@type": "Organization",
+					name: OWNER,
+					url: `${SITE_URL}/`,
 				},
-				{
-					"@type": "ListItem",
-					position: 2,
-					name: ui.title,
-					item: `${SITE_URL}${blogBase(lang)}`,
+				publisher: { "@id": `${SITE_URL}/#organization` },
+				mainEntityOfPage: { "@type": "WebPage", "@id": url },
+				image: item.ogImage
+					? `${SITE_URL}${item.ogImage}`
+					: `${SITE_URL}/og/landing.png`,
+				speakable: {
+					"@type": "SpeakableSpecification",
+					cssSelector: [".article-title", ".prose > p:first-of-type"],
 				},
-				{ "@type": "ListItem", position: 3, name: item.title, item: url },
-			],
-		},
-	];
+			},
+			{
+				"@type": "BreadcrumbList",
+				"@id": `${url}#breadcrumb`,
+				itemListElement: [
+					{
+						"@type": "ListItem",
+						position: 1,
+						name: SITE_NAME,
+						item: `${SITE_URL}${LANDING_PATH[lang]}`,
+					},
+					{
+						"@type": "ListItem",
+						position: 2,
+						name: ui.title,
+						item: `${SITE_URL}${blogBase(lang)}`,
+					},
+					{
+						"@type": "ListItem",
+						position: 3,
+						name: item.title,
+						item: url,
+					},
+				],
+			},
+		],
+	};
 }
 
 export function renderBlogArticle(post, lang, posts, assets) {
@@ -376,7 +444,9 @@ export function renderBlogArticle(post, lang, posts, assets) {
 			ogImage: item.ogImage,
 			ogImageAlt: item.coverAlt,
 			jsonLd: articleJsonLd(post, lang),
-			feed: `${blogBase(lang)}rss.xml`,
+			feedRss: `${blogBase(lang)}feed.xml`,
+			feedAtom: `${blogBase(lang)}atom.xml`,
+			lcpImage: item.cover || undefined,
 		}),
 		header: renderHeader({ lang, switchUrls: alternates, current: "blog" }),
 		body,
