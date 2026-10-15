@@ -3,6 +3,7 @@
  * Every language has STORY copy, so each landing alternates with the other two.
  */
 import {
+	APP_VERSION,
 	LANDING_PATH,
 	LANGUAGES,
 	OWNER,
@@ -53,6 +54,13 @@ function jsonLd(lang, canonical) {
 				inLanguage: lang,
 				url: `${SITE_URL}${canonical}`,
 				downloadUrl: RELEASES_URL,
+				softwareVersion: APP_VERSION,
+				offers: {
+					"@type": "Offer",
+					price: "0",
+					priceCurrency: "USD",
+					url: RELEASES_URL,
+				},
 				author: { "@id": `${SITE_URL}/#organization` },
 				publisher: { "@id": `${SITE_URL}/#organization` },
 			},
