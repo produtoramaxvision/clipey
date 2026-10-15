@@ -1,16 +1,16 @@
 import {
+	blogBase,
 	CATEGORIES,
+	categoryUrl,
 	LANDING_PATH,
 	LANGUAGES,
 	LEGAL_PATHS,
 	RELEASE_DATE,
 	SITE_URL,
-	blogBase,
-	categoryUrl,
 } from "./config.mjs";
 import { UI } from "./i18n.mjs";
-import { usedCategories } from "./template.mjs";
 import { xmlEscape } from "./shell.mjs";
+import { usedCategories } from "./template.mjs";
 
 const decodeEntities = (text) =>
 	text.replace(

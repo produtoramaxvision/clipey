@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import {
+	blogBase,
 	CONTACT_EMAIL,
 	LANDING_ANCHORS,
 	LANDING_PATH,
@@ -8,12 +9,11 @@ import {
 	LEGAL_PATHS,
 	OG_LOCALE,
 	OWNER,
-	REPO_URL,
 	RELEASES_URL,
+	REPO_URL,
 	SITE_NAME,
 	SITE_URL,
 	THEME_KEY,
-	blogBase,
 } from "./config.mjs";
 import { escapeHtml as esc } from "./content.mjs";
 import { UI } from "./i18n.mjs";

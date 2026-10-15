@@ -3,7 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { load } from "js-yaml";
 import { Marked } from "marked";
-import { LANGUAGES, RELEASE_DATE, blogBase, categoryKeyOf } from "./config.mjs";
+import { blogBase, categoryKeyOf, LANGUAGES, RELEASE_DATE } from "./config.mjs";
 
 const siteRoot = path.resolve(
 	path.dirname(fileURLToPath(import.meta.url)),

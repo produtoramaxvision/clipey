@@ -1,6 +1,8 @@
 import {
+	blogBase,
 	CATEGORIES,
 	CATEGORY_KEYS,
+	categoryUrl,
 	LANDING_PATH,
 	LANGUAGE_NAME,
 	LANGUAGES,
@@ -8,8 +10,6 @@ import {
 	RELEASES_URL,
 	SITE_NAME,
 	SITE_URL,
-	blogBase,
-	categoryUrl,
 } from "./config.mjs";
 import { escapeHtml as esc } from "./content.mjs";
 import { UI } from "./i18n.mjs";
@@ -282,7 +282,7 @@ function related(post, lang, posts) {
 	</section>`;
 }
 
-function articleJsonLd(post, lang, posts) {
+function articleJsonLd(post, lang) {
 	const item = post.content[lang];
 	const ui = UI[lang].blog;
 	const url = `${SITE_URL}${item.url}`;
@@ -375,7 +375,7 @@ export function renderBlogArticle(post, lang, posts, assets) {
 			ogType: "article",
 			ogImage: item.ogImage,
 			ogImageAlt: item.coverAlt,
-			jsonLd: articleJsonLd(post, lang, posts),
+			jsonLd: articleJsonLd(post, lang),
 			feed: `${blogBase(lang)}rss.xml`,
 		}),
 		header: renderHeader({ lang, switchUrls: alternates, current: "blog" }),
