@@ -237,7 +237,9 @@ main {
 	border-radius: var(--radius);
 	color: var(--text);
 	text-decoration: none;
-	transition: border-color 0.2s, transform 0.3s var(--ease);
+	transition:
+		border-color 0.2s,
+		transform 0.3s var(--ease);
 }
 
 .teaser a:hover {
@@ -372,5 +374,660 @@ main {
 	.download {
 		margin-top: 80px;
 		padding: 32px 22px;
+	}
+}
+
+/*
+ * v2 landing ("the site is a Clipey recording"): src/landing-story.mjs. The page runs edge to edge with a gutter;
+ * lane colours appear only as timeline semantics (clip lime, zoom blue, speed orange, annotation amber).
+ */
+/* Shared by the title bar (outside main) and the sticky timeline under it. */
+:root {
+	--gutter: clamp(20px, 4vw, 56px);
+	--bar-h: 56px;
+	--tl-h: 54px;
+}
+
+main.story {
+	width: auto;
+	margin: 0;
+	overflow-x: clip;
+}
+
+.story :target,
+.story [id] {
+	scroll-margin-top: calc(var(--bar-h) + var(--tl-h) + 16px);
+}
+
+.meta {
+	margin: 0;
+	color: var(--meta);
+	font: 400 12px / 1.6 var(--font-mono);
+}
+
+/* Title bar: the app window's own bar, with the chapters as its tabs. */
+.titlebar {
+	position: sticky;
+	z-index: 20;
+	top: 0;
+	display: flex;
+	align-items: center;
+	gap: 18px;
+	height: var(--bar-h);
+	padding: 0 20px;
+	border-bottom: 1px solid var(--line-soft);
+	background: var(--bar-glass);
+	backdrop-filter: blur(12px);
+}
+
+.titlebar-brand {
+	display: flex;
+	align-items: center;
+	gap: 9px;
+	color: var(--title);
+	font-size: 17px;
+	font-weight: 600;
+	letter-spacing: -0.01em;
+	text-decoration: none;
+}
+
+.titlebar-brand img {
+	border-radius: 6px;
+}
+
+.titlebar-sep {
+	width: 1px;
+	height: 22px;
+	background: var(--line);
+}
+
+.titlebar-host {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 14px;
+}
+
+.rec-dot {
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: var(--accent);
+	animation: rec 1.2s steps(1, end) infinite;
+}
+
+@keyframes rec {
+	0%,
+	55% {
+		opacity: 1;
+	}
+
+	56%,
+	100% {
+		opacity: 0.2;
+	}
+}
+
+.chapters {
+	display: flex;
+	margin: 0 auto;
+	padding: 3px;
+	border: 1px solid var(--line-soft);
+	border-radius: 10px;
+	background: var(--surface);
+}
+
+.chapter {
+	padding: 7px 18px;
+	border-radius: 8px;
+	color: var(--muted);
+	font-size: 14px;
+	text-decoration: none;
+}
+
+.chapter:hover,
+.chapter[aria-current] {
+	color: var(--text);
+}
+
+.chapter[aria-current] {
+	background: var(--surface-2);
+}
+
+.titlebar-actions {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+}
+
+.titlebar-actions .icon-btn {
+	width: 36px;
+	height: 36px;
+}
+
+.titlebar-link {
+	color: var(--text);
+	font-size: 14px;
+	text-decoration: none;
+}
+
+/* The lime export button of the app, at three sizes. */
+.export-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	height: 36px;
+	padding: 0 16px;
+	border-radius: 10px;
+	background: var(--accent);
+	color: var(--accent-ink);
+	font-size: 14px;
+	font-weight: 600;
+	text-decoration: none;
+	white-space: nowrap;
+	transition: box-shadow 180ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.export-btn:hover {
+	color: var(--accent-ink);
+	box-shadow:
+		0 0 0 5px var(--accent-glow),
+		0 12px 40px -10px var(--accent-glow-strong);
+}
+
+.export-btn svg {
+	width: 15px;
+	height: 15px;
+}
+
+.export-btn--hero {
+	height: 52px;
+	padding: 0 22px;
+	border-radius: 12px;
+	font-size: 16px;
+}
+
+.export-btn--cta {
+	gap: 12px;
+	height: 60px;
+	padding: 0 28px;
+	border-radius: 14px;
+	font-size: 18px;
+	font-weight: 650;
+}
+
+.export-btn--cta svg {
+	width: 18px;
+	height: 18px;
+}
+
+/* Hero: staircase type with timecodes on the left, the real editor bleeding off the right edge. */
+.story-hero {
+	position: relative;
+	padding: 72px 0 0 var(--gutter);
+}
+
+.story-hero-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+	gap: 48px;
+	align-items: start;
+}
+
+.story-copy {
+	position: relative;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	gap: 28px;
+	padding-top: 24px;
+}
+
+.stair {
+	display: flex;
+	flex-direction: column;
+	gap: 28px;
+	margin: 0;
+	font-weight: inherit;
+}
+
+.stair-line {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.stair-line--zoom {
+	padding-left: 40px;
+}
+
+.stair-line--speed {
+	padding-left: 80px;
+}
+
+.stair-tc {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	color: var(--meta);
+	font: 400 13px / 1.4 var(--font-mono);
+	text-transform: uppercase;
+}
+
+.lane-bar {
+	width: 34px;
+	height: 8px;
+	border-radius: 2px;
+	background: var(--accent);
+}
+
+.lane-bar--zoom {
+	width: 22px;
+	background: var(--zoom);
+}
+
+.lane-bar--speed {
+	width: 16px;
+	background: var(--speed);
+}
+
+.stair-text {
+	color: var(--title);
+	font: 650 clamp(52px, 6.7vw, 96px) / 0.92 var(--font-sans);
+	letter-spacing: -0.055em;
+}
+
+.stair-line--speed .stair-text {
+	color: var(--muted);
+}
+
+.story-sub {
+	max-width: 470px;
+	margin: 8px 0 0;
+	color: var(--muted);
+	font-size: 18px;
+	line-height: 1.55;
+}
+
+.story-actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 20px;
+}
+
+.hero-stage {
+	position: relative;
+}
+
+.hero-shot {
+	position: relative;
+	overflow: hidden;
+	border: 1px solid var(--line);
+	border-right: 0;
+	border-radius: 14px 0 0 14px;
+	box-shadow: 0 50px 140px -40px var(--shadow);
+}
+
+.hero-cam {
+	position: relative;
+	transform-origin: 38.5% 37.5%;
+}
+
+.hero-img {
+	width: 100%;
+	height: auto;
+}
+
+.hero-img--light,
+:root[data-theme="light"] .hero-img:not(.hero-img--light) {
+	display: none;
+}
+
+:root[data-theme="light"] .hero-img--light {
+	display: block;
+}
+
+/* Left click as the app draws it: one lime ring, 450 ms, ease-out quad (src/fx/spec.mjs). */
+.click-ring {
+	position: absolute;
+	top: 37.5%;
+	left: 38.5%;
+	width: 70px;
+	height: 70px;
+	border: 3.5px solid var(--accent);
+	border-radius: 50%;
+	transform: translate(-50%, -50%) scale(0);
+	animation: click-ring 1.6s cubic-bezier(0.5, 1, 0.89, 1) infinite;
+}
+
+@keyframes click-ring {
+	0% {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(0.15);
+	}
+
+	28%,
+	100% {
+		opacity: 0;
+		transform: translate(-50%, -50%) scale(1);
+	}
+}
+
+.zoom-box {
+	position: absolute;
+	top: 25%;
+	left: 27%;
+	width: 26%;
+	height: 22%;
+	border: 1.5px solid var(--zoom);
+	border-radius: 6px;
+	box-shadow: 0 0 0 9999px var(--media-scrim);
+}
+
+.zoom-tag {
+	position: absolute;
+	bottom: calc(100% + 6px);
+	left: -1.5px;
+	padding: 3px 7px;
+	border-radius: 4px;
+	background: var(--zoom);
+	color: var(--media-text);
+	font: 400 11px / 1.3 var(--font-mono);
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.cut-strip,
+.burn-caption,
+.vertical-mask {
+	display: none;
+}
+
+.ink {
+	position: absolute;
+	fill: none;
+	stroke: var(--accent);
+	stroke-width: 3.5;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-dasharray: 900;
+	pointer-events: none;
+	animation: ink 2.4s cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+@keyframes ink {
+	from {
+		stroke-dashoffset: 900;
+	}
+
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+
+.ink--hero {
+	top: 52%;
+	left: -150px;
+	width: 300px;
+	height: 170px;
+}
+
+.ink-note {
+	position: absolute;
+	top: calc(52% - 16px);
+	left: -210px;
+	color: var(--accent-text);
+	font: 400 12px / 1 var(--font-mono);
+}
+
+.hero-stage figcaption {
+	margin-top: 12px;
+	font-size: 11px;
+}
+
+/* The scroll story stills: hidden while the scroll-driven hero plays them, listed otherwise. */
+.story-stills {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 32px;
+	margin: 56px 0 0;
+	padding: 0 var(--gutter) 0 0;
+	list-style: none;
+}
+
+.still {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.still-frame {
+	position: relative;
+	overflow: hidden;
+	margin-bottom: 8px;
+	border: 1px solid var(--line);
+	border-radius: 12px;
+}
+
+.still-frame img {
+	width: 100%;
+	height: auto;
+}
+
+.still-tc {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	padding: 4px 8px;
+	border-radius: 5px;
+	background: var(--media-chip);
+	color: var(--media-text);
+	font: 400 11px / 1 var(--font-mono);
+}
+
+.still-title {
+	color: var(--title);
+	font-size: 17px;
+	font-weight: 600;
+}
+
+.still-text {
+	color: var(--muted);
+	font-size: 14px;
+	line-height: 1.55;
+}
+
+/* Sticky timeline under the title bar: the chapters are its pills, the playhead runs as you read. */
+.timeline {
+	position: sticky;
+	z-index: 15;
+	top: var(--bar-h);
+	margin-top: 64px;
+	border-top: 1px solid var(--line-soft);
+	border-bottom: 1px solid var(--line-soft);
+	background: var(--bg);
+}
+
+.timeline-inner {
+	position: relative;
+	height: var(--tl-h);
+	margin: 0 var(--gutter);
+}
+
+.timeline-ticks {
+	display: flex;
+	justify-content: space-between;
+	padding-top: 6px;
+	color: var(--meta);
+	font: 400 10px / 1 var(--font-mono);
+	font-variant-numeric: tabular-nums;
+}
+
+.timeline-lane {
+	position: absolute;
+	right: 0;
+	bottom: 9px;
+	left: 0;
+	display: flex;
+	gap: 3px;
+	height: 18px;
+}
+
+/* Lane pills with the app's candy fill: the lane colour lightened at the top. */
+.lane-pill {
+	--lane: var(--accent);
+	flex: 2;
+	overflow: hidden;
+	padding: 3px 8px;
+	border-radius: 4px;
+	background: linear-gradient(
+		180deg,
+		color-mix(in oklab, var(--lane) 72%, white),
+		var(--lane)
+	);
+	color: var(--lane-ink);
+	font-size: 10px;
+	font-weight: 600;
+	line-height: 12px;
+	white-space: nowrap;
+}
+
+.lane-pill--zoom {
+	--lane: var(--zoom);
+	flex: 3;
+}
+
+.lane-pill--annotation {
+	--lane: var(--annotation);
+}
+
+.lane-pill--speed {
+	--lane: var(--speed);
+}
+
+.playhead {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 18%;
+	width: 2px;
+	border-radius: 1px;
+	background: var(--playhead);
+	box-shadow: 0 0 12px var(--playhead-glow);
+	animation: playhead 24s linear infinite;
+}
+
+.playhead::before {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: 14px;
+	height: 12px;
+	border-radius: 3px;
+	background: var(--playhead);
+	content: "";
+	clip-path: polygon(0% 0%, 100% 0%, 100% 67%, 50% 100%, 0% 67%);
+	filter: drop-shadow(0 1px 3px var(--playhead-shadow));
+	transform: translateX(-50%);
+}
+
+@keyframes playhead {
+	from {
+		left: 0;
+	}
+
+	to {
+		left: 100%;
+	}
+}
+
+@media (max-width: 1000px) {
+	.titlebar-sep,
+	.titlebar-host,
+	.titlebar-link {
+		display: none;
+	}
+
+	.story-hero {
+		padding: 48px var(--gutter) 0;
+	}
+
+	.story-hero-grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.stair-line--zoom {
+		padding-left: 20px;
+	}
+
+	.stair-line--speed {
+		padding-left: 40px;
+	}
+
+	.hero-stage {
+		margin-right: calc(-1 * var(--gutter));
+	}
+
+	.ink--hero,
+	.ink-note {
+		display: none;
+	}
+
+	.story-stills {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		padding: 0;
+	}
+}
+
+@media (max-width: 640px) {
+	.titlebar {
+		gap: 10px;
+		padding: 0 12px;
+	}
+
+	.titlebar .lang-switch,
+	.export-btn--bar span {
+		display: none;
+	}
+
+	.chapter {
+		padding: 7px 10px;
+		font-size: 13px;
+	}
+
+	.export-btn--bar {
+		padding: 0 11px;
+	}
+
+	.stair-text {
+		font-size: 44px;
+	}
+
+	.story-stills {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.lane-pill {
+		padding: 3px 4px;
+		font-size: 9px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.rec-dot,
+	.click-ring,
+	.playhead,
+	.ink {
+		animation: none;
+	}
+
+	.click-ring {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(1);
+	}
+
+	.ink {
+		stroke-dashoffset: 0;
 	}
 }

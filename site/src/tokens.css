@@ -5,16 +5,45 @@
 	--surface: #141612;
 	--surface-2: #20231d;
 	--line: #2e3229;
+	--line-soft: #20231d;
 	--line-strong: #454a3d;
 	--text: #eceee6;
 	--muted: #9aa091;
+	--meta: #858b7c;
 	--accent: #a2d305;
 	--accent-text: #a2d305;
 	--accent-ink: #0c0d0b;
 	--accent-soft: #1d2406;
 	--focus: #a2d305;
-	--font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-	--font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+	/* Timeline semantics, as the app colours its lanes; *-text is the same hue readable as text on --bg. */
+	--zoom: #3b82f6;
+	--zoom-text: #3b82f6;
+	--speed: #fb923c;
+	--speed-text: #fb923c;
+	--annotation: #fbbf24;
+	--annotation-text: #fbbf24;
+	--danger: #f87171;
+	--danger-hatch: rgba(248, 113, 113, 0.4);
+	--lane-ink: #161813;
+	--playhead: #6c55ff;
+	--playhead-glow: rgba(108, 85, 255, 0.68);
+	--playhead-shadow: rgba(108, 85, 255, 0.35);
+	/* Headlines, the title bar glass, and what is drawn over a product picture (the same in both themes). */
+	--title: #ffffff;
+	--bar-glass: rgba(12, 13, 11, 0.92);
+	--shadow: rgba(0, 0, 0, 0.9);
+	--accent-glow: rgba(162, 211, 5, 0.18);
+	--accent-glow-strong: rgba(162, 211, 5, 0.6);
+	--media-text: #ffffff;
+	--media-text-shadow: rgba(0, 0, 0, 0.85);
+	--media-scrim: rgba(12, 13, 11, 0.28);
+	--media-scrim-strong: rgba(12, 13, 11, 0.7);
+	--media-chip: rgba(12, 13, 11, 0.8);
+	--font-sans:
+		"Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+		sans-serif;
+	--font-mono:
+		"Geist Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
 	--radius-s: 8px;
 	--radius: 14px;
 	--radius-l: 22px;
@@ -29,12 +58,26 @@
 	--surface: #ffffff;
 	--surface-2: #f3f5f8;
 	--line: #d5dbe3;
+	--line-soft: #e0e5ec;
 	--line-strong: #aeb8c5;
 	--text: #0f172a;
 	--muted: #56657a;
+	--meta: #5f6b7d;
 	--accent: #8fbc00;
 	--accent-text: #435a00;
 	--accent-ink: #0f172a;
 	--accent-soft: #e4efc2;
 	--focus: #435a00;
+	--zoom-text: #1d4ed8;
+	--speed: #f97316;
+	--speed-text: #9a3412;
+	--annotation: #eab308;
+	--annotation-text: #854d0e;
+	--danger: #ef4444;
+	--danger-hatch: rgba(239, 68, 68, 0.32);
+	--title: #0f172a;
+	--bar-glass: rgba(234, 238, 243, 0.92);
+	--shadow: rgba(15, 23, 42, 0.28);
+	--accent-glow: rgba(143, 188, 0, 0.22);
+	--accent-glow-strong: rgba(143, 188, 0, 0.5);
 }

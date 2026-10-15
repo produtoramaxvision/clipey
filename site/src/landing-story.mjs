@@ -22,6 +22,8 @@ import { STORY } from "./landing-copy.mjs";
 import { readShotManifest, shotImg, shotSet } from "./landing-shots.mjs";
 
 export const HERO_SHOT = "editor-full-speed-zoom-lanes-dark";
+/** The light theme shows the light editor; it stays lazy, so dark visitors never download it. */
+export const HERO_SHOT_LIGHT = "editor-full-light";
 export const HERO_SIZES = "(max-width: 1000px) 100vw, 60vw";
 
 /** Section ids of the v2 page, and the older anchors (linked by the blog and the header) each section answers to. */
@@ -78,8 +80,8 @@ function heroStage(copy, manifest) {
 				<div class="hero-shot">
 					<div class="hero-cam">
 						${shotImg(manifest, HERO_SHOT, { alt: hero.imageAlt, sizes: HERO_SIZES, className: "hero-img", priority: true })}
-						<span class="fx-ring fx-ring--a" aria-hidden="true"></span>
-						<span class="fx-ring fx-ring--b" aria-hidden="true"></span>
+						${shotImg(manifest, HERO_SHOT_LIGHT, { alt: hero.imageAlt, sizes: HERO_SIZES, className: "hero-img hero-img--light" })}
+						<span class="click-ring" aria-hidden="true"></span>
 					</div>
 					<span class="zoom-box" aria-hidden="true"><span class="zoom-tag">${esc(hero.zoomTag)}</span></span>
 					<span class="cut-strip" aria-hidden="true"><span class="cut-keep"></span><span class="cut-gap"></span><span class="cut-keep"></span><span class="cut-tag">${esc(copy.cutTag)}</span></span>
@@ -108,17 +110,17 @@ function storyStills(copy, manifest) {
 
 function hero(copy, manifest) {
 	const hero = copy.hero;
-	return `<section class="hero" id="topo" aria-labelledby="hero-title">
-			<div class="hero-grid">
-				<div class="hero-copy">
+	return `<section class="story-hero" id="topo" aria-labelledby="hero-title">
+			<div class="story-hero-grid">
+				<div class="story-copy">
 					<h1 class="stair" id="hero-title">${hero.lines
 						.map(
 							([lane, tc, label, text]) =>
 								`<span class="stair-line stair-line--${lane}"><span class="stair-tc" aria-hidden="true"><span class="lane-bar lane-bar--${lane}"></span>${esc(tc)} · ${esc(label)}</span><span class="stair-text">${esc(text)}</span></span>`,
 						)
 						.join(" ")}</h1>
-					<p class="hero-sub">${esc(hero.sub)}</p>
-					<div class="hero-actions">
+					<p class="story-sub">${esc(hero.sub)}</p>
+					<div class="story-actions">
 						<a class="export-btn export-btn--hero" href="#${STORY_SECTIONS.export.id}">${esc(hero.download)}</a>
 						<p class="meta">${esc(hero.platform)}<br>${esc(hero.noAccount)}</p>
 					</div>
@@ -314,7 +316,7 @@ export function renderStory(lang, { assets, alternates, jsonLd }) {
 	const copy = STORY[lang];
 	const manifest = readShotManifest();
 	const lcp = shotSet(manifest, HERO_SHOT);
-	const body = `<main id="main">
+	const body = `<main id="main" class="story">
 		${hero(copy, manifest)}
 		${timeline(copy)}
 		${recordSection(copy, manifest)}

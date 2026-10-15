@@ -88,7 +88,7 @@ describe("landing shots", () => {
 describe("v2 pt-BR landing structure", () => {
 	it("has one h1, a main landmark, a header and a footer", () => {
 		expect(html.match(/<h1[\s>]/g)).toHaveLength(1);
-		expect(html.match(/<main id="main">/g)).toHaveLength(1);
+		expect(html.match(/<main id="main" class="story">/g)).toHaveLength(1);
 		expect(html).toContain('<header class="titlebar" data-header>');
 		expect(html).toContain('<footer class="story-footer">');
 		expect(html).toContain('aria-label="Capítulos"');
