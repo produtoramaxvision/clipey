@@ -19,23 +19,23 @@ appliesTo: "1.15"
 
 > **Applies to:** Clipey 1.15 on Windows.
 
-When a video you are allowed to use is hosted online, importing from its link saves you from downloading it separately and locating it in the project. Clipey checks the available information, lets you choose a quality and adds the media to the project. Import does not publish the video, and you are still responsible for having the right to download and reuse the content.
+To import a video from a link into Clipey, select Import from link in the editor, paste a supported public video URL, and click Inspect link to preview duration, author and license details. Choose your preferred quality (such as Best up to 1080p or Audio only) and confirm to download the media directly into your project. The import process runs entirely on your PC without sharing credentials, and you remain responsible for ensuring you have rights to use the content.
 
 ## Paste the link and check the preview
 
 1. Open a project in the editor, or start from the empty state, and choose **Import from link**.
-2. Paste the video's address. The tool accepts compatible HTTP or HTTPS links; do not use local paths, private addresses or links that require bypassing access controls.
-3. Wait for the metadata lookup. Check the title, duration, thumbnail and channel or uploader when the site provides them.
-4. Read the licence information. If the site reports none, Clipey shows **No licence information**. Missing information does not mean the video is free to reuse.
-5. Choose a quality and confirm the import. The default seeks the best quality up to 1080p; other choices include up to 720p, best available and audio only.
+2. Paste the video's address in **Video link**. The tool accepts compatible HTTP or HTTPS links; do not use local paths or private network addresses.
+3. Click **Inspect link** and wait for the metadata lookup. Check the title, duration, thumbnail and channel or uploader details.
+4. Read the reported **License**. If the site provides no details, Clipey displays **No license info**. Missing information does not mean the video is free to reuse.
+5. Choose an option under **Quality** and click **Import video**. The default seeks **Best up to 1080p**; other choices include **Best up to 720p**, **Best available** and **Audio only (m4a)**.
 
-Clipey uses a command-line tool to inspect and download media. It checks metadata first, then downloads using your selected quality. Follow the progress while it runs. You can cancel if you changed your mind or pasted the wrong link. When it finishes, the file is added to the project's media like an imported asset.
+Clipey downloads the media directly to your machine. The dialog shows real-time transfer speed and estimated time remaining, allowing you to cancel at any moment. When finished, the asset is automatically added to your project media.
 
 ## Match quality to the job
 
-Do not automatically choose the largest option. For checking spoken content or editing a short section, a lower quality may be enough and use less storage. For work that needs more picture detail, choose the highest available quality that suits the project. **Best available** does not promise a particular resolution; the source determines what is offered.
+Do not automatically choose the largest option. For checking spoken content or editing a short section, a lower quality may be enough and use less storage. For work that needs more picture detail, choose the highest available quality that suits the project. **Best available** selects the highest resolution provided by the source.
 
-Choose **Audio only** when you need the sound track rather than the picture. Check this choice before starting so you do not download audio when you meant to edit a video.
+Choose **Audio only (m4a)** when you need the sound track rather than the picture. Check this choice before starting so you do not download audio when you meant to edit a video.
 
 After import, find the new asset in the project media and open it to check duration and playback. A metadata preview does not guarantee that the source will remain available or that a download will succeed. A video may be private, region-blocked or require an account. If an error appears, check the link, network and source permissions before trying again.
 
@@ -56,7 +56,18 @@ The imported file is available in the project for editing; this is not the same 
 
 ## Limitations
 
-Support depends on the site and the access it provides at the time. Private, unavailable, region-blocked or removed videos may fail. Clipey displays licence information only when the source supplies it and cannot decide whether you have sufficient rights. Links are not a way around authentication or restrictions. Available formats and resolutions depend on the source, and network or disk-space errors can interrupt a transfer.
+Support depends on the site and the access it provides at the time. Private, unavailable, region-blocked or removed videos cannot be imported. Clipey displays licence information only when the source supplies it and cannot decide whether you have sufficient rights. Links are not a way around authentication or restrictions.
+
+## Frequently asked questions
+
+### Can I import videos from any website?
+Clipey supports public video links compatible with standard media extraction tools. Private videos, streams requiring account authentication, and geoblocked links cannot be downloaded.
+
+### Does Clipey verify if I have copyright permission to use the video?
+No. Clipey displays license information reported by the host site for reference only. You are solely responsible for verifying and obtaining the rights needed to reuse third-party content.
+
+### Does link import send my login credentials to external servers?
+No. Media fetching runs locally on your PC via integrated tools, and Clipey never transmits your personal credentials or access tokens to any cloud service.
 
 After import, read [turning a long recording into short clips](/blog/en/auto-clip-shorts-from-long-videos/) or [prepare captions with SRT/VTT](/blog/en/automatic-captions-and-srt-vtt-import/). For data handling, see [privacy](/en/#privacy).
 

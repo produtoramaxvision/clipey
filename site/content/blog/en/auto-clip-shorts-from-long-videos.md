@@ -19,16 +19,16 @@ appliesTo: "1.15"
 
 > **Applies to:** Clipey 1.15 on Windows.
 
-A long recording may contain several useful explanations, but scrubbing through all of it takes time. Auto Clip looks for moments that might stand on their own. Treat it as a first-pass shortlist: set a duration range, compare the candidates and watch each beginning and ending before publishing.
+To find short, self-contained clips in a long recording, open Clipey Studio and run Auto Clip on your project's transcript. The tool scores candidate segments across Hook, Coherence, Value and Shareability within predefined duration buckets (such as 15–30s or 30–60s) while snapping cuts to natural sentence boundaries. You can compare the top-rated candidates, preview speaker framing, and create polished vertical Shorts in seconds.
 
 ## Set up Auto Clip
 
 1. Open the project with the recording and transcript. The search uses spoken content, so create a transcript in the transcript pane first if one is not available.
-2. Open Clipey Studio and find the **Auto Clip** group. Its controls let you set minimum and maximum clip length, the number of results to seek, and whether to use face focus.
+2. Open Clipey Studio and find the **Auto Clip** group. The controls allow selecting duration buckets such as **15–30s (Shorts/Reels)**, **30–60s (Standard)** or **60–90s (Deep dive)**, setting **Max clips (up to 20)**, and toggling face tracking.
 3. Choose a duration range that fits your destination rather than asking for the largest possible batch. Length bounds constrain each candidate; the count controls how many suggestions the run tries to return. Change one setting at a time to see how it affects the shortlist.
-4. Start the analysis and wait for the candidates. It can use an AI provider configured in the app, so check your provider setup first if you do not want text sent to an external service.
+4. Start the analysis and wait for the candidates. The process parses the transcript to locate self-contained ideas with clear sentence boundaries.
 
-Auto Clip uses transcript text to find segments with potential as short videos. Candidate assessments separate qualities such as hook, coherence, value and shareability, and may include a short reason. A score helps you compare options; it is not a view forecast or a promise that an audience will like the result.
+Auto Clip evaluates segments across four core dimensions: **Hook**, **Coherence**, **Value** and **Shareability**, accompanied by brief reasoning for each candidate. When an interesting segment falls just shy of the strict cut-off score, Clipey marks it with a **Salvaged** badge so you can inspect and recover it if it suits your editorial goal.
 
 ## Treat a candidate as a hypothesis
 
@@ -36,7 +36,7 @@ Start with its first sentence. A clip that opens on a pronoun or relies on a que
 
 Then check the ending. A good cut completes the thought, not just the selected duration. If the final sentence depends on what comes next, reject the suggestion or adjust its boundaries in the main project. The system aims for sentence boundaries rather than cutting through a sentence, but a complete sentence can still lack context.
 
-If a candidate works, review its framing. With face focus enabled, composition can use available focal points; check the result during playback, not only in a still frame. A clear spoken segment may still need a title or context before it is ready to publish.
+If a candidate works, review its framing. If speaker face tracking is unavailable on the machine, the system falls back gracefully to a centered crop without halting candidate generation. A clear spoken segment may still need a title or context before it is ready to publish.
 
 ## Make an editorial selection
 
@@ -56,7 +56,7 @@ If a candidate works, review its framing. With face focus enabled, composition c
 
 ## Limitations
 
-Results depend on the transcript and available provider. Noise, overlapping speech, expressive pauses and topics that need context can all lead to weak boundaries. The process cannot guarantee a strong clip from every recording or predict reach, retention or engagement. Review face-focused framing in the preview too. Before sharing, check rights, privacy and any information visible on screen.
+Results depend on transcript quality and clear recorded audio. Background noise, overlapping talkers, expressive silences and highly context-dependent subjects may require light manual trimming. The scoring process ranks potential clarity; it cannot predict social reach or engagement. Check rights, privacy and on-screen data before publishing.
 
 For manual trims and zooms after choosing a candidate, read [AI editing in a project](/blog/en/ai-editing-cuts-zooms-silence/). For captions, see [transcripts and SRT/VTT import](/blog/en/automatic-captions-and-srt-vtt-import/). Explore [AI features](/en/#ai).
 

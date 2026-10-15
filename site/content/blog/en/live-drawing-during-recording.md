@@ -17,9 +17,9 @@ ogImage: "/blog/og/desenho-ao-vivo-durante-gravacao.png"
 appliesTo: "1.15"
 ---
 
-> **Applies to:** Clipey 1.15. Live drawing is planned for Windows recordings; keeping strokes out of the captured video depends on Windows capture protection.
+> **Applies to:** Clipey 1.15. Live drawing is planned for Windows recordings; keeping strokes out of the captured video depends on Windows capture protection and is awaiting final validation.
 
-When explaining an interface, the cursor is not always enough. You may need to circle a button, point to a region or sketch a shape. Live drawing in 1.15 is planned to let you mark the screen during a recording and replay those marks in sync with the video. The feature still needs implementation and validation, so treat this as the intended workflow rather than a promise that every control is already in your build.
+To annotate your screen while recording with Clipey, the planned workflow uses the global shortcut Ctrl+Shift+D to open a floating drawing toolbar with pens, highlighters, arrows and shapes. Annotations are recorded as timed vector data excluded from the captured screen pixels, allowing strokes to replay as an editable, synchronized layer in the timeline. Because this capability relies on Windows capture protections and remains in final validation, use this guide as an overview of the planned workflow.
 
 ## Before you draw
 

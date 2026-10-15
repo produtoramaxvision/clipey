@@ -19,7 +19,7 @@ appliesTo: "1.15"
 
 > **Applies to:** Clipey 1.15 for Windows.
 
-On a first recording, it is easy to capture the wrong screen, miss an audio source, or export without checking the file. Make a short test before recording anything important. It gives you a chance to check permissions, find the controls, and practise the route from recording to export.
+To get started with recording and exporting in Clipey on Windows, launch the app to select your screen or application window, test your microphone input, and complete a brief sample recording. In the editor, trim unwanted pauses or retakes, then open Export to choose a platform preset with size estimates and automated stream verification. The entire capture and basic export flow runs locally on your computer without cloud account sign-in.
 
 ## Install and open the app
 

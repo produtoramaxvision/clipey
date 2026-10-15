@@ -19,28 +19,32 @@ appliesTo: "1.15"
 
 > **Applies to:** Clipey 1.15 for Windows.
 
-“Local” is useful only when you know which part of a workflow it describes. Clipey records and edits on your PC, and speech recognition runs on-device. But some AI features can call an external provider, and a diagnostic bundle is still worth reviewing before you share it. This guide separates those cases so you can make a deliberate choice.
+In Clipey, your screen recordings, timeline edits, and Whisper speech transcriptions process entirely on your local Windows PC without sending video or audio to cloud servers. External network requests occur only when you choose to configure third-party AI models or publish directly to social networks. Diagnostic bundles generated for troubleshooting do not include video recordings and should always be manually inspected before sharing.
 
 ## Recording and project files
 
-Screen recordings and project media are handled by the desktop app on your computer. Project documents refer to media files and keep editing state such as clips and captions. Keep the project and its source files together when moving it; the editor needs the referenced media to reproduce the result.
+Screen recordings, camera feeds and imported media assets are processed exclusively by the desktop application on your local machine. Clipey project files do not package copies of your video files into monolithic archives; instead, they store lightweight project documents that reference source video and audio paths alongside your edits, trim points, and caption tracks. When moving a project to another folder or storage drive, always keep the original media files together with the project file so the editor can continue to reference them.
 
-For transcription, Clipey uses its local speech model. The first use may need to prepare model files, and later work can reuse downloaded model assets from the local model directory. That is distinct from sending a recording to a hosted transcription service. Local processing does not mean the work is instant: longer material can take time depending on your PC.
+This separation protects your original takes from accidental alteration. Your recorded video remains unmodified on disk, while all cuts, zooms, and audio adjustments exist as instructions within the project file. If you decide to clean up storage, ensure you preserve both the project file and its source media until you are certain you no longer need to re-render the footage.
+
+For speech recognition, Clipey runs a local Whisper speech-to-text engine directly on your hardware. On the first run, the necessary speech model assets are downloaded and stored in your local application directory under the user data path. Subsequent transcription runs access these local model files without initiating remote connections. Processing locally ensures privacy for sensitive audio, though transcription speed depends entirely on your CPU and GPU capabilities.
 
 ## Know when an external provider is involved
 
-Some AI operations use the provider configured in Clipey. Before asking for a generated result, check the selected provider and feature description. Do not assume every feature uses the on-device transcription path just because the editor is a desktop app. When you connect an outside MCP or AI client, that client’s own provider and data practices also apply.
+Some generative features, such as remote voice dubbing or external large language model assistance, rely on third-party cloud APIs that you choose to configure. Before requesting a cloud-based action, review the selected provider in Clipey Studio. Do not assume all AI operations stay on-device simply because the application runs locally on Windows.
+
+When connecting an external client or agent host through the Model Context Protocol (MCP), that client operates under its own authentication and privacy terms. Any credentials, API keys, or bearer tokens used to configure external models should be treated as private secrets: never include them in screenshot captures, public issues, or shared project files. Distinguishing between on-device operations (like local transcription) and cloud calls ensures you stay in control of your data flow.
 
 ## Handle diagnostic exports carefully
 
-Diagnostics help investigate a problem, but they may contain information about your computer or a session. Before sharing a bundle, use the diagnostic export flow and inspect the included files. Do not assume every identifying detail or project content has been removed automatically: review the bundle and remove anything that is not needed to explain the issue.
+Diagnostics help troubleshoot application issues, but raw log bundles can include system paths, machine identifiers, or configuration details. Before sending diagnostic archives to support, generate the export package locally and review its contents. Do not assume every identifying string or username has been stripped automatically; perform a quick manual review to ensure no unnecessary details are shared.
 
-1. Export diagnostics only when support or troubleshooting needs them.
-2. Open the resulting archive and review its contents before attaching it to a report.
-3. Remove unrelated files and redact secrets yourself if the bundle exposes any.
-4. Share it only through the support channel you intended to use.
+1. Export diagnostics only when investigating a specific crash or playback fault.
+2. Open the resulting zip bundle and review the log files before attaching them.
+3. Remove unrelated session logs and redact personal folder paths or tokens if present.
+4. Transmit diagnostic packages only through official support channels.
 
-If the report concerns a transcription or editing failure, describe the steps to reproduce it and the app version. Avoid attaching a full recording when a short, non-sensitive example will do. If you need to share media, choose the file deliberately and make sure you have permission to share it.
+If an inquiry concerns an export mismatch or delivery warning, describe the resolution settings and timeline structure instead of sharing full project footage. When troubleshooting transcription errors, sharing a short, disposable audio clip is often sufficient to pinpoint the problem without exposing private recordings.
 
 ## Tips
 
@@ -48,10 +52,11 @@ If the report concerns a transcription or editing failure, describe the steps to
 - Use local transcription when that is the selected path, and check the provider before invoking other AI features.
 - Preserve original recordings separately if you need a recoverable source; an edited project is not a substitute for a backup.
 - If a client connected through MCP uses its own AI provider, review that provider’s policy independently.
+- Check the contents of your models directory periodically if managing disk space on secondary drives.
 
 ## Limitations
 
-On-device transcription does not make every feature offline. Provider-backed AI requires the configured service and its own account or network access. Diagnostic contents vary with the issue being investigated; inspect the actual archive before sharing it.
+On-device transcription does not make every feature offline. Provider-backed AI requires the configured service and its own account or network access. Diagnostic contents vary with the issue being investigated; inspect the actual archive before sharing it. Automatic diagnostic redaction remains in technical verification, making manual inspection essential.
 
 For agent connections, read [MCP setup and permissions](/blog/en/clipey-ai-agents-mcp/). For the local recording workflow, see [getting started with Clipey](/blog/en/getting-started-with-clipey/). Review the [privacy overview](/en/#privacy).
 

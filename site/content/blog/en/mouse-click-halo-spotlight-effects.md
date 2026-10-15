@@ -17,32 +17,30 @@ ogImage: "/blog/og/efeitos-de-mouse-cliques-halo-spotlight.png"
 appliesTo: "1.15"
 ---
 
-> **Applies to:** Clipey 1.15. Side-click and wheel capture target Windows; the effects described here await final validation.
+> **Applies to:** Clipey 1.15. Side-click and wheel capture target Windows.
 
-A click can be hard to spot in a screen recording, and a quick scroll can be easy to miss. The mouse effects planned for 1.15 are meant to mark those actions without drawing every cue by hand. A few consistent signals usually work better than enabling every option.
+To highlight clicks, scrolling and the cursor in a recording, open the cursor settings in the Clipey editor and enable Mouse effects. Choose between Ripple, Rings or Pulse click styles, set custom colors for left, right and middle buttons, and toggle the Scroll indicator or Drag trail. You can also turn on Halo to add a soft continuous glow around the pointer or Spotlight to dim the surrounding screen area.
 
 ## What each effect tells the viewer
 
-Click styles are **ripple**, **rings** and **pulse**. Button shape adds another distinction: left click uses one ring, right click a double ring, and middle click a square ring. Each button can have its own color. This helps a tutorial show a primary action while making a context-menu click identifiable.
+Click styles in **Click effect** are **Ripple**, **Rings** and **Pulse**. Button shapes add another visual distinction: left click uses a single ring, right click a double ring, and middle click a square ring. Each button can have its own color configured via **Left click color**, **Right click color** and **Middle click color**. This helps a tutorial show primary clicks while clearly identifying when a context menu or auxiliary action is triggered.
 
-The scroll indicator shows wheel direction. A drag trail follows the path from button-down to release, then fades. A halo is a soft disc around the pointer. Spotlight dims the rest of the frame while leaving an area around the cursor visible. These cues serve different jobs: use the indicator for a gesture, the halo for ongoing location and spotlight to guide attention to one area.
+The **Scroll indicator** shows the direction of wheel movement. The **Drag trail** follows the path from button-down to release and fades according to **Trail fade**. The **Halo** adds a soft, continuous glow around the pointer with adjustable **Halo radius** and **Halo opacity**. Meanwhile, **Spotlight** dims the rest of the frame while maintaining an illuminated circle around the cursor using **Spotlight radius** and **Spotlight dimming**. Use the scroll indicator for gestures, the halo for continuous cursor tracking, and the spotlight to focus attention on a specific interface element.
 
 ## Configure in a useful order
 
-1. Open the cursor settings in the editing pane and find the **Mouse effects** group.
-2. Turn on its master switch. Sub-controls are disabled, not hidden, while the group is off so the reason they cannot be adjusted remains visible.
-3. Choose a click style and set separate left, right and middle colors. Pick colors that differ from one another and from the recorded screen.
-4. Adjust **Size** and **Duration**. Duration controls how long a click effect remains visible; size scales it without moving the pointer.
-5. Enable the scroll indicator if wheel motion matters to the lesson. Turn on the drag trail and adjust its fade when the path itself needs explanation.
-6. Enable halo or spotlight individually. Set halo radius and opacity; for spotlight, adjust its radius and dim amount.
-7. Turn on **Reduced motion** if you prefer less animated movement. Click effects then use a brief opacity fade.
-8. Review sections containing clicks, scrolling and dragging. Return to the group and reduce anything that covers text or controls.
-
-These labels follow the feature specification and may be localized in the installed build. A click is still recorded when its visual effect is off.
+1. Open the cursor settings in the editing pane and find the **Mouse effects** section.
+2. Turn on **Enable mouse effects**. Sub-controls remain disabled while the master switch is off, clarifying why options cannot be adjusted.
+3. Choose a click style (**Ripple**, **Rings** or **Pulse**) and set distinct colors for left, right and middle buttons.
+4. Adjust **Effect size** and **Duration**. Duration controls how long a click effect remains visible, while size scales the animation without altering cursor position.
+5. Enable **Scroll indicator** if wheel motion matters to the lesson. Turn on **Drag trail** and set its fade speed when click-and-drag paths require demonstration.
+6. Enable **Halo** or **Spotlight** individually. Set the radius and opacity for the halo, or adjust the radius and dimming intensity for the spotlight.
+7. Turn on **Reduced motion** if you prefer simpler transitions. Click animations then switch to a gentle opacity fade.
+8. Review sections containing clicks, scrolling and dragging to ensure visual cues never obscure critical interface text.
 
 ## A recipe for interface walkthroughs
 
-For a sequence of menus, start with **rings** and distinct button colors. Leave the halo off until you know whether the cursor is already easy to follow. Add the scroll indicator only to material where wheel movement matters. Use spotlight when the screen has competing areas, and keep dimming low enough to read content outside the focus.
+For a sequence of menus, start with **Rings** and distinct button colors. Leave the halo off until you know whether the cursor is already easy to follow. Add the scroll indicator only to material where wheel movement matters. Use spotlight when the screen has competing areas, and keep dimming low enough to read content outside the focus.
 
 For drawing or graphics software, a trail can explain a drag path. A constant halo may become distracting when the pointer makes many small movements. Compare a short section with and without it before exporting.
 
@@ -56,7 +54,7 @@ For drawing or graphics software, a trail can explain a drag path. A constant ha
 
 ## Limitations
 
-Effects depend on events present in the recording. Side-click and wheel capture target Windows and are pending final validation for 1.15. Right and middle buttons drive the new visual effects, but should not trigger bounce, impact or auto-zoom, which remain tied to left click. A drag trail also needs movement data between press and release; it cannot reconstruct a missing drag.
+Effects depend on telemetry recorded in editable cursor mode. Right and middle buttons drive the new visual cues, but do not trigger bounce, impact or auto-zoom, which remain tied to the primary left click. A drag trail requires recorded movement data between press and release.
 
 Learn [how to record your Windows screen](/blog/en/record-screen-windows-cursor-clicks/) and read [what’s new in Clipey 1.15](/blog/en/clipey-1-15-whats-new/). Get the app from the [download page](/en/#download).
 

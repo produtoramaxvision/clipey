@@ -19,7 +19,7 @@ appliesTo: "1.15"
 
 > **Applies to:** Clipey 1.15 for Windows.
 
-Publishing to several networks can leave the video, subtitles, post text, and cover in separate places. A publish kit gathers files that already exist in the project together with copy for each destination, making review and hand-off easier. It does not create new artwork or publish the post for you.
+To save a video publish kit in Clipey, finish exporting your video and navigate to Publish kit and copy in the publishing panel. The feature bundles your finalized video, existing cover artwork, exported subtitle sidecars, and platform-specific caption texts into a local folder or a single compressed ZIP file. You can also generate tailored titles, descriptions and hashtags using Suggest copy before saving the bundle.
 
 ## What the kit contains
 
@@ -30,17 +30,17 @@ That distinction matters: the kit organises prepared material, but it is not a c
 ## Save a folder or ZIP
 
 1. Open the project and finish the video. Use **Export** to create the final file before assembling the kit.
-2. In the publishing section, fill in and review the title, description, and hashtags for each network. Do not leave draft wording in a kit you plan to share publicly.
-3. Choose **Save publish kit**.
-4. Select a folder or ZIP file. Folder is the default; choose ZIP when you want one file to attach or transfer.
-5. Choose a destination and wait for the progress indicator. Keep the app open while the ZIP is being written.
-6. Open the destination and confirm the expected video and copy files are there. If you exported subtitles, check the sidecar file too; if the project already had a cover, check that the image was included.
+2. In the **Publish kit and copy** section, review or edit the title, description, and hashtags for each network. You can click **Suggest copy** to draft platform-ready captions directly from your clip's transcript.
+3. Click **Save publish kit**.
+4. In **Kit format**, select **Folder** or **ZIP archive**. Folder is ideal for quick local edits; select ZIP archive when you want a single file to transfer or store.
+5. Click **Choose destination** and wait for the progress bar. Keep the app open while the ZIP archive is being written to disk.
+6. Open the destination folder and verify the exported video, subtitle sidecar files, cover image, and text files.
 
 Text files are separated by platform so you can copy the right version without mixing instructions. `copy.json` holds the same copy as structured data, useful when another workflow reads fields instead of copying them by hand.
 
 ## Review suggested copy
 
-When copy suggestions are available, they use the transcript and the clip range as their basis and remain suggestions. Read every title, description, and hashtag. Check proper names, context, and calls to action before saving the kit. Suggestions do not replace your review and are not published automatically.
+The **Suggest copy** action examines the transcript and playback range of your clip to generate a grounded title, caption, and relevant hashtags. Read every generated field and adjust proper nouns, technical terms, and calls to action before saving the kit. The tool provides a rapid editorial starting point while keeping you in full control of published copy.
 
 Compare factual claims against what is actually in the video. If a person or brand is not in the transcript, do not assume the suggestion got its name right. Review your own edits in the per-platform file after saving too.
 

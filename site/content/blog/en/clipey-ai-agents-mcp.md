@@ -19,7 +19,7 @@ appliesTo: "1.15"
 
 > **Applies to:** Clipey 1.15 for Windows. Client setup varies by MCP client.
 
-An MCP client can ask Clipey about a project and, when you allow it, use editing tools. The local server is not enabled by default, and editing permission is a separate switch. This guide covers the in-app HTTP server and the separately launched stdio server without assuming every client uses the same configuration screen.
+To connect an AI agent to Clipey with MCP, open the MCP server section in the AI settings and enable the local HTTP server or configure stdio transport in your agent host (such as Claude Code or Codex). The server runs on 127.0.0.1 using an access token, with edit permissions disabled by default to keep project access safely read-only. Enabling write access allows your agent to query media assets, execute timeline edits, and trigger local exports.
 
 ## Choose a connection
 
