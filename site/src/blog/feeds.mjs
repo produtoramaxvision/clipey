@@ -119,17 +119,17 @@ export function renderSearchIndex(lang, posts) {
 	return JSON.stringify(entries);
 }
 
-function entry(loc, alternates, lastmod = RELEASE_DATE) {
+function entry(loc, alternates, lastmod) {
 	const links = alternates
 		.map(
 			([code, href]) =>
 				`\t\t<xhtml:link rel="alternate" hreflang="${code}" href="${SITE_URL}${href}"/>`,
 		)
 		.join("\n");
+	const lastmodTag = lastmod ? `\n\t\t<lastmod>${lastmod}</lastmod>` : "";
 	return `\t<url>
-		<loc>${SITE_URL}${loc}</loc>
-		<lastmod>${lastmod}</lastmod>${links ? `\n${links}` : ""}
-	</url>`;
+\t\t<loc>${SITE_URL}${loc}</loc>${lastmodTag}${links ? `\n${links}` : ""}
+\t</url>`;
 }
 
 /** Every public page: the landing in three languages, the blog, its categories, all articles and the legal texts. */
