@@ -1,0 +1,248 @@
+/*
+ * Live overlay demo (src/fx). The overlays copy the app's dark overlay look, so their colours are the
+ * --fx-* values mountFx publishes on .fx-layer from src/fx/spec.mjs; the control row uses the site tokens.
+ */
+.fx-stage {
+	position: relative;
+	touch-action: manipulation;
+}
+
+.fx-layer {
+	position: absolute;
+	z-index: 2;
+	inset: 0;
+	overflow: hidden;
+	border-radius: inherit;
+	pointer-events: none;
+}
+
+.fx-layer--page {
+	position: fixed;
+	z-index: 60;
+	border-radius: 0;
+}
+
+.fx-canvas {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.fx-layer.is-drawing {
+	border: 2px solid var(--fx-accent);
+	box-shadow: inset 0 0 0 1px var(--fx-edge);
+}
+
+.fx-layer.is-drawing .fx-canvas {
+	pointer-events: auto;
+	touch-action: none;
+	cursor: crosshair;
+}
+
+/* Keystroke pill: one at a time, bottom-centre, 5% from the bottom edge. */
+.fx-pill {
+	position: absolute;
+	bottom: 5%;
+	left: 50%;
+	max-width: 90%;
+	padding: 12px 30px;
+	overflow: hidden;
+	transform: translateX(-50%);
+	border: 1px solid var(--fx-pill-border);
+	border-radius: 9999px;
+	background: var(--fx-pill-bg);
+	color: var(--fx-pill-text);
+	font: 700 clamp(18px, 2.4vw, 26px) / 1.2 var(--font-sans);
+	letter-spacing: -0.01em;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	backdrop-filter: blur(8px);
+}
+
+.fx-pill[hidden],
+.fx-still[hidden],
+.fx-pad[hidden],
+.fx-bar[hidden],
+.fx-controls [hidden] {
+	display: none;
+}
+
+/* Drawing toolbar: the app's floating bar, kept inside the stage. */
+.fx-bar {
+	position: absolute;
+	top: 14px;
+	left: 50%;
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	max-width: calc(100% - 24px);
+	padding: 7px;
+	transform: translateX(-50%);
+	border: 1px solid var(--fx-bar-border);
+	border-radius: 12px;
+	background: var(--fx-bar-bg);
+	color: var(--fx-pill-text);
+	box-shadow: 0 8px 28px var(--fx-bar-shadow);
+	backdrop-filter: blur(16px);
+	font: 500 11px/1 var(--font-sans);
+	pointer-events: auto;
+}
+
+.fx-bar button {
+	min-width: 30px;
+	min-height: 30px;
+	padding: 4px 8px;
+	border: 1px solid transparent;
+	border-radius: 7px;
+	background: transparent;
+	color: inherit;
+	font: inherit;
+	cursor: pointer;
+}
+
+.fx-bar button:hover,
+.fx-bar button:focus-visible,
+.fx-bar button[aria-pressed="true"] {
+	border-color: var(--fx-bar-ring);
+	background: var(--fx-bar-soft);
+}
+
+.fx-bar button:focus-visible {
+	outline: 2px solid var(--fx-accent);
+	outline-offset: 1px;
+}
+
+.fx-bar-sep {
+	width: 1px;
+	height: 20px;
+	margin: 0 2px;
+	background: var(--fx-pill-border);
+}
+
+/* Gamepad overlay: the generic silhouette, bottom-right of the stage. */
+.fx-pad {
+	position: absolute;
+	right: 4%;
+	bottom: 18%;
+	display: grid;
+	justify-items: center;
+	gap: 6px;
+	width: min(240px, 40%);
+}
+
+.fx-pad-canvas {
+	width: 100%;
+	height: auto;
+	aspect-ratio: 8 / 5;
+}
+
+.fx-pad-hint {
+	color: var(--muted);
+	font: 500 11px/1.3 var(--font-mono);
+	text-align: center;
+}
+
+.fx-pad.is-live .fx-pad-hint {
+	visibility: hidden;
+}
+
+/* Still pictures for reduced motion: the end state of each button's effect, labelled. */
+.fx-still-mark {
+	position: absolute;
+	width: 90px;
+	height: 90px;
+	transform: translate(-50%, -50%);
+	border: 3.5px solid var(--fx-left);
+	border-radius: 9999px;
+}
+
+.fx-still-left {
+	top: 66%;
+	left: 30%;
+}
+
+.fx-still-right {
+	top: 72%;
+	left: 52%;
+	border-color: var(--fx-right);
+}
+
+.fx-still-right::after {
+	content: "";
+	position: absolute;
+	inset: 12px;
+	border: 3.5px solid var(--fx-right);
+	border-radius: inherit;
+}
+
+.fx-still-middle {
+	top: 62%;
+	left: 72%;
+	border-color: var(--fx-middle);
+	border-radius: 4px;
+}
+
+.fx-still-label {
+	position: absolute;
+	top: calc(100% + 10px);
+	left: 50%;
+	transform: translateX(-50%);
+	color: var(--muted);
+	font: 400 11px/1 var(--font-mono);
+}
+
+/* Control row under the stage. */
+.fx-controls {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px 18px;
+	margin-top: 14px;
+}
+
+.fx-group {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+}
+
+.fx-group-label {
+	margin-right: 4px;
+	color: var(--muted);
+	font: 400 12px/1 var(--font-mono);
+}
+
+.fx-chip {
+	min-height: 32px;
+	padding: 0 12px;
+	border: 1px solid var(--line);
+	border-radius: 999px;
+	background: transparent;
+	color: var(--muted);
+	font: 500 13px/1 var(--font-sans);
+	cursor: pointer;
+	transition: border-color 0.2s, color 0.2s, background-color 0.2s;
+}
+
+.fx-chip:hover {
+	border-color: var(--line-strong);
+	color: var(--text);
+}
+
+.fx-chip[aria-pressed="true"] {
+	border-color: var(--accent);
+	background: var(--accent-soft);
+	color: var(--text);
+}
+
+.fx-play {
+	border-color: var(--accent);
+	color: var(--text);
+}
+
+.fx-play:disabled {
+	opacity: 0.6;
+	cursor: default;
+}
