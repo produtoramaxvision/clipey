@@ -72,6 +72,10 @@ function titleBar(lang, copy, alternates) {
 	</header>`;
 }
 
+/** The silence cut: two kept stretches with the hatched gap between them. */
+const cutStrip = (copy, attrs = "") =>
+	`<span class="cut-strip"${attrs}><span class="cut-keep"></span><span class="cut-gap"></span><span class="cut-keep"></span><span class="cut-tag">${esc(copy.cutTag)}</span></span>`;
+
 /** The hero picture with the overlays the scroll story switches on: click rings, zoom box, cut, caption, 9:16 mask. */
 function heroStage(copy, manifest) {
 	const hero = copy.hero;
@@ -84,7 +88,7 @@ function heroStage(copy, manifest) {
 						<span class="click-ring" aria-hidden="true"></span>
 					</div>
 					<span class="zoom-box" aria-hidden="true"><span class="zoom-tag">${esc(hero.zoomTag)}</span></span>
-					<span class="cut-strip" aria-hidden="true"><span class="cut-keep"></span><span class="cut-gap"></span><span class="cut-keep"></span><span class="cut-tag">${esc(copy.cutTag)}</span></span>
+					${cutStrip(copy, ' aria-hidden="true"')}
 					<span class="burn-caption" aria-hidden="true">${esc(lead)} <em>${esc(keyword)}</em></span>
 					<span class="vertical-mask" aria-hidden="true"></span>
 				</div>
@@ -94,13 +98,26 @@ function heroStage(copy, manifest) {
 			</figure>`;
 }
 
+/** What each still draws over the picture, in frame order: raw, click, zoom, cut, caption, 9:16. */
+const stillOverlay = (copy, index) => {
+	const [lead, keyword] = copy.captionText;
+	return [
+		"",
+		'<span class="click-ring"></span>',
+		'<span class="click-ring"></span>',
+		cutStrip(copy),
+		`<span class="burn-caption">${esc(lead)} <em>${esc(keyword)}</em></span>`,
+		'<span class="vertical-mask"></span>',
+	][index];
+};
+
 /** The six scroll states as captioned stills: the reduced-motion and no-support view, and the captions of the story. */
 function storyStills(copy, manifest) {
 	const set = shotSet(manifest, HERO_SHOT);
 	return `<ol class="story-stills" aria-label="${esc(copy.storyAria)}">${copy.frames
 		.map(
 			([tc, title, text], index) => `<li class="still still--${index + 1}">
-					<span class="still-frame" aria-hidden="true"><img src="/shots/${HERO_SHOT}-800.webp" width="${set.width}" height="${set.height}" alt="" loading="lazy" decoding="async"><span class="still-tc">${esc(tc)}</span></span>
+					<span class="still-frame" aria-hidden="true"><span class="still-cam"><img src="/shots/${HERO_SHOT}-800.webp" width="${set.width}" height="${set.height}" alt="" loading="lazy" decoding="async"></span>${stillOverlay(copy, index)}<span class="still-tc">${esc(tc)}</span></span>
 					<span class="still-title">${esc(title)}</span>
 					<span class="still-text">${esc(text)}</span>
 				</li>`,

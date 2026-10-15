@@ -688,30 +688,26 @@ main.story {
 	display: block;
 }
 
-/* Left click as the app draws it: one lime ring, 450 ms, ease-out quad (src/fx/spec.mjs). */
+/*
+ * The hero overlays, drawn as the app draws them (src/fx/spec.mjs): the left-click ring in lime, the zoom region
+ * in blue, the silence cut hatched in red, the burnt-in caption with its keyword in lime, the 9:16 crop in orange.
+ * Static view (no scroll-driven animations, or reduced motion): the raw frame with the zoom box; the stills below
+ * show every state.
+ */
 .click-ring {
 	position: absolute;
 	top: 37.5%;
 	left: 38.5%;
-	width: 70px;
-	height: 70px;
-	border: 3.5px solid var(--accent);
+	width: 64px;
+	height: 64px;
+	border: 3px solid var(--accent);
 	border-radius: 50%;
-	transform: translate(-50%, -50%) scale(0);
-	animation: click-ring 1.6s cubic-bezier(0.5, 1, 0.89, 1) infinite;
+	box-shadow: 0 0 0 10px var(--accent-glow);
+	transform: translate(-50%, -50%);
 }
 
-@keyframes click-ring {
-	0% {
-		opacity: 1;
-		transform: translate(-50%, -50%) scale(0.15);
-	}
-
-	28%,
-	100% {
-		opacity: 0;
-		transform: translate(-50%, -50%) scale(1);
-	}
+.hero-cam .click-ring {
+	display: none;
 }
 
 .zoom-box {
@@ -738,10 +734,118 @@ main.story {
 	white-space: nowrap;
 }
 
-.cut-strip,
-.burn-caption,
+.cut-strip {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: flex;
+	gap: 4px;
+	align-items: center;
+	justify-content: center;
+	height: 26%;
+	padding: 0 24px;
+	background: var(--media-scrim-strong);
+}
+
+.cut-keep,
+.cut-gap {
+	height: 22px;
+	border-radius: 4px;
+}
+
+.cut-keep {
+	flex: 3;
+	background: var(--accent);
+}
+
+.cut-gap {
+	flex: 1;
+	border: 1px solid var(--danger);
+	background: repeating-linear-gradient(
+		135deg,
+		var(--danger-hatch) 0 6px,
+		transparent 6px 12px
+	);
+}
+
+.cut-tag {
+	position: absolute;
+	top: 10px;
+	color: var(--danger);
+	font: 400 11px / 1 var(--font-mono);
+	text-transform: uppercase;
+}
+
+.burn-caption {
+	position: absolute;
+	right: 0;
+	bottom: 14%;
+	left: 0;
+	color: var(--media-text);
+	font-size: clamp(16px, 2.1vw, 30px);
+	font-weight: 800;
+	text-align: center;
+	text-shadow: 0 3px 10px var(--media-text-shadow);
+}
+
+.burn-caption em {
+	color: var(--accent);
+	font-style: normal;
+}
+
 .vertical-mask {
+	position: absolute;
+	top: 0;
+	left: 39%;
+	width: 22%;
+	height: 100%;
+	border: 2px solid var(--speed);
+	box-shadow: 0 0 0 9999px var(--media-scrim-strong);
+}
+
+.hero-shot .cut-strip,
+.hero-shot .burn-caption,
+.hero-shot .vertical-mask {
 	display: none;
+}
+
+/* On the stills the overlays are sized for an 800-wide frame. */
+.still .burn-caption {
+	font-size: 18px;
+}
+
+.still .cut-strip {
+	padding: 0 14px;
+}
+
+.still .cut-keep,
+.still .cut-gap {
+	height: 14px;
+}
+
+.still .cut-tag {
+	top: 6px;
+	font-size: 9px;
+}
+
+.still .click-ring {
+	width: 40px;
+	height: 40px;
+	box-shadow: 0 0 0 6px var(--accent-glow);
+}
+
+.still-cam {
+	display: block;
+	transform-origin: 38.5% 37.5%;
+}
+
+.still--3 .still-cam {
+	transform: scale(1.8);
+}
+
+.still--4 .still-cam {
+	transform: scale(1.15);
 }
 
 .ink {
@@ -1589,17 +1693,199 @@ main.story {
 	}
 }
 
+/*
+ * Scroll is the playhead. Where scroll-driven animations exist, motion is allowed and the sticky hero fits the
+ * window, the hero becomes a tall track: the editor stays put while the page scrolls, and each stretch of the
+ * scroll plays one thing the app does to the video (storyboard: 0% raw, 18% click, 36% zoom 1.8x, 54% silence
+ * cut, 72% caption, 90% vertical). Everywhere else the frame stays still and the captioned stills tell the story.
+ */
+@supports (animation-timeline: view()) {
+	@media (prefers-reduced-motion: no-preference) and (min-width: 1001px) and (
+			min-height: 820px
+		) {
+		.story-hero {
+			height: 300vh;
+			view-timeline: --hero block;
+		}
+
+		.story-hero-grid {
+			position: sticky;
+			top: calc(var(--bar-h) + 16px);
+		}
+
+		.story-stills {
+			display: none;
+		}
+
+		.hero-cam,
+		.hero-cam .click-ring,
+		.zoom-box,
+		.hero-shot .cut-strip,
+		.hero-shot .burn-caption,
+		.hero-shot .vertical-mask {
+			animation-duration: 1ms;
+			animation-timing-function: linear;
+			animation-fill-mode: both;
+			animation-timeline: --hero;
+			animation-range: contain 0% contain 100%;
+		}
+
+		.hero-cam {
+			animation-name: hero-zoom;
+		}
+
+		.hero-cam .click-ring {
+			display: block;
+			animation:
+				ring-pulse 1.6s cubic-bezier(0.5, 1, 0.89, 1) infinite,
+				show-click 1ms linear both;
+			animation-timeline: auto, --hero;
+			animation-range:
+				normal,
+				contain 0% contain 100%;
+		}
+
+		.zoom-box {
+			animation-name: show-zoom-box;
+		}
+
+		.hero-shot .cut-strip {
+			display: flex;
+			animation-name: show-cut;
+		}
+
+		.hero-shot .burn-caption {
+			display: block;
+			animation-name: show-caption;
+		}
+
+		.hero-shot .vertical-mask {
+			display: block;
+			animation-name: show-vertical;
+		}
+
+		/* With scroll as the playhead, the timeline playhead follows the reading position instead of looping. */
+		.playhead {
+			animation: playhead 1ms linear both;
+			animation-timeline: scroll(root block);
+		}
+	}
+}
+
+/* A left click: the ring grows from 15% and fades, 450 ms of a 1.6 s loop. */
+@keyframes ring-pulse {
+	0% {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(0.15);
+	}
+
+	28%,
+	100% {
+		opacity: 0;
+		transform: translate(-50%, -50%) scale(1.5);
+	}
+}
+
+@keyframes hero-zoom {
+	0%,
+	18% {
+		transform: none;
+	}
+
+	36% {
+		transform: scale(1.8);
+	}
+
+	54% {
+		transform: scale(1.15);
+	}
+
+	72%,
+	100% {
+		transform: none;
+	}
+}
+
+@keyframes show-click {
+	0%,
+	17.9% {
+		visibility: hidden;
+	}
+
+	18%,
+	53.9% {
+		visibility: visible;
+	}
+
+	54%,
+	100% {
+		visibility: hidden;
+	}
+}
+
+@keyframes show-zoom-box {
+	0%,
+	24% {
+		opacity: 1;
+	}
+
+	34%,
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes show-cut {
+	0%,
+	50% {
+		opacity: 0;
+	}
+
+	56%,
+	68% {
+		opacity: 1;
+	}
+
+	74%,
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes show-caption {
+	0%,
+	68% {
+		opacity: 0;
+	}
+
+	74%,
+	86% {
+		opacity: 1;
+	}
+
+	92%,
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes show-vertical {
+	0%,
+	86% {
+		opacity: 0;
+	}
+
+	92%,
+	100% {
+		opacity: 1;
+	}
+}
+
 @media (prefers-reduced-motion: reduce) {
 	.rec-dot,
-	.click-ring,
 	.playhead,
 	.ink {
 		animation: none;
-	}
-
-	.click-ring {
-		opacity: 1;
-		transform: translate(-50%, -50%) scale(1);
 	}
 
 	.ink {

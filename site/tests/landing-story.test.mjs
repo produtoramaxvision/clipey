@@ -167,3 +167,43 @@ describe("v2 pt-BR landing structure", () => {
 		expect(main).toContain("data-fx-controls");
 	});
 });
+
+describe("v2 pt-BR hero scroll story", () => {
+	const stills =
+		main.match(/<ol class="story-stills"[\s\S]*?<\/ol>/)?.[0] ?? "";
+
+	it("lists one captioned still per scroll state, in storyboard order", () => {
+		expect(stills.match(/<li class="still still--\d">/g)).toHaveLength(
+			STORY["pt-BR"].frames.length,
+		);
+		const titles = [
+			...stills.matchAll(/<span class="still-title">([^<]*)<\/span>/g),
+		].map((m) => m[1]);
+		expect(titles).toEqual(STORY["pt-BR"].frames.map(([, title]) => title));
+	});
+
+	it("draws each state's overlay on its still", () => {
+		const items = stills.split('<li class="still ').slice(1);
+		expect(items[0]).not.toMatch(
+			/click-ring|cut-strip|burn-caption|vertical-mask/,
+		);
+		expect(items[1]).toContain("click-ring");
+		expect(items[3]).toContain("cut-strip");
+		expect(items[4]).toContain("burn-caption");
+		expect(items[5]).toContain("vertical-mask");
+	});
+
+	it("keeps the hero overlays decorative", () => {
+		const shot =
+			main.match(/<div class="hero-shot">[\s\S]*?<\/figure>/)?.[0] ?? "";
+		for (const name of [
+			"click-ring",
+			"zoom-box",
+			"cut-strip",
+			"burn-caption",
+			"vertical-mask",
+		]) {
+			expect(shot).toMatch(new RegExp(`class="${name}" aria-hidden="true"`));
+		}
+	});
+});
