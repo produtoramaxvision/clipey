@@ -434,6 +434,14 @@ describe("12. SEO: hero definition and BYOK FAQ (S8)", () => {
 		}
 	});
 
+	it("styles the definition with design tokens", () => {
+		const css = readFileSync(path.join(root, "src", "landing.css"), "utf8");
+		const rule = css.match(/\.story-def\s*\{([^}]*)\}/);
+		expect(rule, ".story-def rule").not.toBeNull();
+		expect(rule[1]).toMatch(/color:\s*var\(--[a-z-]+\)/);
+		expect(rule[1]).not.toMatch(/#[0-9a-f]{3,8}\b/i);
+	});
+
 	it("has a BYOK FAQ entry in each locale", () => {
 		for (const lang of LANGUAGES) {
 			const byokEntry = STORY[lang].faq.find(([q]) =>

@@ -277,6 +277,15 @@ main.story {
 	line-height: 1.55;
 }
 
+/* Plain product definition under the sub line: quotable by answer engines, quieter than the pitch. */
+.story-def {
+	max-width: 470px;
+	margin: 10px 0 0;
+	color: var(--meta);
+	font-size: 14px;
+	line-height: 1.55;
+}
+
 .story-actions {
 	display: flex;
 	flex-wrap: wrap;
