@@ -113,7 +113,8 @@ export function renderHead({
 		<meta name="description" content="${esc(description)}">
 		<meta name="theme-color" media="(prefers-color-scheme: light)" content="#eaeef3">
 		<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0c0d0b">
-		${robots ? `<meta name="robots" content="${robots}">` : `<link rel="canonical" href="${SITE_URL}${canonical}">`}
+		${robots ? `<meta name="robots" content="${robots}">` : `<meta name="robots" content="index,follow,max-image-preview:large">`}
+		<link rel="canonical" href="${SITE_URL}${canonical}">
 		${hreflang}
 		<meta property="og:type" content="${ogType}">
 		<meta property="og:site_name" content="${SITE_NAME}">
