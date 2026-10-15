@@ -67,6 +67,8 @@ export function renderHead({
 	feedAtom,
 	feed,
 	lcpImage,
+	lcpSrcset,
+	lcpSizes,
 }) {
 	const ui = UI[lang];
 	const hreflang = alternates
@@ -134,7 +136,7 @@ export function renderHead({
 		${rssHref ? `<link rel="alternate" type="application/rss+xml" title="${esc(ui.blog.title)} (RSS)" href="${rssHref}">` : ""}
 		${atomHref ? `<link rel="alternate" type="application/atom+xml" title="${esc(ui.blog.title)} (Atom)" href="${atomHref}">` : ""}
 		<link rel="preload" href="${assets.font}" as="font" type="font/woff2" crossorigin>
-		${lcpImage ? `<link rel="preload" as="image" href="${lcpImage}" fetchpriority="high">` : ""}
+		${lcpImage ? `<link rel="preload" as="image" href="${lcpImage}"${lcpSrcset ? ` imagesrcset="${lcpSrcset}" imagesizes="${lcpSizes}"` : ""} fetchpriority="high">` : ""}
 		<script>${THEME_SCRIPT}</script>
 		${assets.css.map((href) => `<link rel="stylesheet" href="${href}">`).join("\n\t\t")}
 		${ldBlock}

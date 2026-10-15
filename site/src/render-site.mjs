@@ -22,7 +22,7 @@ import {
 } from "./blog/template.mjs";
 import { renderHeaders } from "./headers.mjs";
 import { renderLanding } from "./landing.mjs";
-import { LANDING } from "./landing-copy.mjs";
+import { STORY } from "./landing-copy.mjs";
 
 const siteRoot = path.resolve(
 	path.dirname(fileURLToPath(import.meta.url)),
@@ -102,31 +102,31 @@ ${formatPosts("es")}
 
 /** Generates /llms-full.txt: plain-text concatenation of the landing copy and the 18 pt-BR articles. */
 export function renderLlmsFull(posts) {
-	const copy = LANDING["pt-BR"];
+	const copy = STORY["pt-BR"];
+	const sections = [
+		copy.record,
+		copy.clicks,
+		copy.overlays,
+		copy.vertical,
+		copy.local,
+	];
 	const parts = [];
 
 	parts.push(`================================================================================
 CLIPEY: ESTÚDIO DE VÍDEO PARA WINDOWS
-${copy.hero}
-${copy.sub}
+${copy.hero.lines.map((line) => line[3]).join(" ")}
+${copy.hero.sub}
 ================================================================================
 
-RECURSOS DE GRAVAÇÃO E EDIÇÃO:
-${copy.features.map(([title, text]) => `- ${title}: ${text}`).join("\n")}
+RECURSOS:
+${sections.map((section) => `- ${[section.title].flat().join(" ")} ${section.text}`).join("\n")}
 
-RECURSOS DE IA:
-${copy.ai.map(([title, text]) => `- ${title}: ${text}`).join("\n")}
+PUBLICAÇÃO:
+${copy.publish.title} ${copy.publish.titleMuted}
+${copy.publish.notes.map(([title, text]) => `- ${title}: ${text}`).join("\n")}
 
-RECURSOS DE PUBLICAÇÃO:
-${copy.publish.map(([title, text]) => `- ${title}: ${text}`).join("\n")}
-
-PRIVACIDADE:
-${copy.sections.privacy.title}
-${copy.sections.privacy.sub}
-
-REQUISITOS DO SISTEMA:
-${copy.sections.requirements.title}
-${copy.sections.requirements.sub}
+DOWNLOAD E REQUISITOS:
+${copy.export.platform}. ${copy.export.pricing} ${copy.export.requirements}
 
 PERGUNTAS FREQUENTES (FAQ):
 ${copy.faq.map(([q, a]) => `P: ${q}\nR: ${a}`).join("\n\n")}`);

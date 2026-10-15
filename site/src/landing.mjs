@@ -20,7 +20,8 @@ import {
 	renderHeader,
 	renderPage,
 } from "./blog/shell.mjs";
-import { LANDING } from "./landing-copy.mjs";
+import { LANDING, STORY } from "./landing-copy.mjs";
+import { renderStory } from "./landing-story.mjs";
 
 const GLYPHS = {
 	record:
@@ -191,14 +192,16 @@ function jsonLd(lang, canonical) {
 			{
 				"@type": "FAQPage",
 				"@id": `${SITE_URL}${canonical}#faq`,
-				mainEntity: LANDING[lang].faq.map(([question, answer]) => ({
-					"@type": "Question",
-					name: question,
-					acceptedAnswer: {
-						"@type": "Answer",
-						text: answer,
-					},
-				})),
+				mainEntity: (STORY[lang] ?? LANDING[lang]).faq.map(
+					([question, answer]) => ({
+						"@type": "Question",
+						name: question,
+						acceptedAnswer: {
+							"@type": "Answer",
+							text: answer,
+						},
+					}),
+				),
 			},
 		],
 	};
@@ -211,6 +214,12 @@ export function renderLanding(lang, posts, assets) {
 	const alternates = Object.fromEntries(
 		LANGUAGES.map((code) => [code, LANDING_PATH[code]]),
 	);
+	if (STORY[lang])
+		return renderStory(lang, {
+			assets,
+			alternates,
+			jsonLd: jsonLd(lang, canonical),
+		});
 	const privacy = copy.sections.privacy;
 	const legal = LEGAL_PATHS[lang];
 	const body = `<main id="main">

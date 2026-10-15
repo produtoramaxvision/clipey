@@ -2,127 +2,178 @@
  * Landing page copy. Every product sentence here is mapped to its source in the claims evidence file kept with the release notes;
  * wording that depends on the 1.15 lane specs stays as soft as those specs.
  */
-export const LANDING = {
+
+/**
+ * The v2 landing, "the site is a Clipey recording": a title bar, a hero told as a timeline, one section per chapter
+ * and the export at the end. A language listed here renders the v2 page; the others keep the LANDING page below.
+ */
+export const STORY = {
 	"pt-BR": {
-		eyebrow: "Vídeo de tela, sem atrito",
-		hero: "Do primeiro clique ao vídeo pronto.",
-		sub: "Grave sua tela, refine a edição e publique no seu ritmo. Um estúdio de vídeo para Windows, com seus arquivos no seu computador.",
-		download: "Baixar para Windows",
-		news: "Ver novidades da 1.15",
-		note: ["Windows 10 e 11", "Download gratuito", "Sem telemetria de uso"],
-		frameLabel: "Prévia do editor do Clipey",
-		frameCaption:
-			"Editor do Clipey 1.15: tela gravada, timeline e legendas no mesmo projeto.",
-		framePending: "A captura do editor entra aqui.",
-		sections: {
-			features: {
-				tc: "00:12",
-				kicker: "Recursos",
-				title: "Uma gravação. Um vídeo pronto.",
-				sub: "Capture com clareza, ajuste os detalhes e exporte sem sair do seu fluxo.",
-			},
-			ai: {
-				tc: "00:34",
-				kicker: "IA com você",
-				title: "IA que ajuda, sem tomar o controle.",
-				sub: "Sugestões editáveis para chegar ao corte que você quer.",
-			},
-			publish: {
-				tc: "00:56",
-				kicker: "Publicar",
-				title: "Da edição à publicação, com você no comando.",
-				sub: "Organize os detalhes e escolha quando e onde publicar.",
-			},
-			privacy: {
-				tc: "01:18",
-				kicker: "Privacidade",
-				title: "Seu trabalho continua seu.",
-				sub: "Projetos, gravações e transcrições locais ficam no computador. O Clipey não coleta telemetria de uso. Recursos que usam provedores externos enviam a eles apenas o conteúdo necessário, com a sua configuração.",
-				link: "Como funciona a privacidade",
-				link2: "Exclusão de dados",
-			},
-			requirements: {
-				tc: "01:40",
-				kicker: "Requisitos",
-				title: "Feito para Windows.",
-				sub: "Windows 10 ou 11. A captura de tela exige Windows 10, versão 2004 (build 19041) ou posterior. A gravação e a edição de vídeo se beneficiam de uma GPU compatível; o desempenho varia conforme o projeto e o hardware.",
-			},
-			blog: {
-				tc: "02:02",
-				kicker: "Blog",
-				title: "Guias para tirar o máximo do 1.15.",
-				sub: "Tutoriais curtos, com os nomes reais dos controles.",
-				link: "Ver todos os artigos",
-			},
-			faq: { tc: "02:24", kicker: "Perguntas", title: "Perguntas frequentes" },
-			download: {
-				tc: "02:46",
-				kicker: "Clipey 1.15",
-				title: "Seu próximo vídeo começa aqui.",
-			},
+		bar: {
+			host: "clipey.com.br",
+			recording: "Gravando",
+			chaptersAria: "Capítulos",
+			chapters: [
+				["gravar", "Gravar"],
+				["editar", "Editar"],
+				["publicar", "Publicar"],
+			],
+			blog: "Blog",
+			export: "Exportar o Clipey",
 		},
-		features: [
+		hero: {
+			lines: [
+				["clip", "00:00:00", "Clipe", "Grave a tela."],
+				["zoom", "00:02:14", "Zoom 1,8×", "O Clipey edita."],
+				["speed", "00:07:02", "Exportar", "Você publica."],
+			],
+			sub: "Gravador e editor de tela para Windows. Cortes de silêncio, zoom em cada clique, legendas e publicação no YouTube, TikTok, Instagram e Facebook, no mesmo app.",
+			download: "Baixar para Windows",
+			platform: "Windows 10 e 11 · 64 bits",
+			noAccount: "sem conta para gravar e editar",
+			imageAlt:
+				"Editor do Clipey com a linha do tempo, regiões de zoom e o painel de composição",
+			caption: "Interface real do Clipey 1.15",
+			zoomTag: "Zoom 1,8× · auto no clique",
+			drawNote: "desenhado ao vivo, Ctrl + Shift + D",
+		},
+		/** The scroll story of the hero: [timecode, title, text]. With reduced motion it is a list of stills. */
+		frames: [
 			[
-				"Grave",
-				"Capture a tela e o cursor no Windows. Preserve os movimentos para editar depois.",
+				"00:00",
+				"A gravação crua",
+				"O editor real, parado. O playhead está no começo da linha do tempo.",
 			],
 			[
-				"Edite",
-				"Ajuste cortes, zooms e legendas em uma linha do tempo visual.",
+				"00:02",
+				"O clique",
+				"A onda verde aparece onde o cursor clicou, com a cor do botão esquerdo.",
 			],
 			[
-				"Legende",
-				"Gere transcrições no dispositivo e revise as legendas antes de exportar.",
+				"00:04",
+				"O zoom automático",
+				"A imagem aproxima 1,8× na região do clique.",
 			],
 			[
-				"Exporte",
-				"Prepare o vídeo e confira o arquivo final antes de compartilhar.",
-			],
-		],
-		ai: [
-			[
-				"Edição assistida",
-				"Peça cortes, zooms e a remoção de pausas ao agente e revise o resultado na timeline.",
+				"00:06",
+				"O silêncio some",
+				"O trecho sem fala fica marcado na linha do tempo e sai do corte.",
 			],
 			[
-				"Clipes curtos",
-				"O Auto Clip encontra trechos de 15 a 90 segundos e mostra a nota de cada um para você escolher.",
+				"00:08",
+				"A legenda acende",
+				"A legenda da transcrição aparece com a palavra-chave em destaque.",
 			],
 			[
-				"Voz com custo à vista",
-				"Veja a estimativa de custo antes de gerar voz na nuvem e defina um limite por sessão.",
-			],
-			[
-				"Agentes MCP",
-				"Conecte ferramentas compatíveis e peça ações no editor com sua autorização.",
-			],
-		],
-		publish: [
-			[
-				"Agendamento",
-				"Programe publicações no YouTube, TikTok e Instagram. O Clipey precisa estar aberto ou na bandeja do sistema no horário.",
-			],
-			[
-				"Kit de publicação",
-				"Gere título, descrição e hashtags para cada plataforma a partir da transcrição, respeitando os limites de cada uma.",
-			],
-			[
-				"Presets de exportação",
-				"Escolha presets para TikTok, YouTube Shorts, Instagram Reels e YouTube, com estimativa de tamanho antes de exportar.",
-			],
-			[
-				"Verificação",
-				"Depois de exportar um MP4, o Clipey confere duração, vídeo, áudio e erros de decodificação e avisa se algo estiver fora do esperado.",
+				"00:10",
+				"Vira vertical",
+				"O quadro vai para 9:16, pronto para Shorts, Reels e TikTok.",
 			],
 		],
+		storyAria: "O que o Clipey faz com uma gravação, quadro a quadro",
+		cutTag: "Silêncio 1,8 s · cortado",
+		captionText: ["clique em", "Exportar"],
+		timeline: {
+			ticks: ["00:00", "00:30", "01:00", "01:30", "02:00", "02:30", "03:00"],
+			chapters: [
+				["clip", "Gravar"],
+				["zoom", "Cliques e zoom"],
+				["annotation", "Overlays"],
+				["speed", "Vertical"],
+				["clip", "Publicar"],
+			],
+		},
+		record: {
+			tc: "00:00:30 · Gravar",
+			title: ["Uma barra.", "Nenhum projeto para criar antes."],
+			text: "Escolha a tela ou a janela, ligue câmera e microfone e grave. O Clipey registra o cursor, cada botão do mouse, a rolagem e as teclas, para a edição usar depois.",
+			imageAlt: "Barra de gravação do Clipey com tempo, pausa e parar",
+			caption:
+				"Barra de gravação real, como aparece sobre a sua área de trabalho",
+		},
+		clicks: {
+			tc: "00:01:00 · Cliques e zoom",
+			title: "Cada clique virou um zoom. Você não marcou nenhum.",
+			text: "As pílulas azuis são zooms criados a partir dos seus cliques. Arraste, apague ou mude o nível de cada um na linha do tempo.",
+			imageAlt:
+				"Linha do tempo do Clipey com regiões de zoom em azul e uma região de velocidade",
+			caption:
+				"Linha do tempo real · zoom, velocidade, anotação, corte e áudio em faixas separadas",
+		},
+		overlays: {
+			tc: "00:01:30 · Overlays",
+			title: "Clique nesta área.",
+			text: "Seu cursor já está com os efeitos do Clipey: um estilo para cada botão do mouse. Aperte teclas e elas aparecem como no vídeo.",
+			stageLabel:
+				"Área de demonstração: clique com qualquer botão do mouse ou aperte teclas",
+			imageAlt:
+				"Painel Efeitos do mouse do Clipey: efeito de clique, cor por botão, halo e holofote",
+			caption: "Painel real · Efeitos do mouse",
+		},
+		vertical: {
+			tc: "00:02:00 · Vertical",
+			title: ["16:9 entra.", "9:16 sai."],
+			text: "O Auto Clip sugere trechos curtos com uma nota para você escolher, e o reenquadramento segue o rosto no vertical. O preset mostra resolução, taxa de bits e tamanho estimado antes de exportar.",
+			captionText: ["legenda no", "lugar certo"],
+			wideAlt: "Quadro 16:9 do editor com a área vertical marcada",
+			tallAlt: "O mesmo quadro recortado em 9:16 com legenda",
+			exportAlt: "Diálogo Exportar com presets, tamanho estimado e publicação",
+			scheduleAlt: "Diálogo Exportar com preset do TikTok e aba Agendar",
+		},
+		publish: {
+			tc: "00:02:30 · Publicar",
+			title: "YouTube, TikTok, Instagram e Facebook.",
+			titleMuted: "Agora ou na hora que você marcar.",
+			notes: [
+				[
+					"Kit de publicação",
+					"Título, descrição e hashtags sugeridos para cada rede, dentro dos limites de caracteres de cada uma.",
+				],
+				[
+					"Agendamento",
+					"A fila roda no seu PC com o Clipey aberto ou na bandeja. Se o horário passar com o PC desligado, a publicação fica marcada como perdida e não sai sozinha.",
+				],
+				[
+					"Contas",
+					"Conecte cada rede uma vez pelo navegador. O Clipey mostra quais contas estão conectadas.",
+				],
+			],
+		},
+		local: {
+			tc: "00:03:00 · Seu PC",
+			title: "A transcrição pode rodar inteira no seu computador.",
+			text: "Sem telemetria de uso. Serviços na nuvem são opcionais e usam a sua própria chave; a voz na nuvem mostra o custo estimado antes de gerar.",
+			imageAlt: "Configurações de transcrição e mídia do Clipey",
+			caption: "Configurações reais · Transcrição e mídia",
+			privacyLink: "Como funciona a privacidade",
+			deletionLink: "Exclusão de dados",
+		},
+		faqTc: "00:03:15 · Perguntas",
+		faqTitle: "Perguntas frequentes",
+		export: {
+			tc: "00:03:30 · Fim da gravação",
+			title: "Exportar.",
+			download: "Baixar o Clipey para Windows",
+			platform: "Windows 10 e 11 · 64 bits",
+			version: "Versão",
+			pricing:
+				"O download é gratuito. Recursos na nuvem usam a sua própria chave de API ou créditos.",
+			requirements:
+				"A captura de tela exige Windows 10 versão 2004 (build 19041) ou posterior.",
+		},
+		footer: {
+			blog: "Blog",
+			contact: "Contato",
+			releases: "Versões para baixar",
+		},
 		faq: [
 			[
 				"O Clipey é gratuito?",
-				"Sim. O aplicativo é gratuito para baixar. Alguns recursos podem depender de serviços externos que você configura.",
+				"O download é gratuito. Recursos na nuvem, como voz e modelos de IA, usam a sua própria chave de API ou créditos.",
 			],
 			[
 				"Em quais sistemas funciona?",
-				"O Clipey 1.15 é para Windows 10 e 11. Recursos de captura usam APIs do Windows.",
+				"O Clipey 1.15 é para Windows 10 e 11, 64 bits. Recursos de captura usam APIs do Windows.",
 			],
 			[
 				"Preciso criar uma conta?",
@@ -137,19 +188,14 @@ export const LANDING = {
 				"A transcrição local usa modelos baixados no computador. A primeira configuração pode exigir baixar os arquivos do modelo.",
 			],
 			[
-				"Posso revisar as sugestões de IA?",
-				"Sim. As sugestões de edição são editáveis antes da exportação.",
-			],
-			[
 				"O agendamento publica com o aplicativo fechado?",
 				"Não. O Clipey ou o ícone da bandeja precisa estar em execução no horário agendado.",
 			],
-			[
-				"Onde encontro os requisitos?",
-				"A captura requer Windows 10 build 19041 ou superior. O desempenho depende também da GPU e da resolução do projeto.",
-			],
 		],
 	},
+};
+
+export const LANDING = {
 	en: {
 		eyebrow: "Screen video, without the friction",
 		hero: "From the first click to a finished video.",
