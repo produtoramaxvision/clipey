@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0c0d0b">
+<title>Política de privacidade · Clipey</title>
+<meta name="description" content="Clipey: grave, edite e publique vídeos de tela.">
+<link rel="icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ground:#0c0d0b;--s1:#141612;--s2:#1b1d18;--s3:#252821;--border:#2c2f27;
+--text:#eceee6;--muted:#9aa091;--lime:#a2d305;--lime-text:#b5e33a;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ground);color:var(--text);
+font:16px/1.65 Geist,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--lime-text);text-underline-offset:3px}
+a:hover{color:#d4f27a}
+header{border-bottom:1px solid var(--border);background:var(--ground)}
+.bar{max-width:880px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;
+gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);
+font-weight:600;font-size:17px;margin-right:auto}
+.brand img{width:30px;height:30px;display:block}
+nav{display:flex;gap:4px 14px;flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;font-size:14px;white-space:nowrap}
+nav a:hover,nav a[aria-current]{color:var(--text)}
+main{max-width:880px;margin:0 auto;padding:40px 16px 64px}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.15;margin:0 0 8px;letter-spacing:-0.01em}
+h2{font-size:20px;margin:36px 0 8px}
+.meta{color:var(--muted);font-size:14px;margin:0 0 28px}
+li{margin:4px 0}
+.hero{display:flex;flex-direction:column;align-items:flex-start;gap:18px;padding:32px 0 8px}
+.hero img{width:96px;height:96px}
+.lead{font-size:19px;color:var(--muted);max-width:620px;margin:0}
+.btn{display:inline-flex;align-items:center;height:46px;padding:0 22px;border-radius:12px;
+background:var(--lime);color:#0c0d0b;font-weight:700;text-decoration:none;white-space:nowrap}
+.btn:hover{background:#b5e33a;color:#0c0d0b}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:40px}
+.card{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:18px}
+.card h3{margin:0 0 6px;font-size:16px}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.note{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+footer{border-top:1px solid var(--border);color:var(--muted);font-size:14px}
+footer .bar{justify-content:space-between}
+</style>
+</head>
+<body>
+<header><div class="bar"><a class="brand" href="/"><img src="/clipey-256.png" alt="" width="30" height="30">Clipey</a><nav><a href="/">Início</a><a href="/privacidade/" aria-current=page>Privacidade</a><a href="/termos/">Termos</a><a href="/exclusao-de-dados/">Exclusão de dados</a><a href="/en/">English</a></nav></div></header>
+<main>
+<h1>Política de privacidade</h1>
+<p class="meta">Última atualização: 29 de setembro de 2026</p>
+<h2>Quem somos</h2>
+<p>O Clipey é um aplicativo de desktop para gravar, editar e publicar vídeos, mantido pela Produtora MaxVision. Esta política explica quais dados o Clipey usa, para quê, e como você controla esses dados. Contato: <a href="mailto:clipeyoficial@gmail.com">clipeyoficial@gmail.com</a>.</p>
+<h2>O que fica no seu computador</h2>
+<p>Gravações, projetos, transcrições feitas no próprio computador e configurações ficam na sua máquina (no Windows, em <code>%APPDATA%\Clipey</code>). Chaves de API e tokens de contas conectadas são cifrados pelo sistema operacional e guardados somente no seu computador. A Produtora MaxVision não tem acesso a esses arquivos.</p>
+<h2>Contas conectadas</h2>
+<p>Você pode conectar contas do YouTube (Google), Facebook, Instagram e TikTok para publicar vídeos. Ao conectar, o Clipey pede somente o necessário:</p>
+<ul>
+<li><strong>Identificação básica da conta</strong>: nome, foto de perfil e identificador, para mostrar qual conta está conectada.</li>
+<li><strong>Destinos de publicação</strong>: as Páginas do Facebook e contas profissionais do Instagram que você administra, para você escolher onde publicar.</li>
+<li><strong>Envio de vídeos</strong>: permissão para enviar o vídeo, o título, a descrição e a configuração de privacidade que você escolher.</li>
+</ul>
+<p>O Clipey não lê mensagens, não acessa seguidores ou contatos, não publica nada sem uma ação sua e não usa esses dados para publicidade nem para treinar modelos de IA.</p>
+<h2>Como funciona a autorização</h2>
+<p>O login acontece no site oficial de cada plataforma, no seu navegador. A plataforma devolve um código de autorização ao Clipey no seu computador. Para Facebook, Instagram e TikTok, esse código passa pelo serviço de autorização do Clipey (<code>api.clipey.com.br</code>) somente para ser trocado por um token de acesso, porque essas plataformas exigem uma credencial do aplicativo que não pode ficar no instalador. O serviço repassa o token ao seu computador e não armazena tokens, códigos, vídeos nem dados da conta. Registros técnicos de acesso (data, hora e endereço IP) podem ser mantidos pelo provedor de infraestrutura (Cloudflare) por até 30 dias para segurança.</p>
+<h2>Dados do Google e do YouTube</h2>
+<p>O uso e a transferência, pelo Clipey, de informações recebidas das APIs do Google seguem a <a href="https://developers.google.com/terms/api-services-user-data-policy">Política de Dados do Usuário dos Serviços de API do Google</a>, incluindo os requisitos de Uso Limitado. O Clipey usa os Serviços de API do YouTube; ao conectar sua conta, você também concorda com os <a href="https://www.youtube.com/t/terms">Termos de Serviço do YouTube</a>, e seus dados são tratados também pela <a href="https://policies.google.com/privacy">Política de Privacidade do Google</a>. Você pode revogar o acesso do Clipey a qualquer momento em <a href="https://myaccount.google.com/connections">Conexões da sua Conta do Google</a>.</p>
+<h2>Quando outros dados saem do seu computador</h2>
+<ul>
+<li><strong>Serviços de IA que você configurar</strong> (chat, voz, dublagem): o Clipey envia o conteúdo necessário para a tarefa diretamente ao provedor escolhido, com a sua chave. O tratamento segue a política desse provedor.</li>
+<li><strong>Transcrição em servidor</strong>: somente se você escolher esse modo; o áudio é enviado ao servidor configurado e não é mantido após a transcrição.</li>
+<li><strong>Verificação de atualizações</strong>: o Clipey consulta a página pública de versões no GitHub.</li>
+</ul>
+<h2>O que não fazemos</h2>
+<p>Não coletamos telemetria de uso, não vendemos dados, não compartilhamos dados com anunciantes e não criamos perfis de usuários.</p>
+<h2>Retenção e exclusão</h2>
+<p>Como seus dados ficam no seu computador, você controla a retenção. Desconectar uma conta no Clipey apaga o token dela do seu computador. Veja todas as opções em <a href="/exclusao-de-dados/">Exclusão de dados</a>.</p>
+<h2>Seus direitos</h2>
+<p>Nos termos da Lei Geral de Proteção de Dados (Lei nº 13.709/2018), você pode pedir confirmação de tratamento, acesso, correção, exclusão e informações sobre compartilhamento. Envie o pedido para <a href="mailto:clipeyoficial@gmail.com">clipeyoficial@gmail.com</a>; respondemos em até 15 dias.</p>
+<h2>Crianças</h2>
+<p>O Clipey não é destinado a menores de 13 anos, e as contas conectadas precisam cumprir a idade mínima de cada plataforma.</p>
+<h2>Alterações</h2>
+<p>Se esta política mudar, a data acima será atualizada e mudanças relevantes serão informadas nas notas de versão do aplicativo.</p>
+</main>
+<footer><div class="bar"><span>© 2026 Produtora MaxVision. Todos os direitos reservados.</span><a href="mailto:clipeyoficial@gmail.com">clipeyoficial@gmail.com</a></div></footer>
+</body>
+</html>

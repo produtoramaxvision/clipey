@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0c0d0b">
+<title>Data deletion · Clipey</title>
+<meta name="description" content="Clipey: record, edit and publish screen videos.">
+<link rel="icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ground:#0c0d0b;--s1:#141612;--s2:#1b1d18;--s3:#252821;--border:#2c2f27;
+--text:#eceee6;--muted:#9aa091;--lime:#a2d305;--lime-text:#b5e33a;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ground);color:var(--text);
+font:16px/1.65 Geist,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--lime-text);text-underline-offset:3px}
+a:hover{color:#d4f27a}
+header{border-bottom:1px solid var(--border);background:var(--ground)}
+.bar{max-width:880px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;
+gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);
+font-weight:600;font-size:17px;margin-right:auto}
+.brand img{width:30px;height:30px;display:block}
+nav{display:flex;gap:4px 14px;flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;font-size:14px;white-space:nowrap}
+nav a:hover,nav a[aria-current]{color:var(--text)}
+main{max-width:880px;margin:0 auto;padding:40px 16px 64px}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.15;margin:0 0 8px;letter-spacing:-0.01em}
+h2{font-size:20px;margin:36px 0 8px}
+.meta{color:var(--muted);font-size:14px;margin:0 0 28px}
+li{margin:4px 0}
+.hero{display:flex;flex-direction:column;align-items:flex-start;gap:18px;padding:32px 0 8px}
+.hero img{width:96px;height:96px}
+.lead{font-size:19px;color:var(--muted);max-width:620px;margin:0}
+.btn{display:inline-flex;align-items:center;height:46px;padding:0 22px;border-radius:12px;
+background:var(--lime);color:#0c0d0b;font-weight:700;text-decoration:none;white-space:nowrap}
+.btn:hover{background:#b5e33a;color:#0c0d0b}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:40px}
+.card{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:18px}
+.card h3{margin:0 0 6px;font-size:16px}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.note{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+footer{border-top:1px solid var(--border);color:var(--muted);font-size:14px}
+footer .bar{justify-content:space-between}
+</style>
+</head>
+<body>
+<header><div class="bar"><a class="brand" href="/en/"><img src="/clipey-256.png" alt="" width="30" height="30">Clipey</a><nav><a href="/en/">Home</a><a href="/en/privacy/">Privacy</a><a href="/en/terms/">Terms</a><a href="/en/data-deletion/" aria-current=page>Data deletion</a><a href="/">Português</a></nav></div></header>
+<main>
+<h1>Data deletion instructions</h1>
+<p class="meta">Last updated: September 29, 2026</p>
+<p class="note">Clipey stores your data only on your computer. Produtora MaxVision keeps no copy of your recordings, projects or access tokens.</p>
+<h2>1. Disconnect accounts in Clipey</h2>
+<p>Open Clipey, go to <strong>Settings → Connected accounts</strong> and click <strong>Disconnect</strong> on each account. The token is deleted from your computer immediately.</p>
+<h2>2. Revoke access on each platform</h2>
+<ul>
+<li><strong>Google / YouTube</strong>: <a href="https://myaccount.google.com/connections">Google Account connections</a> → Clipey → Delete all connections.</li>
+<li><strong>Facebook and Instagram</strong>: Facebook → Settings &amp; privacy → Settings → <a href="https://www.facebook.com/settings?tab=business_tools">Business integrations</a> → Clipey → Remove.</li>
+<li><strong>TikTok</strong>: TikTok → Settings and privacy → Security and permissions → Apps and services → Clipey → Remove access.</li>
+</ul>
+<h2>3. Delete local files</h2>
+<p>Uninstall Clipey from <strong>Windows Settings → Apps</strong> and delete the <code>%APPDATA%\Clipey</code> folder. Recordings saved in other folders are not deleted automatically.</p>
+<h2>4. Request by email</h2>
+<p>You can also email a deletion request to <a href="mailto:clipeyoficial@gmail.com">clipeyoficial@gmail.com</a> with the subject "Data deletion". We reply within 15 days confirming that no data of yours is stored on our services.</p>
+</main>
+<footer><div class="bar"><span>© 2026 Produtora MaxVision. All rights reserved.</span><a href="mailto:clipeyoficial@gmail.com">clipeyoficial@gmail.com</a></div></footer>
+</body>
+</html>
