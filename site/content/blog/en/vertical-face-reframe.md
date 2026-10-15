@@ -17,9 +17,9 @@ ogImage: "/blog/og/reenquadramento-vertical-por-rosto.png"
 appliesTo: "1.15"
 ---
 
-> **Applies to:** Clipey 1.15 on Windows. Face reframe and blurred backdrop are planned capabilities currently awaiting final validation.
+> **Applies to:** Clipey 1.15. Face reframe and blurred backdrop are available in the editor for fixed output formats.
 
-To reframe a screen recording vertically around a face in Clipey, switch your project aspect ratio to 9:16 and enable the planned face reframe setting. The feature is designed to process face detection locally on-device to build a smooth tracking path that keeps the speaker centered, with fallback options to track the cursor or frame center when no face is visible. Because face reframe and blurred backdrop remain in technical validation, use this article as guidance for the planned workflow.
+To reframe a screen recording vertically around a face in Clipey, choose a fixed format such as 9:16 and enable **Face reframe**. Clipey analyzes the video locally to create a face-following track, with adjustable **Smoothing** and **Fallback** options for **Cursor** or **Center** when no face is found. For fixed formats, **Blurred backdrop** fills side space with an enlarged, blurred version of the source.
 
 ## Set the output format
 

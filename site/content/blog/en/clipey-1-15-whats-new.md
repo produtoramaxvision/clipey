@@ -1,6 +1,6 @@
 ---
 title: "Clipey 1.15: what’s new in recording and editing"
-description: "Explore the planned Clipey 1.15 changes, where to find them, and which features are Windows-specific or still awaiting final validation."
+description: "Explore Clipey 1.15 recording and editing features, where to find them, and which workflows have platform requirements."
 slug: "clipey-1-15-whats-new"
 lang: "en"
 translationKey: "clipey-1-15-novidades"
@@ -17,7 +17,7 @@ ogImage: "/blog/og/clipey-1-15-novidades.png"
 appliesTo: "1.15"
 ---
 
-> **Applies to:** Clipey 1.15. The primary recording workflow is for Windows; live drawing remains in final release validation.
+> **Applies to:** Clipey 1.15. Windows-specific recording features and live drawing's protected-overlay requirement are noted below.
 
 Clipey 1.15 delivers editable cursor recording with button-specific mouse effects, live gamepad overlay for gameplay, timeline productivity shortcuts, and automated short clip generation. The release also integrates subtitle and link importing, local Model Context Protocol (MCP) server support for AI agents, and reliable export presets with post-render stream verification. All screen capture, editing, and transcription workflows run directly on your Windows PC without transmitting video to remote servers.
 
@@ -31,7 +31,7 @@ On Windows, recording interaction data captures side-button clicks and wheel scr
 
 Mouse effects combine button-specific click animations (**Ripple**, **Rings**, **Pulse**), a scroll indicator, a drag trail, a cursor halo and a spotlight. **Reduced motion** replaces travel animations with a short opacity fade. Start with one or two effects: excessive halo and dark spotlight can compete with text underneath.
 
-Live drawing is designed for quick annotations during a recording: pen, highlighter, arrow, rectangle and ellipse, with color and width chosen from a floating toolbar. Strokes are intended to stay out of the captured video while being stored as vectors for replay in the editor and export. Because it relies on Windows capture protections, live drawing remains in final technical verification.
+Live drawing adds timed annotations during an active recording through a protected overlay. The default global shortcut is **Ctrl+Shift+D**; the floating toolbar offers **Pen**, **Highlighter**, **Arrow**, **Rectangle** and **Ellipse**, plus color and stroke-width controls. Protected strokes stay out of the captured screen and replay in the editor. On Windows the overlay requires Windows 11 22H2 (build 22621) or later; earlier builds disable it because protected click-through capture is unavailable. The overlay is also disabled on macOS 26 because protected windows are not displayed there.
 
 For gameplay, the **Gamepad overlay** displays pressed buttons as compact labels in **Compact** style or as a controller silhouette in **Full** style. The full layout can also display stick positions with **Show thumbsticks**. Its events follow the edited video timeline, ensuring trims and speed changes keep input precisely aligned with footage.
 
@@ -44,7 +44,7 @@ Use Shift for a one-off placement that should not snap. Use a marker when you wa
 ## A short test before a finished project
 
 1. Start a brief Windows recording and choose **Editable cursor** if you plan to reposition or emphasize the pointer later.
-2. Try a few clicks and wheel movements, and enable **Capture gamepad** if demonstrating controller gameplay. For the planned live drawing feature, test the default **Ctrl+Shift+D** toggle and **Esc** to exit.
+2. Try a few clicks and wheel movements, and enable **Capture gamepad** if demonstrating controller gameplay. To annotate, use **Ctrl+Shift+D** to toggle live drawing and **Esc** to exit, provided protected overlay capture is available on the system.
 3. Open the take in the editor. Confirm that events appear at the right points before turning on several overlays. Adjust input delay or visual settings only if you see a mismatch.
 4. Test a trim while holding Shift, then add a marker at the playhead with **M**. Rename it so the marker list stays understandable through revisions.
 5. Export a short review section and check readability in motion. This catches effects that obscure text or annotations that appear out of time.
@@ -71,7 +71,7 @@ For hands-on instructions, read [recording your screen on Windows](/blog/en/reco
 
 ## Limitations
 
-Gamepad, side-button and mouse wheel capture target Windows. Mouse effects, gamepad overlays, and timeline shortcuts are fully merged in Clipey 1.15. Live drawing during recording remains in final release verification.
+Gamepad, side-button and mouse wheel capture target Windows. Live drawing requires an available protected display overlay; on Windows this means Windows 11 22H2 (build 22621) or later, and it is unavailable on macOS 26. Face reframe is available for vertical output, and blurred backdrop is offered for fixed formats.
 
 Visit the [download page](/en/#download) to get Clipey and check the current release.
 

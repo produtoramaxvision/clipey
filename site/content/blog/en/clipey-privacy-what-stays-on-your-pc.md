@@ -37,11 +37,11 @@ When connecting an external client or agent host through the Model Context Proto
 
 ## Handle diagnostic exports carefully
 
-Diagnostics help troubleshoot application issues, but raw log bundles can include system paths, machine identifiers, or configuration details. Before sending diagnostic archives to support, generate the export package locally and review its contents. Do not assume every identifying string or username has been stripped automatically; perform a quick manual review to ensure no unnecessary details are shared.
+Before writing a diagnostic package, Clipey automatically redacts recognized secrets, bearer and OAuth tokens, email addresses, Windows usernames in paths, and transcript text. Transcripts are excluded by default; you can choose to include them when exporting. Redaction uses patterns and does not remove every identifying detail, so review the file before sharing it.
 
 1. Export diagnostics only when investigating a specific crash or playback fault.
 2. Open the resulting zip bundle and review the log files before attaching them.
-3. Remove unrelated session logs and redact personal folder paths or tokens if present.
+3. Confirm transcripts are included only when needed, and remove any identifying details that remain.
 4. Transmit diagnostic packages only through official support channels.
 
 If an inquiry concerns an export mismatch or delivery warning, describe the resolution settings and timeline structure instead of sharing full project footage. When troubleshooting transcription errors, sharing a short, disposable audio clip is often sufficient to pinpoint the problem without exposing private recordings.
@@ -56,7 +56,7 @@ If an inquiry concerns an export mismatch or delivery warning, describe the reso
 
 ## Limitations
 
-On-device transcription does not make every feature offline. Provider-backed AI requires the configured service and its own account or network access. Diagnostic contents vary with the issue being investigated; inspect the actual archive before sharing it. Automatic diagnostic redaction remains in technical verification, making manual inspection essential.
+On-device transcription does not make every feature offline. Provider-backed AI requires the configured service and its own account or network access. Automatic redaction recognizes specific secret and path patterns; it does not guarantee that the entire package is anonymous. Inspect the exported file before sharing it.
 
 For agent connections, read [MCP setup and permissions](/blog/en/clipey-ai-agents-mcp/). For the local recording workflow, see [getting started with Clipey](/blog/en/getting-started-with-clipey/). Review the [privacy overview](/en/#privacy).
 
