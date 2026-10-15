@@ -17,7 +17,7 @@ body {
 	margin: 0;
 	background: var(--bg);
 	color: var(--text);
-	font: 400 17px/1.6 var(--font-sans);
+	font: 400 17px / 1.6 var(--font-sans);
 	font-feature-settings: "ss01", "cv11";
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
@@ -44,8 +44,10 @@ a:hover {
 	border-radius: 4px;
 }
 
-[hidden] {
-	display: none !important;
+/* Author display rules would otherwise win over the hidden attribute; components that set display list theirs. */
+[hidden],
+.search-results[hidden] {
+	display: none;
 }
 
 .sr-only {
@@ -85,7 +87,7 @@ a:hover {
 }
 
 .tc {
-	font: 500 12px/1 var(--font-mono);
+	font: 500 12px / 1 var(--font-mono);
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
 	color: var(--muted);
@@ -111,12 +113,16 @@ a:hover {
 	padding: 0 22px;
 	border: 1px solid transparent;
 	border-radius: 999px;
-	font: 600 15px/1 var(--font-sans);
+	font: 600 15px / 1 var(--font-sans);
 	letter-spacing: -0.005em;
 	text-decoration: none;
 	white-space: nowrap;
 	cursor: pointer;
-	transition: transform 0.2s var(--ease), background-color 0.2s, border-color 0.2s, color 0.2s;
+	transition:
+		transform 0.2s var(--ease),
+		background-color 0.2s,
+		border-color 0.2s,
+		color 0.2s;
 }
 
 .btn svg {
@@ -181,7 +187,7 @@ a:hover {
 	gap: 10px;
 	margin-right: auto;
 	color: var(--text);
-	font: 650 20px/1 var(--font-sans);
+	font: 650 20px / 1 var(--font-sans);
 	letter-spacing: -0.04em;
 	text-decoration: none;
 }
@@ -209,7 +215,9 @@ a:hover {
 	font-size: 14.5px;
 	font-weight: 500;
 	text-decoration: none;
-	transition: color 0.2s, background-color 0.2s;
+	transition:
+		color 0.2s,
+		background-color 0.2s;
 }
 
 .header-nav a:hover,
@@ -269,7 +277,7 @@ a:hover {
 	padding: 6px 10px;
 	border-radius: 999px;
 	color: var(--muted);
-	font: 500 12px/1 var(--font-mono);
+	font: 500 12px / 1 var(--font-mono);
 	letter-spacing: 0.06em;
 	text-decoration: none;
 }
@@ -344,7 +352,7 @@ a:hover {
 
 .footer-col h2 {
 	margin: 0 0 14px;
-	font: 500 12px/1 var(--font-mono);
+	font: 500 12px / 1 var(--font-mono);
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
 	color: var(--muted);
@@ -396,15 +404,17 @@ a:hover {
 	}
 }
 
+/* Reduced motion: no smooth scrolling and no movement on hover. Each stylesheet stops its own motion, after its rules. */
 @media (prefers-reduced-motion: reduce) {
 	html {
 		scroll-behavior: auto;
 	}
 
-	*,
-	*::before,
-	*::after {
-		animation: none !important;
-		transition: none !important;
+	.btn {
+		transition: none;
+	}
+
+	.btn--primary:hover {
+		transform: none;
 	}
 }

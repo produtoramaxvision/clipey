@@ -1454,14 +1454,14 @@ main.story {
 	border-radius: 14px;
 }
 
-.link-row {
+.story .link-row {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 12px 28px;
 	margin: 0;
 }
 
-.text-link {
+.story .text-link {
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
@@ -1470,11 +1470,11 @@ main.story {
 	text-decoration: none;
 }
 
-.text-link:hover {
+.story .text-link:hover {
 	color: var(--title);
 }
 
-.text-link svg {
+.story .text-link svg {
 	width: 15px;
 	height: 15px;
 }
@@ -1487,15 +1487,15 @@ main.story {
 	align-items: start;
 }
 
-.faq {
+.story .faq {
 	border-top: 1px solid var(--line-soft);
 }
 
-.faq-item {
+.story .faq-item {
 	border-bottom: 1px solid var(--line-soft);
 }
 
-.faq-item summary {
+.story .faq-item summary {
 	position: relative;
 	padding: 22px 40px 22px 0;
 	color: var(--text);
@@ -1506,11 +1506,11 @@ main.story {
 	cursor: pointer;
 }
 
-.faq-item summary::-webkit-details-marker {
+.story .faq-item summary::-webkit-details-marker {
 	display: none;
 }
 
-.faq-item summary::after {
+.story .faq-item summary::after {
 	position: absolute;
 	top: 22px;
 	right: 4px;
@@ -1519,11 +1519,11 @@ main.story {
 	content: "+";
 }
 
-.faq-item[open] summary::after {
+.story .faq-item[open] summary::after {
 	content: "−";
 }
 
-.faq-item p {
+.story .faq-item p {
 	max-width: 680px;
 	margin: 0;
 	padding: 0 0 24px;
@@ -1886,6 +1886,18 @@ main.story {
 	.playhead,
 	.ink {
 		animation: none;
+	}
+
+	.text-link svg,
+	.faq-item summary svg,
+	.teaser a,
+	.export-btn {
+		transition: none;
+	}
+
+	.text-link:hover svg,
+	.teaser a:hover {
+		transform: none;
 	}
 
 	.ink {

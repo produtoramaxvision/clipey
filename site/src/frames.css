@@ -27,18 +27,31 @@
 	height: 30px;
 	border-top: 1px solid var(--line);
 	background-color: var(--surface);
-	background-image: repeating-linear-gradient(90deg, var(--line-strong) 0 1px, transparent 1px 12px),
-		repeating-linear-gradient(90deg, var(--line-strong) 0 1px, transparent 1px 60px);
-	background-size: 100% 6px, 100% 12px;
+	background-image:
+		repeating-linear-gradient(
+			90deg,
+			var(--line-strong) 0 1px,
+			transparent 1px 12px
+		),
+		repeating-linear-gradient(
+			90deg,
+			var(--line-strong) 0 1px,
+			transparent 1px 60px
+		);
+	background-size:
+		100% 6px,
+		100% 12px;
 	background-repeat: no-repeat;
-	background-position: 0 0, 0 0;
+	background-position:
+		0 0,
+		0 0;
 }
 
 .frame-tc {
 	position: absolute;
 	bottom: 7px;
 	color: var(--muted);
-	font: 500 11px/1 var(--font-mono);
+	font: 500 11px / 1 var(--font-mono);
 	letter-spacing: 0.06em;
 	text-transform: uppercase;
 }
@@ -67,7 +80,9 @@
 }
 
 .card-link .frame {
-	transition: border-color 0.2s, transform 0.3s var(--ease);
+	transition:
+		border-color 0.2s,
+		transform 0.3s var(--ease);
 }
 
 .card-link:hover .frame {
@@ -122,3 +137,12 @@
 	}
 }
 
+@media (prefers-reduced-motion: reduce) {
+	.card-link .frame {
+		transition: none;
+	}
+
+	.card-link:hover .frame {
+		transform: none;
+	}
+}

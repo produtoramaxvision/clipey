@@ -248,7 +248,7 @@ export function renderBlogIndex(lang, posts, assets, categoryKey = "all") {
 				? `<article class="featured" aria-labelledby="featured-title">
 			<a class="featured-frame" href="${featuredItem.url}" tabindex="-1" aria-hidden="true">${frame(featured, lang, { eager: true, sizes: "(max-width: 900px) 100vw, 760px", total })}</a>
 			<div class="featured-copy">
-				<p class="entry-meta"><span>${esc(copy.featured)}</span>${entryMeta(featured, lang)}</p>
+				<p class="entry-meta"><span class="entry-flag">${esc(copy.featured)}</span>${entryMeta(featured, lang)}</p>
 				<h2 id="featured-title" class="featured-title"><a href="${featuredItem.url}">${esc(featuredItem.title)}</a></h2>
 				<p class="featured-desc">${esc(featuredItem.description)}</p>
 				<a class="featured-more" href="${featuredItem.url}">${esc(copy.readArticle)}${icon("arrow")}</a>
