@@ -17,17 +17,17 @@ ogImage: "/blog/og/reenquadramento-vertical-por-rosto.png"
 appliesTo: "1.15"
 ---
 
-> **Aplica-se a:** Clipey 1.15 no Windows. O reenquadramento por rosto e o fundo desfocado são recursos planejados que ainda aguardam validação final.
+> **Aplica-se a:** Clipey 1.15. O enquadramento facial e o fundo desfocado estão disponíveis no editor para formatos de saída fixos.
 
-Para reenquadrar uma gravação verticalmente pelo rosto no Clipey, altere a proporção do projeto para 9:16 e ative o recurso planejado de reenquadramento facial com detecção local no dispositivo. O sistema analisa a mídia para construir uma trilha de foco suavizada que mantém o apresentador centralizado, oferecendo fallback para o cursor ou centro quando o rosto não for detectado. Como essa funcionalidade e o fundo desfocado ainda aguardam validação final, utilize este guia como referência para os controles projetados.
+Para reenquadrar uma gravação verticalmente pelo rosto no Clipey, escolha um formato fixo, como 9:16, e ative **Enquadramento facial**. O Clipey analisa o vídeo localmente para criar uma trilha que acompanha o rosto, com opções de **Suavização** e **Alternativa** para **Cursor** ou **Centro** quando nenhum rosto é encontrado. Em formatos fixos, **Fundo desfocado** preenche as laterais com uma versão ampliada e desfocada da fonte.
 
 ## Prepare o formato de saída
 
 1. Abra o projeto com o vídeo que deseja adaptar e confirme que a mídia está carregada.
 2. No painel de formato, escolha a proporção vertical, como 9:16. Observe o preview: o quadro fixo seleciona apenas parte da imagem original.
-3. Ative a opção prevista de reenquadramento por rosto. O Clipey analisa a mídia localmente para construir uma trajetória de foco contínua. Essa análise ocorre quando o recurso é ativado; o objetivo não é detectar rostos a cada quadro durante a reprodução.
-4. Ajuste a suavização para equilibrar acompanhamento e estabilidade. Uma resposta mais suave reduz mudanças bruscas, mas pode demorar a acompanhar um deslocamento rápido. Reproduza trechos em que a pessoa muda de posição antes de decidir.
-5. Se nenhum rosto estiver disponível em parte do vídeo, escolha o comportamento alternativo de fallback: seguir o cursor ou centralizar o quadro. Reproduza o intervalo sem rosto e confira se a alternativa mantém informação útil.
+3. Ative **Enquadramento facial**. O Clipey analisa o vídeo para construir uma trajetória de foco. A análise ocorre ao ativar o recurso ou quando o ativo ainda não tem uma trajetória; os rostos não são detectados a cada quadro durante a reprodução.
+4. Ajuste **Suavização** para equilibrar acompanhamento e estabilidade. Uma resposta mais suave reduz mudanças bruscas, mas pode demorar a acompanhar um deslocamento rápido. Reproduza trechos em que a pessoa muda de posição antes de decidir.
+5. Se nenhum rosto for detectado, escolha a **Alternativa**: seguir o cursor ou centralizar o quadro. Reproduza o intervalo sem rosto e confira se essa opção mantém informação útil.
 
 ## Revise o movimento do quadro
 
@@ -52,7 +52,7 @@ Use a opção conforme a finalidade do conteúdo. Para uma pessoa falando, o fun
 
 ## Limitações
 
-O reenquadramento planejado depende de detecção facial no dispositivo e de uma trilha de foco gerada para o ativo, permanecendo pendente de validação na versão estável. Não é garantia de que todos os rostos serão detectados em todas as condições de iluminação, nem identifica automaticamente qual elemento da interface importa. Em períodos sem detecção, o comportamento de fallback é acionado. O fundo desfocado pode reduzir o contraste e não substitui uma edição manual detalhada para cenas complexas.
+O enquadramento facial depende da detecção de rostos no dispositivo e de uma trilha gerada para o ativo. Não garante detectar todos os rostos em todas as condições nem identifica qual elemento da interface é importante. Ele acompanha um rosto detectado, que pode não ser a pessoa falando. Quando não há detecção, usa a alternativa configurada. O fundo desfocado pode reduzir a legibilidade do conteúdo visual e não substitui a edição manual em cenas complexas.
 
 Para selecionar momentos curtos da gravação, leia [como revisar clipes do Auto Clip](/blog/auto-clip-shorts-de-videos-longos/). Para trabalhar com cortes e zooms, veja [edição com IA](/blog/edicao-com-ia-cortes-zooms-silencio/). Consulte também os [recursos do Clipey](/#recursos).
 

@@ -1,6 +1,6 @@
 ---
 title: "Clipey 1.15: novidades em gravação, edição e exportação"
-description: "Conheça as mudanças previstas para Clipey 1.15, saiba onde encontrá-las e veja quais recursos dependem de Windows ou ainda aguardam validação."
+description: "Conheça os recursos de gravação e edição do Clipey 1.15 e saiba quais fluxos têm requisitos específicos de plataforma."
 slug: "clipey-1-15-novidades"
 lang: "pt-BR"
 translationKey: "clipey-1-15-novidades"
@@ -17,7 +17,7 @@ ogImage: "/blog/og/clipey-1-15-novidades.png"
 appliesTo: "1.15"
 ---
 
-> **Aplica-se a:** Clipey 1.15. A gravação principal é para Windows; o desenho ao vivo ainda aguarda validação final.
+> **Aplica-se a:** Clipey 1.15. Os requisitos dos recursos de gravação para Windows e da sobreposição protegida de desenho estão descritos abaixo.
 
 O Clipey 1.15 traz efeitos de cursor com destaque de cliques e rolagem, sobreposição de controle para gameplay, atalhos rápidos na linha do tempo e geração automática de clipes curtos. A versão também adiciona importação de legendas e links, suporte a servidores MCP para agentes locais e predefinições de exportação com verificação técnica de entrega. Todas as ferramentas de captura e edição continuam sendo executadas no seu próprio computador, sem transferir seus arquivos para servidores remotos.
 
@@ -31,7 +31,7 @@ No Windows, a gravação de interações inclui cliques laterais e eventos da ro
 
 O editor recebe recursos para destacar ações sem redesenhar a gravação original. Os efeitos de mouse combinam formas de clique por botão, indicador de rolagem, rastro durante arraste, halo e holofote. Uma configuração de movimento reduzido troca a animação por uma mudança breve de opacidade. Ajuste só os elementos necessários: halo e holofote podem competir com o conteúdo se ficarem fortes demais.
 
-O desenho ao vivo foi pensado para anotações rápidas enquanto a gravação acontece: caneta, marca-texto, seta, retângulo e elipse, com cor e espessura escolhidas numa barra flutuante. Os traços devem permanecer fora do vídeo capturado e ser armazenados como vetores para reaparecer no editor e na exportação. Por depender de proteções de captura no Windows, esse recurso permanece em validação final; os traços acompanham os tempos da gravação.
+O desenho ao vivo permite criar anotações temporizadas durante uma gravação ativa por meio de uma sobreposição protegida. O atalho global padrão é **Ctrl+Shift+D**; a barra flutuante oferece **Caneta**, **Marca-texto**, **Seta**, **Retângulo** e **Elipse**, além de cor e espessura do traço. As marcações protegidas ficam fora da tela gravada e reaparecem no editor. No Windows, a sobreposição exige Windows 11 22H2 (build 22621) ou posterior; versões anteriores a desativam porque não oferecem captura protegida com clique através da janela. No macOS 26, a proteção também é desativada porque janelas protegidas não são exibidas.
 
 Para gameplay, a sobreposição de controle mostra botões pressionados em estilo **Compacto** ou **Completo**, conforme a escolha no inspetor. A visualização completa também pode exibir a posição dos analógicos com **Mostrar analógicos**. Os eventos seguem o tempo editado do vídeo, então aparas e trechos acelerados mantêm a sincronia com a sobreposição.
 
@@ -44,12 +44,12 @@ Esses controles são complementares. Use Shift quando o encaixe estiver atrapalh
 ## Um fluxo de teste antes do projeto final
 
 1. Inicie uma gravação curta no Windows e escolha o modo de cursor adequado. Se a intenção for reposicionar ou destacar o ponteiro depois, escolha **Cursor editável**.
-2. Faça alguns cliques e movimentos de roda, e ative **Capturar controle** se for demonstrar um jogo. Para o desenho ao vivo em validação, o fluxo previsto utiliza o atalho **Ctrl+Shift+D** para entrar em modo de anotação e **Esc** para sair.
+2. Faça alguns cliques e movimentos de roda, e ative **Capturar controle** se for demonstrar um jogo. Para anotar, use **Ctrl+Shift+D** para alternar o desenho ao vivo e **Esc** para sair, desde que a captura protegida da sobreposição esteja disponível no sistema.
 3. Abra a gravação no editor. Confira se os eventos aparecem nos trechos corretos antes de ativar várias camadas de sobreposição. Ajuste o atraso de entrada ou as opções visuais apenas se perceber um desencontro.
 4. Na timeline, teste uma apara segurando Shift e adicione um marcador ao playhead com **M**. Renomeie o marcador para que a lista continue útil em projetos com várias revisões.
 5. Exporte um trecho de conferência e observe a leitura em movimento. Assim fica mais fácil detectar efeitos que escondam texto ou marcações fora de sincronia.
 
-Os recursos de mouse, controle e timeline já estão integrados na versão 1.15. Apenas o desenho ao vivo durante a captura permanece como funcionalidade planejada em validação final.
+Os recursos de mouse, controle, timeline, desenho ao vivo e reenquadramento facial estão integrados no Clipey 1.15. O desenho ao vivo exige uma sobreposição de tela protegida; no Windows, isso significa Windows 11 22H2 (build 22621) ou posterior, e o recurso fica indisponível no macOS 26. O fundo desfocado é oferecido para formatos fixos.
 
 ## O que muda entre os modos de cursor?
 
@@ -73,7 +73,7 @@ O Clipey 1.15 também reúne mudanças no fluxo de edição assistida, voz, lege
 
 ## Limitações
 
-A captura de comandos de controle, botões laterais e roda é voltada ao Windows. Os recursos de efeitos de mouse, sobreposição de controle e atalhos de linha do tempo estão incorporados ao Clipey 1.15. Já o desenho ao vivo durante a gravação continua em fase de implementação e validação técnica final.
+A captura de comandos de controle, botões laterais e roda é voltada ao Windows. O desenho ao vivo requer uma sobreposição de tela protegida; no Windows isso significa Windows 11 22H2 (build 22621) ou posterior, e ele fica indisponível no macOS 26. O enquadramento facial está disponível para saída vertical, e o fundo desfocado para formatos fixos.
 
 Para obter Clipey e acompanhar a versão, visite a página de [download](/#download).
 

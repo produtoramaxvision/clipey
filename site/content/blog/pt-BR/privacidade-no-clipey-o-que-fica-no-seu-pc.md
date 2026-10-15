@@ -37,11 +37,11 @@ Se o fluxo pedir credenciais de uma conta externa, trate-as como segredos e não
 
 ## Revise as exportações de diagnóstico
 
-Diagnósticos ajudam a investigar um problema, mas podem conter informações sobre o computador ou uma sessão. Antes de compartilhar um pacote, use o fluxo de exportação e confira os arquivos incluídos. Não presuma que todo dado identificável ou conteúdo do projeto foi removido automaticamente: faça uma revisão humana e retire o que não for necessário para explicar o problema.
+Antes de gravar um pacote de diagnóstico, o Clipey oculta automaticamente segredos reconhecidos, tokens bearer e OAuth, endereços de e-mail, nomes de usuário do Windows em caminhos e texto de transcrições. A transcrição é excluída por padrão; você pode optar por incluí-la na exportação. A proteção usa padrões e não remove todos os dados identificáveis, então confira o arquivo antes de compartilhá-lo.
 
 1. Exporte diagnósticos somente quando forem necessários para suporte ou investigação.
 2. Abra o arquivo gerado e confira o conteúdo antes de anexá-lo.
-3. Remova arquivos irrelevantes e oculte manualmente qualquer segredo que encontrar.
+3. Confirme se a transcrição só foi incluída quando necessária e remova os dados identificáveis que ainda estiverem presentes.
 4. Compartilhe apenas pelo canal de suporte que você pretendia usar.
 
 Se um relatório envolver um erro de exportação, descreva as configurações escolhidas e o ponto em que o problema aparece. Assim, pode ser possível reproduzi-lo sem compartilhar o vídeo completo. Se o arquivo de diagnóstico incluir caminhos locais, nomes de projeto ou trechos de texto, considere se esses dados são necessários para a investigação antes de enviar.
@@ -57,7 +57,7 @@ Se o relatório envolve uma falha de transcrição ou edição, descreva os pass
 
 ## Limitações
 
-Transcrição no dispositivo não quer dizer que todos os recursos funcionem sem conexão. Recursos apoiados por provedores dependem do serviço configurado e podem exigir conta ou rede. O conteúdo de um diagnóstico varia conforme o tipo de problema investigado; confira o pacote real antes de compartilhá-lo.
+Transcrição no dispositivo não quer dizer que todos os recursos funcionem sem conexão. Recursos apoiados por provedores dependem do serviço configurado e podem exigir conta ou rede. A redação automática reconhece padrões específicos de segredos e caminhos; não garante anonimizar todo o pacote. Confira o arquivo exportado antes de compartilhá-lo.
 
 Para conectar agentes, leia [configuração e permissões MCP](/blog/clipey-com-agentes-de-ia-mcp/). Para iniciar uma gravação local, veja [primeiros passos no Clipey](/blog/primeiros-passos-no-clipey/). Consulte as informações de [privacidade](/#privacidade).
 
