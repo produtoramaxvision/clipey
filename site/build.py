@@ -1,99 +1,19 @@
-"""Build the static clipey.com.br site into ./dist.
+"""Legal texts of clipey.com.br.
 
-Pages are plain HTML generated from the content below so the legal texts stay
-in one reviewable file. Run: python site/build.py
+The privacy policy, terms of use and data-deletion instructions live in this one
+reviewable file. Running it prints them as JSON (language, path, title, body);
+vite.config.js renders them in the site shell. Run: python3 site/build.py
 """
 
 from __future__ import annotations
 
 import html
-import shutil
-from pathlib import Path
+import json
 
-ROOT = Path(__file__).parent
-DIST = ROOT / "dist"
 UPDATED = {"pt": "29 de setembro de 2026", "en": "September 29, 2026"}
 CONTACT = "clipeyoficial@gmail.com"
 RELEASES = "https://github.com/produtoramaxvision/clipey/releases/latest"
 REPO = "https://github.com/produtoramaxvision/clipey"
-
-NAV = {
-    "pt": [("/", "Início"), ("/privacidade/", "Privacidade"), ("/termos/", "Termos"),
-           ("/exclusao-de-dados/", "Exclusão de dados"), ("/en/", "English")],
-    "en": [("/en/", "Home"), ("/en/privacy/", "Privacy"), ("/en/terms/", "Terms"),
-           ("/en/data-deletion/", "Data deletion"), ("/", "Português")],
-}
-
-CSS = """
-:root{--ground:#0c0d0b;--s1:#141612;--s2:#1b1d18;--s3:#252821;--border:#2c2f27;
---text:#eceee6;--muted:#9aa091;--lime:#a2d305;--lime-text:#b5e33a;color-scheme:dark}
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--ground);color:var(--text);
-font:16px/1.65 Geist,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-a{color:var(--lime-text);text-underline-offset:3px}
-a:hover{color:#d4f27a}
-header{border-bottom:1px solid var(--border);background:var(--ground)}
-.bar{max-width:880px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;
-gap:16px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);
-font-weight:600;font-size:17px;margin-right:auto}
-.brand img{width:30px;height:30px;display:block}
-nav{display:flex;gap:4px 14px;flex-wrap:wrap}
-nav a{color:var(--muted);text-decoration:none;font-size:14px;white-space:nowrap}
-nav a:hover,nav a[aria-current]{color:var(--text)}
-main{max-width:880px;margin:0 auto;padding:40px 16px 64px}
-h1{font-size:clamp(28px,5vw,40px);line-height:1.15;margin:0 0 8px;letter-spacing:-0.01em}
-h2{font-size:20px;margin:36px 0 8px}
-.meta{color:var(--muted);font-size:14px;margin:0 0 28px}
-li{margin:4px 0}
-.hero{display:flex;flex-direction:column;align-items:flex-start;gap:18px;padding:32px 0 8px}
-.hero img{width:96px;height:96px}
-.lead{font-size:19px;color:var(--muted);max-width:620px;margin:0}
-.btn{display:inline-flex;align-items:center;height:46px;padding:0 22px;border-radius:12px;
-background:var(--lime);color:#0c0d0b;font-weight:700;text-decoration:none;white-space:nowrap}
-.btn:hover{background:#b5e33a;color:#0c0d0b}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:40px}
-.card{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:18px}
-.card h3{margin:0 0 6px;font-size:16px}
-.card p{margin:0;color:var(--muted);font-size:15px}
-.note{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
-footer{border-top:1px solid var(--border);color:var(--muted);font-size:14px}
-footer .bar{justify-content:space-between}
-"""
-
-
-def page(lang: str, path: str, title: str, body: str) -> str:
-    nav = "".join(
-        f'<a href="{href}"{" aria-current=page" if href == path else ""}>{html.escape(label)}</a>'
-        for href, label in NAV[lang]
-    )
-    home = "/" if lang == "pt" else "/en/"
-    rights = "Todos os direitos reservados." if lang == "pt" else "All rights reserved."
-    doc_title = "Clipey" if title == "Clipey" else f"{title} · Clipey"
-    return f"""<!doctype html>
-<html lang="{'pt-BR' if lang == 'pt' else 'en'}">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0c0d0b">
-<title>{html.escape(doc_title)}</title>
-<meta name="description" content="{'Clipey: grave, edite e publique vídeos de tela.' if lang == 'pt' else 'Clipey: record, edit and publish screen videos.'}">
-<link rel="icon" href="/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&display=swap" rel="stylesheet">
-<style>{CSS}</style>
-</head>
-<body>
-<header><div class="bar"><a class="brand" href="{home}"><img src="/clipey-256.png" alt="" width="30" height="30">Clipey</a><nav>{nav}</nav></div></header>
-<main>
-{body}
-</main>
-<footer><div class="bar"><span>© 2026 Produtora MaxVision. {rights}</span><a href="mailto:{CONTACT}">{CONTACT}</a></div></footer>
-</body>
-</html>
-"""
-
 
 def legal(lang: str, title: str, sections: list[tuple[str, str]]) -> str:
     label = "Última atualização" if lang == "pt" else "Last updated"
@@ -106,19 +26,6 @@ def legal(lang: str, title: str, sections: list[tuple[str, str]]) -> str:
 
 
 # --------------------------------------------------------------------------- pt
-
-HOME_PT = f"""<section class="hero">
-<img src="/clipey-256.png" alt="Logotipo do Clipey" width="96" height="96">
-<h1>Grave, edite e publique vídeos de tela.</h1>
-<p class="lead">Clipey é um aplicativo gratuito para Windows que grava sua tela, edita com zoom automático, legendas e cortes, e publica direto no YouTube, Instagram, Facebook e TikTok.</p>
-<a class="btn" href="{RELEASES}">Baixar para Windows</a>
-</section>
-<div class="grid">
-<div class="card"><h3>Seus arquivos ficam com você</h3><p>Gravações, projetos e configurações ficam no seu computador.</p></div>
-<div class="card"><h3>Publicação sob seu controle</h3><p>Nada é publicado sem você escolher o vídeo, a conta e clicar em publicar.</p></div>
-<div class="card"><h3>Sem telemetria</h3><p>O Clipey não coleta dados de uso e não vende informações.</p></div>
-</div>
-<p style="margin-top:40px"><a href="{REPO}">Documentação e notas de versão</a></p>"""
 
 PRIVACY_PT = [
     ("Quem somos", f"""<p>O Clipey é um aplicativo de desktop para gravar, editar e publicar vídeos, mantido pela Produtora MaxVision. Esta política explica quais dados o Clipey usa, para quê, e como você controla esses dados. Contato: <a href="mailto:{CONTACT}">{CONTACT}</a>.</p>"""),
@@ -170,19 +77,6 @@ DELETION_PT = [
 
 # --------------------------------------------------------------------------- en
 
-HOME_EN = f"""<section class="hero">
-<img src="/clipey-256.png" alt="Clipey logo" width="96" height="96">
-<h1>Record, edit and publish screen videos.</h1>
-<p class="lead">Clipey is a free Windows app that records your screen, edits with automatic zoom, captions and cuts, and publishes straight to YouTube, Instagram, Facebook and TikTok.</p>
-<a class="btn" href="{RELEASES}">Download for Windows</a>
-</section>
-<div class="grid">
-<div class="card"><h3>Your files stay with you</h3><p>Recordings, projects and settings stay on your computer.</p></div>
-<div class="card"><h3>You control publishing</h3><p>Nothing is published until you choose the video, the account and click publish.</p></div>
-<div class="card"><h3>No telemetry</h3><p>Clipey does not collect usage data and does not sell information.</p></div>
-</div>
-<p style="margin-top:40px"><a href="{REPO}">Documentation and release notes</a></p>"""
-
 PRIVACY_EN = [
     ("Who we are", f"""<p>Clipey is a desktop app for recording, editing and publishing videos, maintained by Produtora MaxVision (Brazil). This policy explains which data Clipey uses, why, and how you control it. Contact: <a href="mailto:{CONTACT}">{CONTACT}</a>.</p>"""),
     ("What stays on your computer", """<p>Recordings, projects, on-device transcriptions and settings stay on your machine (on Windows, in <code>%APPDATA%\\Clipey</code>). API keys and tokens for connected accounts are encrypted by the operating system and stored only on your computer. Produtora MaxVision has no access to these files.</p>"""),
@@ -232,11 +126,9 @@ DELETION_EN = [
 ]
 
 PAGES = [
-    ("pt", "/", "Clipey", HOME_PT),
-    ("pt", "/privacidade/", "Política de privacidade", legal("pt", "Política de privacidade", PRIVACY_PT)),
-    ("pt", "/termos/", "Termos de uso", legal("pt", "Termos de uso", TERMS_PT)),
-    ("pt", "/exclusao-de-dados/", "Exclusão de dados", legal("pt", "Exclusão de dados", DELETION_PT)),
-    ("en", "/en/", "Clipey", HOME_EN),
+    ("pt-BR", "/privacidade/", "Política de privacidade", legal("pt", "Política de privacidade", PRIVACY_PT)),
+    ("pt-BR", "/termos/", "Termos de uso", legal("pt", "Termos de uso", TERMS_PT)),
+    ("pt-BR", "/exclusao-de-dados/", "Exclusão de dados", legal("pt", "Exclusão de dados", DELETION_PT)),
     ("en", "/en/privacy/", "Privacy policy", legal("en", "Privacy policy", PRIVACY_EN)),
     ("en", "/en/terms/", "Terms of service", legal("en", "Terms of service", TERMS_EN)),
     ("en", "/en/data-deletion/", "Data deletion", legal("en", "Data deletion instructions", DELETION_EN)),
@@ -244,24 +136,7 @@ PAGES = [
 
 
 def main() -> None:
-    if DIST.exists():
-        shutil.rmtree(DIST)
-    for lang, path, title, body in PAGES:
-        out = DIST / path.strip("/") / "index.html"
-        out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(page(lang, path, title, body), encoding="utf-8")
-    not_found = '<h1>Página não encontrada</h1><p class="meta">Page not found.</p><p><a href="/">Voltar ao início</a> · <a href="/en/">Home</a></p>'
-    (DIST / "404.html").write_text(page("pt", "", "Página não encontrada", not_found), encoding="utf-8")
-    # announcements.json is read by the app (in-app news banner); robots.txt by crawlers.
-    for asset in ("clipey-256.png", "favicon.png", "announcements.json", "robots.txt"):
-        shutil.copy2(ROOT / asset, DIST / asset)
-    (DIST / "_headers").write_text(
-        "/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n"
-        "  X-Frame-Options: DENY\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n"
-        "/announcements.json\n  Cache-Control: public, max-age=300\n",
-        encoding="utf-8",
-    )
-    print(f"built {len(PAGES)} pages into {DIST}")
+    print(json.dumps([{"lang": lang, "path": path, "title": title, "body": body} for lang, path, title, body in PAGES], ensure_ascii=False))
 
 
 if __name__ == "__main__":

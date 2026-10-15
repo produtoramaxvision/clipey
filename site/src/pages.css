@@ -1,0 +1,65 @@
+/* Legal pages and the 404 page. */
+
+.page-main {
+	width: min(calc(100% - 48px), 820px);
+	margin: 0 auto;
+	padding: 72px 0 0;
+}
+
+.legal h1,
+.not-found h1 {
+	margin: 18px 0 14px;
+	font: 650 clamp(36px, 6vw, 64px) / 1 var(--font-sans);
+	letter-spacing: -0.055em;
+	text-wrap: balance;
+}
+
+.legal .meta {
+	margin: 0 0 40px;
+	color: var(--muted);
+	font: 500 13px var(--font-mono);
+}
+
+.legal h2 {
+	margin: 44px 0 12px;
+	font: 650 24px / 1.2 var(--font-sans);
+	letter-spacing: -0.03em;
+}
+
+.legal p,
+.legal li {
+	max-width: 70ch;
+}
+
+.legal li {
+	margin: 6px 0;
+}
+
+.legal .note {
+	padding: 16px 20px;
+	border: 1px solid var(--line);
+	border-left: 3px solid var(--accent);
+	border-radius: 0 var(--radius-s) var(--radius-s) 0;
+	background: var(--surface);
+}
+
+.not-found {
+	display: grid;
+	gap: 16px;
+	justify-items: start;
+	padding-bottom: 40px;
+}
+
+.not-found p {
+	max-width: 52ch;
+	margin: 0;
+	color: var(--muted);
+	font-size: 19px;
+}
+
+.not-found-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin-top: 12px;
+}

@@ -1,0 +1,40 @@
+/* Design tokens. Dark is the default; the light theme is selected with data-theme="light" on <html>. */
+:root {
+	color-scheme: dark;
+	--bg: #0c0d0b;
+	--surface: #141612;
+	--surface-2: #20231d;
+	--line: #2e3229;
+	--line-strong: #454a3d;
+	--text: #eceee6;
+	--muted: #9aa091;
+	--accent: #a2d305;
+	--accent-text: #a2d305;
+	--accent-ink: #0c0d0b;
+	--accent-soft: #1d2406;
+	--focus: #a2d305;
+	--font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+	--font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+	--radius-s: 8px;
+	--radius: 14px;
+	--radius-l: 22px;
+	--page: min(1240px, calc(100% - 48px));
+	--prose: 720px;
+	--ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+:root[data-theme="light"] {
+	color-scheme: light;
+	--bg: #eaeef3;
+	--surface: #ffffff;
+	--surface-2: #f3f5f8;
+	--line: #d5dbe3;
+	--line-strong: #aeb8c5;
+	--text: #0f172a;
+	--muted: #56657a;
+	--accent: #8fbc00;
+	--accent-text: #435a00;
+	--accent-ink: #0f172a;
+	--accent-soft: #e4efc2;
+	--focus: #435a00;
+}
