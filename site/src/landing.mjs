@@ -74,13 +74,13 @@ function tileList(items, glyphs) {
 }
 
 /** Anchors that older links use: an empty marker element placed right before the section that owns them. */
-function aliasMarkers(lang, keyAliases) {
+function aliasMarkers(keyAliases) {
 	return keyAliases
 		.map((id) => `<span id="${id}" class="anchor-alias"></span>`)
 		.join("");
 }
 
-function hero(lang, copy, newsUrl) {
+function hero(copy, newsUrl) {
 	return `<section class="hero" aria-labelledby="hero-title">
 			<div class="hero-copy">
 				<p class="tc"><span class="tc-dot" aria-hidden="true"></span>${esc(copy.eyebrow)}</p>
@@ -175,9 +175,9 @@ export function renderLanding(lang, posts, assets) {
 	const privacy = copy.sections.privacy;
 	const legal = LEGAL_PATHS[lang];
 	const body = `<main id="main">
-		${hero(lang, copy, (posts.find((post) => post.featured) ?? posts[0]).content[lang].url)}
+		${hero(copy, (posts.find((post) => post.featured) ?? posts[0]).content[lang].url)}
 		<section class="section" id="${ids(lang, "features")}" aria-labelledby="${ids(lang, "features")}-title">
-			${aliasMarkers(lang, aliasesFor(lang, "features"))}
+			${aliasMarkers(aliasesFor(lang, "features"))}
 			${sectionHead(lang, "features")}
 			${tileList(copy.features, FEATURE_GLYPHS)}
 		</section>
@@ -190,7 +190,7 @@ export function renderLanding(lang, posts, assets) {
 			${tileList(copy.publish, PUBLISH_GLYPHS)}
 		</section>
 		<section class="section section--split" id="${ids(lang, "privacy")}" aria-labelledby="${ids(lang, "privacy")}-title">
-			${aliasMarkers(lang, aliasesFor(lang, "privacy"))}
+			${aliasMarkers(aliasesFor(lang, "privacy"))}
 			${sectionHead(lang, "privacy", `<p class="link-row"><a class="text-link" href="${legal.privacy}">${esc(privacy.link)}${icon("arrow")}</a><a class="text-link" href="${legal.deletion}">${esc(privacy.link2)}${icon("arrow")}</a></p>`)}
 		</section>
 		<section class="section section--split" id="${ids(lang, "requirements")}" aria-labelledby="${ids(lang, "requirements")}-title">
@@ -198,7 +198,7 @@ export function renderLanding(lang, posts, assets) {
 		</section>
 		${blogTeaser(lang, copy, posts)}
 		${faq(lang, copy)}
-		${aliasMarkers(lang, aliasesFor(lang, "download"))}
+		${aliasMarkers(aliasesFor(lang, "download"))}
 		${downloadBand(lang, copy)}
 	</main>`;
 	const head = renderHead({
@@ -217,7 +217,7 @@ export function renderLanding(lang, posts, assets) {
 		header: renderHeader({ lang, switchUrls: alternates, current: "home" }),
 		body,
 		footer: renderFooter({ lang }),
-		script: assets.landingScript,
+		script: assets.script,
 	});
 }
 

@@ -63,80 +63,44 @@ main {
 	list-style: none;
 }
 
-/* The editor capture is a request: until the file exists the frame keeps its 16:10 box. */
-.film {
+/* The editor capture is a request: until the file exists the frame keeps its 16:9 box. */
+.hero-frame {
+	display: grid;
+	gap: 14px;
 	margin: 0;
-	border: 1px solid var(--line-strong);
-	border-radius: var(--radius-l);
-	background: var(--surface);
-	overflow: hidden;
 }
 
-.film-ruler {
-	display: flex;
-	justify-content: space-between;
-	padding: 10px 16px 8px;
-	border-bottom: 1px solid var(--line);
-	background-image: repeating-linear-gradient(90deg, var(--line-strong) 0 1px, transparent 1px 14px);
-	background-size: 100% 5px;
-	background-repeat: no-repeat;
-	background-position: 0 100%;
-}
-
-.film-screen {
+.hero-frame .frame-empty {
 	position: relative;
-	display: grid;
-	grid-template-rows: 1fr auto auto;
-	gap: 10px;
-	aspect-ratio: 16 / 10;
-	padding: 18px;
-	background: var(--bg);
 }
 
-.film-window {
-	display: grid;
-	grid-template-columns: 1fr 0.42fr;
-	gap: 10px;
+.frame-track {
+	position: absolute;
+	left: 8%;
+	height: 10px;
+	border-radius: 3px;
 }
 
-.film-window span {
-	border: 1px solid var(--line);
-	border-radius: var(--radius-s);
-	background: var(--surface-2);
-}
-
-.film-window span:nth-child(3) {
-	display: none;
-}
-
-.film-track {
-	height: 22px;
-	border-radius: 6px;
-	background: var(--surface-2);
-}
-
-.film-track--video {
-	width: 78%;
+.frame-track--video {
+	bottom: 28%;
+	width: 62%;
 	border: 1px solid var(--accent);
 	background: var(--accent-soft);
 }
 
-.film-track--audio {
-	width: 92%;
+.frame-track--audio {
+	bottom: 16%;
+	width: 78%;
+	background: var(--line-strong);
 }
 
-.film-playhead {
+.frame-playhead {
 	position: absolute;
-	top: 14px;
-	bottom: 14px;
-	left: 38%;
+	top: 14%;
+	bottom: 10%;
+	left: 46%;
 	width: 2px;
 	background: var(--accent);
-}
-
-.film-caption {
-	padding: 12px 16px;
-	border-top: 1px solid var(--line);
 }
 
 /* Sections */

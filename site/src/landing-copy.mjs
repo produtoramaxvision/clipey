@@ -82,7 +82,7 @@ export const LANDING = {
 		ai: [
 			[
 				"Edição assistida",
-				"Sugestões de cortes, zooms e trechos sem fala para revisar.",
+				"Peça cortes, zooms e a remoção de pausas ao agente e revise o resultado na timeline.",
 			],
 			[
 				"Clipes curtos",
@@ -225,7 +225,10 @@ export const LANDING = {
 			["Export", "Prepare your video and check the final file before sharing."],
 		],
 		ai: [
-			["Assisted editing", "Review suggested cuts, zooms and quiet sections."],
+			[
+				"Assisted editing",
+				"Ask the agent for cuts, zooms and removal of pauses, then review the result on the timeline.",
+			],
 			[
 				"Short clips",
 				"Auto Clip finds 15 to 90 second moments and shows a score for each so you can choose.",
@@ -369,7 +372,10 @@ export const LANDING = {
 			],
 		],
 		ai: [
-			["Edición asistida", "Revisa cortes, zooms y pausas sugeridos."],
+			[
+				"Edición asistida",
+				"Pide al agente cortes, zooms y la eliminación de pausas, y revisa el resultado en la línea de tiempo.",
+			],
 			[
 				"Clips cortos",
 				"Auto Clip encuentra momentos de 15 a 90 segundos y muestra una puntuación para que elijas.",
