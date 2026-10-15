@@ -1,0 +1,68 @@
+---
+title: "Privacidade no Clipey: o que fica no seu PC"
+description: "Entenda o que gravação e transcrição processam localmente, o que revisar nos diagnósticos e quando um provedor externo de IA participa."
+slug: "privacidade-no-clipey-o-que-fica-no-seu-pc"
+lang: "pt-BR"
+translationKey: "privacidade-no-clipey-o-que-fica-no-seu-pc"
+category: "guias"
+tags: ["Privacidade", "Windows", "Edição com IA"]
+author: "Equipe Clipey"
+date: "{{RELEASE_DATE}}"
+updated: "{{RELEASE_DATE}}"
+featured: false
+order: 17
+cover: "/blog/covers/privacidade-no-clipey-o-que-fica-no-seu-pc.webp"
+coverAlt: "Ajustes de privacidade e fluxo de mídia local no Clipey"
+ogImage: "/blog/og/privacidade-no-clipey-o-que-fica-no-seu-pc.png"
+appliesTo: "1.15"
+---
+
+> **Aplica-se a:** Clipey 1.15 para Windows.
+
+“Local” só é uma informação útil quando você sabe a qual parte do fluxo ela se refere. O Clipey grava e edita no PC, e o reconhecimento de fala é executado no dispositivo. Algumas funções de IA, porém, podem usar um provedor externo; e um pacote de diagnóstico merece revisão antes de ser compartilhado. Este guia separa esses casos para ajudar você a decidir com clareza.
+
+## Gravações e arquivos do projeto
+
+As gravações de tela e as mídias do projeto são processadas pelo aplicativo de desktop no seu computador. O documento do projeto referencia os arquivos de mídia e mantém o estado da edição, como clipes e legendas. Ao mover um projeto, leve também os arquivos de origem: o editor precisa deles para reconstruir o resultado.
+
+Isso também ajuda a separar o arquivo do projeto da mídia original. O documento não é necessariamente um vídeo consolidado: ele descreve o trabalho e aponta para os recursos usados. Mantenha cópias dos dois antes de liberar espaço ou apagar uma gravação que serviu de origem.
+
+Para transcrever, o Clipey usa um modelo de fala local. No primeiro uso, pode ser necessário preparar os arquivos do modelo; depois, esses recursos baixados podem ser reutilizados a partir da pasta local de modelos. Isso é diferente de enviar a gravação a um serviço hospedado. Processamento local também não significa resultado instantâneo: materiais mais longos podem levar tempo, dependendo do computador.
+
+## Saiba quando há um provedor externo
+
+Algumas operações de IA usam o provedor configurado no Clipey. Antes de pedir um resultado, confira o provedor e a descrição da função selecionada. Não presuma que tudo usa o caminho local de transcrição só porque o editor é um aplicativo de desktop. Quando você conecta um cliente externo de IA ou MCP, também se aplicam as práticas desse cliente e do provedor dele.
+
+Se o fluxo pedir credenciais de uma conta externa, trate-as como segredos e não as inclua em capturas de tela nem em arquivos de projeto compartilhados. Para compreender a diferença entre uma operação local e uma chamada feita por um provedor, procure a indicação da função específica em vez de aplicar uma regra geral a todas as ferramentas.
+
+## Revise as exportações de diagnóstico
+
+Diagnósticos ajudam a investigar um problema, mas podem conter informações sobre o computador ou uma sessão. Antes de compartilhar um pacote, use o fluxo de exportação e confira os arquivos incluídos. Não presuma que todo dado identificável ou conteúdo do projeto foi removido automaticamente: faça uma revisão humana e retire o que não for necessário para explicar o problema.
+
+1. Exporte diagnósticos somente quando forem necessários para suporte ou investigação.
+2. Abra o arquivo gerado e confira o conteúdo antes de anexá-lo.
+3. Remova arquivos irrelevantes e oculte manualmente qualquer segredo que encontrar.
+4. Compartilhe apenas pelo canal de suporte que você pretendia usar.
+
+Se um relatório envolver um erro de exportação, descreva as configurações escolhidas e o ponto em que o problema aparece. Assim, pode ser possível reproduzi-lo sem compartilhar o vídeo completo. Se o arquivo de diagnóstico incluir caminhos locais, nomes de projeto ou trechos de texto, considere se esses dados são necessários para a investigação antes de enviar.
+
+Se o relatório envolve uma falha de transcrição ou edição, descreva os passos para reproduzi-la e a versão do aplicativo. Evite anexar a gravação inteira quando um trecho pequeno, sem conteúdo sensível, for suficiente. Se precisar enviar um exemplo de mídia, escolha conscientemente o arquivo e confirme que tem autorização para compartilhá-lo.
+
+## Dicas
+
+- Não inclua tokens de acesso ou credenciais de provedores em capturas de tela, nomes de projeto ou mensagens de suporte.
+- Use a transcrição local quando esse for o caminho selecionado e confira o provedor antes de acionar outros recursos de IA.
+- Guarde as gravações originais separadamente se precisar de uma fonte recuperável; o projeto editado não substitui um backup.
+- Se um cliente MCP usar o próprio provedor de IA, confira as práticas desse provedor à parte.
+
+## Limitações
+
+Transcrição no dispositivo não quer dizer que todos os recursos funcionem sem conexão. Recursos apoiados por provedores dependem do serviço configurado e podem exigir conta ou rede. O conteúdo de um diagnóstico varia conforme o tipo de problema investigado; confira o pacote real antes de compartilhá-lo.
+
+Para conectar agentes, leia [configuração e permissões MCP](/blog/clipey-com-agentes-de-ia-mcp/). Para iniciar uma gravação local, veja [primeiros passos no Clipey](/blog/primeiros-passos-no-clipey/). Consulte as informações de [privacidade](/#privacidade).
+
+Antes de compartilhar diagnósticos, inspecione o pacote real. [Baixe o Clipey](/#download) para trabalhar com gravações e projetos no seu próprio fluxo.
+
+## Histórico desta página
+
+- {{RELEASE_DATE}}: publicado.
