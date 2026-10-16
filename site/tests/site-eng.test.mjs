@@ -68,13 +68,13 @@ describe("1. Legal pages: copied verbatim, text pinned, no third-party origin (S
 	// SHA-256 of visibleText() for each legal page. Any change to the wording of a policy changes its hash: update
 	// it only together with the "Última atualização" / "Last updated" date in the page.
 	const VISIBLE_TEXT_SHA256 = {
-		"privacidade/index.html": "438b6093aa3537ea5d29f9ac7f35109d4b8bfab11228b9b26db01193ceb160ae",
-		"termos/index.html": "fc6649414db8fb5b64e7b192aace11957449c1c9c0d54e86df2f48b70a3213be",
-		"exclusao-de-dados/index.html": "54593515f8c7ee316b8d561bb6f41069cc93c20f3bc5cbfd49e39ec9d0cf865f",
-		"en/privacy/index.html": "9ecce11b655feab2a80f7a59976d62e79fbc6a16c6f8aa47b9ebb0c91a126be6",
-		"en/terms/index.html": "14eb9b784ab5294fd775e28ba058dc5ce603824f9f31c92a4bc8c0498f113055",
-		"en/data-deletion/index.html": "cc0da0a2454bad3d6bc75391b619f881daf1461d355c42d630b31dc830950482",
-		"404.html": "fc5079cdd071aeb18199f2cbeb0198a0663f58d205ccd9bb9119fbf1b567819c",
+		"privacidade/index.html": "c9856270b88048b2300c4776718335289e8cfb301d883fd3acbd821f2201f873",
+		"termos/index.html": "2108c20a929da89c445388cfe3826d416cd1b3ac7dd63dab5af042088ded2e0d",
+		"exclusao-de-dados/index.html": "97ef6d5ff17ba25d41126bc4a95a8842cd70a1742b8a682bc3c144bdad939882",
+		"en/privacy/index.html": "63e114dffff52eaf2f262607380f92cabfa2855f75ec210494a9ca82d489a2ce",
+		"en/terms/index.html": "7a6c6ef80e0d8f6ede78f75e61dd1c33c7be9ec0bba8f6b339f4f8d1ec9bc257",
+		"en/data-deletion/index.html": "5ff9d6ef7c52946ec8d8fd40171fa32d2a3d90e0624dd3236909c4ec1423e139",
+		"404.html": "6f07a90177a8c92701c798de2af2466cfd8cd9a1c485e2e0fe0f10c4ed28925f",
 	};
 
 	for (const fileName of LEGAL_OUTPUT_FILES) {
@@ -167,7 +167,8 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			const text = bodyText(html);
 			expect(text).toContain("Produtora MaxVision");
 			expect(text).toContain("CNPJ 38.386.434/0001-44");
-			expect(text).toContain("Diadema/SP");
+			expect(text).toContain(lang === "en" ? "São Paulo, Brazil" : "São Paulo, Brasil");
+			expect(text).not.toContain("Diadema");
 			expect(text).toMatch(
 				lang === "en"
 					? /Data Protection Officer \(DPO[^)]*\)[,:] Max Müller, (?:at )?maxmuller@clipey\.com\.br/
@@ -175,6 +176,11 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			);
 			expect(html).toContain('<a href="mailto:maxmuller@clipey.com.br">');
 			expect(html).toContain('<a href="mailto:contato@clipey.com.br">contato@clipey.com.br</a></div></footer>');
+			expect(text).toContain(
+				lang === "en"
+					? "Site content: all rights reserved. App licensed under the MIT License."
+					: "Conteúdo do site: todos os direitos reservados. Aplicativo sob a Licença MIT.",
+			);
 			if (kind !== "terms") expect(html).toContain(`<a href="mailto:${PRIVACY_EMAIL[lang]}">`);
 			expect(html).not.toContain("gmail.com");
 			expect(html).not.toMatch(/\[[A-Z][A-Z ]+\]/);
@@ -265,11 +271,22 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			"componente de importação de terceiros",
 			"A importação não é permitida para conteúdo cujos termos a vedem, inclusive o YouTube.",
 			"(LGPD, art. 7º, IX; GDPR, art. 6º, 1, f)",
-			"(LGPD, art. 33, II; Resolução CD/ANPD nº 19/2024)",
+			"citando a LGPD (art. 33, II) e a Resolução CD/ANPD nº 19/2024",
 			"O exercício dos direitos é gratuito.",
 			"Você também pode recorrer a órgãos de defesa do consumidor.",
 			"Titulares sujeitos ao GDPR também têm direito ao apagamento (art. 17)",
 			"mudanças relevantes serão avisadas no aplicativo com 30 dias de antecedência",
+			"Aplicativo complementar para celular e tablet",
+			"Tailscale",
+			"token exclusivo por dispositivo",
+			"não são enviados a servidores do Clipey ou da Produtora MaxVision",
+			"Android (distribuído por nós em formato APK)",
+			"aplicativo web (PWA)",
+			"Funções locais, aplicativo complementar móvel e tarefas de IA",
+			"Cloudflare Workers Logs",
+			"código de autorização de uso único do redirecionamento OAuth",
+			"expiram em poucos minutos",
+			"até 7 dias",
 		],
 		"en/privacy/index.html": [
 			"free desktop app for Windows (macOS and Linux coming soon)",
@@ -288,43 +305,64 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			"third-party import component",
 			"Import is not permitted for content whose terms prohibit it, including YouTube.",
 			"(LGPD Art. 7 IX; GDPR Art. 6(1)(f))",
-			"(LGPD Art. 33 II; ANPD Res. 19/2024)",
+			"citing LGPD Art. 33 II and ANPD Res. 19/2024",
 			"Exercising these rights is free.",
 			"You may also turn to consumer protection bodies.",
 			"Data subjects covered by the GDPR also have the right to erasure (Art. 17)",
 			"material changes will be announced in the app 30 days in advance",
+			"Mobile and tablet companion",
+			"Tailscale",
+			"per-device token",
+			"not sent to Clipey or Produtora MaxVision servers",
+			"Android app (an APK distributed by us)",
+			"web app (PWA)",
+			"Local features, mobile companion and AI tasks",
+			"Cloudflare Workers Logs",
+			"one-time authorization code of the OAuth redirect",
+			"expire within minutes",
+			"up to 7 days",
 		],
 		"termos/index.html": [
 			"aplicativo gratuito para Windows (macOS e Linux em breve)",
 			"O Clipey não vende créditos, assinaturas nem outros itens pagos.",
 			"O uso é permitido a maiores de 18 anos ou a menores representados ou assistidos pelos responsáveis.",
 			"componente de importação de terceiros e não é permitida para conteúdo cujos termos a vedem, inclusive o YouTube.",
-			"licenciado gratuitamente sob a Licença MIT",
+			"O aplicativo e o aplicativo complementar móvel são licenciados gratuitamente sob a Licença MIT",
 			"Para usuários consumidores, nada nos itens 7 e 8 limita a responsabilidade por vícios e defeitos nem a reparação integral prevista no CDC (arts. 6º, VI, 12, 14 e 24).",
 			"Mudanças relevantes serão avisadas no aplicativo com 30 dias de antecedência. Se discordar, você pode parar de usar o Clipey.",
 			"normas obrigatórias de proteção ao consumidor do país onde você reside",
+			"aplicativo complementar em celular ou tablet",
 		],
 		"en/terms/index.html": [
 			"free desktop app for Windows (macOS and Linux coming soon)",
 			"Clipey does not sell credits, subscriptions or any other paid items.",
 			"Use is for persons aged 18+, or minors represented or assisted by a guardian.",
 			"third-party import component and is not permitted for content whose terms prohibit it, including YouTube.",
-			"licensed free of charge under the MIT License",
+			"The app and the mobile companion are licensed free of charge under the MIT License",
 			"For consumer users, nothing in sections 7 and 8 limits liability for defects or full compensation under the CDC (Arts. 6 VI, 12, 14, 24).",
 			"Material changes will be announced in the app 30 days in advance. If you disagree, you may stop using Clipey.",
 			"mandatory consumer protection laws of your country of residence",
+			"mobile or tablet companion app",
 		],
 		"exclusao-de-dados/index.html": [
 			"macOS (quando disponível)",
 			"Linux (quando disponível)",
 			"Responderemos em até 15 dias com uma confirmação de que os dados foram excluídos.",
 			"O aplicativo pede a revogação do acesso à plataforma e apaga o token da conta do seu computador.",
+			"No celular ou tablet (aplicativo complementar)",
+			"desemparelhar o aparelho",
+			"revogue o token do aparelho",
+			"limpe os dados e o cache do aplicativo",
 		],
 		"en/data-deletion/index.html": [
 			"macOS (when available)",
 			"Linux (when available)",
 			"We will reply within 15 days confirming deletion.",
 			"The app asks the platform to revoke access and deletes the account’s token from your computer.",
+			"On your phone or tablet (mobile companion)",
+			"unpair a mobile device",
+			"revoke the token for that device",
+			"clear the app data and cache",
 		],
 	};
 
@@ -337,6 +375,33 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			expect(text).not.toMatch(/significa aceitação|means acceptance|nas notas de versão|in the release notes/);
 		});
 	}
+
+	it("updates the 404 page and blog footers with location, MIT license, and consistent links", () => {
+		const html404 = files.get("404.html");
+		const text404 = bodyText(html404);
+		expect(text404).toContain("Produtora MaxVision");
+		expect(text404).toContain("CNPJ 38.386.434/0001-44");
+		expect(text404).toContain("São Paulo, Brasil");
+		expect(text404).not.toContain("Diadema");
+		expect(text404).toContain("Conteúdo do site: todos os direitos reservados. Aplicativo sob a Licença MIT.");
+		expect(html404).toContain('<a href="mailto:contato@clipey.com.br">contato@clipey.com.br</a></div></footer>');
+
+		for (const lang of LANGUAGES) {
+			const blogHtml = files.get(fileForUrl(blogBase(lang)));
+			const blogText = bodyText(blogHtml);
+			expect(blogText).toContain("Produtora MaxVision");
+			expect(blogText).toContain("CNPJ 38.386.434/0001-44");
+			expect(blogText).toContain(lang === "en" ? "São Paulo, Brazil" : "São Paulo, Brasil");
+			expect(blogText).not.toContain("Diadema");
+			expect(blogText).toContain(
+				lang === "en"
+					? "Site content: all rights reserved. App licensed under the MIT License."
+					: lang === "es"
+						? "Contenido del sitio: todos los derechos reservados. Aplicación bajo la Licencia MIT."
+						: "Conteúdo do site: todos os direitos reservados. Aplicativo sob a Licença MIT.",
+			);
+		}
+	});
 
 	it("keeps the repository policy files consistent with the published pages", () => {
 		const repoFile = (name) => readFileSync(path.join(root, "..", name), "utf8");
