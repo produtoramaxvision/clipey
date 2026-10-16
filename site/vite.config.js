@@ -1,6 +1,6 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { defineConfig } from "vite";
+import { defineConfig, normalizePath } from "vite";
 import { LANGUAGES } from "./src/blog/config.mjs";
 import { getCompletePosts, getPosts } from "./src/blog/content.mjs";
 import { missingCaptures, readCaptureManifest } from "./src/blog/manifest.mjs";
@@ -47,7 +47,8 @@ function builtAssets(bundle) {
 			(chunk) =>
 				chunk.type === "chunk" &&
 				chunk.isEntry &&
-				chunk.facadeModuleId === path.join(root, input),
+				(chunk.name === name ||
+					chunk.facadeModuleId === normalizePath(path.join(root, input))),
 		);
 		if (!entry) throw new Error(`the ${name} entry is missing from the bundle`);
 		assets[name] = {
