@@ -150,6 +150,52 @@ function searchBar(lang) {
 	</div>`;
 }
 
+/**
+ * The breadcrumb trail of a blog page as `{ name, url }` crumbs, root first. Both the visible `<nav>` and the
+ * BreadcrumbList JSON-LD are rendered from this one list, so their labels, order and URLs cannot drift apart.
+ */
+export function breadcrumbTrail(lang, { categoryKey = "all", post } = {}) {
+	const trail = [
+		{ name: SITE_NAME, url: LANDING_PATH[lang] },
+		{ name: UI[lang].nav.blog, url: blogBase(lang) },
+	];
+	const key = post ? post.categoryKey : categoryKey;
+	if (key !== "all")
+		trail.push({ name: CATEGORIES[key][lang].label, url: categoryUrl(lang, key) });
+	if (post)
+		trail.push({ name: post.content[lang].title, url: post.content[lang].url });
+	return trail;
+}
+
+function breadcrumbJsonLd(trail) {
+	const current = trail.at(-1);
+	return {
+		"@type": "BreadcrumbList",
+		"@id": `${SITE_URL}${current.url}#breadcrumb`,
+		itemListElement: trail.map((crumb, index) => ({
+			"@type": "ListItem",
+			position: index + 1,
+			name: crumb.name,
+			item: `${SITE_URL}${crumb.url}`,
+		})),
+	};
+}
+
+/** Every crumb but the last is a link; the last one is the current page. */
+function breadcrumbNav(trail, ariaLabel) {
+	const links = trail
+		.slice(0, -1)
+		.map(
+			(crumb) =>
+				`<a href="${crumb.url}">${esc(crumb.name)}</a><span aria-hidden="true">/</span>`,
+		)
+		.join("\n\t\t\t");
+	return `<nav class="breadcrumb" aria-label="${esc(ariaLabel)}">
+			${links}
+			<span aria-current="page">${esc(trail.at(-1).name)}</span>
+		</nav>`;
+}
+
 function blogJsonLd(lang, posts, canonical, categoryKey = "all") {
 	const ui = UI[lang].blog;
 	const title =
@@ -160,37 +206,6 @@ function blogJsonLd(lang, posts, canonical, categoryKey = "all") {
 		categoryKey === "all"
 			? ui.description
 			: `${CATEGORIES[categoryKey][lang].label}: ${ui.description}`;
-	const breadcrumbItems = [
-		{
-			"@type": "ListItem",
-			position: 1,
-			name: SITE_NAME,
-			item: `${SITE_URL}${LANDING_PATH[lang]}`,
-		},
-	];
-	if (categoryKey === "all") {
-		breadcrumbItems.push({
-			"@type": "ListItem",
-			position: 2,
-			name: ui.title,
-			item: `${SITE_URL}${canonical}`,
-		});
-	} else {
-		breadcrumbItems.push(
-			{
-				"@type": "ListItem",
-				position: 2,
-				name: ui.title,
-				item: `${SITE_URL}${blogBase(lang)}`,
-			},
-			{
-				"@type": "ListItem",
-				position: 3,
-				name: CATEGORIES[categoryKey][lang].label,
-				item: `${SITE_URL}${canonical}`,
-			},
-		);
-	}
 	return {
 		"@context": "https://schema.org",
 		"@graph": [
@@ -232,11 +247,7 @@ function blogJsonLd(lang, posts, canonical, categoryKey = "all") {
 					})),
 				},
 			},
-			{
-				"@type": "BreadcrumbList",
-				"@id": `${SITE_URL}${canonical}#breadcrumb`,
-				itemListElement: breadcrumbItems,
-			},
+			breadcrumbJsonLd(breadcrumbTrail(lang, { categoryKey })),
 		],
 	};
 }
@@ -269,16 +280,10 @@ export function renderBlogIndex(lang, posts, assets, categoryKey = "all") {
 	const description =
 		categoryKey === "all" ? copy.description : `${label}: ${copy.description}`;
 	const featuredItem = featured?.content[lang];
-	const breadcrumb = categoryKey === "all"
-		? `<nav class="breadcrumb" aria-label="${esc(copy.breadcrumbAria)}">
-			<a href="${LANDING_PATH[lang]}">${SITE_NAME}</a><span aria-hidden="true">/</span>
-			<span aria-current="page">Blog</span>
-		</nav>`
-		: `<nav class="breadcrumb" aria-label="${esc(copy.breadcrumbAria)}">
-			<a href="${LANDING_PATH[lang]}">${SITE_NAME}</a><span aria-hidden="true">/</span>
-			<a href="${blogBase(lang)}">Blog</a><span aria-hidden="true">/</span>
-			<span aria-current="page">${esc(label)}</span>
-		</nav>`;
+	const breadcrumb = breadcrumbNav(
+		breadcrumbTrail(lang, { categoryKey }),
+		copy.breadcrumbAria,
+	);
 	const body = `<main class="blog blog-index" id="main">
 		${breadcrumb}
 		<section class="blog-hero" aria-labelledby="blog-title">
@@ -396,7 +401,6 @@ function related(post, lang, posts) {
 
 function articleJsonLd(post, lang) {
 	const item = post.content[lang];
-	const ui = UI[lang].blog;
 	const url = `${SITE_URL}${item.url}`;
 	return {
 		"@context": "https://schema.org",
@@ -448,30 +452,7 @@ function articleJsonLd(post, lang) {
 					cssSelector: [".article-title", ".prose > p:first-of-type"],
 				},
 			},
-			{
-				"@type": "BreadcrumbList",
-				"@id": `${url}#breadcrumb`,
-				itemListElement: [
-					{
-						"@type": "ListItem",
-						position: 1,
-						name: SITE_NAME,
-						item: `${SITE_URL}${LANDING_PATH[lang]}`,
-					},
-					{
-						"@type": "ListItem",
-						position: 2,
-						name: ui.title,
-						item: `${SITE_URL}${blogBase(lang)}`,
-					},
-					{
-						"@type": "ListItem",
-						position: 3,
-						name: item.title,
-						item: url,
-					},
-				],
-			},
+			breadcrumbJsonLd(breadcrumbTrail(lang, { post })),
 		],
 	};
 }
@@ -495,11 +476,7 @@ export function renderBlogArticle(post, lang, posts, assets) {
 	const category = CATEGORIES[post.categoryKey][lang].label;
 	const alternates = postAlternates(post);
 	const body = `<main class="blog article-page" id="main">
-		<nav class="breadcrumb" aria-label="${esc(ui.blog.breadcrumbAria)}">
-			<a href="${blogBase(lang)}">Blog</a><span aria-hidden="true">/</span>
-			<a href="${categoryUrl(lang, post.categoryKey)}">${esc(category)}</a><span aria-hidden="true">/</span>
-			<span aria-current="page">${padOrder(post.order)}</span>
-		</nav>
+		${breadcrumbNav(breadcrumbTrail(lang, { post }), ui.blog.breadcrumbAria)}
 		<header class="article-head">
 			<p class="tc"><span class="tc-dot" aria-hidden="true"></span>${esc(category)} / Clipey ${esc(item.appliesTo)}</p>
 			<h1 class="article-title">${esc(item.title)}</h1>

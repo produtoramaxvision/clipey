@@ -27,6 +27,7 @@ import {
 	parsePostFile,
 	renderMarkdown,
 } from "../src/blog/content.mjs";
+import { UI } from "../src/blog/i18n.mjs";
 import { THEME_SCRIPT_HASH } from "../src/blog/shell.mjs";
 import { usedCategories } from "../src/blog/template.mjs";
 import { STORY } from "../src/landing-copy.mjs";
@@ -241,7 +242,10 @@ describe("4. JSON-LD structure and validation", () => {
 					(item) => item["@type"] === "BreadcrumbList",
 				);
 				expect(breadcrumbs).toBeDefined();
-				expect(breadcrumbs.itemListElement).toHaveLength(3);
+				expect(breadcrumbs.itemListElement.at(-1)).toMatchObject({
+					name: post.content[lang].title,
+					item: `${SITE_URL}${post.content[lang].url}`,
+				});
 			}
 		}
 	});
@@ -523,44 +527,87 @@ describe("12. SEO: hero definition and BYOK FAQ (S8)", () => {
 	});
 });
 
-describe("13. SEO: blog index/category BreadcrumbList (S9)", () => {
-	it("blog index has visible breadcrumbs and BreadcrumbList JSON-LD", () => {
-		for (const lang of LANGUAGES) {
-			const html = files.get(fileForUrl(blogBase(lang)));
-			expect(html).toContain('class="breadcrumb"');
-			expect(html).toContain(`<a href="${LANDING_PATH[lang]}">${SITE_NAME}</a>`);
+describe("13. SEO: breadcrumb schema equals the visible breadcrumb (S9)", () => {
+	const decode = (text) =>
+		text
+			.replace(/&quot;/g, '"')
+			.replace(/&#39;/g, "'")
+			.replace(/&lt;/g, "<")
+			.replace(/&gt;/g, ">")
+			.replace(/&amp;/g, "&");
 
-			const ld = JSON.parse(
-				html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1],
+	/** Reads the rendered <nav class="breadcrumb"> independently of the template: one crumb per link or current span. */
+	function visibleCrumbs(html, pageUrl) {
+		const nav = html.match(/<nav class="breadcrumb"[^>]*>([\s\S]*?)<\/nav>/);
+		expect(nav, pageUrl).not.toBeNull();
+		return [
+			...nav[1].matchAll(
+				/<a href="([^"]+)">([^<]*)<\/a>|<span aria-current="page">([^<]*)<\/span>/g,
+			),
+		].map((match, index) => ({
+			position: index + 1,
+			name: decode(match[2] ?? match[3]),
+			item: `${SITE_URL}${match[1] ?? pageUrl}`,
+		}));
+	}
+
+	function schemaCrumbs(html) {
+		const ld = JSON.parse(
+			html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1],
+		);
+		const list = ld["@graph"].filter((node) => node["@type"] === "BreadcrumbList");
+		expect(list).toHaveLength(1);
+		return list[0].itemListElement.map(({ position, name, item }) => ({
+			position,
+			name,
+			item,
+		}));
+	}
+
+	const pages = () => {
+		const out = [];
+		for (const lang of LANGUAGES) {
+			out.push({ lang, kind: "index", url: blogBase(lang), depth: 2 });
+			for (const key of usedCategories(posts))
+				out.push({ lang, kind: "category", url: categoryUrl(lang, key), depth: 3, key });
+			for (const post of posts)
+				out.push({ lang, kind: "article", url: post.content[lang].url, depth: 4, post });
+		}
+		return out;
+	};
+
+	it("every item matches the visible nav in position, name and URL on index, category and article pages", () => {
+		let checked = 0;
+		for (const page of pages()) {
+			const html = files.get(fileForUrl(page.url));
+			const visible = visibleCrumbs(html, page.url);
+			expect(schemaCrumbs(html), `${page.lang} ${page.url}`).toEqual(visible);
+			expect(visible, page.url).toHaveLength(page.depth);
+			checked += 1;
+		}
+		expect(checked).toBe(LANGUAGES.length * (1 + usedCategories(posts).length + posts.length));
+	});
+
+	it("uses the localized labels a reader sees, root to current page", () => {
+		for (const page of pages()) {
+			const names = visibleCrumbs(files.get(fileForUrl(page.url)), page.url).map(
+				(crumb) => crumb.name,
 			);
-			const breadcrumbs = ld["@graph"].find(
-				(item) => item["@type"] === "BreadcrumbList",
-			);
-			expect(breadcrumbs).toBeDefined();
-			expect(breadcrumbs.itemListElement).toHaveLength(2);
-			expect(breadcrumbs.itemListElement[0].name).toBe(SITE_NAME);
+			expect(names[0]).toBe(SITE_NAME);
+			expect(names[1]).toBe(UI[page.lang].nav.blog);
+			if (page.kind === "category")
+				expect(names[2]).toBe(CATEGORIES[page.key][page.lang].label);
+			if (page.kind === "article") {
+				expect(names[2]).toBe(CATEGORIES[page.post.categoryKey][page.lang].label);
+				expect(names[3]).toBe(page.post.content[page.lang].title);
+			}
 		}
 	});
 
-	it("category pages have 3-level breadcrumbs matching the visible nav", () => {
-		for (const lang of LANGUAGES) {
-			for (const key of usedCategories(posts)) {
-				const html = files.get(fileForUrl(categoryUrl(lang, key)));
-				expect(html).toContain('class="breadcrumb"');
-				expect(html).toContain(`<a href="${blogBase(lang)}">Blog</a>`);
-
-				const ld = JSON.parse(
-					html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1],
-				);
-				const breadcrumbs = ld["@graph"].find(
-					(item) => item["@type"] === "BreadcrumbList",
-				);
-				expect(breadcrumbs).toBeDefined();
-				expect(breadcrumbs.itemListElement).toHaveLength(3);
-				expect(breadcrumbs.itemListElement[2].name).toBe(
-					CATEGORIES[key][lang].label,
-				);
-			}
+	it("links the root crumb to the landing of the same language", () => {
+		for (const page of pages()) {
+			const [root] = visibleCrumbs(files.get(fileForUrl(page.url)), page.url);
+			expect(root.item).toBe(`${SITE_URL}${LANDING_PATH[page.lang]}`);
 		}
 	});
 });
