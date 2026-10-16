@@ -624,12 +624,88 @@ describe("14. SEO: footer year from build date (S10)", () => {
 	});
 });
 
-describe("15. SEO: Content-Type headers (S12)", () => {
-	it("includes explicit Content-Type rules for json, xml, and txt", () => {
-		const headers = files.get("_headers");
-		expect(headers).toContain("/*.json\n  Content-Type: application/json; charset=utf-8");
-		expect(headers).toContain("/*.xml\n  Content-Type: application/xml; charset=utf-8");
-		expect(headers).toContain("/*.txt\n  Content-Type: text/plain; charset=utf-8");
+describe("15. SEO: Content-Type comes from the platform, not _headers (S12)", () => {
+	// Workers Static Assets stores each file's Content-Type at upload from its extension (wrangler 4.145
+	// getContentType: mime@4 lookup, "; charset=utf-8" appended to text/*). Measured on this build output:
+	// .json -> application/json, .xml -> application/xml, .txt -> text/plain; charset=utf-8. That is correct under
+	// nosniff, so _headers must not override it: a wildcard rule would also rewrite any future special-case file.
+	const PLATFORM_TYPE = {
+		json: "application/json",
+		xml: "application/xml",
+		txt: "text/plain; charset=utf-8",
+		html: "text/html; charset=utf-8",
+	};
+
+	/** Applies the generated _headers to a path the way Workers does: every matching rule contributes its headers. */
+	function headersFor(pathname) {
+		const rules = [];
+		let current;
+		for (const line of files.get("_headers").split("\n")) {
+			if (!line.trim() || line.startsWith("#")) continue;
+			if (!/^\s/.test(line)) {
+				current = { pattern: line.trim(), headers: {} };
+				rules.push(current);
+			} else if (current) {
+				const [name, ...value] = line.trim().split(":");
+				current.headers[name.trim().toLowerCase()] = value.join(":").trim();
+			}
+		}
+		const matches = (pattern) =>
+			new RegExp(
+				`^${pattern.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, ".*")}$`,
+			).test(pathname);
+		return Object.assign({}, ...rules.filter((r) => matches(r.pattern)).map((r) => r.headers));
+	}
+
+	// Served = rendered files plus the copied public/ directory (robots.txt, announcements.json, manifests).
+	const publicFiles = (dir, prefix = "") =>
+		readdirSync(dir, { withFileTypes: true }).flatMap((entry) =>
+			entry.isDirectory()
+				? publicFiles(path.join(dir, entry.name), `${prefix}${entry.name}/`)
+				: [`${prefix}${entry.name}`],
+		);
+	const servedFiles = () =>
+		[...new Set([...files.keys(), ...publicFiles(path.join(root, "public"))])]
+			.filter((name) => /\.(json|xml|txt)$/.test(name) && !name.startsWith("_"))
+			.map((name) => `/${name}`)
+			.sort();
+
+	it("leaves every served json, xml and txt file to the platform's correct type under nosniff", () => {
+		const served = servedFiles();
+		expect(served).toEqual(
+			expect.arrayContaining([
+				"/sitemap.xml",
+				"/robots.txt",
+				"/llms.txt",
+				"/announcements.json",
+				"/blog/rss.xml",
+				"/blog/search-index.json",
+			]),
+		);
+		for (const pathname of served) {
+			const headers = headersFor(pathname);
+			expect(headers["x-content-type-options"], pathname).toBe("nosniff");
+			expect(headers["content-type"], pathname).toBeUndefined();
+			const ext = pathname.split(".").pop();
+			expect(PLATFORM_TYPE[ext], pathname).toBeDefined();
+		}
+	});
+
+	it("serves XML whose encoding is declared in-document, so application/xml needs no charset", () => {
+		const xml = servedFiles().filter((p) => p.endsWith(".xml"));
+		expect(xml.length).toBeGreaterThan(0);
+		for (const pathname of xml) {
+			const body =
+				files.get(pathname.slice(1)) ?? readFileSync(path.join(root, "public", pathname), "utf8");
+			expect(body, pathname).toMatch(
+				/^<\?xml version="1\.0" encoding="(?:UTF|utf)-8"\?>/,
+			);
+		}
+	});
+
+	it("keeps the announcements cache rule intact and sets no Content-Type anywhere", () => {
+		expect(headersFor("/announcements.json")["cache-control"]).toBe("no-store");
+		expect(files.get("_headers")).not.toMatch(/^\s+Content-Type:/im);
 	});
 });
 

@@ -44,15 +44,5 @@ export function renderHeaders(inlineScriptHashes = [THEME_SCRIPT_HASH]) {
 # The release feed the app reads: no-store
 /announcements.json
   Cache-Control: no-store
-
-# Explicit MIME types for non-HTML assets (nosniff requires correct Content-Type).
-/*.json
-  Content-Type: application/json; charset=utf-8
-
-/*.xml
-  Content-Type: application/xml; charset=utf-8
-
-/*.txt
-  Content-Type: text/plain; charset=utf-8
 `;
 }
