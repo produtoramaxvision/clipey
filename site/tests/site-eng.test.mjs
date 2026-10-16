@@ -68,13 +68,13 @@ describe("1. Legal pages: copied verbatim, text pinned, no third-party origin (S
 	// SHA-256 of visibleText() for each legal page. Any change to the wording of a policy changes its hash: update
 	// it only together with the "Última atualização" / "Last updated" date in the page.
 	const VISIBLE_TEXT_SHA256 = {
-		"privacidade/index.html": "e17bd0a678e77a9b19ab11897154e8803398051457005b88521dc9469deee029",
-		"termos/index.html": "12504e240d21212df153c75525852572438a99c50bd345f247715e10657ff171",
-		"exclusao-de-dados/index.html": "a958fe57439956e38c845b6f839148513be1be4384dcd6a42179bd0eb798842c",
-		"en/privacy/index.html": "7fd43bcfdf2c0151c706751f4f6d25d28c8e32876805de1bd32c32d91dcb4494",
-		"en/terms/index.html": "40b2987ca17f8914eb07be8e28ba25ec99ab62bf56ac83623ee63ef832ffa80a",
-		"en/data-deletion/index.html": "d6ac21f590953dee76f2a1955785044c1e9838a3fbdc0605f505e16502a1e91d",
-		"404.html": "7cf1254221441da72905bac053e0edf0f82486109b375cbe20cb3e9df3a96145",
+		"privacidade/index.html": "c3cba091aa5ec1826de7d09844297340c370e0888a8b7edab88eadac3d8c7d9b",
+		"termos/index.html": "a1c774f81dfb64f3febb0b0bbaf165df021e34071b2f34ff3f1bda656c98d81e",
+		"exclusao-de-dados/index.html": "c0d9aaf08bf496b58b9c96e9dd4a6d0fe4abef40abf31cfb70ba914526650302",
+		"en/privacy/index.html": "94ec9a918017c6af5d08208937d8b09f9d55ae457fbfdc1d57d4f16722573fa6",
+		"en/terms/index.html": "b9a2ff4cfa69bbf752c09a8f878c28bc569390155106119c80b201925df28b85",
+		"en/data-deletion/index.html": "238cb267500caacf20d22a2995c623bbbf69b9f9a46405d43bb6e0c71f08aac3",
+		"404.html": "fc5079cdd071aeb18199f2cbeb0198a0663f58d205ccd9bb9119fbf1b567819c",
 	};
 
 	for (const fileName of LEGAL_OUTPUT_FILES) {
@@ -132,6 +132,124 @@ describe("1. Legal pages: copied verbatim, text pinned, no third-party origin (S
 			return description;
 		});
 		expect(new Set(descriptions).size).toBe(legalPages.length);
+	});
+});
+
+describe("1b. Legal pages: controller, DPO, contacts and platform-required clauses", () => {
+	const POLICY_PAGES = {
+		"privacidade/index.html": { lang: "pt-BR", kind: "privacy" },
+		"termos/index.html": { lang: "pt-BR", kind: "terms" },
+		"exclusao-de-dados/index.html": { lang: "pt-BR", kind: "deletion" },
+		"en/privacy/index.html": { lang: "en", kind: "privacy" },
+		"en/terms/index.html": { lang: "en", kind: "terms" },
+		"en/data-deletion/index.html": { lang: "en", kind: "deletion" },
+	};
+	const PRIVACY_EMAIL = { "pt-BR": "privacidade@clipey.com.br", en: "privacy@clipey.com.br" };
+	const REVOKE_URL = "https://security.google.com/settings/security/permissions";
+
+	/** The page body as a reader sees it: tags removed, entities and runs of whitespace collapsed. */
+	const bodyText = (html) =>
+		html
+			.match(/<body>([\s\S]*)<\/body>/)[1]
+			.replace(/<[^>]*>/g, "")
+			.replace(/&amp;/g, "&")
+			.replace(/\s+/g, " ");
+
+	it("covers exactly the six policy pages", () => {
+		expect(Object.keys(POLICY_PAGES).sort()).toEqual(
+			LEGAL_OUTPUT_FILES.filter((name) => name.endsWith("/index.html")).sort(),
+		);
+	});
+
+	for (const [fileName, { lang, kind }] of Object.entries(POLICY_PAGES)) {
+		it(`identifies the controller, the DPO and the contact address: ${fileName}`, () => {
+			const html = files.get(fileName);
+			const text = bodyText(html);
+			expect(text).toContain("Produtora MaxVision");
+			expect(text).toContain("CNPJ 38.386.434/0001-44");
+			expect(text).toContain("Diadema/SP");
+			expect(text).toMatch(
+				lang === "en"
+					? /Data Protection Officer \(DPO[^)]*\)[,:] Max Müller, (?:at )?maxmuller@clipey\.com\.br/
+					: /[Ee]ncarregado pelo tratamento de dados pessoais \(DPO\)[,:] Max Müller, (?:em )?maxmuller@clipey\.com\.br/,
+			);
+			expect(html).toContain('<a href="mailto:maxmuller@clipey.com.br">');
+			expect(html).toContain('<a href="mailto:contato@clipey.com.br">contato@clipey.com.br</a></div></footer>');
+			if (kind !== "terms") expect(html).toContain(`<a href="mailto:${PRIVACY_EMAIL[lang]}">`);
+			expect(html).not.toContain("gmail.com");
+			expect(html).not.toMatch(/\[[A-Z][A-Z ]+\]/);
+		});
+
+		it(`states its effective and last-updated date: ${fileName}`, () => {
+			const text = bodyText(files.get(fileName));
+			expect(text).toContain(
+				lang === "en"
+					? "Effective October 16, 2026 · Last updated: October 16, 2026"
+					: "Em vigor desde 16 de outubro de 2026 · Última atualização: 16 de outubro de 2026",
+			);
+		});
+	}
+
+	for (const fileName of ["privacidade/index.html", "en/privacy/index.html"]) {
+		it(`carries the Google Limited Use statement, the required links and the revocation URL: ${fileName}`, () => {
+			const html = files.get(fileName);
+			const text = bodyText(html);
+			expect(text).toContain(
+				fileName.startsWith("en/")
+					? "Clipey’s use and transfer to any other app of information received from Google APIs will adhere to the Google API Services User Data Policy, including the Limited Use requirements."
+					: "O uso e a transferência, pelo Clipey, para qualquer outro aplicativo, de informações recebidas das APIs do Google seguem a Política de Dados do Usuário dos Serviços de API do Google, incluindo os requisitos de Uso Limitado.",
+			);
+			for (const url of [
+				"https://developers.google.com/terms/api-services-user-data-policy",
+				"https://www.youtube.com/t/terms",
+				"https://policies.google.com/privacy",
+				REVOKE_URL,
+				"https://www.tiktok.com/legal/tik-tok-developer-terms-of-service?lang=en",
+			])
+				expect(html, url).toContain(`<a href="${url}">`);
+			expect(text).toContain(REVOKE_URL);
+			expect(text).toContain("api.clipey.com.br");
+			expect(text).toContain("localStorage");
+			expect(text).toMatch(/ANPD/);
+			expect(text).not.toMatch(/até 30 dias|up to 30 days|não armazena tokens|does not store tokens/);
+		});
+	}
+
+	for (const fileName of ["termos/index.html", "en/terms/index.html"]) {
+		it(`binds YouTube API users to the YouTube Terms and names the venue: ${fileName}`, () => {
+			const html = files.get(fileName);
+			const text = bodyText(html);
+			const en = fileName.startsWith("en/");
+			expect(text).toContain(
+				en
+					? "By using the Clipey features that access YouTube API Services, you agree to be bound by the YouTube Terms of Service."
+					: "Ao usar as funções do Clipey que acessam os Serviços de API do YouTube, você concorda em estar vinculado aos Termos de Serviço do YouTube.",
+			);
+			expect(html).toContain('<a href="https://www.youtube.com/t/terms">');
+			expect(text).toContain(en ? "Comarca) of São Paulo" : "foro da Comarca de São Paulo/SP");
+			expect(text).toContain(en ? "Article 101, item I, of the Brazilian Consumer Protection Code" : "art. 101, inciso I, do Código de Defesa do Consumidor");
+			expect(html).toContain('<a href="mailto:legal@clipey.com.br">');
+			expect(html).toContain('<a href="mailto:security@clipey.com.br">');
+			expect(html).toContain('<a href="https://github.com/produtoramaxvision/clipey/security/advisories/new">');
+		});
+	}
+
+	for (const fileName of ["exclusao-de-dados/index.html", "en/data-deletion/index.html"]) {
+		it(`gives Meta deletion instructions, the Google revocation URL and every OS: ${fileName}`, () => {
+			const html = files.get(fileName);
+			const text = bodyText(html);
+			expect(text).toMatch(/Instruções de exclusão de dados para usuários da Meta|Data deletion instructions for Meta users/);
+			expect(html).toContain(`<a href="${REVOKE_URL}">`);
+			expect(html).toContain('<a href="https://www.facebook.com/settings?tab=business_tools">');
+			for (const os of ["Windows", "macOS", "Linux"]) expect(text).toContain(os);
+			expect(text).not.toMatch(/somente no seu computador|only on your computer/);
+		});
+	}
+
+	it("uses the clipey.com.br contact everywhere on the site", () => {
+		for (const [name, content] of files)
+			if (typeof content === "string") expect(content, name).not.toContain("clipeyoficial");
+		expect(files.get("index.html")).toContain('href="mailto:contato@clipey.com.br"');
 	});
 });
 

@@ -7,4 +7,4 @@ A versão oficial e vigente da política está em **https://clipey.com.br/privac
 
 O texto é gerado a partir de [`site/build.py`](site/build.py).
 
-Contato: clipeyoficial@gmail.com
+Contato: privacidade@clipey.com.br (English: privacy@clipey.com.br). Encarregado (DPO): Max Müller, maxmuller@clipey.com.br.

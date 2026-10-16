@@ -7,7 +7,7 @@ export const THEME_KEY = "clipey-theme";
 export const RELEASES_URL =
 	"https://github.com/produtoramaxvision/clipey/releases/latest";
 export const REPO_URL = "https://github.com/produtoramaxvision/clipey";
-export const CONTACT_EMAIL = "clipeyoficial@gmail.com";
+export const CONTACT_EMAIL = "contato@clipey.com.br";
 export const OWNER = "Produtora MaxVision";
 
 export const LANDING_PATH = { "pt-BR": "/", en: "/en/", es: "/es/" };
