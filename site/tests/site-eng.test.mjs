@@ -418,10 +418,12 @@ describe("11. SEO: blog posts have real dates (S6)", () => {
 });
 
 describe("11b. SEO: single canonical host (S7)", () => {
-	it("binds only the apex domain; www is redirected at the zone", () => {
-		const wrangler = readFileSync(path.join(root, "wrangler.jsonc"), "utf8");
-		expect(wrangler).toContain('"pattern": "clipey.com.br"');
-		expect(wrangler).not.toContain("www.clipey.com.br");
+	it("every canonical URL uses the apex host, never www", () => {
+		for (const [name, html] of htmlFiles) {
+			const canonical = html.match(/<link rel="canonical" href="([^"]+)"/);
+			if (canonical) expect(canonical[1], name).toMatch(/^https:\/\/clipey\.com\.br\//);
+			expect(html, name).not.toContain("www.clipey.com.br");
+		}
 	});
 });
 
