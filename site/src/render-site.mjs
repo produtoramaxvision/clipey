@@ -41,6 +41,16 @@ export const LEGAL_OUTPUT_FILES = [
 	"announcements.json",
 ];
 
+/** The legal pages' shared stylesheet. It is generated so its @font-face names the self-hosted Geist file. */
+export const LEGAL_STYLESHEET = "legal.css";
+
+/** `fontUrl` is the built (or, in development, source) URL of the Geist sans variable font. */
+export function renderLegalStylesheet(fontUrl) {
+	const rules = fs.readFileSync(path.join(siteRoot, "src/legal.css"), "utf8");
+	return `@font-face{font-family:Geist;src:url("${fontUrl}") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+${rules}`;
+}
+
 /** The file a public URL is served from: `/blog/` is `blog/index.html`. */
 export function fileForUrl(url) {
 	return url.endsWith("/") ? `${url.slice(1)}index.html` : url.slice(1);
@@ -198,6 +208,7 @@ export function renderSite(posts, legalOrAssets, maybeAssets) {
 		const source = fs.readFileSync(path.join(legalSourceDir, fileName), "utf8");
 		files.set(fileName, source);
 	}
+	files.set(LEGAL_STYLESHEET, renderLegalStylesheet(assets.landing.font));
 
 	files.set("sitemap.xml", renderSitemap(posts));
 	files.set("llms.txt", renderLlms(posts));

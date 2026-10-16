@@ -56,17 +56,6 @@ async function runSmoke() {
 			reducedMotion: "reduce",
 		});
 
-		// Fulfill Google Fonts locally to keep zero network egress during preview
-		await context.route(
-			/^https:\/\/(fonts\.googleapis\.com|fonts\.gstatic\.com)\/.*/,
-			(route) =>
-				route.fulfill({
-					status: 200,
-					contentType: "text/css",
-					body: "/* mock */",
-				}),
-		);
-
 		for (const item of PAGES) {
 			const page = await context.newPage();
 			const consoleErrors = [];
@@ -83,13 +72,7 @@ async function runSmoke() {
 
 			page.on("request", (req) => {
 				const url = new URL(req.url());
-				if (
-					url.origin !== PREVIEW_ORIGIN &&
-					!url.hostname.includes("fonts.googleapis.com") &&
-					!url.hostname.includes("fonts.gstatic.com")
-				) {
-					externalRequests.push(req.url());
-				}
+				if (url.origin !== PREVIEW_ORIGIN) externalRequests.push(req.url());
 			});
 
 			const targetUrl = `${PREVIEW_ORIGIN}${item.path}`;

@@ -4,7 +4,11 @@ import { defineConfig } from "vite";
 import { LANGUAGES } from "./src/blog/config.mjs";
 import { getCompletePosts, getPosts } from "./src/blog/content.mjs";
 import { missingCaptures, readCaptureManifest } from "./src/blog/manifest.mjs";
-import { fileForUrl, renderSite } from "./src/render-site.mjs";
+import {
+	fileForUrl,
+	LEGAL_STYLESHEET,
+	renderSite,
+} from "./src/render-site.mjs";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const publicDir = path.join(root, "public");
@@ -100,6 +104,10 @@ function sitePlugin() {
 						: `${pathname}/`;
 				const files = renderSite(getCompletePosts(), devAssets());
 				const source = files.get(fileForUrl(url));
+				if (source !== undefined && fileForUrl(url) === LEGAL_STYLESHEET) {
+					res.setHeader("content-type", "text/css; charset=utf-8");
+					return res.end(source);
+				}
 				if (source === undefined || !fileForUrl(url).endsWith(".html"))
 					return next();
 				res.setHeader("content-type", "text/html; charset=utf-8");

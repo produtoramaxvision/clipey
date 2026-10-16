@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import {
 	mkdtempSync,
 	readdirSync,
@@ -57,14 +58,81 @@ const posts = getCompletePosts();
 const files = renderSite(posts, assets);
 const htmlFiles = [...files].filter(([name]) => name.endsWith(".html"));
 
-describe("1. Legal pages byte-identical output", () => {
+describe("1. Legal pages: copied verbatim, text pinned, no third-party origin (S1, S2, S13)", () => {
+	const legalPages = LEGAL_OUTPUT_FILES.filter((name) => name.endsWith(".html"));
+
+	/** What a reader sees: the title, then the body with every tag removed (entities and whitespace kept). */
+	const visibleText = (html) =>
+		`${html.match(/<title>([\s\S]*?)<\/title>/)[1]}\n${html.match(/<body>([\s\S]*)<\/body>/)[1].replace(/<[^>]*>/g, "")}`;
+
+	// SHA-256 of visibleText() for each legal page. Any change to the wording of a policy changes its hash: update
+	// it only together with the "Última atualização" / "Last updated" date in the page.
+	const VISIBLE_TEXT_SHA256 = {
+		"privacidade/index.html": "e17bd0a678e77a9b19ab11897154e8803398051457005b88521dc9469deee029",
+		"termos/index.html": "12504e240d21212df153c75525852572438a99c50bd345f247715e10657ff171",
+		"exclusao-de-dados/index.html": "a958fe57439956e38c845b6f839148513be1be4384dcd6a42179bd0eb798842c",
+		"en/privacy/index.html": "7fd43bcfdf2c0151c706751f4f6d25d28c8e32876805de1bd32c32d91dcb4494",
+		"en/terms/index.html": "40b2987ca17f8914eb07be8e28ba25ec99ab62bf56ac83623ee63ef832ffa80a",
+		"en/data-deletion/index.html": "d6ac21f590953dee76f2a1955785044c1e9838a3fbdc0605f505e16502a1e91d",
+		"404.html": "7cf1254221441da72905bac053e0edf0f82486109b375cbe20cb3e9df3a96145",
+	};
+
 	for (const fileName of LEGAL_OUTPUT_FILES) {
-		it(`matches legal source byte-for-byte: ${fileName}`, () => {
+		it(`copies the legal source verbatim: ${fileName}`, () => {
 			const source = readFileSync(path.join(legalSourceDir, fileName));
-			const output = Buffer.from(files.get(fileName));
-			expect(output.equals(source)).toBe(true);
+			expect(Buffer.from(files.get(fileName)).equals(source)).toBe(true);
 		});
 	}
+
+	it("keeps the visible text of every legal page unchanged", () => {
+		expect(Object.keys(VISIBLE_TEXT_SHA256).sort()).toEqual([...legalPages].sort());
+		for (const fileName of legalPages) {
+			const hash = createHash("sha256").update(visibleText(files.get(fileName))).digest("hex");
+			expect(hash, fileName).toBe(VISIBLE_TEXT_SHA256[fileName]);
+		}
+	});
+
+	it("loads nothing from another origin: no remote font, stylesheet, script or image", () => {
+		for (const fileName of legalPages) {
+			const html = files.get(fileName);
+			const resources = [...html.matchAll(/<(?:link|script|img|iframe|source|video|audio|object|embed)\b[^>]*>/g)];
+			expect(resources.length, fileName).toBeGreaterThan(0);
+			for (const [tag] of resources) {
+				for (const [, url] of tag.matchAll(/\b(?:src|srcset|href)="([^"]*)"/g))
+					expect(url, `${fileName}: ${tag}`).toMatch(/^\/(?!\/)/);
+			}
+			expect(html, fileName).not.toMatch(/<style[\s>]|\sstyle=|@import|fonts\.(?:googleapis|gstatic)\.com/);
+		}
+		expect(files.get("legal.css")).not.toMatch(/https?:|\/\/|@import/);
+		// The CSP allows the stylesheet and the font only from the site itself, and names no other origin.
+		const csp = files.get("_headers").match(/Content-Security-Policy: (.+)/)[1];
+		expect(csp).toContain("style-src 'self';");
+		expect(csp).toContain("font-src 'self';");
+		expect(csp).not.toMatch(/https?:|\*|fonts\./);
+	});
+
+	it("styles every legal page from the shared same-origin stylesheet with the self-hosted Geist", () => {
+		for (const fileName of legalPages)
+			expect(files.get(fileName), fileName).toContain('<link rel="stylesheet" href="/legal.css">');
+		const css = files.get("legal.css");
+		expect(css).toContain('src:url("/assets/Geist-Variable.woff2") format("woff2")');
+		expect(css).toContain("font-display:swap");
+		expect(css).toContain('font:16px/1.65 Geist,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif');
+	});
+
+	it("gives every legal page its own description in the page language", () => {
+		const descriptions = legalPages.map((fileName) => {
+			const html = files.get(fileName);
+			const description = html.match(/<meta name="description" content="([^"]+)">/)?.[1];
+			expect(description, fileName).toBeDefined();
+			expect(description.length, fileName).toBeLessThanOrEqual(170);
+			expect(description, fileName).not.toMatch(/grave, edite e publique|record, edit and publish/);
+			const lang = html.match(/<html lang="([^"]+)">/)[1];
+			expect(lang, fileName).toBe(fileName.startsWith("en/") ? "en" : "pt-BR");
+			return description;
+		});
+		expect(new Set(descriptions).size).toBe(legalPages.length);
+	});
 });
 
 describe("2. robots.txt and sitemap.xml", () => {
