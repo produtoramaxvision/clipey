@@ -18,7 +18,7 @@ export const UI = {
 			download: "Baixar",
 		},
 		footerAria: "Rodapé",
-		footerNote: "Clipey grava, edita e publica vídeos de tela no Windows.",
+		footerNote: "Clipey grava, edita e publica vídeos de tela no Windows, macOS e Linux.",
 		footer: {
 			privacy: "Privacidade",
 			terms: "Termos",
@@ -67,8 +67,8 @@ export const UI = {
 			updated: "Atualizado em",
 			closeTitle: "Baixe o Clipey e faça uma gravação de teste.",
 			closeSub:
-				"Gratuito para Windows 10 e 11. Assine o RSS para acompanhar os próximos artigos.",
-			closeDownload: "Baixar para Windows",
+				"Gratuito para Windows, macOS e Linux. Assine o RSS para acompanhar os próximos artigos.",
+			closeDownload: "Baixar o Clipey",
 			closeRss: "Assinar o RSS",
 			emptyCategory: "Ainda não há artigos nesta categoria.",
 			shareEmail: "E-mail",
@@ -87,7 +87,7 @@ export const UI = {
 		landing: {
 			title: "Clipey: grave, edite e publique vídeos de tela",
 			description:
-				"Grave a tela no Windows, edite com cortes, zooms e legendas e publique no seu ritmo. Gratuito, com seus arquivos no seu computador.",
+				"Grave a tela no Windows, macOS e Linux, edite com cortes, zooms e legendas e publique no seu ritmo. Gratuito, com seus arquivos no seu computador.",
 		},
 	},
 	en: {
@@ -108,7 +108,7 @@ export const UI = {
 			download: "Download",
 		},
 		footerAria: "Footer",
-		footerNote: "Clipey records, edits and publishes screen videos on Windows.",
+		footerNote: "Clipey records, edits and publishes screen videos on Windows, macOS and Linux.",
 		footer: {
 			privacy: "Privacy",
 			terms: "Terms",
@@ -157,8 +157,8 @@ export const UI = {
 			updated: "Updated",
 			closeTitle: "Download Clipey and make a test recording.",
 			closeSub:
-				"Free for Windows 10 and 11. Subscribe to the RSS feed to follow new articles.",
-			closeDownload: "Download for Windows",
+				"Free for Windows, macOS and Linux. Subscribe to the RSS feed to follow new articles.",
+			closeDownload: "Download Clipey",
 			closeRss: "Subscribe via RSS",
 			emptyCategory: "There are no articles in this category yet.",
 			shareEmail: "Email",
@@ -177,7 +177,7 @@ export const UI = {
 		landing: {
 			title: "Clipey: record, edit and publish screen videos",
 			description:
-				"Record your screen on Windows, edit with cuts, zooms and captions, and publish on your terms. Free, with your files on your computer.",
+				"Record your screen on Windows, macOS and Linux, edit with cuts, zooms and captions, and publish on your terms. Free, with your files on your computer.",
 		},
 	},
 	es: {
@@ -198,7 +198,7 @@ export const UI = {
 			download: "Descargar",
 		},
 		footerAria: "Pie de página",
-		footerNote: "Clipey graba, edita y publica videos de pantalla en Windows.",
+		footerNote: "Clipey graba, edita y publica videos de pantalla en Windows, macOS y Linux.",
 		footer: {
 			privacy: "Privacidad (EN)",
 			terms: "Términos (EN)",
@@ -247,8 +247,8 @@ export const UI = {
 			updated: "Actualizado el",
 			closeTitle: "Descarga Clipey y haz una grabación de prueba.",
 			closeSub:
-				"Gratis para Windows 10 y 11. Suscríbete al RSS para seguir los próximos artículos.",
-			closeDownload: "Descargar para Windows",
+				"Gratis para Windows, macOS y Linux. Suscríbete al RSS para seguir los próximos artículos.",
+			closeDownload: "Descargar Clipey",
 			closeRss: "Suscribirse al RSS",
 			emptyCategory: "Todavía no hay artículos en esta categoría.",
 			shareEmail: "Correo",
@@ -267,7 +267,7 @@ export const UI = {
 		landing: {
 			title: "Clipey: graba, edita y publica videos de pantalla",
 			description:
-				"Graba la pantalla en Windows, edita con cortes, zooms y subtítulos y publica a tu manera. Gratis, con tus archivos en tu computadora.",
+				"Graba la pantalla en Windows, macOS y Linux, edita con cortes, zooms y subtítulos y publica a tu manera. Gratis, con tus archivos en tu computadora.",
 		},
 	},
 };

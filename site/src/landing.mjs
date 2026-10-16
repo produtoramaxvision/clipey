@@ -49,7 +49,7 @@ function jsonLd(lang, canonical) {
 				"@id": `${SITE_URL}${canonical}#software`,
 				name: SITE_NAME,
 				applicationCategory: "MultimediaApplication",
-				operatingSystem: "Windows 10, Windows 11",
+				operatingSystem: "Windows, macOS, Linux",
 				description: ui.landing.description,
 				inLanguage: lang,
 				url: `${SITE_URL}${canonical}`,

@@ -608,7 +608,7 @@ describe("4. JSON-LD structure and validation", () => {
 			);
 			expect(app).toBeDefined();
 			expect(app.name).toBe(SITE_NAME);
-			expect(app.operatingSystem).toBe("Windows 10, Windows 11");
+			expect(app.operatingSystem).toBe("Windows, macOS, Linux");
 			expect(app.applicationCategory).toBe("MultimediaApplication");
 			expect(app.softwareVersion).toBe(APP_VERSION);
 			expect(app.offers).toEqual({
@@ -674,6 +674,63 @@ describe("4. JSON-LD structure and validation", () => {
 				});
 			}
 		}
+	});
+});
+
+describe("4b. Platform statements name Windows, macOS and Linux", () => {
+	const OS_LIST = {
+		"pt-BR": "Windows, macOS e Linux",
+		en: "Windows, macOS and Linux",
+		es: "Windows, macOS y Linux",
+	};
+	const WINDOWS_ONLY = /Windows 10 (?:e|and|y) 11|(?:para|for) Windows(?!,)\b/;
+
+	it("states all three systems in the blog and landing copy of every language", () => {
+		for (const lang of LANGUAGES) {
+			const strings = [
+				UI[lang].footerNote,
+				UI[lang].blog.closeSub,
+				UI[lang].landing.description,
+				STORY[lang].hero.sub,
+				STORY[lang].hero.definition,
+				STORY[lang].faq.find(([q]) => /sistemas|systems/i.test(q))[1],
+			];
+			for (const text of strings) expect(text, `${lang}: ${text}`).toContain(OS_LIST[lang]);
+			expect(STORY[lang].hero.platform).toContain(OS_LIST[lang]);
+			expect(STORY[lang].export.platform).toContain(OS_LIST[lang]);
+		}
+	});
+
+	it("keeps no Windows-only download label or Windows 10 and 11 claim in the customer copy", () => {
+		for (const lang of LANGUAGES) {
+			const copy = [
+				UI[lang].footerNote,
+				UI[lang].blog.closeSub,
+				UI[lang].blog.closeDownload,
+				UI[lang].landing.description,
+				STORY[lang].hero.sub,
+				STORY[lang].hero.definition,
+				STORY[lang].hero.download,
+				STORY[lang].hero.platform,
+				STORY[lang].export.download,
+				STORY[lang].export.platform,
+				...STORY[lang].faq.map(([, answer]) => answer),
+			];
+			for (const text of copy) expect(text, `${lang}: ${text}`).not.toMatch(WINDOWS_ONLY);
+		}
+	});
+
+	it("scopes the Windows build requirement to Windows", () => {
+		expect(STORY["pt-BR"].export.requirements).toMatch(/^No Windows,/);
+		expect(STORY.en.export.requirements).toMatch(/^On Windows,/);
+		expect(STORY.es.export.requirements).toMatch(/^En Windows,/);
+	});
+
+	it("tells llms.txt readers the app runs on all three systems", () => {
+		const llms = files.get("llms.txt");
+		expect(llms).toContain("aplicativo desktop para Windows, macOS e Linux");
+		expect(llms).toContain("Clipey funciona no Windows, macOS e Linux.");
+		expect(llms).not.toMatch(/Windows 10 e Windows 11/);
 	});
 });
 

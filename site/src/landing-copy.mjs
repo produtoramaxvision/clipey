@@ -27,10 +27,10 @@ export const STORY = {
 				["zoom", "00:02:14", "Zoom 1,8×", "O Clipey edita."],
 				["speed", "00:07:02", "Exportar", "Você publica."],
 			],
-			sub: "Gravador e editor de tela para Windows. Cortes de silêncio, zoom em cada clique, legendas e publicação no YouTube, TikTok, Instagram e Facebook, no mesmo app.",
-			definition: "Clipey é um aplicativo de gravação e edição de vídeo de tela para Windows que reúne captura de cursor e cliques, edição com cortes e zooms automáticos e publicação em redes sociais.",
-			download: "Baixar para Windows",
-			platform: "Windows 10 e 11 · 64 bits",
+			sub: "Gravador e editor de tela para Windows, macOS e Linux. Cortes de silêncio, zoom em cada clique, legendas e publicação no YouTube, TikTok, Instagram e Facebook, no mesmo app.",
+			definition: "Clipey é um aplicativo de gravação e edição de vídeo de tela para Windows, macOS e Linux que reúne captura de cursor e cliques, edição com cortes e zooms automáticos e publicação em redes sociais.",
+			download: "Baixar o Clipey",
+			platform: "Windows, macOS e Linux · 64 bits",
 			noAccount: "sem conta para gravar e editar",
 			imageAlt:
 				"Linha do tempo do Clipey com as regiões de zoom criadas a partir dos cliques, em azul",
@@ -154,13 +154,13 @@ export const STORY = {
 		export: {
 			tc: "00:03:30 · Fim da gravação",
 			title: "Exportar.",
-			download: "Baixar o Clipey para Windows",
-			platform: "Windows 10 e 11 · 64 bits",
+			download: "Baixar o Clipey",
+			platform: "Windows, macOS e Linux · 64 bits",
 			version: "Versão",
 			pricing:
 				"O download é gratuito. Recursos na nuvem usam a sua própria chave de API ou créditos.",
 			requirements:
-				"A captura de tela exige Windows 10 versão 2004 (build 19041) ou posterior.",
+				"No Windows, a captura de tela exige Windows 10 versão 2004 (build 19041) ou posterior.",
 		},
 		footer: {
 			blog: "Blog",
@@ -178,7 +178,7 @@ export const STORY = {
 			],
 			[
 				"Em quais sistemas funciona?",
-				"O Clipey 1.15 é para Windows 10 e 11, 64 bits. Recursos de captura usam APIs do Windows.",
+				"O Clipey 1.15 funciona no Windows, macOS e Linux, 64 bits. No Windows, recursos de captura usam APIs do sistema.",
 			],
 			[
 				"Preciso criar uma conta?",
@@ -217,10 +217,10 @@ export const STORY = {
 				["zoom", "00:02:14", "Zoom 1.8×", "Clipey edits."],
 				["speed", "00:07:02", "Export", "You publish."],
 			],
-			sub: "A screen recorder and editor for Windows. Silence cuts, a zoom on every click, captions and publishing to YouTube, TikTok, Instagram and Facebook, all in one app.",
-			definition: "Clipey is a screen recording and editing app for Windows that combines cursor and click capture, automatic cuts and zooms, and publishing to social media.",
-			download: "Download for Windows",
-			platform: "Windows 10 and 11 · 64-bit",
+			sub: "A screen recorder and editor for Windows, macOS and Linux. Silence cuts, a zoom on every click, captions and publishing to YouTube, TikTok, Instagram and Facebook, all in one app.",
+			definition: "Clipey is a screen recording and editing app for Windows, macOS and Linux that combines cursor and click capture, automatic cuts and zooms, and publishing to social media.",
+			download: "Download Clipey",
+			platform: "Windows, macOS and Linux · 64-bit",
 			noAccount: "no account needed to record and edit",
 			imageAlt:
 				"Clipey timeline with the zoom regions created from your clicks, in blue",
@@ -341,13 +341,13 @@ export const STORY = {
 		export: {
 			tc: "00:03:30 · End of recording",
 			title: "Export.",
-			download: "Download Clipey for Windows",
-			platform: "Windows 10 and 11 · 64-bit",
+			download: "Download Clipey",
+			platform: "Windows, macOS and Linux · 64-bit",
 			version: "Version",
 			pricing:
 				"The download is free. Cloud features use your own API key or credits.",
 			requirements:
-				"Screen capture requires Windows 10 version 2004 (build 19041) or later.",
+				"On Windows, screen capture requires Windows 10 version 2004 (build 19041) or later.",
 		},
 		footer: {
 			blog: "Blog",
@@ -365,7 +365,7 @@ export const STORY = {
 			],
 			[
 				"Which systems does it run on?",
-				"Clipey 1.15 is for Windows 10 and 11, 64-bit. Capture features use Windows APIs.",
+				"Clipey 1.15 runs on Windows, macOS and Linux, 64-bit. On Windows, capture features use system APIs.",
 			],
 			[
 				"Do I need an account?",
@@ -404,10 +404,10 @@ export const STORY = {
 				["zoom", "00:02:14", "Zoom 1,8×", "Clipey edita."],
 				["speed", "00:07:02", "Exportar", "Tú publicas."],
 			],
-			sub: "Grabador y editor de pantalla para Windows. Cortes de silencio, zoom en cada clic, subtítulos y publicación en YouTube, TikTok, Instagram y Facebook, en la misma app.",
-			definition: "Clipey es una aplicación de grabación y edición de video de pantalla para Windows que combina captura de cursor y clics, cortes y zooms automáticos y publicación en redes sociales.",
-			download: "Descargar para Windows",
-			platform: "Windows 10 y 11 · 64 bits",
+			sub: "Grabador y editor de pantalla para Windows, macOS y Linux. Cortes de silencio, zoom en cada clic, subtítulos y publicación en YouTube, TikTok, Instagram y Facebook, en la misma app.",
+			definition: "Clipey es una aplicación de grabación y edición de video de pantalla para Windows, macOS y Linux que combina captura de cursor y clics, cortes y zooms automáticos y publicación en redes sociales.",
+			download: "Descargar Clipey",
+			platform: "Windows, macOS y Linux · 64 bits",
 			noAccount: "sin cuenta para grabar y editar",
 			imageAlt:
 				"Línea de tiempo de Clipey con las regiones de zoom creadas a partir de los clics, en azul",
@@ -532,13 +532,13 @@ export const STORY = {
 		export: {
 			tc: "00:03:30 · Fin de la grabación",
 			title: "Exportar.",
-			download: "Descargar Clipey para Windows",
-			platform: "Windows 10 y 11 · 64 bits",
+			download: "Descargar Clipey",
+			platform: "Windows, macOS y Linux · 64 bits",
 			version: "Versión",
 			pricing:
 				"La descarga es gratuita. Las funciones en la nube usan tu propia clave de API o créditos.",
 			requirements:
-				"La captura de pantalla requiere Windows 10 versión 2004 (compilación 19041) o posterior.",
+				"En Windows, la captura de pantalla requiere Windows 10 versión 2004 (compilación 19041) o posterior.",
 		},
 		footer: {
 			blog: "Blog",
@@ -556,7 +556,7 @@ export const STORY = {
 			],
 			[
 				"¿En qué sistemas funciona?",
-				"Clipey 1.15 es para Windows 10 y 11, 64 bits. Las funciones de captura usan las API de Windows.",
+				"Clipey 1.15 funciona en Windows, macOS y Linux, 64 bits. En Windows, las funciones de captura usan las API del sistema.",
 			],
 			[
 				"¿Necesito una cuenta?",

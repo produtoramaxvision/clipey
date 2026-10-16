@@ -318,9 +318,9 @@ describe("landing copy in every language", () => {
 
 	it("keeps the platform, the own key or credits and the build requirement", () => {
 		const platform = {
-			"pt-BR": "Windows 10 e 11 · 64 bits",
-			en: "Windows 10 and 11 · 64-bit",
-			es: "Windows 10 y 11 · 64 bits",
+			"pt-BR": "Windows, macOS e Linux · 64 bits",
+			en: "Windows, macOS and Linux · 64-bit",
+			es: "Windows, macOS y Linux · 64 bits",
 		};
 		const credits = {
 			"pt-BR": /própria chave de API ou créditos/,
