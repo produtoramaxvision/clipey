@@ -68,12 +68,12 @@ describe("1. Legal pages: copied verbatim, text pinned, no third-party origin (S
 	// SHA-256 of visibleText() for each legal page. Any change to the wording of a policy changes its hash: update
 	// it only together with the "Última atualização" / "Last updated" date in the page.
 	const VISIBLE_TEXT_SHA256 = {
-		"privacidade/index.html": "c35e45ce8ac518156205b4701652a8b74ed56c286ad491ae9deb34fc47e6001c",
-		"termos/index.html": "770936e973d82f345830f0b41da798b808121d9c7bda68cf37450d1bb5a6d04e",
-		"exclusao-de-dados/index.html": "97ef6d5ff17ba25d41126bc4a95a8842cd70a1742b8a682bc3c144bdad939882",
-		"en/privacy/index.html": "b71ccb67d8a45d8e68e0bae9fd419728f0d4b4790d310b7aaaa8da1a78219e7e",
-		"en/terms/index.html": "7a299564feac972b7da7c80e8a5af29b56f1a8b3882dd518b0597d6193352322",
-		"en/data-deletion/index.html": "5ff9d6ef7c52946ec8d8fd40171fa32d2a3d90e0624dd3236909c4ec1423e139",
+		"privacidade/index.html": "db9f3dbfe1669ab5df3b2ba4bf966f25c2aa480c2d0930fd6eec5101af803aaf",
+		"termos/index.html": "6b0a390bfd8bdda6ac31e0f2f3dd1c5ff8464ac21fb0ebd08fbf8a9dee301924",
+		"exclusao-de-dados/index.html": "42c376e25276226f60f1469e610e4634b709238e59a08e8904e03cd3ccdabda5",
+		"en/privacy/index.html": "6e3c0011692c2932ebd243f221cb01a605c64ec9ddf5e0bf676f2e89d4824c87",
+		"en/terms/index.html": "50777b07012b0992f37f537cbc76c541c9171db6d116f5e705368f0bf4338ddf",
+		"en/data-deletion/index.html": "7b415e143f8dbb5d9cd6636bceeb81892a9e3257ab589bbc2e2e97643241672f",
 		"404.html": "6f07a90177a8c92701c798de2af2466cfd8cd9a1c485e2e0fe0f10c4ed28925f",
 	};
 
@@ -89,6 +89,12 @@ describe("1. Legal pages: copied verbatim, text pinned, no third-party origin (S
 		for (const fileName of legalPages) {
 			const hash = createHash("sha256").update(visibleText(files.get(fileName))).digest("hex");
 			expect(hash, fileName).toBe(VISIBLE_TEXT_SHA256[fileName]);
+		}
+	});
+
+	it("contains no HTML comments in any built legal page", () => {
+		for (const fileName of legalPages) {
+			expect(files.get(fileName), fileName).not.toContain("<!--");
 		}
 	});
 
@@ -183,7 +189,15 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			);
 			if (kind !== "terms") expect(html).toContain(`<a href="mailto:${PRIVACY_EMAIL[lang]}">`);
 			expect(html).not.toContain("gmail.com");
+			expect(html).not.toContain("<!--");
 			expect(html).not.toMatch(/\[[A-Z][A-Z ]+\]/);
+			expect(html).not.toMatch(/\[confirmar\]/i);
+		});
+
+		it(`contains no HTML comments or reviewer notes: ${fileName}`, () => {
+			const html = files.get(fileName);
+			expect(html).not.toContain("<!--");
+			expect(html).not.toMatch(/\[confirmar\]/i);
 		});
 
 		it(`states its effective and last-updated date: ${fileName}`, () => {
@@ -255,7 +269,7 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 	// The statements the legal review made mandatory, in both languages with the same substance.
 	const REVIEWED_STATEMENTS = {
 		"privacidade/index.html": [
-			"aplicativo gratuito para Windows (macOS e Linux em breve)",
+			"aplicativo gratuito para Windows, macOS e Linux",
 			"https://www.googleapis.com/auth/youtube.upload",
 			"https://www.googleapis.com/auth/youtube.readonly",
 			"Ao desconectar a conta no Clipey, o aplicativo também solicita a revogação do token ao Google",
@@ -274,7 +288,7 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			"própria chave de API (BYOK)",
 			"não há créditos na versão 1.15",
 			"(LGPD, art. 7º, IX; GDPR, art. 6º, 1, f)",
-			"citando a LGPD (art. 33, II) e a Resolução CD/ANPD nº 19/2024",
+			"aditivo de tratamento de dados da Cloudflare (LGPD, art. 33, II)",
 			"O exercício dos direitos é gratuito.",
 			"Você também pode recorrer a órgãos de defesa do consumidor.",
 			"Titulares sujeitos ao GDPR também têm direito ao apagamento (art. 17)",
@@ -287,12 +301,11 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			"aplicativo web (PWA)",
 			"Funções locais, aplicativo complementar móvel e tarefas de IA",
 			"Cloudflare Workers Logs",
-			"código de autorização de uso único do redirecionamento OAuth",
-			"expiram em poucos minutos",
+			"Os parâmetros da URL (query string) são ocultados antes do registro, de modo que códigos de autorização OAuth não ficam armazenados.",
 			"até 7 dias",
 		],
 		"en/privacy/index.html": [
-			"free desktop app for Windows (macOS and Linux coming soon)",
+			"free desktop app for Windows, macOS and Linux",
 			"https://www.googleapis.com/auth/youtube.upload",
 			"https://www.googleapis.com/auth/youtube.readonly",
 			"On disconnect, the app also asks Google to revoke the token",
@@ -311,7 +324,7 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			"own API key (BYOK)",
 			"there are no credits in 1.15",
 			"(LGPD Art. 7 IX; GDPR Art. 6(1)(f))",
-			"citing LGPD Art. 33 II and ANPD Res. 19/2024",
+			"Cloudflare's data processing addendum (LGPD Art. 33 II)",
 			"Exercising these rights is free.",
 			"You may also turn to consumer protection bodies.",
 			"Data subjects covered by the GDPR also have the right to erasure (Art. 17)",
@@ -324,12 +337,11 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			"web app (PWA)",
 			"Local features, mobile companion and AI tasks",
 			"Cloudflare Workers Logs",
-			"one-time authorization code of the OAuth redirect",
-			"expire within minutes",
+			"URL query parameters (query string) are redacted before logging, so OAuth authorization codes are not stored.",
 			"up to 7 days",
 		],
 		"termos/index.html": [
-			"aplicativo gratuito para Windows (macOS e Linux em breve)",
+			"aplicativo gratuito para Windows, macOS e Linux",
 			"O Clipey não vende créditos, assinaturas nem outros itens pagos.",
 			"O uso é permitido a maiores de 18 anos ou a menores representados ou assistidos pelos responsáveis.",
 			"A importação por link usa um componente de terceiros e baixa a mídia diretamente do site de origem para o seu computador.",
@@ -338,13 +350,14 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			"própria chave de API (BYOK)",
 			"não há créditos na versão 1.15",
 			"O aplicativo e o aplicativo complementar móvel são licenciados gratuitamente sob a Licença MIT",
+			"Na versão 1.15, os instaladores para macOS e Linux não têm assinatura digital do desenvolvedor",
 			"Para usuários consumidores, nada nos itens 7 e 8 limita a responsabilidade por vícios e defeitos nem a reparação integral prevista no CDC (arts. 6º, VI, 12, 14 e 24).",
 			"Mudanças relevantes serão avisadas no aplicativo com 30 dias de antecedência. Se discordar, você pode parar de usar o Clipey.",
 			"normas obrigatórias de proteção ao consumidor do país onde você reside",
-			"aplicativo complementar em celular ou tablet",
+			"conectar um aplicativo complementar no celular ou tablet",
 		],
 		"en/terms/index.html": [
-			"free desktop app for Windows (macOS and Linux coming soon)",
+			"free desktop app for Windows, macOS and Linux",
 			"Clipey does not sell credits, subscriptions or any other paid items.",
 			"Use is for persons aged 18+, or minors represented or assisted by a guardian.",
 			"Link import uses a third-party component and downloads media directly from the source site to your computer.",
@@ -353,24 +366,25 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			"own API key (BYOK)",
 			"there are no credits in 1.15",
 			"The app and the mobile companion are licensed free of charge under the MIT License",
+			"In version 1.15, the macOS and Linux installers are not code-signed",
 			"For consumer users, nothing in sections 7 and 8 limits liability for defects or full compensation under the CDC (Arts. 6 VI, 12, 14, 24).",
 			"Material changes will be announced in the app 30 days in advance. If you disagree, you may stop using Clipey.",
 			"mandatory consumer protection laws of your country of residence",
 			"mobile or tablet companion app",
 		],
 		"exclusao-de-dados/index.html": [
-			"macOS (quando disponível)",
-			"Linux (quando disponível)",
+			"macOS: ~/Library/Application Support",
+			"Linux: ~/.config",
 			"Responderemos em até 15 dias com uma confirmação de que os dados foram excluídos.",
 			"O aplicativo pede a revogação do acesso à plataforma e apaga o token da conta do seu computador.",
 			"No celular ou tablet (aplicativo complementar)",
-			"desemparelhar o aparelho",
+			"desparear o aparelho",
 			"revogue o token do aparelho",
 			"limpe os dados e o cache do aplicativo",
 		],
 		"en/data-deletion/index.html": [
-			"macOS (when available)",
-			"Linux (when available)",
+			"macOS: ~/Library/Application Support",
+			"Linux: ~/.config",
 			"We will reply within 15 days confirming deletion.",
 			"The app asks the platform to revoke access and deletes the account’s token from your computer.",
 			"On your phone or tablet (mobile companion)",
@@ -385,7 +399,9 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			const html = files.get(fileName);
 			const text = bodyText(html);
 			for (const statement of statements) expect(text, statement).toContain(statement);
-			expect(text).not.toMatch(/yt-dlp|OpenScreen|Windows, macOS (?:e|and) Linux/i);
+			expect(text).not.toMatch(/yt-dlp|OpenScreen/i);
+			expect(text).not.toMatch(/em breve|coming soon|\((?:quando disponível|when available)\)/i);
+			expect(text).not.toMatch(/código de autorização de uso único do redirecionamento|one-time authorization code of the OAuth redirect/);
 			expect(text).not.toMatch(/significa aceitação|means acceptance|nas notas de versão|in the release notes/);
 			expect(text).not.toContain("router.produtoramaxvision.com.br");
 			expect(text).not.toContain("n8n.meuagente.api.br");

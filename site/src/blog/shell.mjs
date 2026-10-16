@@ -9,6 +9,7 @@ import {
 	LEGAL_PATHS,
 	OG_LOCALE,
 	OWNER,
+	OWNER_CNPJ,
 	RELEASES_URL,
 	REPO_URL,
 	SITE_NAME,
@@ -207,7 +208,7 @@ export function renderFooter({ lang }) {
 			</nav>
 		</div>
 		<div class="footer-legal">
-			<p>© ${year} ${OWNER} · CNPJ 38.386.434/0001-44 · ${esc(ui.footer.location)}. ${esc(ui.footer.rights)}</p>
+			<p>© ${year} ${OWNER} · CNPJ ${OWNER_CNPJ} · ${esc(ui.footer.location)}. ${esc(ui.footer.rights)}</p>
 			${ui.legalNote ? `<p>${esc(ui.legalNote)}</p>` : ""}
 		</div>
 	</footer>`;

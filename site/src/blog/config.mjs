@@ -9,6 +9,7 @@ export const RELEASES_URL =
 export const REPO_URL = "https://github.com/produtoramaxvision/clipey";
 export const CONTACT_EMAIL = "contato@clipey.com.br";
 export const OWNER = "Produtora MaxVision";
+export const OWNER_CNPJ = "38.386.434/0001-44";
 
 export const LANDING_PATH = { "pt-BR": "/", en: "/en/", es: "/es/" };
 export const OG_LOCALE = { "pt-BR": "pt_BR", en: "en_US", es: "es_ES" };
