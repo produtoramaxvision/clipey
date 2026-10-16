@@ -68,12 +68,12 @@ describe("1. Legal pages: copied verbatim, text pinned, no third-party origin (S
 	// SHA-256 of visibleText() for each legal page. Any change to the wording of a policy changes its hash: update
 	// it only together with the "Última atualização" / "Last updated" date in the page.
 	const VISIBLE_TEXT_SHA256 = {
-		"privacidade/index.html": "c3cba091aa5ec1826de7d09844297340c370e0888a8b7edab88eadac3d8c7d9b",
-		"termos/index.html": "a1c774f81dfb64f3febb0b0bbaf165df021e34071b2f34ff3f1bda656c98d81e",
-		"exclusao-de-dados/index.html": "c0d9aaf08bf496b58b9c96e9dd4a6d0fe4abef40abf31cfb70ba914526650302",
-		"en/privacy/index.html": "94ec9a918017c6af5d08208937d8b09f9d55ae457fbfdc1d57d4f16722573fa6",
-		"en/terms/index.html": "b9a2ff4cfa69bbf752c09a8f878c28bc569390155106119c80b201925df28b85",
-		"en/data-deletion/index.html": "238cb267500caacf20d22a2995c623bbbf69b9f9a46405d43bb6e0c71f08aac3",
+		"privacidade/index.html": "438b6093aa3537ea5d29f9ac7f35109d4b8bfab11228b9b26db01193ceb160ae",
+		"termos/index.html": "fc6649414db8fb5b64e7b192aace11957449c1c9c0d54e86df2f48b70a3213be",
+		"exclusao-de-dados/index.html": "54593515f8c7ee316b8d561bb6f41069cc93c20f3bc5cbfd49e39ec9d0cf865f",
+		"en/privacy/index.html": "9ecce11b655feab2a80f7a59976d62e79fbc6a16c6f8aa47b9ebb0c91a126be6",
+		"en/terms/index.html": "14eb9b784ab5294fd775e28ba058dc5ce603824f9f31c92a4bc8c0498f113055",
+		"en/data-deletion/index.html": "cc0da0a2454bad3d6bc75391b619f881daf1461d355c42d630b31dc830950482",
 		"404.html": "fc5079cdd071aeb18199f2cbeb0198a0663f58d205ccd9bb9119fbf1b567819c",
 	};
 
@@ -243,6 +243,115 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			expect(html).toContain('<a href="https://www.facebook.com/settings?tab=business_tools">');
 			for (const os of ["Windows", "macOS", "Linux"]) expect(text).toContain(os);
 			expect(text).not.toMatch(/somente no seu computador|only on your computer/);
+		});
+	}
+
+	// The statements the legal review made mandatory, in both languages with the same substance.
+	const REVIEWED_STATEMENTS = {
+		"privacidade/index.html": [
+			"aplicativo gratuito para Windows (macOS e Linux em breve)",
+			"https://www.googleapis.com/auth/youtube.upload",
+			"https://www.googleapis.com/auth/youtube.readonly",
+			"Ao desconectar a conta no Clipey, o aplicativo também solicita a revogação do token ao Google",
+			"pages_show_list, pages_read_engagement, pages_manage_posts, instagram_basic, instagram_content_publish e business_management",
+			"user.info.basic",
+			"video.upload e video.publish",
+			"o vídeo não é hospedado em nenhum endereço do Clipey",
+			"Ele não grava códigos, tokens nem dados de conta em banco de dados ou em outro armazenamento próprio.",
+			"Vídeos e publicações não passam por esse serviço",
+			"router.produtoramaxvision.com.br",
+			"n8n.meuagente.api.br",
+			"Os modelos de reconhecimento de fala são baixados uma vez do Hugging Face (huggingface.co)",
+			"componente de importação de terceiros",
+			"A importação não é permitida para conteúdo cujos termos a vedem, inclusive o YouTube.",
+			"(LGPD, art. 7º, IX; GDPR, art. 6º, 1, f)",
+			"(LGPD, art. 33, II; Resolução CD/ANPD nº 19/2024)",
+			"O exercício dos direitos é gratuito.",
+			"Você também pode recorrer a órgãos de defesa do consumidor.",
+			"Titulares sujeitos ao GDPR também têm direito ao apagamento (art. 17)",
+			"mudanças relevantes serão avisadas no aplicativo com 30 dias de antecedência",
+		],
+		"en/privacy/index.html": [
+			"free desktop app for Windows (macOS and Linux coming soon)",
+			"https://www.googleapis.com/auth/youtube.upload",
+			"https://www.googleapis.com/auth/youtube.readonly",
+			"On disconnect, the app also asks Google to revoke the token",
+			"pages_show_list, pages_read_engagement, pages_manage_posts, instagram_basic, instagram_content_publish and business_management",
+			"user.info.basic",
+			"video.upload and video.publish",
+			"the video is not hosted at any Clipey address",
+			"It does not write codes, tokens or account data to any database or other storage of its own.",
+			"Videos and posts do not pass through this service",
+			"router.produtoramaxvision.com.br",
+			"n8n.meuagente.api.br",
+			"The speech recognition models are downloaded once from Hugging Face (huggingface.co)",
+			"third-party import component",
+			"Import is not permitted for content whose terms prohibit it, including YouTube.",
+			"(LGPD Art. 7 IX; GDPR Art. 6(1)(f))",
+			"(LGPD Art. 33 II; ANPD Res. 19/2024)",
+			"Exercising these rights is free.",
+			"You may also turn to consumer protection bodies.",
+			"Data subjects covered by the GDPR also have the right to erasure (Art. 17)",
+			"material changes will be announced in the app 30 days in advance",
+		],
+		"termos/index.html": [
+			"aplicativo gratuito para Windows (macOS e Linux em breve)",
+			"O Clipey não vende créditos, assinaturas nem outros itens pagos.",
+			"O uso é permitido a maiores de 18 anos ou a menores representados ou assistidos pelos responsáveis.",
+			"componente de importação de terceiros e não é permitida para conteúdo cujos termos a vedem, inclusive o YouTube.",
+			"licenciado gratuitamente sob a Licença MIT",
+			"Para usuários consumidores, nada nos itens 7 e 8 limita a responsabilidade por vícios e defeitos nem a reparação integral prevista no CDC (arts. 6º, VI, 12, 14 e 24).",
+			"Mudanças relevantes serão avisadas no aplicativo com 30 dias de antecedência. Se discordar, você pode parar de usar o Clipey.",
+			"normas obrigatórias de proteção ao consumidor do país onde você reside",
+		],
+		"en/terms/index.html": [
+			"free desktop app for Windows (macOS and Linux coming soon)",
+			"Clipey does not sell credits, subscriptions or any other paid items.",
+			"Use is for persons aged 18+, or minors represented or assisted by a guardian.",
+			"third-party import component and is not permitted for content whose terms prohibit it, including YouTube.",
+			"licensed free of charge under the MIT License",
+			"For consumer users, nothing in sections 7 and 8 limits liability for defects or full compensation under the CDC (Arts. 6 VI, 12, 14, 24).",
+			"Material changes will be announced in the app 30 days in advance. If you disagree, you may stop using Clipey.",
+			"mandatory consumer protection laws of your country of residence",
+		],
+		"exclusao-de-dados/index.html": [
+			"macOS (quando disponível)",
+			"Linux (quando disponível)",
+			"Responderemos em até 15 dias com uma confirmação de que os dados foram excluídos.",
+			"O aplicativo pede a revogação do acesso à plataforma e apaga o token da conta do seu computador.",
+		],
+		"en/data-deletion/index.html": [
+			"macOS (when available)",
+			"Linux (when available)",
+			"We will reply within 15 days confirming deletion.",
+			"The app asks the platform to revoke access and deletes the account’s token from your computer.",
+		],
+	};
+
+	for (const [fileName, statements] of Object.entries(REVIEWED_STATEMENTS)) {
+		it(`carries the statements required by the legal review: ${fileName}`, () => {
+			const html = files.get(fileName);
+			const text = bodyText(html);
+			for (const statement of statements) expect(text, statement).toContain(statement);
+			expect(text).not.toMatch(/yt-dlp|OpenScreen|Windows, macOS (?:e|and) Linux/i);
+			expect(text).not.toMatch(/significa aceitação|means acceptance|nas notas de versão|in the release notes/);
+		});
+	}
+
+	it("keeps the repository policy files consistent with the published pages", () => {
+		const repoFile = (name) => readFileSync(path.join(root, "..", name), "utf8");
+		expect(repoFile("PRIVACY.md")).not.toContain("build.py");
+		const security = repoFile("SECURITY.md");
+		expect(security).not.toMatch(/somente no seu computador|não envia essas chaves/);
+		expect(security).toContain("api.clipey.com.br");
+		expect(repoFile("SUPPORT.md")).toContain("Revise o diagnóstico antes de anexar: ele pode conter dados pessoais.");
+	});
+
+	for (const fileName of ["privacidade/index.html", "en/privacy/index.html"]) {
+		it(`links the TikTok and Meta privacy policies: ${fileName}`, () => {
+			const html = files.get(fileName);
+			expect(html).toContain('<a href="https://www.tiktok.com/legal/privacy-policy">');
+			expect(html).toContain('<a href="https://www.facebook.com/privacy/policy">');
 		});
 	}
 
