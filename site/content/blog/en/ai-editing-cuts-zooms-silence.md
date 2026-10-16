@@ -59,4 +59,4 @@ Next, try one local edit in a short recording and watch that section before aski
 
 ## Page history
 
-- {{RELEASE_DATE}}: published.
+- 2026-10-15: published.

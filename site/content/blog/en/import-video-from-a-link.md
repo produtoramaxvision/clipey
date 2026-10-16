@@ -75,4 +75,4 @@ Next, import only a link you are authorised to use, check the asset in the proje
 
 ## Page history
 
-- {{RELEASE_DATE}}: published.
+- 2026-10-15: published.

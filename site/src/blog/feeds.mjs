@@ -5,7 +5,6 @@ import {
 	LANDING_PATH,
 	LANGUAGES,
 	LEGAL_PATHS,
-	RELEASE_DATE,
 	SITE_URL,
 } from "./config.mjs";
 import { UI } from "./i18n.mjs";
@@ -58,9 +57,10 @@ export function renderAtom(lang, posts, selfUrl) {
 	const feedHref = selfUrl ?? `${SITE_URL}${blogBase(lang)}atom.xml`;
 	const blogHref = `${SITE_URL}${blogBase(lang)}`;
 	const filtered = posts.filter((post) => post.content[lang]);
+	// An empty feed has no article date to report; the build time is the only true "updated" value then.
 	const latestUpdated = filtered.length
 		? `${filtered[0].updated}T12:00:00Z`
-		: `${RELEASE_DATE}T12:00:00Z`;
+		: `${new Date().toISOString().slice(0, 19)}Z`;
 
 	const entries = filtered
 		.map((post) => {

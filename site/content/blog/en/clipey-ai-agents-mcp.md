@@ -62,4 +62,4 @@ After connecting, verify a simple read before enabling edits. [Download Clipey](
 
 ## Page history
 
-- {{RELEASE_DATE}}: published.
+- 2026-10-15: published.

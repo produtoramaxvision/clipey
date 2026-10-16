@@ -58,4 +58,4 @@ Leia também [gravar a tela no Windows](/blog/gravar-tela-windows-com-cursor-e-c
 
 ## Histórico desta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

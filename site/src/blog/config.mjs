@@ -1,4 +1,3 @@
-export const RELEASE_DATE = "2026-09-29";
 /** The app version the download links point at; the landing shows it next to the button. */
 export const APP_VERSION = "1.15.0";
 export const SITE_URL = "https://clipey.com.br";

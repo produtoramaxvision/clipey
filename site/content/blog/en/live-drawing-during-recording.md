@@ -64,4 +64,4 @@ For context on cursor capture, read [recording your screen on Windows](/blog/en/
 
 ## Page history
 
-- {{RELEASE_DATE}}: published.
+- 2026-10-15: published.

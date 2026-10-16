@@ -64,4 +64,4 @@ Siguiente paso: elige una grabación transcrita, genera candidatos y reproduce c
 
 ## Historial de esta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

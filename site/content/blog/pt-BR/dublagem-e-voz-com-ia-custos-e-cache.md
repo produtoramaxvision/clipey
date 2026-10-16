@@ -62,4 +62,4 @@ Próximo passo: teste uma linha, escute-a no projeto e só então gere o restant
 
 ## Histórico desta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

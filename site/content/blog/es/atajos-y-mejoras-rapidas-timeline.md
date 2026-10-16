@@ -74,4 +74,4 @@ Para preparar el material, lee [grabar la pantalla en Windows](/blog/es/grabar-p
 
 ## Historial de esta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

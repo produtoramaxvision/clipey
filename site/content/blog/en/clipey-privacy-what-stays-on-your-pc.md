@@ -64,4 +64,4 @@ Before sharing diagnostics, inspect the actual archive. [Download Clipey](/en/#d
 
 ## Page history
 
-- {{RELEASE_DATE}}: published.
+- 2026-10-15: published.

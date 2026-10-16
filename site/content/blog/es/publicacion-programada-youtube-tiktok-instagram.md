@@ -76,4 +76,4 @@ Cuando hayas revisado la cuenta y la cola, deja Clipey abierto y el ordenador di
 
 ## Historial de esta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

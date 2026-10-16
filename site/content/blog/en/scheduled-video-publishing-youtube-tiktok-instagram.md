@@ -76,4 +76,4 @@ After checking the account and queue, keep Clipey open and the computer availabl
 
 ## Page history
 
-- {{RELEASE_DATE}}: published.
+- 2026-10-15: published.

@@ -64,4 +64,4 @@ Próximo passo: escolha uma gravação com transcrição, gere alguns candidatos
 
 ## Histórico desta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

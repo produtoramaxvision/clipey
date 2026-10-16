@@ -69,4 +69,4 @@ Después de revisar el archivo en el ordenador, [descarga Clipey](/es/#descargar
 
 ## Historial de esta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

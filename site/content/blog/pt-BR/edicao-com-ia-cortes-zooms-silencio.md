@@ -59,4 +59,4 @@ Como próximo passo, abra uma gravação curta, faça uma alteração localizada
 
 ## Histórico desta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

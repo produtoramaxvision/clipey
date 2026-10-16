@@ -59,4 +59,4 @@ Como siguiente paso, prueba un cambio concreto en una grabación corta y reprodu
 
 ## Historial de esta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

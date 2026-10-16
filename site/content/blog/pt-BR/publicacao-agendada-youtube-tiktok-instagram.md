@@ -76,4 +76,4 @@ Quando tiver revisado a fila e a conta, mantenha o Clipey aberto e o computador 
 
 ## Histórico desta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

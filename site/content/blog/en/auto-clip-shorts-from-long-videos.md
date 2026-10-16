@@ -64,4 +64,4 @@ Next, choose a recording with a transcript, generate a shortlist and watch each 
 
 ## Page history
 
-- {{RELEASE_DATE}}: published.
+- 2026-10-15: published.

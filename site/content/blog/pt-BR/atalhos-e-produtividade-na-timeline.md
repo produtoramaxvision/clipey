@@ -82,4 +82,4 @@ Para preparar o material, veja [gravar a tela no Windows](/blog/gravar-tela-wind
 
 ## Histórico desta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

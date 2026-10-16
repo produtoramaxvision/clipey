@@ -75,4 +75,4 @@ Próximo passo: importe uma faixa existente ou transcreva um trecho, corrija o t
 
 ## Histórico desta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

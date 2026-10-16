@@ -3,7 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { load } from "js-yaml";
 import { Marked } from "marked";
-import { blogBase, categoryKeyOf, LANGUAGES, RELEASE_DATE } from "./config.mjs";
+import { blogBase, categoryKeyOf, LANGUAGES } from "./config.mjs";
 
 const siteRoot = path.resolve(
 	path.dirname(fileURLToPath(import.meta.url)),
@@ -117,18 +117,21 @@ function parsePost(file, lang) {
 		!Number.isInteger(data.order)
 	)
 		throw new Error(`${file}: invalid title, description, or order`);
+	// Each article carries its own literal dates; there is no shared release date to substitute.
 	const validDate = (value) =>
-		value === "{{RELEASE_DATE}}" || /^\d{4}-\d{2}-\d{2}$/.test(value);
+		typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value);
 	if (
 		data.appliesTo !== "1.15" ||
 		typeof data.featured !== "boolean" ||
 		!validDate(data.date) ||
-		!validDate(data.updated)
+		!validDate(data.updated) ||
+		data.updated < data.date
 	)
 		throw new Error(`${file}: invalid applicability, feature flag, or dates`);
-	data.date = data.date.replaceAll("{{RELEASE_DATE}}", RELEASE_DATE);
-	data.updated = data.updated.replaceAll("{{RELEASE_DATE}}", RELEASE_DATE);
-	const body = match[2].replaceAll("{{RELEASE_DATE}}", RELEASE_DATE);
+	const body = match[2];
+	const placeholder = body.match(/\{\{[A-Z_]+\}\}/);
+	if (placeholder)
+		throw new Error(`${file}: unreplaced template token ${placeholder[0]}`);
 	const headings = [];
 	const html = renderMarkdown(body, headings);
 	if (/<script\b|javascript:/i.test(html))
@@ -144,6 +147,9 @@ function parsePost(file, lang) {
 		url: `${blogBase(lang)}${data.slug}/`,
 	};
 }
+
+/** Parses and validates a single article file exactly as the build does (used by tests on throwaway copies). */
+export const parsePostFile = parsePost;
 
 function imageExists(image) {
 	return fs.existsSync(path.join(publicRoot, `.${image}`));

@@ -77,4 +77,4 @@ Visit the [download page](/en/#download) to get Clipey and check the current rel
 
 ## Page history
 
-- {{RELEASE_DATE}}: published.
+- 2026-10-15: published.

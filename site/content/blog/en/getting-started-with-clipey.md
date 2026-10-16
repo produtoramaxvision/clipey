@@ -69,4 +69,4 @@ After reviewing the file on your computer, [download Clipey](/en/#download) and 
 
 ## Page history
 
-- {{RELEASE_DATE}}: published.
+- 2026-10-15: published.

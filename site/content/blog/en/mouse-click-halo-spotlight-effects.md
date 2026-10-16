@@ -60,4 +60,4 @@ Learn [how to record your Windows screen](/blog/en/record-screen-windows-cursor-
 
 ## Page history
 
-- {{RELEASE_DATE}}: published.
+- 2026-10-15: published.

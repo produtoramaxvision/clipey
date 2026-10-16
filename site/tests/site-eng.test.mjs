@@ -1,4 +1,11 @@
-import { readFileSync } from "node:fs";
+import {
+	mkdtempSync,
+	readdirSync,
+	readFileSync,
+	rmSync,
+	writeFileSync,
+} from "node:fs";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { gzipSync } from "node:zlib";
@@ -11,12 +18,15 @@ import {
 	LANDING_PATH,
 	LANGUAGES,
 	OWNER,
-	RELEASE_DATE,
 	RELEASES_URL,
 	SITE_NAME,
 	SITE_URL,
 } from "../src/blog/config.mjs";
-import { getCompletePosts, renderMarkdown } from "../src/blog/content.mjs";
+import {
+	getCompletePosts,
+	parsePostFile,
+	renderMarkdown,
+} from "../src/blog/content.mjs";
 import { THEME_SCRIPT_HASH } from "../src/blog/shell.mjs";
 import { usedCategories } from "../src/blog/template.mjs";
 import { STORY } from "../src/landing-copy.mjs";
@@ -92,7 +102,7 @@ describe("2. robots.txt and sitemap.xml", () => {
 
 		expect(sitemap).toContain('hreflang="x-default"');
 		expect(sitemap).toContain(`href="${SITE_URL}/"`);
-		expect(sitemap).not.toContain("{{RELEASE_DATE}}");
+		expect(sitemap).not.toMatch(/\{\{[A-Z_]+\}\}/);
 	});
 });
 
@@ -153,7 +163,7 @@ describe("4. JSON-LD structure and validation", () => {
 			expect(org.logo?.url).toBe(`${SITE_URL}/clipey-256.png`);
 
 			const rawString = JSON.stringify(data);
-			expect(rawString).not.toContain("{{RELEASE_DATE}}");
+			expect(rawString).not.toMatch(/\{\{[A-Z_]+\}\}/);
 			expect(rawString).not.toContain("undefined");
 			expect(rawString).not.toContain("null");
 		}
@@ -257,7 +267,7 @@ describe("5. AEO/GEO: llms.txt and llms-full.txt", () => {
 		for (let i = 1; i <= 18; i++) {
 			expect(full).toContain(`ARTIGO ${i}: `);
 		}
-		expect(full).not.toContain("{{RELEASE_DATE}}");
+		expect(full).not.toMatch(/\{\{[A-Z_]+\}\}/);
 	});
 });
 
@@ -391,29 +401,76 @@ describe("10. SEO: sitemap lastmod only for posts (S5)", () => {
 });
 
 describe("11. SEO: blog posts have real dates (S6)", () => {
-	it("uses actual editorial dates, not the release date constant", () => {
+	const articleFile = (post, lang) =>
+		path.join(root, "content", "blog", lang, `${post.content[lang].slug}.md`);
+
+	it("uses literal per-article dates, with updated never before date", () => {
 		for (const post of posts) {
 			expect(post.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
 			expect(post.updated).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-			expect(post.date, post.translationKey).not.toBe(RELEASE_DATE);
 			expect(post.updated >= post.date, post.translationKey).toBe(true);
 		}
 	});
 
-	it("front matter carries literal dates, never the release placeholder", () => {
+	it("each article's page history opens with its own publication date", () => {
 		for (const post of posts) {
 			for (const lang of LANGUAGES) {
-				const file = path.join(
-					root,
-					"content",
-					"blog",
-					lang,
-					`${post.content[lang].slug}.md`,
+				const raw = readFileSync(articleFile(post, lang), "utf8");
+				const history = raw.match(
+					/^## (?:Histórico desta página|Page history|Historial de esta página)\r?\n\r?\n- (\S+): /m,
 				);
-				const frontMatter = readFileSync(file, "utf8").split(/\r?\n---/)[0];
-				expect(frontMatter, file).not.toContain("{{RELEASE_DATE}}");
+				expect(history, articleFile(post, lang)).not.toBeNull();
+				expect(history[1], articleFile(post, lang)).toBe(post.date);
+				expect(files.get(fileForUrl(post.content[lang].url))).toContain(
+					`${post.date}: `,
+				);
 			}
 		}
+	});
+
+	it("rejects an article that still carries a template token", () => {
+		const dir = mkdtempSync(path.join(tmpdir(), "clipey-post-"));
+		try {
+			const valid = readFileSync(articleFile(posts[0], "en"), "utf8");
+			const file = path.join(dir, "post.md");
+			writeFileSync(file, valid.replace(/- \S+: published\./, "- {{RELEASE_DATE}}: published."));
+			expect(() => parsePostFile(file, "en")).toThrow(/unreplaced template token/);
+			writeFileSync(file, valid.replace(/^date: .*$/m, 'date: "{{RELEASE_DATE}}"'));
+			expect(() => parsePostFile(file, "en")).toThrow(/invalid applicability, feature flag, or dates/);
+			writeFileSync(file, valid);
+			expect(parsePostFile(file, "en").date).toBe(posts[0].date);
+		} finally {
+			rmSync(dir, { recursive: true, force: true });
+		}
+	});
+
+	it("no shared release date remains anywhere in the site sources or output", () => {
+		// The legal pages are protected byte-for-byte and legitimately state their own effective date; Wrangler's
+		// compatibility_date is a runtime flag, not an editorial date. Everything else must be clean.
+		const FORBIDDEN = /2026-09-29|29 SET|29 de setembro|September 29|Sep 29|29 de septiembre|RELEASE_DATE|\{\{[A-Z_]+\}\}/;
+		const skipDirs = new Set(["node_modules", "dist", "legal-source", ".git"]);
+		const textFile = /\.(mjs|js|json|jsonc|md|css|html|txt|xml)$/;
+		const self = fileURLToPath(import.meta.url);
+		const walk = (dir) =>
+			readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+				const full = path.join(dir, entry.name);
+				if (entry.isDirectory()) return skipDirs.has(entry.name) ? [] : walk(full);
+				return textFile.test(entry.name) && full !== self ? [full] : [];
+			});
+		const hits = [];
+		for (const file of walk(root)) {
+			const lines = readFileSync(file, "utf8").split(/\r?\n/);
+			lines.forEach((line, index) => {
+				if (!FORBIDDEN.test(line)) return;
+				if (path.basename(file) === "wrangler.jsonc" && /"compatibility_date"/.test(line)) return;
+				hits.push(`${path.relative(root, file)}:${index + 1}`);
+			});
+		}
+		for (const [name, content] of files) {
+			if (LEGAL_OUTPUT_FILES.includes(name)) continue;
+			if (FORBIDDEN.test(content)) hits.push(`output:${name}`);
+		}
+		expect(hits).toEqual([]);
 	});
 });
 

@@ -60,4 +60,4 @@ Next, apply the reframe to a short section, check the fallback and review the ex
 
 ## Page history
 
-- {{RELEASE_DATE}}: published.
+- 2026-10-15: published.

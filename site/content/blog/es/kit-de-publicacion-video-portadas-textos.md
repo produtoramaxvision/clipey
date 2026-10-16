@@ -62,4 +62,4 @@ Después de revisar el vídeo y los textos de cada destino, entrega el kit a qui
 
 ## Historial de esta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

@@ -57,4 +57,4 @@ Antes de compartir diagnósticos, inspecciona el archivo real. [Descarga Clipey]
 
 ## Historial de esta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

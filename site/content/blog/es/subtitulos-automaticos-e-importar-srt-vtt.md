@@ -75,4 +75,4 @@ Siguiente paso: importa una pista existente o transcribe un fragmento, corrige e
 
 ## Historial de esta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

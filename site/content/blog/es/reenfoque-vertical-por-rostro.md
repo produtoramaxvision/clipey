@@ -60,4 +60,4 @@ Siguiente paso: prueba el reencuadre en un fragmento corto, comprueba la alterna
 
 ## Historial de esta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

@@ -62,4 +62,4 @@ Depois de conectar o cliente, teste uma leitura simples e confirme o projeto ant
 
 ## Histórico desta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

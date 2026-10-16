@@ -75,4 +75,4 @@ Next, import a subtitle track or transcribe a short section, correct its text an
 
 ## Page history
 
-- {{RELEASE_DATE}}: published.
+- 2026-10-15: published.

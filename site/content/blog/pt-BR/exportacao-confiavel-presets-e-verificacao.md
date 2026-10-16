@@ -78,4 +78,4 @@ Consulte os [recursos de exportação](/#recursos) e faça uma reprodução loca
 
 ## Histórico desta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

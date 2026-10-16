@@ -74,4 +74,4 @@ To prepare footage, read [recording your screen on Windows](/blog/en/record-scre
 
 ## Page history
 
-- {{RELEASE_DATE}}: published.
+- 2026-10-15: published.

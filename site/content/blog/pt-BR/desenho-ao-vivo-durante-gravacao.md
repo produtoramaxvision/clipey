@@ -64,4 +64,4 @@ Para contexto sobre o modo de cursor, leia [gravar a tela no Windows](/blog/grav
 
 ## Histórico desta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

@@ -73,4 +73,4 @@ Review the [export features](/en/#features) and play the file locally before sen
 
 ## Page history
 
-- {{RELEASE_DATE}}: published.
+- 2026-10-15: published.

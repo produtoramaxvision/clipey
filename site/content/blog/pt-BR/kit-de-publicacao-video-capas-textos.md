@@ -62,4 +62,4 @@ Depois de revisar o vídeo e os textos de cada destino, você pode entregar o ki
 
 ## Histórico desta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

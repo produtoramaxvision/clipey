@@ -58,4 +58,4 @@ Also read [recording your screen on Windows](/blog/en/record-screen-windows-curs
 
 ## Page history
 
-- {{RELEASE_DATE}}: published.
+- 2026-10-15: published.

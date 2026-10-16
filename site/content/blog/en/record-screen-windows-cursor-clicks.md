@@ -76,4 +76,4 @@ Start a project from the [download page](/en/#download).
 
 ## Page history
 
-- {{RELEASE_DATE}}: published.
+- 2026-10-15: published.

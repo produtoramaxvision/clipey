@@ -1,6 +1,6 @@
 # Clipey blog publishing guide
 
-Articles live in `content/blog/<lang>/<slug>.md`, with language folders `pt-BR`, `en`, and `es`. The Vite build replaces `{{RELEASE_DATE}}` with the single value in `src/blog/config.mjs`. The blog starts empty; content is maintained separately.
+Articles live in `content/blog/<lang>/<slug>.md`, with language folders `pt-BR`, `en`, and `es`. Every article carries its own literal dates (`YYYY-MM-DD`): `date` is the day it was first published and `updated` the day of its last factual change. There is no shared release date and no date template token; the build rejects `{{…}}` tokens in articles. The blog starts empty; content is maintained separately.
 
 ## Frontmatter
 
@@ -13,8 +13,8 @@ translationKey: ""        # pt-BR slug, shared by every translation
 category: "novidades"     # translated category values are defined by language
 tags: ["Edição com IA"]   # one to three localized tags
 author: "Equipe Clipey"   # localized author name
-date: "{{RELEASE_DATE}}"
-updated: "{{RELEASE_DATE}}"
+date: "YYYY-MM-DD"        # first publication day of this article
+updated: "YYYY-MM-DD"     # last factual change; never earlier than date
 featured: false            # true only for the 1.15 launch post
 order: 1
 cover: "/blog/covers/<translationKey>.webp"
@@ -27,7 +27,7 @@ appliesTo: "1.15"
 
 Use `/blog/<pt-slug>/`, `/blog/en/<en-slug>/`, and `/blog/es/<es-slug>/`. Slugs are lowercase ASCII and retain their trailing slash. Keep each article in all three languages; an incomplete translation set is excluded from language-specific output with a build warning. Use `/blog/img/<translationKey>/<name>.webp` for real app captures and request each capture in the lane evidence file. Do not invent screenshots.
 
-Open with an “Aplica-se a” / “Applies to” / “Aplica a” note naming Clipey 1.15 and Windows. Explain the reader's problem, then provide numbered steps for tutorials with exact interface labels. Include a localized tips section, limitations when relevant, two links to other planned posts, one landing-page anchor, and one closing call to action. Finish with “Histórico desta página” / “Page history” / “Historial de esta página” and `{{RELEASE_DATE}}: published.`
+Open with an “Aplica-se a” / “Applies to” / “Aplica a” note naming Clipey 1.15 and Windows. Explain the reader's problem, then provide numbered steps for tutorials with exact interface labels. Include a localized tips section, limitations when relevant, two links to other planned posts, one landing-page anchor, and one closing call to action. Finish with “Histórico desta página” / “Page history” / “Historial de esta página” and a dated entry such as `- YYYY-MM-DD: published.` using the article's real `date`; add a dated line for each later factual update.
 
 Tutorial UI labels in English and Spanish must match the translated UI. If there is no English label, mention the Portuguese label in parentheses on first use only. Write each language naturally rather than translating sentence by sentence.
 

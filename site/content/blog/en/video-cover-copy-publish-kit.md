@@ -62,4 +62,4 @@ After checking the video and copy for each destination, hand the kit to whoever 
 
 ## Page history
 
-- {{RELEASE_DATE}}: published.
+- 2026-10-15: published.

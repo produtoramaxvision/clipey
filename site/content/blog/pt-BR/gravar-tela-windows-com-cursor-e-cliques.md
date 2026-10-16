@@ -76,4 +76,4 @@ Para começar um novo projeto, consulte a página de [download](/#download).
 
 ## Histórico desta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

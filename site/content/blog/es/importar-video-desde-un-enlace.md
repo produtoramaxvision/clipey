@@ -75,4 +75,4 @@ Siguiente paso: importa solo un enlace autorizado, comprueba el archivo dentro d
 
 ## Historial de esta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

@@ -65,4 +65,4 @@ Antes de compartilhar diagnósticos, inspecione o pacote real. [Baixe o Clipey](
 
 ## Histórico desta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

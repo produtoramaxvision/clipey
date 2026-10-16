@@ -79,4 +79,4 @@ Para obter Clipey e acompanhar a versão, visite a página de [download](/#downl
 
 ## Histórico desta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

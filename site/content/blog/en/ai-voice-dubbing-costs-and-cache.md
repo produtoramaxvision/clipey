@@ -62,4 +62,4 @@ Next, test one line, listen in the project and generate the rest only after it s
 
 ## Page history
 
-- {{RELEASE_DATE}}: published.
+- 2026-10-15: published.

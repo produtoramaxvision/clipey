@@ -45,8 +45,8 @@ describe("blog pure helpers", () => {
 		const sitemap = renderSitemap([
 			{
 				categoryKey: "news",
-				date: "2026-09-29",
-				updated: "2026-09-29",
+				date: "2026-10-15",
+				updated: "2026-10-15",
 				content: {
 					"pt-BR": { url: "/blog/launch/" },
 					en: { url: "/blog/en/launch/" },

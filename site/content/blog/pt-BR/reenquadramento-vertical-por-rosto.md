@@ -60,4 +60,4 @@ Próximo passo: aplique o reenquadramento a um trecho curto, confira o fallback 
 
 ## Histórico desta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

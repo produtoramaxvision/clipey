@@ -73,4 +73,4 @@ Consulta las [funciones de exportación](/es/#funciones) y reproduce el archivo 
 
 ## Historial de esta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.

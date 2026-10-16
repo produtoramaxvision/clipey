@@ -63,8 +63,8 @@ describe("article presentation helpers", () => {
 	});
 
 	it("formats the short date of the timecode column", () => {
-		expect(formatShortDate("2026-09-29", "en")).toBe("Sep 29, 2026");
-		expect(formatShortDate("2026-09-29", "pt-BR")).not.toContain(" de ");
+		expect(formatShortDate("2026-10-15", "en")).toBe("Oct 15, 2026");
+		expect(formatShortDate("2026-10-15", "pt-BR")).not.toContain(" de ");
 	});
 });
 

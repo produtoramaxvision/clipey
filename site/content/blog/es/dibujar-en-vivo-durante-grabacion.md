@@ -64,4 +64,4 @@ Para entender la captura del cursor, lee [grabar la pantalla en Windows](/blog/e
 
 ## Historial de esta página
 
-- {{RELEASE_DATE}}: publicado.
+- 2026-10-15: publicado.
