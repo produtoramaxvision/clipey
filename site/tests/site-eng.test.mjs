@@ -68,11 +68,11 @@ describe("1. Legal pages: copied verbatim, text pinned, no third-party origin (S
 	// SHA-256 of visibleText() for each legal page. Any change to the wording of a policy changes its hash: update
 	// it only together with the "Última atualização" / "Last updated" date in the page.
 	const VISIBLE_TEXT_SHA256 = {
-		"privacidade/index.html": "c9856270b88048b2300c4776718335289e8cfb301d883fd3acbd821f2201f873",
-		"termos/index.html": "2108c20a929da89c445388cfe3826d416cd1b3ac7dd63dab5af042088ded2e0d",
+		"privacidade/index.html": "c35e45ce8ac518156205b4701652a8b74ed56c286ad491ae9deb34fc47e6001c",
+		"termos/index.html": "770936e973d82f345830f0b41da798b808121d9c7bda68cf37450d1bb5a6d04e",
 		"exclusao-de-dados/index.html": "97ef6d5ff17ba25d41126bc4a95a8842cd70a1742b8a682bc3c144bdad939882",
-		"en/privacy/index.html": "63e114dffff52eaf2f262607380f92cabfa2855f75ec210494a9ca82d489a2ce",
-		"en/terms/index.html": "7a6c6ef80e0d8f6ede78f75e61dd1c33c7be9ec0bba8f6b339f4f8d1ec9bc257",
+		"en/privacy/index.html": "b71ccb67d8a45d8e68e0bae9fd419728f0d4b4790d310b7aaaa8da1a78219e7e",
+		"en/terms/index.html": "7a299564feac972b7da7c80e8a5af29b56f1a8b3882dd518b0597d6193352322",
 		"en/data-deletion/index.html": "5ff9d6ef7c52946ec8d8fd40171fa32d2a3d90e0624dd3236909c4ec1423e139",
 		"404.html": "6f07a90177a8c92701c798de2af2466cfd8cd9a1c485e2e0fe0f10c4ed28925f",
 	};
@@ -265,11 +265,14 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			"o vídeo não é hospedado em nenhum endereço do Clipey",
 			"Ele não grava códigos, tokens nem dados de conta em banco de dados ou em outro armazenamento próprio.",
 			"Vídeos e publicações não passam por esse serviço",
-			"router.produtoramaxvision.com.br",
-			"n8n.meuagente.api.br",
 			"Os modelos de reconhecimento de fala são baixados uma vez do Hugging Face (huggingface.co)",
-			"componente de importação de terceiros",
-			"A importação não é permitida para conteúdo cujos termos a vedem, inclusive o YouTube.",
+			"componente de terceiros",
+			"A importação por link usa um componente de terceiros e baixa a mídia diretamente do site de origem para o seu computador.",
+			"Você é responsável por importar apenas conteúdo que possui ou que tem autorização para usar, respeitando os direitos autorais e os termos do site de origem.",
+			"A Produtora MaxVision não hospeda, armazena nem distribui o conteúdo importado.",
+			"nenhum dado vai para servidores do Clipey",
+			"própria chave de API (BYOK)",
+			"não há créditos na versão 1.15",
 			"(LGPD, art. 7º, IX; GDPR, art. 6º, 1, f)",
 			"citando a LGPD (art. 33, II) e a Resolução CD/ANPD nº 19/2024",
 			"O exercício dos direitos é gratuito.",
@@ -299,11 +302,14 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			"the video is not hosted at any Clipey address",
 			"It does not write codes, tokens or account data to any database or other storage of its own.",
 			"Videos and posts do not pass through this service",
-			"router.produtoramaxvision.com.br",
-			"n8n.meuagente.api.br",
 			"The speech recognition models are downloaded once from Hugging Face (huggingface.co)",
-			"third-party import component",
-			"Import is not permitted for content whose terms prohibit it, including YouTube.",
+			"third-party component",
+			"Link import uses a third-party component and downloads media directly from the source site to your computer.",
+			"You are responsible for importing only content you own or are authorized to use, respecting copyright and the terms of the source site.",
+			"Produtora MaxVision does not host, store or distribute imported content.",
+			"no data goes to Clipey servers",
+			"own API key (BYOK)",
+			"there are no credits in 1.15",
 			"(LGPD Art. 7 IX; GDPR Art. 6(1)(f))",
 			"citing LGPD Art. 33 II and ANPD Res. 19/2024",
 			"Exercising these rights is free.",
@@ -326,7 +332,11 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			"aplicativo gratuito para Windows (macOS e Linux em breve)",
 			"O Clipey não vende créditos, assinaturas nem outros itens pagos.",
 			"O uso é permitido a maiores de 18 anos ou a menores representados ou assistidos pelos responsáveis.",
-			"componente de importação de terceiros e não é permitida para conteúdo cujos termos a vedem, inclusive o YouTube.",
+			"A importação por link usa um componente de terceiros e baixa a mídia diretamente do site de origem para o seu computador.",
+			"Você é responsável por importar apenas conteúdo que possui ou que tem autorização para usar, respeitando os direitos autorais e os termos do site de origem.",
+			"A Produtora MaxVision não hospeda, armazena nem distribui o conteúdo importado.",
+			"própria chave de API (BYOK)",
+			"não há créditos na versão 1.15",
 			"O aplicativo e o aplicativo complementar móvel são licenciados gratuitamente sob a Licença MIT",
 			"Para usuários consumidores, nada nos itens 7 e 8 limita a responsabilidade por vícios e defeitos nem a reparação integral prevista no CDC (arts. 6º, VI, 12, 14 e 24).",
 			"Mudanças relevantes serão avisadas no aplicativo com 30 dias de antecedência. Se discordar, você pode parar de usar o Clipey.",
@@ -337,7 +347,11 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			"free desktop app for Windows (macOS and Linux coming soon)",
 			"Clipey does not sell credits, subscriptions or any other paid items.",
 			"Use is for persons aged 18+, or minors represented or assisted by a guardian.",
-			"third-party import component and is not permitted for content whose terms prohibit it, including YouTube.",
+			"Link import uses a third-party component and downloads media directly from the source site to your computer.",
+			"You are responsible for importing only content you own or are authorized to use, respecting copyright and the terms of the source site.",
+			"Produtora MaxVision does not host, store or distribute imported content.",
+			"own API key (BYOK)",
+			"there are no credits in 1.15",
 			"The app and the mobile companion are licensed free of charge under the MIT License",
 			"For consumer users, nothing in sections 7 and 8 limits liability for defects or full compensation under the CDC (Arts. 6 VI, 12, 14, 24).",
 			"Material changes will be announced in the app 30 days in advance. If you disagree, you may stop using Clipey.",
@@ -373,8 +387,44 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			for (const statement of statements) expect(text, statement).toContain(statement);
 			expect(text).not.toMatch(/yt-dlp|OpenScreen|Windows, macOS (?:e|and) Linux/i);
 			expect(text).not.toMatch(/significa aceitação|means acceptance|nas notas de versão|in the release notes/);
+			expect(text).not.toContain("router.produtoramaxvision.com.br");
+			expect(text).not.toContain("n8n.meuagente.api.br");
+			expect(text).not.toMatch(/não é permitid[ao] para conteúdo|not permitted for content/i);
+			expect(text).not.toMatch(/servidor(?:es)? intermediário|intermediate server/i);
 		});
 	}
+
+	it("enforces round 3 owner decisions: user responsibility on link import and absence of internal AI servers", () => {
+		const ptImport =
+			"A importação por link usa um componente de terceiros e baixa a mídia diretamente do site de origem para o seu computador. Você é responsável por importar apenas conteúdo que possui ou que tem autorização para usar, respeitando os direitos autorais e os termos do site de origem. A Produtora MaxVision não hospeda, armazena nem distribui o conteúdo importado.";
+		const enImport =
+			"Link import uses a third-party component and downloads media directly from the source site to your computer. You are responsible for importing only content you own or are authorized to use, respecting copyright and the terms of the source site. Produtora MaxVision does not host, store or distribute imported content.";
+
+		for (const file of ["privacidade/index.html", "termos/index.html"]) {
+			const text = bodyText(files.get(file));
+			expect(text).toContain(ptImport);
+			expect(text).not.toContain("router.produtoramaxvision.com.br");
+			expect(text).not.toContain("n8n.meuagente.api.br");
+			expect(text).not.toMatch(/não é permitid[ao]/i);
+			expect(text).not.toMatch(/servidor(?:es)? intermediário/i);
+		}
+
+		for (const file of ["en/privacy/index.html", "en/terms/index.html"]) {
+			const text = bodyText(files.get(file));
+			expect(text).toContain(enImport);
+			expect(text).not.toContain("router.produtoramaxvision.com.br");
+			expect(text).not.toContain("n8n.meuagente.api.br");
+			expect(text).not.toMatch(/not permitted/i);
+			expect(text).not.toMatch(/intermediate server/i);
+		}
+
+		expect(bodyText(files.get("privacidade/index.html"))).toContain(
+			"nenhum dado vai para servidores do Clipey",
+		);
+		expect(bodyText(files.get("en/privacy/index.html"))).toContain(
+			"no data goes to Clipey servers",
+		);
+	});
 
 	it("updates the 404 page and blog footers with location, MIT license, and consistent links", () => {
 		const html404 = files.get("404.html");
