@@ -68,11 +68,11 @@ describe("1. Legal pages: copied verbatim, text pinned, no third-party origin (S
 	// SHA-256 of visibleText() for each legal page. Any change to the wording of a policy changes its hash: update
 	// it only together with the "Última atualização" / "Last updated" date in the page.
 	const VISIBLE_TEXT_SHA256 = {
-		"privacidade/index.html": "f1cc09375ba3aa5d3c63d4a6c9b389c0a7f606ace1e6f4c469b9f2a9fea88d1d",
-		"termos/index.html": "6b0a390bfd8bdda6ac31e0f2f3dd1c5ff8464ac21fb0ebd08fbf8a9dee301924",
+		"privacidade/index.html": "d169fdbc88394fdc14a3e63fb03bb84a8fd464df4fcc79fa758b5206b1984911",
+		"termos/index.html": "0b22921f5000b030dc05e654202070ae063418a83441d9c274e017dfe1212369",
 		"exclusao-de-dados/index.html": "2662889a398d97b6a9e018ec2f2161a6694c89e4b390a1ade036f91536004667",
-		"en/privacy/index.html": "d1cd658b43c28c2c73edab93dac68bdec6706935ef75e21267803e209acee1d9",
-		"en/terms/index.html": "50777b07012b0992f37f537cbc76c541c9171db6d116f5e705368f0bf4338ddf",
+		"en/privacy/index.html": "4e44f09496fc5dc2de82b0ad82143ff2fd200bffdd3292e54e4ca71562ef0128",
+		"en/terms/index.html": "afecc9ccdd62677b8ad1d1b6db3a2ddc28a4b9e8007d151d77b9cfde20c4038b",
 		"en/data-deletion/index.html": "c17da80873b3238220a268fd39b7b4911ead054d0682885db6a812337b9efafc",
 		"404.html": "6f07a90177a8c92701c798de2af2466cfd8cd9a1c485e2e0fe0f10c4ed28925f",
 	};
@@ -202,10 +202,12 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 
 		it(`states its effective and last-updated date: ${fileName}`, () => {
 			const text = bodyText(files.get(fileName));
+			const expectedDate = kind === "deletion" ? "October 16, 2026" : "October 17, 2026";
+			const expectedDatePt = kind === "deletion" ? "16 de outubro de 2026" : "17 de outubro de 2026";
 			expect(text).toContain(
 				lang === "en"
-					? "Effective October 16, 2026 · Last updated: October 16, 2026"
-					: "Em vigor desde 16 de outubro de 2026 · Última atualização: 16 de outubro de 2026",
+					? `Effective October 16, 2026 · Last updated: ${expectedDate}`
+					: `Em vigor desde 16 de outubro de 2026 · Última atualização: ${expectedDatePt}`,
 			);
 		});
 	}
@@ -231,7 +233,7 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			expect(text).toContain("api.clipey.com.br");
 			expect(text).toContain("localStorage");
 			expect(text).toMatch(/ANPD/);
-			expect(text).not.toMatch(/até 30 dias|up to 30 days|não armazena tokens|does not store tokens/);
+			expect(text).not.toMatch(/até 30 dias|up to 30 days|o aplicativo não armazena tokens|the app does not store tokens/);
 		});
 	}
 
