@@ -114,12 +114,15 @@ describe("1. Legal pages: copied verbatim, text pinned, no third-party origin (S
 		}
 		expect(files.get("legal.css")).not.toMatch(/https?:|\/\/|@import/);
 		// The CSP allows the stylesheet and the font only from the site itself, and names no other origin besides the
-		// Cloudflare Web Analytics beacon path in script-src.
+		// Cloudflare Web Analytics beacon in script-src and its reporting origin in connect-src.
 		const csp = files.get("_headers").match(/Content-Security-Policy: (.+)/)[1];
 		expect(csp).toContain("style-src 'self';");
 		expect(csp).toContain("font-src 'self';");
 		expect(
-			csp.replace(" https://static.cloudflareinsights.com/beacon.min.js/", ""),
+			csp
+				.replace(" https://static.cloudflareinsights.com/beacon.min.js/", "")
+				.replace(" https://static.cloudflareinsights.com/beacon.min.js", "")
+				.replace(" https://cloudflareinsights.com", ""),
 		).not.toMatch(/https?:|\*|fonts\./);
 	});
 
