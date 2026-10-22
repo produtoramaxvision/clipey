@@ -1020,6 +1020,11 @@ html {
 	stroke-linejoin: round;
 }
 
+/*
+ * The tour loops, so it runs only once landing-v3.js has mounted it (is-live) and shown its pause button. Without
+ * scripts there is no way to pause it, so it holds its first frame (WCAG 2.2.2).
+ */
+.hud:not(.is-live) :is(.hud-track, .hud-ring, .hud-tip, .hud-cursor-track),
 .hud.is-paused :is(.hud-track, .hud-ring, .hud-tip, .hud-cursor-track),
 .hud.is-offscreen :is(.hud-track, .hud-ring, .hud-tip, .hud-cursor-track) {
 	animation-play-state: paused;

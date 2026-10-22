@@ -5,7 +5,8 @@
  *   element outside the viewport (also with the phone section turned to landscape), unequal widths inside a button
  *   group, layout shift, or a phone menu that does not open, close on Escape and return focus. The light run also
  *   fails unless the page is in the light theme; the reduced-motion runs fail if the hero video plays or any
- *   animation is running. Every run logs the source the hero video picked;
+ *   animation is running; the no-script runs fail if anything moves or the hero video lacks native controls. Every
+ *   run logs the source the hero video picked;
  * - loads every other page of dist/ once at desktop width, scrolls through it, and fails on console errors, failed
  *   requests, broken images or horizontal scroll.
  * `vite preview` does not apply dist/_headers, so the production CSP is read from that file and added to every
@@ -56,6 +57,8 @@ const RUNS = [
 	{ name: "pt-BR-desktop-reduced-motion", url: "/", context: { ...DESKTOP, reducedMotion: "reduce" } },
 	{ name: "pt-BR-phone-reduced-motion", url: "/", context: { ...PHONE, reducedMotion: "reduce" } },
 	{ name: "pt-BR-desktop-light", url: "/", context: DESKTOP, light: true },
+	{ name: "pt-BR-desktop-no-script", url: "/", context: { ...DESKTOP, javaScriptEnabled: false } },
+	{ name: "pt-BR-phone-no-script", url: "/", context: { ...PHONE, javaScriptEnabled: false } },
 ];
 
 /** Every other HTML page of the build, as its URL. */
@@ -134,15 +137,17 @@ async function newPage(browser, contextOptions, { light = false } = {}) {
 
 /** Scrolls through the page so every lazy image and video slot is reached, then back to the top, instantly. */
 async function scrollThrough(page) {
-	await page.evaluate(async () => {
-		const step = Math.round(window.innerHeight * 0.8);
-		for (let y = 0; y < document.documentElement.scrollHeight; y += step) {
-			window.scrollTo({ top: y, behavior: "instant" });
-			await new Promise((resolve) => setTimeout(resolve, 120));
-		}
-		window.scrollTo({ top: 0, behavior: "instant" });
-	});
-	await page.waitForFunction(() => window.scrollY === 0);
+	// The waits run here, not in the page: with scripts disabled the page's own timers never fire.
+	const { step, height } = await page.evaluate(() => ({
+		step: Math.round(window.innerHeight * 0.8),
+		height: document.documentElement.scrollHeight,
+	}));
+	for (let y = 0; y < height; y += step) {
+		await page.evaluate((top) => window.scrollTo({ top, behavior: "instant" }), y);
+		await page.waitForTimeout(120);
+	}
+	await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+	if ((await page.evaluate(() => window.scrollY)) !== 0) throw new Error("could not scroll back to the top");
 	await page.waitForLoadState("networkidle");
 }
 
@@ -228,8 +233,16 @@ async function checkLanding(browser, run, info) {
 		const theme = await page.evaluate(() => document.documentElement.dataset.theme);
 		if (theme !== "light") problems.push(`light run: data-theme="${theme}"`);
 	}
-	if (run.context.reducedMotion === "reduce") {
-		if (hero && !hero.paused) problems.push("reduced motion: the hero video plays");
+	// Without scripts nothing may move (there is no pause button) and the hero video must offer its native controls.
+	const noScript = run.context.javaScriptEnabled === false;
+	if (noScript) {
+		const controls = await page.evaluate(() => document.querySelector(".vslot--hero video")?.controls);
+		if (!controls) problems.push("no script: the hero video has no native controls");
+		if (hero && !hero.paused) problems.push("no script: the hero video plays");
+	}
+	if (run.context.reducedMotion === "reduce" || noScript) {
+		const mode = noScript ? "no script" : "reduced motion";
+		if (hero && !hero.paused && !noScript) problems.push("reduced motion: the hero video plays");
 		const running = await page.evaluate(() =>
 			document
 				.getAnimations()
@@ -240,7 +253,7 @@ async function checkLanding(browser, run, info) {
 					return `${name} on ${target?.tagName?.toLowerCase() ?? "?"}.${[...(target?.classList ?? [])].join(".")}${animation.effect?.pseudoElement ?? ""}`;
 				}),
 		);
-		for (const animation of running) problems.push(`reduced motion: running ${animation}`);
+		for (const animation of running) problems.push(`${mode}: running ${animation}`);
 	}
 
 	const overflow = await horizontalOverflow(page);
@@ -251,7 +264,8 @@ async function checkLanding(browser, run, info) {
 	if (cls > 0.01) problems.push(`layout shift: CLS ${cls.toFixed(3)}`);
 
 	await page.screenshot({ path: path.join(artifacts, `${run.name}.png`), fullPage: true });
-	await checkMenu(page, problems);
+	// The menu is a script feature; without scripts its links stay reachable as the page's sections and footer.
+	if (!noScript) await checkMenu(page, problems);
 
 	// The phone section turned to landscape must stay inside the viewport and inside its own column.
 	const rotate = page.locator('label[for="rotate-phone"]');

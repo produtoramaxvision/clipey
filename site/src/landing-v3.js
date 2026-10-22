@@ -108,6 +108,8 @@ function mountHud(hud) {
 	const button = hud.querySelector("[data-hud-toggle]");
 	watchVisibility(hud, (visible) => hud.classList.toggle("is-offscreen", !visible));
 	if (!button) return;
+	// The CSS holds the tour on its first frame until this point, where its pause button becomes available.
+	hud.classList.add("is-live");
 	button.hidden = false;
 	setToggle(button, false);
 	button.addEventListener("click", () => {
