@@ -51,6 +51,63 @@
 	--media-scrim: rgba(12, 13, 11, 0.28);
 	--media-scrim-strong: rgba(12, 13, 11, 0.7);
 	--media-chip: rgba(12, 13, 11, 0.8);
+	/* Auto Clip's lane and highlights, as the app colours them (violet, between zoom blue and the playhead). */
+	--clip: #8b5cf6;
+	--clip-text: #a78bfa;
+	--clip-ink: #160f2e;
+	--clip-mark: rgba(167, 139, 250, 0.4);
+	--clip-glow: rgba(167, 139, 250, 0.8);
+	/*
+	 * The feature demos are pictures of the app, drawn in its dark interface in both themes: --demo-* never change
+	 * with the page theme, like --media-*.
+	 */
+	--demo-bg: #0c0d0b;
+	--demo-panel: rgba(12, 13, 11, 0.6);
+	--demo-surface: #141612;
+	--demo-line: #2c2f27;
+	--demo-line-strong: #3d4136;
+	--demo-text: #eceee6;
+	--demo-text-strong: #ffffff;
+	--demo-muted: #9aa091;
+	--demo-faint: #6b7064;
+	--demo-meta: #858b7c;
+	--demo-accent: #a2d305;
+	--demo-accent-ink: #0c0d0b;
+	--demo-accent-mark: rgba(162, 211, 5, 0.16);
+	--demo-accent-glow: rgba(162, 211, 5, 0.6);
+	--demo-danger: #f87171;
+	--demo-danger-mark: rgba(248, 113, 113, 0.14);
+	--demo-annotation: #fbbf24;
+	--demo-annotation-soft: #fde68a;
+	--demo-annotation-tap: rgba(251, 191, 36, 0.5);
+	--demo-caption-bg: rgba(24, 25, 22, 0.88);
+	--demo-segment: #242621;
+	--demo-segment-on: rgba(162, 211, 5, 0.18);
+	--demo-light: #f1efe7;
+	--demo-light-2: #dcd8cb;
+	--demo-chip-on-light: rgba(12, 13, 11, 0.82);
+	--demo-dot-on-light: rgba(12, 13, 11, 0.25);
+	--demo-violet-deep: #1d1733;
+	--demo-green-deep: #1a2410;
+	--demo-purple-deep: #3b2a6b;
+	--demo-ink-deep: #07070a;
+	--demo-shadow: rgba(0, 0, 0, 0.9);
+	--demo-draw: #ef4444;
+	--demo-draw-halo: rgba(255, 255, 255, 0.85);
+	--demo-key: #eceee6;
+	--demo-key-ink: #0c0d0b;
+	--demo-key-edge: #9aa091;
+	/* The chat window of the agents section: a light chat app in both themes. */
+	--chat-bg: #f4f4f0;
+	--chat-line: #e3e3dc;
+	--chat-ink: #1d1f1a;
+	--chat-bubble: #ffffff;
+	--chat-muted: #3a3d35;
+	--chat-ok: #4a6e00;
+	--chat-live: #7fb800;
+	--chat-dot: #6c55ff;
+	--chat-user: #1d1f1a;
+	--chat-user-ink: #ffffff;
 	--font-sans:
 		"Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
 		sans-serif;
@@ -85,6 +142,8 @@
 	--zoom-text: #1d4ed8;
 	--speed: #f97316;
 	--speed-text: #9a3412;
+	--clip: #7c3aed;
+	--clip-text: #6d28d9;
 	--annotation: #eab308;
 	--annotation-text: #854d0e;
 	--danger: #ef4444;
