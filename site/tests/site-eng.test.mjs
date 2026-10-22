@@ -32,6 +32,7 @@ import { UI } from "../src/blog/i18n.mjs";
 import { THEME_SCRIPT_HASH } from "../src/blog/shell.mjs";
 import { usedCategories } from "../src/blog/template.mjs";
 import { STORY } from "../src/landing-copy.mjs";
+import { LANDING } from "../src/landing-v3-copy.mjs";
 import {
 	fileForUrl,
 	LEGAL_OUTPUT_FILES,
@@ -607,7 +608,7 @@ describe("4. JSON-LD structure and validation", () => {
 		}
 	});
 
-	it("landings have SoftwareApplication with offers and FAQPage", () => {
+	it("landings have SoftwareApplication with offers, and no FAQPage (the v3 page shows no FAQ)", () => {
 		for (const lang of LANGUAGES) {
 			const html = files.get(fileForUrl(LANDING_PATH[lang]));
 			const jsonText = html.match(
@@ -629,11 +630,9 @@ describe("4. JSON-LD structure and validation", () => {
 				url: RELEASES_URL,
 			});
 
+			// Structured data must describe what the page shows; the FAQ text lives on in llms-full.txt.
 			const faq = data["@graph"].find((item) => item["@type"] === "FAQPage");
-			expect(faq).toBeDefined();
-			expect(faq.mainEntity.length).toBeGreaterThan(0);
-			expect(faq.mainEntity[0]["@type"]).toBe("Question");
-			expect(faq.mainEntity[0].acceptedAnswer["@type"]).toBe("Answer");
+			expect(faq).toBeUndefined();
 		}
 	});
 
@@ -728,6 +727,21 @@ describe("4b. Platform statements name Windows, macOS and Linux", () => {
 				...STORY[lang].faq.map(([, answer]) => answer),
 			];
 			for (const text of copy) expect(text, `${lang}: ${text}`).not.toMatch(WINDOWS_ONLY);
+		}
+	});
+
+	it("names Windows alone in the v3 copy only inside groups that also offer macOS and Linux", () => {
+		const strings = (value) =>
+			typeof value === "string" ? [value] : Object.values(value).flatMap(strings);
+		for (const lang of LANGUAGES) {
+			// Per-system button groups and the compatibility strip list all three systems side by side (owner-approved design).
+			const { hero, download, compat, ...rest } = LANDING[lang];
+			const { cta, ctaPhone, ...heroRest } = hero;
+			for (const text of strings({ ...rest, heroRest }))
+				expect(text, `${lang}: ${text}`).not.toMatch(WINDOWS_ONLY);
+			expect(cta.join(" ")).toMatch(/Windows[\s\S]*macOS[\s\S]*Linux/);
+			expect(download.buttons.join(" ")).toMatch(/Windows[\s\S]*macOS[\s\S]*Linux/);
+			expect(compat.groups.flatMap(([, items]) => items).join(" ")).toMatch(/Windows[\s\S]*macOS[\s\S]*Linux/);
 		}
 	});
 
@@ -982,21 +996,15 @@ describe("11b. SEO: single canonical host (S7)", () => {
 	});
 });
 
-describe("12. SEO: hero definition and BYOK FAQ (S8)", () => {
-	it("renders a factual definition near the hero in each locale", () => {
+describe("12. SEO: hero statement and BYOK FAQ (S8)", () => {
+	// The v3 design has no separate definition paragraph: the hero subtitle says what Clipey does on which systems.
+	it("says what Clipey does and on which systems right under the h1, in each locale", () => {
 		for (const lang of LANGUAGES) {
 			const html = files.get(fileForUrl(LANDING_PATH[lang]));
-			expect(html, lang).toContain('class="story-def"');
-			expect(html, lang).toContain(STORY[lang].hero.definition);
+			const sub = LANDING[lang].hero.sub;
+			expect(sub).toMatch(/Windows, macOS (?:ou|or|o) Linux/);
+			expect(html.indexOf(sub), lang).toBeGreaterThan(html.indexOf("</h1>"));
 		}
-	});
-
-	it("styles the definition with design tokens", () => {
-		const css = readFileSync(path.join(root, "src", "landing.css"), "utf8");
-		const rule = css.match(/\.story-def\s*\{([^}]*)\}/);
-		expect(rule, ".story-def rule").not.toBeNull();
-		expect(rule[1]).toMatch(/color:\s*var\(--[a-z-]+\)/);
-		expect(rule[1]).not.toMatch(/#[0-9a-f]{3,8}\b/i);
 	});
 
 	it("has a BYOK FAQ entry in each locale", () => {
@@ -1009,14 +1017,11 @@ describe("12. SEO: hero definition and BYOK FAQ (S8)", () => {
 		}
 	});
 
-	it("includes the BYOK FAQ in the landing JSON-LD", () => {
-		for (const lang of LANGUAGES) {
-			const html = files.get(fileForUrl(LANDING_PATH[lang]));
-			const ld = JSON.parse(
-				html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1],
-			);
-			const faq = ld["@graph"].find((node) => node["@type"] === "FAQPage");
-			expect(faq.mainEntity.length).toBe(STORY[lang].faq.length);
+	it("keeps the FAQ, BYOK answer included, in llms-full.txt", () => {
+		const full = files.get("llms-full.txt");
+		for (const [question, answer] of STORY["pt-BR"].faq) {
+			expect(full).toContain(question);
+			expect(full).toContain(answer);
 		}
 	});
 });

@@ -1,6 +1,7 @@
 /**
- * The landing page of each language: the v2 story page, with its JSON-LD (organisation, site, app and FAQ).
- * Every language has STORY copy, so each landing alternates with the other two.
+ * The landing page of each language: the v3 page, with its JSON-LD (organisation, site and app). The v3 design has no
+ * visible FAQ, so the page carries no FAQPage markup (structured data must describe content the page shows); the FAQ
+ * text stays in llms-full.txt. Every language has v3 copy, so each landing alternates with the other two.
  */
 import {
 	APP_VERSION,
@@ -12,8 +13,7 @@ import {
 	SITE_URL,
 } from "./blog/config.mjs";
 import { UI } from "./blog/i18n.mjs";
-import { STORY } from "./landing-copy.mjs";
-import { renderStory } from "./landing-story.mjs";
+import { renderLanding3 } from "./landing-v3.mjs";
 
 /** The landing URL of every language, for hreflang alternates and the language switcher. */
 export const landingAlternates = () =>
@@ -64,24 +64,12 @@ function jsonLd(lang, canonical) {
 				author: { "@id": `${SITE_URL}/#organization` },
 				publisher: { "@id": `${SITE_URL}/#organization` },
 			},
-			{
-				"@type": "FAQPage",
-				"@id": `${SITE_URL}${canonical}#faq`,
-				mainEntity: STORY[lang].faq.map(([question, answer]) => ({
-					"@type": "Question",
-					name: question,
-					acceptedAnswer: {
-						"@type": "Answer",
-						text: answer,
-					},
-				})),
-			},
 		],
 	};
 }
 
 export function renderLanding(lang, assets) {
-	return renderStory(lang, {
+	return renderLanding3(lang, {
 		assets,
 		alternates: landingAlternates(),
 		jsonLd: jsonLd(lang, LANDING_PATH[lang]),

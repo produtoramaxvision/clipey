@@ -20,6 +20,8 @@
 	--accent-text: #a2d305;
 	--accent-ink: #0c0d0b;
 	--accent-soft: #1d2406;
+	/* Link hover and the highlighted language chip of the landing. */
+	--accent-hi: #d4f27a;
 	--focus: #a2d305;
 	/* Timeline semantics, as the app colours its lanes; *-text is the same hue readable as text on --bg. */
 	--zoom: #3b82f6;
@@ -29,6 +31,10 @@
 	--annotation: #fbbf24;
 	--annotation-text: #fbbf24;
 	--danger: #f87171;
+	--danger-text: #fca5a5;
+	--danger-soft: rgba(248, 113, 113, 0.14);
+	--danger-line: rgba(248, 113, 113, 0.5);
+	--danger-ring: rgba(248, 113, 113, 0.18);
 	--danger-hatch: rgba(248, 113, 113, 0.4);
 	--lane-ink: #161813;
 	--playhead: #6c55ff;
@@ -74,6 +80,7 @@
 	--accent-text: #435a00;
 	--accent-ink: #0f172a;
 	--accent-soft: #e4efc2;
+	--accent-hi: #2f4000;
 	--focus: #435a00;
 	--zoom-text: #1d4ed8;
 	--speed: #f97316;
@@ -81,6 +88,10 @@
 	--annotation: #eab308;
 	--annotation-text: #854d0e;
 	--danger: #ef4444;
+	--danger-text: #b91c1c;
+	--danger-soft: rgba(239, 68, 68, 0.1);
+	--danger-line: rgba(239, 68, 68, 0.45);
+	--danger-ring: rgba(239, 68, 68, 0.18);
 	--danger-hatch: rgba(239, 68, 68, 0.32);
 	--title: #0f172a;
 	--bar-glass: rgba(234, 238, 243, 0.92);
