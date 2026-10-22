@@ -7,6 +7,7 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"test": "vitest run",
+		"gate": "vite build && node scripts/gate.mjs",
 		"images": "node scripts/blog-images/covers.mjs",
 		"shots": "node scripts/shots/build-shots.mjs",
 		"deploy": "vite build && wrangler deploy"

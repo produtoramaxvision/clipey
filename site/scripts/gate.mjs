@@ -1,16 +1,18 @@
 /**
- * Pre-commit browser gate for the built site. Serves dist/ with `npm run preview` and:
+ * Pre-commit browser gate for the built site. Serves dist/ with `pnpm preview` and:
  * - loads every landing at desktop (1440) and phone (390) widths, plus spot checks (768, 1024, 360, reduced motion,
- *   light theme), and fails on console errors, page errors, failed requests, horizontal scroll, any element outside
- *   the viewport (also with the phone section turned to landscape), unequal widths inside a button group, layout
- *   shift, or a phone menu that does not open, close on Escape and return focus;
- * - loads every other page of dist/ once at desktop width and fails on console errors, failed requests or
- *   horizontal scroll.
+ *   light theme), and fails on console errors, page errors, failed requests, broken images, horizontal scroll, any
+ *   element outside the viewport (also with the phone section turned to landscape), unequal widths inside a button
+ *   group, layout shift, or a phone menu that does not open, close on Escape and return focus. The light run also
+ *   fails unless the page is in the light theme; the reduced-motion runs fail if the hero video plays or any
+ *   animation is running. Every run logs the source the hero video picked;
+ * - loads every other page of dist/ once at desktop width, scrolls through it, and fails on console errors, failed
+ *   requests, broken images or horizontal scroll.
  * `vite preview` does not apply dist/_headers, so the production CSP is read from that file and added to every
  * document response: a style="" attribute or an inline script the CSP blocks fails here as it would in production.
  * Screenshots go to tests/artifacts/ (gitignored).
  *
- * Usage: npm run build && node scripts/gate.mjs
+ * Usage: pnpm gate (vite build, then this script)
  */
 import { spawn, spawnSync } from "node:child_process";
 import fs from "node:fs";
@@ -198,18 +200,49 @@ async function checkMenu(page, problems) {
 		problems.push("menu: focus does not return to the toggle");
 }
 
-async function checkLanding(browser, run) {
+/** Images that finished loading without any pixels. */
+const brokenImages = (page) =>
+	page.evaluate(() =>
+		[...document.images]
+			.filter((image) => image.complete && image.naturalWidth === 0)
+			.map((image) => image.currentSrc || image.src),
+	);
+
+async function checkLanding(browser, run, info) {
 	const { context, page, problems } = await newPage(browser, run.context, run);
 	const response = await page.goto(`${ORIGIN}${run.url}`, { waitUntil: "networkidle" });
 	if (response.status() !== 200) problems.push(`status ${response.status()}`);
 	await scrollThrough(page);
 
-	const broken = await page.evaluate(() =>
-		[...document.images]
-			.filter((image) => image.complete && image.naturalWidth === 0)
-			.map((image) => image.currentSrc || image.src),
-	);
-	for (const src of broken) problems.push(`broken image: ${src}`);
+	for (const src of await brokenImages(page)) problems.push(`broken image: ${src}`);
+
+	// Back at the top the hero slot is on screen again: give the script a moment to start or keep it paused.
+	await page.waitForTimeout(800);
+	const hero = await page.evaluate(() => {
+		const video = document.querySelector(".vslot--hero video");
+		return video && { src: video.currentSrc, paused: video.paused };
+	});
+	if (!hero) problems.push("hero video: missing");
+	else info.push(`hero video: ${hero.src.replace(ORIGIN, "") || "(none)"}${hero.paused ? " (paused)" : " (playing)"}`);
+	if (run.light) {
+		const theme = await page.evaluate(() => document.documentElement.dataset.theme);
+		if (theme !== "light") problems.push(`light run: data-theme="${theme}"`);
+	}
+	if (run.context.reducedMotion === "reduce") {
+		if (hero && !hero.paused) problems.push("reduced motion: the hero video plays");
+		const running = await page.evaluate(() =>
+			document
+				.getAnimations()
+				.filter((animation) => animation.playState === "running")
+				.map((animation) => {
+					const target = animation.effect?.target;
+					const name = animation.animationName ?? animation.transitionProperty ?? "animation";
+					return `${name} on ${target?.tagName?.toLowerCase() ?? "?"}.${[...(target?.classList ?? [])].join(".")}${animation.effect?.pseudoElement ?? ""}`;
+				}),
+		);
+		for (const animation of running) problems.push(`reduced motion: running ${animation}`);
+	}
+
 	const overflow = await horizontalOverflow(page);
 	if (overflow) problems.push(`horizontal scroll: ${overflow}`);
 	for (const element of await outOfBounds(page)) problems.push(`outside the viewport: ${element}`);
@@ -252,13 +285,16 @@ async function checkPage(browser, url) {
 	const response = await page.goto(`${ORIGIN}${url}`, { waitUntil: "networkidle" });
 	const expected = url === "/404.html" ? [200, 404] : [200];
 	if (!expected.includes(response.status())) problems.push(`status ${response.status()}`);
+	await scrollThrough(page);
+	for (const src of await brokenImages(page)) problems.push(`broken image: ${src}`);
 	const overflow = await horizontalOverflow(page);
 	if (overflow) problems.push(`horizontal scroll: ${overflow}`);
 	await context.close();
 	return problems.filter((problem) => !(url === "/404.html" && problem.startsWith("http 404")));
 }
 
-const server = spawn(`npm run preview -- --port ${PORT} --strictPort`, {
+// pnpm forwards these flags to vite preview as they are (a "--" would reach vite literally).
+const server = spawn(`pnpm preview --port ${PORT} --strictPort`, {
 	cwd: root,
 	shell: true,
 	detached: process.platform !== "win32",
@@ -267,16 +303,20 @@ const server = spawn(`npm run preview -- --port ${PORT} --strictPort`, {
 
 let failed = false;
 let count = 0;
-const report = (name, url, problems) => {
+const report = (name, url, problems, info = []) => {
 	count++;
 	console.log(`${problems.length ? "FAIL" : "PASS"} ${name.padEnd(30)} ${url}`);
+	for (const line of info) console.log(`     ${line}`);
 	for (const problem of problems) console.log(`     ${problem}`);
 	if (problems.length) failed = true;
 };
 try {
 	await waitForServer();
 	const browser = await chromium.launch({ args: ["--disable-lcd-text"] });
-	for (const run of RUNS) report(run.name, run.url, await checkLanding(browser, run));
+	for (const run of RUNS) {
+		const info = [];
+		report(run.name, run.url, await checkLanding(browser, run, info), info);
+	}
 	const pages = otherPages();
 	let clean = 0;
 	for (const url of pages) {
@@ -287,7 +327,7 @@ try {
 			count++;
 		}
 	}
-	console.log(`PASS ${clean}/${pages.length} other pages (console, requests, horizontal scroll)`);
+	console.log(`PASS ${clean}/${pages.length} other pages (console, requests, broken images, horizontal scroll)`);
 	await browser.close();
 } finally {
 	stop(server);
