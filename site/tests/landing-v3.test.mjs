@@ -111,12 +111,13 @@ describe.each(LANGUAGES)("%s v3 landing", (lang) => {
 			expect(copy.download.buttons[index]).toContain(os);
 	});
 
-	it("preloads the editor tour poster first and plays the video muted, inline, mp4 before webm", () => {
+	it("preloads the editor tour poster first; the video has no autoplay, preloads nothing and keeps native controls for visitors without scripts", () => {
 		expect(page).toContain(
 			`<link rel="preload" as="image" href="${VIDEOS.tour.poster}" fetchpriority="high">`,
 		);
-		const video = between(main, '<video class="vslot-video" autoplay', "</video>");
-		expect(video).toContain('autoplay muted loop playsinline preload="metadata"');
+		const video = between(main, '<video class="vslot-video"', "</video>");
+		expect(video).toContain('muted loop playsinline preload="none" controls');
+		expect(main).not.toContain("autoplay");
 		expect(video).toContain(`poster="${VIDEOS.tour.poster}"`);
 		expect(video).toContain('width="1600" height="860"');
 		expect(video.indexOf("video/mp4")).toBeLessThan(video.indexOf("video/webm"));

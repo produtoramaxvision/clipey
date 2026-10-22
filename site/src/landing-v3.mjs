@@ -119,7 +119,10 @@ const ICON = {
 	play: '<svg class="icon-play" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg>',
 };
 
-/** A pause/play toggle. Scripts show it and keep its label in step; without scripts it stays hidden. */
+/**
+ * A pause/play toggle. Scripts show it and keep its label in step; without scripts it stays hidden, and a video slot
+ * keeps its native controls instead.
+ */
 const toggle = (className, attr, pause, play) =>
 	`<button type="button" class="media-toggle ${className}" ${attr} data-label-pause="${esc(pause)}" data-label-play="${esc(play)}" aria-label="${esc(pause)}" hidden>${ICON.pause}${ICON.play}</button>`;
 
@@ -164,8 +167,10 @@ function videoSlot(copy, media, video, { label, lazy = false, className = "" }) 
 	const sources = video.sources
 		.map(([src, type]) => `<source ${srcAttr}="${src}" type="${type}">`)
 		.join("");
-	// Lazy slots carry the same attributes; their sources wait in data-src, so nothing loads before the slot is near.
-	const attrs = 'autoplay muted loop playsinline preload="metadata"';
+	// No autoplay and nothing preloaded: landing-v3.js starts playback when the slot is on screen and motion is not
+	// reduced. Without scripts the native controls are the way to play and pause; the script swaps them for the
+	// toggle. Lazy slots also keep their sources in data-src until the slot is near.
+	const attrs = 'muted loop playsinline preload="none" controls';
 	return `<div class="vslot ${className}" data-vslot${lazy ? " data-vslot-lazy" : ""}>
 					<video class="vslot-video" ${attrs} poster="${poster}" width="${video.width}" height="${video.height}" aria-label="${esc(label)}">${sources}</video>
 					${toggle("vslot-toggle", "data-vslot-toggle", copy.video.pause, copy.video.play)}

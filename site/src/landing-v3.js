@@ -1,6 +1,7 @@
 /*
  * Behaviour of the v3 landing: the video slots (play only on screen, poster and play button under reduced motion,
- * a pause control for everyone) and the recording bar tour (paused off screen and on request). The tour itself is CSS.
+ * a pause control for everyone; native controls without scripts) and the recording bar tour (paused off screen and on
+ * request). The tour itself is CSS.
  */
 
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -28,6 +29,11 @@ function setToggle(button, paused) {
 	);
 }
 
+/*
+ * A video slot has no autoplay attribute and preloads nothing. It plays while it is on screen, unless motion is
+ * reduced or the visitor paused it. A Play the visitor pressed is remembered on its own, so reduced motion (at load or
+ * switched on later) never undoes it, and leaving and re-entering the viewport resumes it (WCAG 2.2.2).
+ */
 function mountVideoSlot(slot) {
 	const video = slot.querySelector("video");
 	const button = slot.querySelector("[data-vslot-toggle]");
@@ -35,8 +41,9 @@ function mountVideoSlot(slot) {
 	const lazy = slot.hasAttribute("data-vslot-lazy");
 	let loaded = !lazy;
 	let visible = false;
-	// A visitor's choice (pause or play) wins over automatic playback until they change it.
+	// The visitor's last choice: Pause wins over everything, Play wins over reduced motion.
 	let userPaused = false;
+	let userPlayed = false;
 
 	const load = () => {
 		if (loaded) return;
@@ -60,39 +67,33 @@ function mountVideoSlot(slot) {
 	};
 
 	const update = () => {
-		const shouldPlay = visible && !userPaused && !reducedMotion.matches;
+		const shouldPlay =
+			visible && !userPaused && (userPlayed || !reducedMotion.matches);
 		if (shouldPlay) play();
 		else if (!video.paused) video.pause();
 		setToggle(button, !shouldPlay);
 	};
 
-	// Under reduced motion the slot starts on its poster: stop autoplay and return to the first frame shown as poster.
-	if (reducedMotion.matches) {
-		video.removeAttribute("autoplay");
-		video.autoplay = false;
-		video.pause();
-		// load() drops any frame already decoded, so the poster shows again.
-		if (loaded) video.load();
-		userPaused = true;
-	}
-
+	// With scripts the toggle replaces the native controls the markup carries for visitors without them.
+	video.controls = false;
+	video.removeAttribute("controls");
 	button.hidden = false;
+	setToggle(button, true);
 	button.addEventListener("click", () => {
 		if (video.paused) {
 			userPaused = false;
+			userPlayed = true;
 			play();
 		} else {
 			userPaused = true;
+			userPlayed = false;
 			video.pause();
 		}
 	});
 	video.addEventListener("play", () => setToggle(button, false));
 	video.addEventListener("pause", () => setToggle(button, true));
 
-	reducedMotion.addEventListener("change", () => {
-		if (reducedMotion.matches) userPaused = true;
-		update();
-	});
+	reducedMotion.addEventListener("change", update);
 	watchVisibility(
 		slot,
 		(isVisible) => {
