@@ -75,7 +75,8 @@ for (const still of STILLS) {
 					use_sharp_yuv: 1,
 				}),
 			);
-			const name = stillFileName(still.name, locale, width);
+			// Named after the width actually written: a narrower source stops at its own width, never upscaled.
+			const name = stillFileName(still.name, locale, out.width);
 			writeFileSync(path.join(OUT_DIR, name), bytes);
 			files[name] = {
 				width: out.width,
