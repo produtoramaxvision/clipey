@@ -151,21 +151,24 @@ function header(lang, copy, alternates) {
 	</header>`;
 }
 
+/**
+ * A slot is shown only once its recording exists. A poster alone would describe a video that is not there (the
+ * captions poster is the editor without captions), so a slot without sources renders nothing until they are added.
+ */
+const hasVideo = (video) => video.sources.length > 0;
+
 /** The hero video slot and, further down, the captions slot. `lazy` slots keep their sources as data-src until seen. */
 function videoSlot(copy, media, video, { label, lazy = false, className = "" }) {
 	const poster = media.poster(video);
-	const playable = video.sources.length > 0;
 	const srcAttr = lazy ? "data-src" : "src";
 	const sources = video.sources
 		.map(([src, type]) => `<source ${srcAttr}="${src}" type="${type}">`)
 		.join("");
 	// Lazy slots carry the same attributes; their sources wait in data-src, so nothing loads before the slot is near.
-	const attrs = playable
-		? 'autoplay muted loop playsinline preload="metadata"'
-		: 'muted playsinline preload="none"';
+	const attrs = 'autoplay muted loop playsinline preload="metadata"';
 	return `<div class="vslot ${className}" data-vslot${lazy ? " data-vslot-lazy" : ""}>
 					<video class="vslot-video" ${attrs} poster="${poster}" width="${video.width}" height="${video.height}" aria-label="${esc(label)}">${sources}</video>
-					${playable ? toggle("vslot-toggle", "data-vslot-toggle", copy.video.pause, copy.video.play) : ""}
+					${toggle("vslot-toggle", "data-vslot-toggle", copy.video.pause, copy.video.play)}
 				</div>`;
 }
 
@@ -282,12 +285,12 @@ function editSection(lang, copy, media) {
 					</article>`,
 					)
 					.join("")}</div>
-				<figure class="captions-figure">
+				${hasVideo(VIDEOS.captions) ? `<figure class="captions-figure">
 					<div class="media-frame">
 						${videoSlot(copy, media, VIDEOS.captions, { label: s.captionsLabel, lazy: true })}
 					</div>
 					<figcaption class="lp-caption">${esc(s.captionsCaption)}</figcaption>
-				</figure>
+				</figure>` : ""}
 			</div>
 		</section>`;
 }

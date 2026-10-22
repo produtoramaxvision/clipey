@@ -123,12 +123,12 @@ describe.each(LANGUAGES)("%s v3 landing", (lang) => {
 		expect(main).toContain("data-vslot-toggle");
 	});
 
-	it("holds the captions slot with a provisional poster in this language or pt-BR", () => {
-		const slot = between(main, "data-vslot-lazy", "</video>");
-		const locale = stillLocale(readMediaManifest(), "captions-poster", lang);
-		expect(slot).toContain(`poster="/media/captions-poster-${locale}-1400.webp"`);
-		expect(slot).not.toContain("autoplay");
-		expect(slot).toContain(`aria-label="${copy.edit.captionsLabel}"`);
+	it("renders no captions figure until its recording exists, since the poster shows no captions", () => {
+		expect(VIDEOS.captions.sources).toEqual([]);
+		expect(main).not.toContain("captions-figure");
+		expect(main).not.toContain(copy.edit.captionsCaption);
+		expect(main).not.toContain("captions-poster");
+		expect(main.match(/data-vslot[\s>]/g)).toHaveLength(1);
 	});
 
 	it("tours the recording bar with the app's own labels, decorative tips and a real list", () => {
@@ -200,6 +200,22 @@ describe.each(LANGUAGES)("%s v3 landing", (lang) => {
 	it("writes the version once, from the app version", () => {
 		expect(main).toContain(`Clipey ${VERSION_LABEL}`);
 		expect(main).not.toContain("{version}");
+	});
+});
+
+describe("v3 landing captions slot", () => {
+	it("becomes a lazy video slot with its caption as soon as the recording has a source", () => {
+		VIDEOS.captions.sources.push(["/media/captions.mp4", "video/mp4"]);
+		try {
+			const page = renderSite(getCompletePosts(), { landing: bundle, blog: bundle }).get("index.html");
+			const figure = between(page, '<figure class="captions-figure">', "</figure>");
+			expect(figure).toContain("data-vslot-lazy");
+			expect(figure).toContain('<source data-src="/media/captions.mp4" type="video/mp4">');
+			expect(figure).toContain(`poster="/media/captions-poster-pt-BR-1400.webp"`);
+			expect(figure).toContain(LANDING["pt-BR"].edit.captionsCaption);
+		} finally {
+			VIDEOS.captions.sources.length = 0;
+		}
 	});
 });
 

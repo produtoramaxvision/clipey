@@ -60,7 +60,8 @@ export function stillImg(
 
 /**
  * The video slots. Replacing a recording is a change to its entry here (and the files in public/media/). A slot with
- * no `sources` shows its poster only; `poster` is a URL or `{ still }`, a still resolved per language.
+ * no `sources` is not rendered at all (its figure returns with the first source); `poster` is a URL or `{ still }`, a
+ * still resolved per language.
  * The editor tour is PROVISIONAL: a re-recorded take replaces these files.
  */
 export const VIDEOS = {
@@ -73,7 +74,7 @@ export const VIDEOS = {
 		width: 1600,
 		height: 860,
 	},
-	// The captions recording has not been made yet: a provisional poster holds the slot.
+	// The captions recording has not been made yet, so its figure is not rendered; the poster waits for the sources.
 	captions: {
 		sources: [],
 		poster: { still: "captions-poster" },
