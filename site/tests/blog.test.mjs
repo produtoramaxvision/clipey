@@ -16,6 +16,7 @@ import {
 import { renderSitemap } from "../src/blog/feeds.mjs";
 import { missingCaptures, readCaptureManifest } from "../src/blog/manifest.mjs";
 import { THEME_SCRIPT, THEME_SCRIPT_HASH } from "../src/blog/shell.mjs";
+import { ANALYTICS_BEACON_SRC } from "../src/headers.mjs";
 import {
 	fileForUrl,
 	LEGAL_OUTPUT_FILES,
@@ -182,7 +183,15 @@ describe("the generated site", () => {
 			.split(";")
 			.find((part) => part.trim().startsWith("script-src"));
 		expect(scriptSrc).toContain(`'${THEME_SCRIPT_HASH}'`);
-		expect(csp).not.toMatch(/https?:/);
+		// The one other origin is the Cloudflare Web Analytics beacon, as a path prefix in script-src only.
+		expect(scriptSrc).toContain(
+			" https://static.cloudflareinsights.com/beacon.min.js/ ",
+		);
+		expect(csp.replace(ANALYTICS_BEACON_SRC, "")).not.toMatch(/https?:/);
+		const connectSrc = csp
+			.split(";")
+			.find((part) => part.trim().startsWith("connect-src"));
+		expect(connectSrc.trim()).toBe("connect-src 'self'");
 		for (const [name, html] of renderedHtmlFiles) {
 			const bootstrap = html.match(/<script>([^<]*)<\/script>/)?.[1];
 			expect(bootstrap, name).toBeDefined();

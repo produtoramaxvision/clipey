@@ -110,11 +110,14 @@ describe("1. Legal pages: copied verbatim, text pinned, no third-party origin (S
 			expect(html, fileName).not.toMatch(/<style[\s>]|\sstyle=|@import|fonts\.(?:googleapis|gstatic)\.com/);
 		}
 		expect(files.get("legal.css")).not.toMatch(/https?:|\/\/|@import/);
-		// The CSP allows the stylesheet and the font only from the site itself, and names no other origin.
+		// The CSP allows the stylesheet and the font only from the site itself, and names no other origin besides the
+		// Cloudflare Web Analytics beacon path in script-src.
 		const csp = files.get("_headers").match(/Content-Security-Policy: (.+)/)[1];
 		expect(csp).toContain("style-src 'self';");
 		expect(csp).toContain("font-src 'self';");
-		expect(csp).not.toMatch(/https?:|\*|fonts\./);
+		expect(
+			csp.replace(" https://static.cloudflareinsights.com/beacon.min.js/", ""),
+		).not.toMatch(/https?:|\*|fonts\./);
 	});
 
 	it("styles every legal page from the shared same-origin stylesheet with the self-hosted Geist", () => {
