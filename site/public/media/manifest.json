@@ -1,7 +1,9 @@
 {
 	"stills": {
 		"hud-bar": [
-			"pt-BR"
+			"pt-BR",
+			"en",
+			"es"
 		],
 		"export": [
 			"pt-BR",
@@ -15,6 +17,23 @@
 		],
 		"captions-poster": [
 			"pt-BR"
+		],
+		"ui-board": [
+			"pt-BR",
+			"en",
+			"es"
+		],
+		"captions-clean": [
+			"pt-BR",
+			"en",
+			"es"
+		],
+		"phone-portrait": [],
+		"phone-landscape": [],
+		"captions-pane": [
+			"pt-BR",
+			"en",
+			"es"
 		]
 	},
 	"files": {
@@ -32,6 +51,36 @@
 			"width": 1941,
 			"height": 174,
 			"bytes": 10368
+		},
+		"hud-bar-en-800.webp": {
+			"width": 800,
+			"height": 70,
+			"bytes": 4086
+		},
+		"hud-bar-en-1400.webp": {
+			"width": 1400,
+			"height": 122,
+			"bytes": 7348
+		},
+		"hud-bar-en-1941.webp": {
+			"width": 1941,
+			"height": 169,
+			"bytes": 9652
+		},
+		"hud-bar-es-800.webp": {
+			"width": 800,
+			"height": 69,
+			"bytes": 3986
+		},
+		"hud-bar-es-1400.webp": {
+			"width": 1400,
+			"height": 121,
+			"bytes": 7244
+		},
+		"hud-bar-es-1941.webp": {
+			"width": 1941,
+			"height": 167,
+			"bytes": 10218
 		},
 		"export-pt-BR-800.webp": {
 			"width": 800,
@@ -138,14 +187,137 @@
 			"height": 1032,
 			"bytes": 78694
 		},
-		"clipey-editor-tour.mp4": {
-			"bytes": 1499011
+		"ui-board-pt-BR-800.webp": {
+			"width": 800,
+			"height": 493,
+			"bytes": 13380
 		},
-		"clipey-editor-tour.webm": {
-			"bytes": 1320046
+		"ui-board-pt-BR-991.webp": {
+			"width": 991,
+			"height": 611,
+			"bytes": 19484
 		},
-		"clipey-editor-tour-poster.jpg": {
-			"bytes": 135320
+		"ui-board-en-800.webp": {
+			"width": 800,
+			"height": 493,
+			"bytes": 12738
+		},
+		"ui-board-en-991.webp": {
+			"width": 991,
+			"height": 611,
+			"bytes": 18324
+		},
+		"ui-board-es-800.webp": {
+			"width": 800,
+			"height": 493,
+			"bytes": 13480
+		},
+		"ui-board-es-991.webp": {
+			"width": 991,
+			"height": 611,
+			"bytes": 19654
+		},
+		"captions-clean-pt-BR-800.webp": {
+			"width": 800,
+			"height": 493,
+			"bytes": 14748
+		},
+		"captions-clean-pt-BR-991.webp": {
+			"width": 991,
+			"height": 611,
+			"bytes": 20436
+		},
+		"captions-clean-en-800.webp": {
+			"width": 800,
+			"height": 493,
+			"bytes": 13406
+		},
+		"captions-clean-en-991.webp": {
+			"width": 991,
+			"height": 611,
+			"bytes": 18452
+		},
+		"captions-clean-es-800.webp": {
+			"width": 800,
+			"height": 493,
+			"bytes": 14980
+		},
+		"captions-clean-es-991.webp": {
+			"width": 991,
+			"height": 611,
+			"bytes": 21394
+		},
+		"captions-pane-pt-BR-756.webp": {
+			"width": 756,
+			"height": 1234,
+			"bytes": 24918
+		},
+		"captions-pane-en-756.webp": {
+			"width": 756,
+			"height": 1234,
+			"bytes": 28542
+		},
+		"captions-pane-es-756.webp": {
+			"width": 756,
+			"height": 1234,
+			"bytes": 25706
+		},
+		"clipey-editor-tour-pt-BR.mp4": {
+			"bytes": 1489295
+		},
+		"clipey-editor-tour-pt-BR.webm": {
+			"bytes": 1286533
+		},
+		"clipey-editor-tour-pt-BR-poster.jpg": {
+			"bytes": 132235
+		},
+		"clipey-editor-tour-en.mp4": {
+			"bytes": 1304776
+		},
+		"clipey-editor-tour-en.webm": {
+			"bytes": 1601140
+		},
+		"clipey-editor-tour-en-poster.jpg": {
+			"bytes": 130467
+		},
+		"clipey-editor-tour-es.mp4": {
+			"bytes": 1394501
+		},
+		"clipey-editor-tour-es.webm": {
+			"bytes": 1743468
+		},
+		"clipey-editor-tour-es-poster.jpg": {
+			"bytes": 134185
+		},
+		"clipey-tab-edit-pt-BR.mp4": {
+			"bytes": 1703766
+		},
+		"clipey-tab-edit-pt-BR.webm": {
+			"bytes": 1893837
+		},
+		"clipey-tab-edit-pt-BR-poster.jpg": {
+			"bytes": 81951
+		},
+		"clipey-tab-edit-en.mp4": {
+			"bytes": 1629173
+		},
+		"clipey-tab-edit-en.webm": {
+			"bytes": 1847936
+		},
+		"clipey-tab-edit-en-poster.jpg": {
+			"bytes": 79309
+		},
+		"clipey-tab-edit-es.mp4": {
+			"bytes": 1696323
+		},
+		"clipey-tab-edit-es.webm": {
+			"bytes": 1919712
+		},
+		"clipey-tab-edit-es-poster.jpg": {
+			"bytes": 81264
+		},
+		"mvcode-mark.png": {
+			"bytes": 12304
 		}
 	}
 }
