@@ -4,12 +4,14 @@ import {
 	readdirSync,
 	readFileSync,
 	rmSync,
+	statSync,
 	writeFileSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { gzipSync } from "node:zlib";
+import { build } from "vite";
 import { describe, expect, it } from "vitest";
 import {
 	APP_VERSION,
@@ -829,26 +831,48 @@ describe("7. Security headers in _headers", () => {
 });
 
 describe("8. Performance budget", () => {
-	it("verifies landing page JS and CSS gzip sizes within budget", () => {
-		const landingCss = readFileSync(path.join(root, "src/landing.css"), "utf8");
-		const baseCss = readFileSync(path.join(root, "src/base.css"), "utf8");
-		const tokensCss = readFileSync(path.join(root, "src/tokens.css"), "utf8");
-		const framesCss = readFileSync(path.join(root, "src/frames.css"), "utf8");
-		const fontsCss = readFileSync(path.join(root, "src/fonts.css"), "utf8");
+	// Measured on a real build (into a temporary folder, so dist/ is never stale or required): the stylesheets and the
+	// scripts the built landing actually loads, each file gzipped as it is served.
+	it("keeps the built landing's CSS and JS within the gzip budget", async () => {
+		const outDir = mkdtempSync(path.join(tmpdir(), "clipey-budget-"));
+		try {
+			await build({
+				root,
+				configFile: path.join(root, "vite.config.js"),
+				logLevel: "silent",
+				build: { outDir, emptyOutDir: true },
+			});
+			const html = readFileSync(path.join(outDir, "index.html"), "utf8");
+			const gz = (url) =>
+				gzipSync(readFileSync(path.join(outDir, url.slice(1)))).length;
 
-		const totalCssRaw = landingCss + baseCss + tokensCss + framesCss + fontsCss;
-		const cssGzip = gzipSync(Buffer.from(totalCssRaw)).length;
+			const css = [...html.matchAll(/<link rel="stylesheet" href="([^"]+)">/g)].map((m) => m[1]);
+			expect(css.length).toBeGreaterThan(0);
+			const cssGzip = css.reduce((sum, url) => sum + gz(url), 0);
+			expect(cssGzip, css.join(", ")).toBeLessThanOrEqual(30 * 1024);
 
-		expect(cssGzip).toBeLessThanOrEqual(30 * 1024);
+			// The entry script and every chunk it imports, followed through the built files.
+			const entry = html.match(/<script type="module" src="([^"]+)">/)[1];
+			const scripts = new Set();
+			const visit = (url) => {
+				if (scripts.has(url)) return;
+				scripts.add(url);
+				const source = readFileSync(path.join(outDir, url.slice(1)), "utf8");
+				for (const [, rel] of source.matchAll(/(?:import|from)\s*["'](\.{1,2}\/[^"']+\.js)["']/g))
+					visit(path.posix.join(path.posix.dirname(url), rel));
+			};
+			visit(entry);
+			const jsGzip = [...scripts].reduce((sum, url) => sum + gz(url), 0);
+			expect(jsGzip, [...scripts].join(", ")).toBeLessThanOrEqual(35 * 1024);
+		} finally {
+			rmSync(outDir, { recursive: true, force: true });
+		}
+	}, 120_000);
 
-		const landingJs = readFileSync(
-			path.join(root, "src/entry-landing.js"),
-			"utf8",
-		);
-		const chromeJs = readFileSync(path.join(root, "src/chrome.js"), "utf8");
-		const jsGzip = gzipSync(Buffer.from(landingJs + chromeJs)).length;
-
-		expect(jsGzip).toBeLessThanOrEqual(35 * 1024);
+	it("keeps every landing media file at or under 2 MB", () => {
+		const mediaDir = path.join(root, "public/media");
+		for (const file of readdirSync(mediaDir))
+			expect(statSync(path.join(mediaDir, file)).size, file).toBeLessThanOrEqual(2 * 1024 * 1024);
 	});
 
 	it("verifies font is preloaded, woff2 only, and has font-display: swap", () => {
