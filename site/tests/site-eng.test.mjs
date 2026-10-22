@@ -775,11 +775,24 @@ describe("5. AEO/GEO: llms.txt and llms-full.txt", () => {
 		expect(llms).toContain("## Informações Legais");
 		expect(llms).toContain("## Documentação Completa");
 		expect(llms).toContain("/llms-full.txt");
+		// The v3 landing has no requirements section; llms.txt must not promise one.
+		const pages = llms.slice(llms.indexOf("## Páginas Principais"), llms.indexOf("## Blog e Tutoriais"));
+		expect(pages).not.toMatch(/requisitos|requirements/);
 	});
 
 	it("generates /llms-full.txt concatenating landing copy and all 18 pt-BR articles", () => {
 		const full = files.get("llms-full.txt");
-		expect(full).toContain("CLIPEY: ESTÚDIO DE VÍDEO PARA WINDOWS");
+		expect(full).toContain(
+			"CLIPEY: GRAVAÇÃO DE TELA, EDIÇÃO E PUBLICAÇÃO DE VÍDEO PARA WINDOWS, MACOS E LINUX",
+		);
+		// Built from the v3 landing copy: its sections, its facts, and no section the page no longer has.
+		const v3 = LANDING["pt-BR"];
+		for (const text of [v3.hero.sub, v3.record.title, v3.edit.title, v3.publish.note, v3.phone.title, v3.local.title])
+			expect(full).toContain(text);
+		for (const button of v3.download.buttons) expect(full).toContain(button);
+		const landingPart = full.slice(0, full.indexOf("PERGUNTAS FREQUENTES (FAQ):"));
+		expect(landingPart).not.toMatch(/REQUISITOS|requisitos|PARA WINDOWS\n/);
+		expect(full).not.toContain("{version}");
 		expect(full).toContain("PERGUNTAS FREQUENTES (FAQ):");
 		for (let i = 1; i <= 18; i++) {
 			expect(full).toContain(`ARTIGO ${i}: `);

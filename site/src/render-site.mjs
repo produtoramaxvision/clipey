@@ -7,6 +7,7 @@ import {
 	categoryUrl,
 	LANDING_PATH,
 	LANGUAGES,
+	RELEASES_URL,
 	SITE_URL,
 } from "./blog/config.mjs";
 import {
@@ -23,6 +24,8 @@ import {
 import { renderHeaders } from "./headers.mjs";
 import { renderLanding } from "./landing.mjs";
 import { STORY } from "./landing-copy.mjs";
+import { VERSION_LABEL } from "./landing-v3.mjs";
+import { LANDING } from "./landing-v3-copy.mjs";
 
 const siteRoot = path.resolve(
 	path.dirname(fileURLToPath(import.meta.url)),
@@ -79,9 +82,9 @@ Clipey funciona no Windows, macOS e Linux. O aplicativo é offline-first, sem te
 
 ## Páginas Principais
 
-- [Clipey (Português)](${landingPt}): Página inicial oficial com visão geral dos recursos, IA assistida, kit de publicação e requisitos.
-- [Clipey (English)](${landingEn}): Official English landing page with features, AI editing tools, publishing workflows, and requirements.
-- [Clipey (Español)](${landingEs}): Página oficial en español con funciones, herramientas de IA, flujo de publicación y requisitos.
+- [Clipey (Português)](${landingPt}): Página inicial oficial: gravar, editar com zooms, cortes e legendas, publicar nas redes, usar o celular como controle, transcrição no computador e download para Windows, macOS e Linux.
+- [Clipey (English)](${landingEn}): Official English landing page: record, edit with zooms, cuts and captions, publish to social networks, use your phone as a remote, on-device transcription and downloads for Windows, macOS and Linux.
+- [Clipey (Español)](${landingEs}): Página oficial en español: grabar, editar con zooms, cortes y subtítulos, publicar en redes, usar el móvil como control, transcripción en la computadora y descargas para Windows, macOS y Linux.
 
 ## Blog e Tutoriais (Português)
 
@@ -110,36 +113,53 @@ ${formatPosts("es")}
 `;
 }
 
-/** Generates /llms-full.txt: plain-text concatenation of the landing copy and the 18 pt-BR articles. */
+/**
+ * Generates /llms-full.txt: the pt-BR v3 landing as plain text, the FAQ (kept here until the FAQ page exists; the v3
+ * landing shows none) and the 18 pt-BR articles.
+ */
 export function renderLlmsFull(posts) {
-	const copy = STORY["pt-BR"];
-	const sections = [
-		copy.record,
-		copy.clicks,
-		copy.overlays,
-		copy.vertical,
-		copy.local,
-	];
+	const copy = LANDING["pt-BR"];
+	const version = (text) => text.replaceAll("{version}", VERSION_LABEL);
+	const section = (title, ...lines) => `${title}:\n${lines.join("\n")}`;
 	const parts = [];
 
 	parts.push(`================================================================================
-CLIPEY: ESTÚDIO DE VÍDEO PARA WINDOWS
-${copy.hero.lines.map((line) => line[3]).join(" ")}
+CLIPEY: GRAVAÇÃO DE TELA, EDIÇÃO E PUBLICAÇÃO DE VÍDEO ${copy.hero.platforms.toUpperCase()}
+${copy.hero.title.join(" ")}
 ${copy.hero.sub}
+${version(copy.hero.meta)}
 ================================================================================
 
-RECURSOS:
-${sections.map((section) => `- ${[section.title].flat().join(" ")} ${section.text}`).join("\n")}
+${section(
+	"COMPATIBILIDADE",
+	...copy.compat.groups.map(([label, items]) => `- ${label}: ${items.join(", ")}`),
+)}
 
-PUBLICAÇÃO:
-${copy.publish.title} ${copy.publish.titleMuted}
-${copy.publish.notes.map(([title, text]) => `- ${title}: ${text}`).join("\n")}
+${section(
+	"GRAVAR",
+	`${copy.record.title} ${copy.record.text}`,
+	...copy.record.list.map((item) => `- ${item}`),
+)}
 
-DOWNLOAD E REQUISITOS:
-${copy.export.platform}. ${copy.export.pricing} ${copy.export.requirements}
+${section(
+	"EDITAR",
+	`${copy.edit.title} ${copy.edit.text}`,
+	...copy.edit.cards.map(([, , title, body]) => `- ${title}: ${body}`),
+)}
+
+${section("PUBLICAR", `${copy.publish.title} ${copy.publish.text}`, copy.publish.note)}
+
+${section("NO CELULAR", `${copy.phone.title} ${copy.phone.text}`)}
+
+${section("NO SEU COMPUTADOR", `${copy.local.title} ${copy.local.text}`)}
+
+${section(
+	"DOWNLOAD",
+	`${copy.download.buttons.join(" · ")}: ${RELEASES_URL}`,
+)}
 
 PERGUNTAS FREQUENTES (FAQ):
-${copy.faq.map(([q, a]) => `P: ${q}\nR: ${a}`).join("\n\n")}`);
+${STORY["pt-BR"].faq.map(([q, a]) => `P: ${q}\nR: ${a}`).join("\n\n")}`);
 
 	for (const post of posts) {
 		const item = post.content["pt-BR"];
