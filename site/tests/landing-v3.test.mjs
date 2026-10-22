@@ -174,6 +174,14 @@ describe.each(LANGUAGES)("%s v3 landing", (lang) => {
 		expect(types).toEqual(["Organization", "WebSite", "SoftwareApplication"]);
 	});
 
+	it("titles the download section in this language, with the accent dot added once by the markup", () => {
+		const title = { "pt-BR": "Download", en: "Download", es: "Descarga" }[lang];
+		expect(copy.download.title).toBe(title);
+		expect(main).toContain(
+			`<h2 class="mega" id="download-title">${title}<span class="accent" aria-hidden="true">.</span></h2>`,
+		);
+	});
+
 	it("writes the version once, from the app version", () => {
 		expect(main).toContain(`Clipey ${VERSION_LABEL}`);
 		expect(main).not.toContain("{version}");

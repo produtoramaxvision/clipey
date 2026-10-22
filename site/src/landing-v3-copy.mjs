@@ -405,7 +405,7 @@ export const LANDING = {
 		},
 		download: {
 			marker: "01:30 · FIN DE LA EDICIÓN",
-			title: "Download",
+			title: "Descarga",
 			aria: "Descargar Clipey",
 			buttons: [
 				"Descargar para Windows",
