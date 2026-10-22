@@ -156,8 +156,9 @@ function videoSlot(copy, media, video, { label, lazy = false, className = "" }) 
 	const sources = video.sources
 		.map(([src, type]) => `<source ${srcAttr}="${src}" type="${type}">`)
 		.join("");
+	// Lazy slots carry the same attributes; their sources wait in data-src, so nothing loads before the slot is near.
 	const attrs = playable
-		? `${lazy ? "" : "autoplay "}muted loop playsinline preload="${lazy ? "none" : "metadata"}"`
+		? 'autoplay muted loop playsinline preload="metadata"'
 		: 'muted playsinline preload="none"';
 	return `<div class="vslot ${className}" data-vslot${lazy ? " data-vslot-lazy" : ""}>
 					<video class="vslot-video" ${attrs} poster="${poster}" width="${video.width}" height="${video.height}" aria-label="${esc(label)}">${sources}</video>
@@ -257,7 +258,7 @@ function editSection(lang, copy, media) {
 	const s = copy.edit;
 	const chip = (kind, text) =>
 		kind === "langs"
-			? `<span class="langs" aria-hidden="true">${s.langs.map((code, index) => `<span class="lang-chip lang-chip--${index + 1}">${esc(code)}</span>`).join("")}</span>`
+			? `<span class="langs" data-anim aria-hidden="true">${s.langs.map((code, index) => `<span class="lang-chip lang-chip--${index + 1}">${esc(code)}</span>`).join("")}</span>`
 			: `<span class="chip chip--${kind}" aria-hidden="true">${esc(text)}</span>`;
 	return `<section class="lp-section lp-edit" id="${SECTION_IDS[lang].edit}" aria-labelledby="edit-title">
 			${aliasMarkers(lang, "edit")}

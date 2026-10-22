@@ -328,10 +328,7 @@ html {
 	font-weight: 500;
 	text-decoration: none;
 	white-space: nowrap;
-	transition:
-		transform 0.2s var(--ease),
-		background-color 0.2s,
-		border-color 0.2s;
+	transition: transform 0.2s var(--ease);
 }
 
 .cta--primary,
@@ -361,6 +358,13 @@ html {
 
 .cta svg {
 	flex: none;
+}
+
+/* Three 240 px buttons need about 760 px: below that the trio stacks, still one width for all three. */
+@media (max-width: 860px) {
+	.cta-group--trio {
+		grid-auto-flow: row;
+	}
 }
 
 @media (max-width: 640px) {
@@ -439,8 +443,9 @@ html {
 	box-shadow: 0 0 0 4px var(--danger-ring);
 }
 
+/* The artboard draws the slash in --line-strong (1.7:1); --meta keeps it quiet and readable (AA). */
 .rec-sep {
-	color: var(--line-strong);
+	color: var(--meta);
 }
 
 .lp-h1 {
@@ -1328,8 +1333,13 @@ html {
 	border-radius: inherit;
 	content: "";
 	opacity: 0;
-	animation: lang-pulse 6s ease-in-out infinite;
+	/* One pass when the card comes into view: the last highlight ends 4.2 s in (WCAG 2.2.2: stops within 5 s). */
+	animation: lang-pulse 6s ease-in-out 1 paused;
 	animation-delay: var(--d, 0s);
+}
+
+.langs.is-played .lang-chip::before {
+	animation-play-state: running;
 }
 
 .lang-chip {
@@ -1589,13 +1599,18 @@ html {
 	perspective: 1600px;
 }
 
+/*
+ * The float runs once, half a cycle (4.5 s), when the phone first comes into view, and rests at the other side:
+ * moving content that starts by itself stops within 5 s (WCAG 2.2.2), so no pause control is needed.
+ */
 .phone-float {
+	transform: rotateY(-14deg) rotateX(6deg);
 	transform-style: preserve-3d;
-	animation: phone-float 9s ease-in-out infinite;
+	animation: phone-float 9s ease-in-out 0.5 forwards paused;
 }
 
-.phone-stage.is-offscreen .phone-float {
-	animation-play-state: paused;
+.phone-stage.is-played .phone-float {
+	animation-play-state: running;
 }
 
 .phone {
@@ -1638,9 +1653,25 @@ html {
 	transform: rotate(90deg);
 }
 
-/* Landscape is scaled so the turned phone stays inside its column (the artboard's 620 px would overflow it). */
+/*
+ * Landscape is scaled so the turned phone stays inside its column (the artboard's 620 px would overflow it):
+ * 0.85 (527 px) where the column is at least that wide, 0.62 (384 px) for the two-column layout below 1300 px,
+ * 0.75 (465 px) once the card stacks, 0.66 (284 px) on phones.
+ */
 .rotate-input:checked ~ .phone-stage .phone {
 	transform: rotateZ(-90deg) scale(0.85);
+}
+
+@media (min-width: 1001px) and (max-width: 1299px) {
+	.rotate-input:checked ~ .phone-stage .phone {
+		transform: rotateZ(-90deg) scale(0.62);
+	}
+}
+
+@media (max-width: 1000px) {
+	.rotate-input:checked ~ .phone-stage .phone {
+		transform: rotateZ(-90deg) scale(0.75);
+	}
 }
 
 .rotate-input:checked ~ .phone-stage .phone-face--portrait {
@@ -1713,9 +1744,9 @@ html {
 		font-size: 11px;
 	}
 
-	/* 430 px turned and scaled by 0.7 is 301 px, inside the card on a 360 px phone. */
+	/* 430 px turned and scaled by 0.66 is 284 px, inside the card's padding on a 360 px phone. */
 	.rotate-input:checked ~ .phone-stage .phone {
-		transform: rotateZ(-90deg) scale(0.7);
+		transform: rotateZ(-90deg) scale(0.66);
 	}
 }
 

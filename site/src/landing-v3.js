@@ -118,7 +118,8 @@ function mountHud(hud) {
 
 for (const slot of document.querySelectorAll("[data-vslot]")) mountVideoSlot(slot);
 for (const hud of document.querySelectorAll("[data-hud]")) mountHud(hud);
+// One-shot animations (the phone float, the language pulse) start the first time they come into view.
 for (const element of document.querySelectorAll("[data-anim]"))
-	watchVisibility(element, (visible) =>
-		element.classList.toggle("is-offscreen", !visible),
-	);
+	watchVisibility(element, (visible) => {
+		if (visible) element.classList.add("is-played");
+	});
