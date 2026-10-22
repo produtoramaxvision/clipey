@@ -17,7 +17,8 @@ export const readMediaManifest = (file = manifestFile) =>
 /** The language a still is shown in on a page: its own when captured, pt-BR otherwise. */
 export const stillLocale = (manifest, name, lang) => {
 	const locales = manifest.stills?.[name];
-	if (!locales?.length) throw new Error(`the still ${name} is missing from the manifest`);
+	if (!locales?.length)
+		throw new Error(`the still ${name} is missing from the manifest`);
 	return locales.includes(lang) ? lang : MEDIA_FALLBACK_LOCALE;
 };
 
@@ -39,7 +40,9 @@ export function stillSet(manifest, name, lang) {
 		src: `/media/${largestFile}`,
 		/** A mid-size file for places that take one URL, such as a video poster. */
 		poster: `/media/${mid[0]}`,
-		srcset: entries.map(([file, { width }]) => `/media/${file} ${width}w`).join(", "),
+		srcset: entries
+			.map(([file, { width }]) => `/media/${file} ${width}w`)
+			.join(", "),
 		width: largest.width,
 		height: largest.height,
 	};
@@ -66,11 +69,21 @@ export function stillImg(
  */
 export const VIDEOS = {
 	tour: {
-		sources: [
-			["/media/clipey-editor-tour.mp4", "video/mp4"],
-			["/media/clipey-editor-tour.webm", "video/webm"],
-		],
-		poster: "/media/clipey-editor-tour-poster.jpg",
+		sources: Object.fromEntries(
+			["pt-BR", "en", "es"].map((locale) => [
+				locale,
+				[
+					[`/media/clipey-editor-tour-${locale}.mp4`, "video/mp4"],
+					[`/media/clipey-editor-tour-${locale}.webm`, "video/webm"],
+				],
+			]),
+		),
+		poster: Object.fromEntries(
+			["pt-BR", "en", "es"].map((locale) => [
+				locale,
+				`/media/clipey-editor-tour-${locale}-poster.jpg`,
+			]),
+		),
 		width: 1600,
 		height: 860,
 	},
@@ -81,18 +94,69 @@ export const VIDEOS = {
 		width: 1600,
 		height: 860,
 	},
+	// The Edit tab: one walkthrough per language of the app, so `sources` and `poster` are keyed by locale.
+	editTab: {
+		sources: Object.fromEntries(
+			["pt-BR", "en", "es"].map((locale) => [
+				locale,
+				[
+					[`/media/clipey-tab-edit-${locale}.mp4`, "video/mp4"],
+					[`/media/clipey-tab-edit-${locale}.webm`, "video/webm"],
+				],
+			]),
+		),
+		poster: Object.fromEntries(
+			["pt-BR", "en", "es"].map((locale) => [
+				locale,
+				`/media/clipey-tab-edit-${locale}-poster.jpg`,
+			]),
+		),
+		width: 1440,
+		height: 774,
+	},
+	// Games: gameplay recorded with the controller overlay. Third-party footage is not shipped until its rights are
+	// cleared: no file is in public/media and the stage draws its own scene. A cleared loop goes here as
+	// [["/media/clipey-games.mp4", "video/mp4"], ["/media/clipey-games.webm", "video/webm"]] with its poster, its copies
+	// in scripts/media/config.mjs and FLAGS.gamesFootage set to true.
+	games: {
+		sources: [],
+		poster: null,
+		width: 960,
+		height: 600,
+	},
 };
+
+/**
+ * Switches for media whose use depends on a decision outside the code:
+ * - `gamesFootage`: gameplay video in the games section. False (rights not cleared) draws the stage and the controller
+ *   card instead, with no video, no poster and no credit line.
+ * - `phoneScreens`: the real phone screens in the "on your phone" section (stills phone-portrait and phone-landscape).
+ *   False leaves the phone out and the copy takes the card, so no placeholder frame is ever shown.
+ */
+export const FLAGS = {
+	gamesFootage: false,
+	phoneScreens: false,
+};
+
+/** The sources of a video slot on a page of one language (a slot keyed by locale falls back to pt-BR). */
+export const videoSources = (video, lang) =>
+	Array.isArray(video.sources)
+		? video.sources
+		: (video.sources[lang] ?? video.sources[MEDIA_FALLBACK_LOCALE]);
 
 /** The poster URL of a video slot on a page of one language. */
 export const videoPoster = (manifest, video, lang) =>
-	typeof video.poster === "string"
+	typeof video.poster === "string" || video.poster === null
 		? video.poster
-		: stillSet(manifest, video.poster.still, lang).poster;
+		: video.poster.still
+			? stillSet(manifest, video.poster.still, lang).poster
+			: (video.poster[lang] ?? video.poster[MEDIA_FALLBACK_LOCALE]);
 
 /** The media of one page, with its language bound. */
 export const pageMedia = (manifest, lang) => ({
 	set: (name) => stillSet(manifest, name, lang),
 	img: (name, options) => stillImg(manifest, name, { ...options, lang }),
 	poster: (video) => videoPoster(manifest, video, lang),
+	sources: (video) => videoSources(video, lang),
 	locale: (name) => stillLocale(manifest, name, lang),
 });

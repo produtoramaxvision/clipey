@@ -119,7 +119,32 @@ function mountHud(hud) {
 	});
 }
 
+/*
+ * A looping demo (the platforms strip, the feature tabs, the agents, the games). It moves only while it is live: scripts
+ * on, motion not reduced, on screen and not paused by the visitor (WCAG 2.2.2). Without that the CSS shows each demo
+ * finished and still.
+ */
+function mountDemo(demo) {
+	const button = demo.querySelector("[data-demo-toggle]");
+	if (!button) return;
+	const update = () => {
+		const live = !reducedMotion.matches;
+		demo.classList.toggle("is-live", live);
+		button.hidden = !live;
+	};
+	watchVisibility(demo, (visible) => demo.classList.toggle("is-offscreen", !visible));
+	setToggle(button, false);
+	button.addEventListener("click", () => {
+		const paused = !demo.classList.contains("is-paused");
+		demo.classList.toggle("is-paused", paused);
+		setToggle(button, paused);
+	});
+	reducedMotion.addEventListener("change", update);
+	update();
+}
+
 for (const slot of document.querySelectorAll("[data-vslot]")) mountVideoSlot(slot);
+for (const demo of document.querySelectorAll("[data-demo]")) mountDemo(demo);
 for (const hud of document.querySelectorAll("[data-hud]")) mountHud(hud);
 // One-shot animations (the phone float, the language pulse) start the first time they come into view.
 for (const element of document.querySelectorAll("[data-anim]"))

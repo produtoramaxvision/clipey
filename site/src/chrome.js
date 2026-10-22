@@ -51,7 +51,8 @@ if (menuToggle && mobileMenu) {
 	for (const link of mobileMenu.querySelectorAll("a"))
 		link.addEventListener("click", () => setOpen(false));
 	window.addEventListener("resize", () => {
-		if (window.innerWidth > 980) setOpen(false);
+		// Closed once the toggle itself is gone: each page's CSS decides where the nav fits again.
+		if (getComputedStyle(menuToggle).display === "none") setOpen(false);
 	});
 }
 

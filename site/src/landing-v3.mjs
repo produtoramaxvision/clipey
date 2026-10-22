@@ -19,14 +19,27 @@ import {
 import { escapeHtml as esc } from "./blog/content.mjs";
 import { UI } from "./blog/i18n.mjs";
 import { icon, renderHead, renderPage } from "./blog/shell.mjs";
-import { pageMedia, readMediaManifest, VIDEOS } from "./landing-media.mjs";
+import {
+	brandMark,
+	dualsense,
+	gameScene,
+	person,
+	waveform,
+} from "./landing-art.mjs";
+import {
+	FLAGS,
+	pageMedia,
+	readMediaManifest,
+	VIDEOS,
+} from "./landing-media.mjs";
 import { LANDING } from "./landing-v3-copy.mjs";
 
 /** "1.15.0" is shown as "1.15", as the design writes it. */
 export const VERSION_LABEL = APP_VERSION.split(".").slice(0, 2).join(".");
 
 /** The footer's MaxVision link (a tracked short link, so it keeps exactly rel="noopener"). */
-export const OWNER_LINK = "https://link.produtoramaxvision.com.br/maxvision-clipey";
+export const OWNER_LINK =
+	"https://link.produtoramaxvision.com.br/maxvision-clipey";
 
 /** Section ids of the page in each language, keyed by chapter, in page order. */
 export const SECTION_IDS = {
@@ -35,6 +48,8 @@ export const SECTION_IDS = {
 		compat: "compatibilidade",
 		record: "gravar",
 		edit: "editar",
+		agents: "agentes",
+		games: "jogos",
 		publish: "publicar",
 		phone: "celular",
 		local: "seu-pc",
@@ -45,6 +60,8 @@ export const SECTION_IDS = {
 		compat: "compatibility",
 		record: "record",
 		edit: "edit",
+		agents: "agents",
+		games: "games",
 		publish: "publish",
 		phone: "phone",
 		local: "your-pc",
@@ -55,6 +72,8 @@ export const SECTION_IDS = {
 		compat: "compatibilidad",
 		record: "grabar",
 		edit: "editar",
+		agents: "agentes",
+		games: "juegos",
 		publish: "publicar",
 		phone: "movil",
 		local: "tu-pc",
@@ -116,6 +135,7 @@ const ICON = {
 	menu: '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
 	pause:
 		'<svg class="icon-pause" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>',
+	clip: '<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="9.5" y="4" width="5" height="16" rx="1.5"/><rect x="16" y="4" width="5" height="16" rx="1.5"/></svg>',
 	play: '<svg class="icon-play" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg>',
 };
 
@@ -158,13 +178,22 @@ function header(lang, copy, alternates) {
  * A slot is shown only once its recording exists. A poster alone would describe a video that is not there (the
  * captions poster is the editor without captions), so a slot without sources renders nothing until they are added.
  */
-const hasVideo = (video) => video.sources.length > 0;
+const hasVideo = (video) =>
+	Array.isArray(video.sources)
+		? video.sources.length > 0
+		: Object.keys(video.sources).length > 0;
 
 /** The hero video slot and, further down, the captions slot. `lazy` slots keep their sources as data-src until seen. */
-function videoSlot(copy, media, video, { label, lazy = false, className = "" }) {
+function videoSlot(
+	copy,
+	media,
+	video,
+	{ label, lazy = false, className = "" },
+) {
 	const poster = media.poster(video);
 	const srcAttr = lazy ? "data-src" : "src";
-	const sources = video.sources
+	const sources = media
+		.sources(video)
 		.map(([src, type]) => `<source ${srcAttr}="${src}" type="${type}">`)
 		.join("");
 	// No autoplay and nothing preloaded: landing-v3.js starts playback when the slot is on screen and motion is not
@@ -180,17 +209,17 @@ function videoSlot(copy, media, video, { label, lazy = false, className = "" }) 
 function hero(lang, copy, media) {
 	const ids = SECTION_IDS[lang];
 	const h = copy.hero;
-	const [line1, brand, verb] = h.title;
+	const [line1, brand, verb, shine] = h.title;
 	const lanes = h.lanes
 		.map(
 			([chapter, label, tag]) =>
-				`<a class="lane lane--${chapter}" href="#${ids[chapter]}">${ICON[{ record: "rec", edit: "zoom", publish: "up" }[chapter]]}<span>${esc(label)}</span>${tag ? `<span class="lane-tag">${esc(tag)}</span>` : ""}</a>`,
+				`<a class="lane lane--${chapter}" href="#${ids[chapter === "clip" ? "edit" : chapter]}">${ICON[{ record: "rec", edit: "zoom", clip: "clip", publish: "up" }[chapter]]}<span>${esc(label)}</span>${tag ? `<span class="lane-tag">${esc(tag)}</span>` : ""}</a>`,
 		)
 		.join("");
 	return `<section class="lp-hero" id="${ids.hero}" aria-labelledby="hero-title">
 			<div class="lp-hero-inner">
 				<p class="rec-pill"><span class="rec-dot" aria-hidden="true"></span>${esc(h.rec)}<span class="rec-sep" aria-hidden="true">/</span><span>Clipey ${VERSION_LABEL}<span class="rec-platforms"> ${esc(h.platforms)}</span></span></p>
-				<h1 class="lp-h1" id="hero-title">${esc(line1)}<br>${esc(brand)} <span class="accent">${esc(verb)}</span></h1>
+				<h1 class="lp-h1" id="hero-title">${esc(line1)}<br>${esc(brand)} ${esc(verb)} <span class="accent shine" data-anim>${esc(shine)}</span></h1>
 				<p class="lp-sub">${esc(h.sub)}</p>
 				<div class="cta-group cta-group--pair cta-group--wide">
 					<a class="cta cta--primary" href="#${ids.download}">${ICON.download}<span>${esc(h.cta[0])}</span></a>
@@ -216,26 +245,55 @@ function hero(lang, copy, media) {
 		</section>`;
 }
 
+/** The marks of the compatibility strip, by group and item position (the same in every language). */
+const COMPAT_MARKS = [
+	["youtube", "tiktok", "instagram", "facebook"],
+	[null, "apple", "linux"],
+	[null],
+];
+
+/**
+ * Platforms, systems and languages as one strip that scrolls sideways. The first copy is the real list; the second
+ * (aria-hidden) closes the loop. It moves only once landing-v3.js has shown its pause button; without scripts, or
+ * with reduced motion, the copy wraps and stands still.
+ */
 function compat(lang, copy) {
-	const groups = copy.compat.groups
+	const c = copy.compat;
+	const groups = c.groups
 		.map(
-			([label, items], index) =>
-				`${index ? '<span class="compat-sep" aria-hidden="true"></span>' : ""}<div class="compat-group"><span class="compat-label" id="compat-${index}">${esc(label)}</span><ul class="compat-items" role="list" aria-labelledby="compat-${index}">${items.map((item) => `<li>${esc(item)}</li>`).join("")}</ul></div>`,
+			([label, items], group) =>
+				`<li class="mq-group"><span class="mq-k" id="compat-${group}">${esc(label)}</span><ul class="mq-items" role="list" aria-labelledby="compat-${group}">${items
+					.map((item, index) => {
+						const mark = COMPAT_MARKS[group][index];
+						return `<li class="mq-i">${mark ? brandMark(mark, mark === "apple" ? 17 : 18) : ""}${esc(item)}</li>`;
+					})
+					.join(
+						"",
+					)}${group === c.groups.length - 1 ? `<li class="mq-lang" aria-hidden="true">${c.langs.map((code) => `<span>${esc(code)}</span>`).join("")}</li>` : ""}</ul></li>`,
 		)
 		.join("");
-	return `<section class="lp-compat" id="${SECTION_IDS[lang].compat}" aria-label="${esc(copy.compat.aria)}">
+	return `<section class="lp-compat" id="${SECTION_IDS[lang].compat}" aria-label="${esc(c.aria)}">
 			${aliasMarkers(lang, "compat")}
-			<div class="lp-wrap compat-row">${groups}</div>
+			<div class="lp-wrap mq-row" data-demo>
+				<div class="mq">
+					<div class="mq-track">
+						<ul class="mq-g" role="list" aria-label="${esc(c.list)}">${groups}</ul>
+						<ul class="mq-g mq-dup" role="list" aria-hidden="true">${groups.replaceAll(/ id="compat-\d+"/g, "").replaceAll(/ aria-labelledby="compat-\d+"/g, "")}</ul>
+					</div>
+				</div>
+				${toggle("demo-toggle", "data-demo-toggle", c.pause, c.play)}
+			</div>
 		</section>`;
 }
 
-const marker = (text, lane) => `<p class="marker marker--${lane}">${esc(text)}</p>`;
+const marker = (text, lane) =>
+	`<p class="marker marker--${lane}">${esc(text)}</p>`;
 
 /** The recording bar tour: the real bar, a highlight ring, a tooltip and the cursor per button, in the app's words. */
 function hud(copy, media) {
 	const h = copy.record.hud;
 	const slots = h.labels.map((_, index) => index + 1);
-	return `<figure class="hud" data-hud>
+	return `<figure class="hud hud--${media.locale("hud-bar")}" data-hud>
 				<div class="hud-stage" data-hud-stage>
 					<div class="hud-track">
 						${media.img("hud-bar", { alt: h.alt, sizes: "(max-width: 640px) 760px, (max-width: 1144px) calc(100vw - 64px), 1080px", className: "hud-img" })}
@@ -265,42 +323,381 @@ function recordSection(lang, copy, media) {
 		</section>`;
 }
 
+/** The feature tabs, in the order of the tab bar. */
+const TABS = ["edit", "clip", "cap", "voice", "cam"];
+
+/** The colour of each tab's dot and numbered steps, as the app colours the feature. */
+const TAB_TONE = {
+	edit: "zoom",
+	clip: "clip",
+	cap: "annotation",
+	voice: "accent",
+	cam: "speed",
+};
+
+const STAGE_SIZES = "(max-width: 1000px) calc(100vw - 32px), 700px";
+
+/** The three numbered steps and the short list under them. */
+const tabCopy = (tab) => `<div class="ft-copy">
+						<h3 class="ft-title">${esc(tab.title)}</h3>
+						<ol class="steps">${tab.steps.map(([title, text]) => `<li><b>${esc(title)}</b><span>${esc(text)}</span></li>`).join("")}</ol>
+						<ul class="also" role="list">${tab.also.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>
+					</div>`;
+
+/** Auto Clip scores of the three highlights, in transcript order. */
+const CLIP_SCORES = [92, 87, 84];
+
+/** A clip's caption: the highlighted words on their own line, the rest around them. */
+const clipCaption = ([before, strong, after]) =>
+	after
+		? `${esc(before)}<b>${esc(strong)}</b><br>${esc(after)}`
+		: `${esc(before)}<br><b>${esc(strong)}</b>`;
+
+/** Auto Clip: the transcript is read, three sentences are marked, each becomes a clip, one is rejected. */
+function clipStage(s) {
+	let mark = 0;
+	const lines = s.lines
+		.map(([text, reason]) => {
+			if (!reason) return `<p>${esc(text)}</p>`;
+			mark += 1;
+			return `<p class="ac2-h ac2-h--${mark}"><span>${esc(text)}</span><em>${esc(reason)}</em></p>`;
+		})
+		.join("");
+	const art = [
+		person("a"),
+		`<span class="ac2-split">${person("b")}${person("c")}</span>`,
+		person("c", "#2f3f2a"),
+	];
+	const clips = s.clips
+		.map(
+			(caption, index) => `<li class="ac2-card ac2-card--${index + 1}">
+								<span class="ac2-ph">${art[index]}<span class="ac2-cap${index === 1 ? " ac2-cap--mid" : ""}">${clipCaption(caption)}</span><span class="ac2-sc">${CLIP_SCORES[index]}</span></span>
+								<span class="ac2-bd ${index === 1 ? "ac2-bd--no" : "ac2-bd--ok"}">${esc(index === 1 ? s.reject : s.keep)}</span>
+							</li>`,
+		)
+		.join("");
+	return `<div class="stage-in ac2">
+						<div class="ac2-top"><span class="ac2-file"><b>${esc(s.file)}</b> · ${esc(s.duration)}</span><span class="ac2-st" aria-hidden="true">${s.status.map((text, index) => `<i class="ac2-st--${index + 1}">${esc(text)}</i>`).join("")}</span></div>
+						<div class="ac2-body">
+							<div class="ac2-tr" role="group" aria-label="${esc(s.transcriptAria)}">${lines}</div>
+							<div class="ac2-clipwrap">
+								<ol class="ac2-clips" aria-label="${esc(s.clipsAria)}">${clips}</ol>
+								<span class="ac2-apply">${esc(s.apply)}</span>
+							</div>
+						</div>
+						<div class="ac2-tl" aria-hidden="true"><span class="ac2-wave">${waveform(3, 90, 20)}</span><span class="ac2-rg ac2-rg--1"></span><span class="ac2-rg ac2-rg--2"></span><span class="ac2-rg ac2-rg--3"></span><span class="ac2-scan"></span><span class="ac2-t0">0:00</span><span class="ac2-t1">42:18</span></div>
+					</div>`;
+}
+
+/** Each word of a caption line, so the spoken word can light up in turn (delays come from the word's class). */
+const captionWords = (text) =>
+	text
+		.split(" ")
+		.map(
+			(word, index) => `<span class="cw cw--${index + 1}">${esc(word)}</span>`,
+		)
+		.join(" ");
+
+/** The language a caption is translated into on each page: the page's pane shows that translation selected. */
+const CAPTION_TARGET = { "pt-BR": "pt-BR", en: "es", es: "es" };
+
+/** Captions: the original line, then the translated one, as the pane switches from Original to the translation. */
+function captionStage(lang, s, media) {
+	const target = CAPTION_TARGET[lang];
+	const button = target === "pt-BR" ? "pt" : "es";
+	return `<div class="stage-in cap2">
+						${media.img("captions-clean", { alt: s.shotAlt, sizes: STAGE_SIZES, className: "cap2-shot" })}
+						<span class="cap2-tag" aria-hidden="true"><span class="cap2-tag--en">${esc(s.tagOriginal)}</span><span class="cap2-tag--tr">${esc(s.tagTranslated)}</span></span>
+						<p class="cap2-line cap2-line--en" lang="en"><span class="cl">${captionWords(s.original)}</span></p>
+						<p class="cap2-line cap2-line--tr" lang="${target}"><span class="cl">${captionWords(s.translated)}</span></p>
+						<div class="cap2-pane cap2-pane--${lang}">
+							${media.img("captions-pane", { alt: s.paneAlt, sizes: "260px" })}
+							<span class="cap2-o" aria-hidden="true"></span>
+							<span class="cap2-p cap2-p--${button}" aria-hidden="true">${esc(s.target)}</span>
+							<span class="cap2-tap cap2-tap--${button}" aria-hidden="true"></span>
+						</div>
+					</div>`;
+}
+
+/** Voice: the quote in the original and in the dub, and two timeline lanes where the dub replaces the original. */
+function voiceStage(s) {
+	const [original, dub] = s.lanes;
+	const [[playing, replaced], [generating, ready]] = s.states;
+	return `<div class="stage-in vz2">
+						<p class="vz2-q"><span class="vz2-tag">${esc(s.tagOriginal)}</span><span class="vz2-quote vz2-quote--en" lang="en">${esc(s.original)}</span></p>
+						<p class="vz2-q"><span class="vz2-tag vz2-tag--dub">${esc(s.tagDub)}</span><span class="vz2-quote vz2-quote--dub">${esc(s.dub)}</span></p>
+						<div class="vz2-tracks" role="img" aria-label="${esc(s.tracksAria)}">
+							<span class="vz2-row"><span class="vz2-lbl">${esc(original)}</span><span class="vz2-wave vz2-wave--o">${waveform(7)}</span><span class="vz2-st"><span class="vz2-st--a">${esc(playing)}</span><span class="vz2-st--b">${esc(replaced)}</span></span></span>
+							<span class="vz2-row"><span class="vz2-lbl vz2-lbl--dub">${esc(dub)}</span><span class="vz2-wave vz2-wave--d"><span class="vz2-ghost">${waveform(11)}</span><span class="vz2-fill">${waveform(11)}</span></span><span class="vz2-st vz2-st--dub"><span class="vz2-st--a">${esc(generating)}</span><span class="vz2-st--b">${esc(ready)}</span></span></span>
+							<span class="vz2-head"></span>
+						</div>
+						<p class="vz2-meta">${esc(s.meta)}</p>
+					</div>`;
+}
+
+/** Camera: the same recording in the three layouts, one after the other. */
+function cameraStage(s, media) {
+	const screen = (className) =>
+		`<span class="cam2-scr ${className}">${media.img("ui-board", { sizes: "480px" })}</span>`;
+	const [corner, stacked, side] = s.layouts;
+	return `<div class="stage-in cam2" role="group" aria-label="${esc(s.aria)}">
+						<div class="cam-l cam-l--1">${screen("cam2-scr--full")}<span class="cam2-pip cam2-pip--round">${person("a")}</span><span class="cam2-lbl">${esc(corner)}</span></div>
+						<div class="cam-l cam-l--2"><span class="cam2-phone">${screen("cam2-scr--top")}<span class="cam2-face">${person("a")}</span></span><span class="cam2-lbl">${esc(stacked)}</span></div>
+						<div class="cam-l cam-l--3">${screen("cam2-scr--side")}<span class="cam2-pip cam2-pip--side">${person("a")}</span><span class="cam2-lbl">${esc(side)}</span></div>
+						<span class="cam2-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+					</div>`;
+}
+
+/**
+ * What the Clipey editor does, as radio tabs: each works without scripts (a checked radio shows its panel) and with
+ * the keyboard (arrow keys move between radios). The demos move only once landing-v3.js has shown their pause button.
+ */
 function editSection(lang, copy, media) {
 	const s = copy.edit;
-	const chip = (kind, text) =>
-		kind === "langs"
-			? `<span class="langs" data-anim aria-hidden="true">${s.langs.map((code, index) => `<span class="lang-chip lang-chip--${index + 1}">${esc(code)}</span>`).join("")}</span>`
-			: `<span class="chip chip--${kind}" aria-hidden="true">${esc(text)}</span>`;
+	const tabs = s.tabs;
+	const stage = {
+		edit: () => `<div class="stage-in stage-in--video">
+						${videoSlot(copy, media, VIDEOS.editTab, { label: tabs.edit.videoLabel, lazy: true, className: "vslot--tab" })}
+					</div>`,
+		clip: () => clipStage(tabs.clip.stage),
+		cap: () =>
+			hasVideo(VIDEOS.captions)
+				? `<div class="stage-in stage-in--video captions-figure">
+						${videoSlot(copy, media, VIDEOS.captions, { label: s.captionsLabel, lazy: true, className: "vslot--tab" })}
+					</div>`
+				: captionStage(lang, tabs.cap.stage, media),
+		voice: () => voiceStage(tabs.voice.stage),
+		cam: () => cameraStage(tabs.cam.stage, media),
+	};
 	return `<section class="lp-section lp-edit" id="${SECTION_IDS[lang].edit}" aria-labelledby="edit-title">
 			${aliasMarkers(lang, "edit")}
 			<div class="lp-wrap">
 				<div class="edit-head">
 					<div class="edit-copy">
 						${marker(s.marker, "edit")}
-						<h2 class="lp-h2" id="edit-title">${esc(s.title)}</h2>
+						<h2 class="lp-h2 lp-h2--wide" id="edit-title">${s.title.map(esc).join("<br>")}</h2>
 					</div>
 					<p class="lp-lede edit-lede">${esc(s.text)}</p>
 				</div>
-				<div class="cards">${s.cards
-					.map(
-						([kind, text, title, body]) => `<article class="card">
-						${chip(kind, text)}
-						<h3>${esc(title)}</h3>
-						<p>${esc(body)}</p>
-					</article>`,
-					)
-					.join("")}</div>
-				${hasVideo(VIDEOS.captions) ? `<figure class="captions-figure">
-					<div class="media-frame">
-						${videoSlot(copy, media, VIDEOS.captions, { label: s.captionsLabel, lazy: true })}
+				<div class="ft" data-demo>
+					${TABS.map((key, index) => `<input type="radio" name="ft" id="ft-${key}" class="ft-input" aria-controls="ft-panel-${key}"${index ? "" : " checked"}>`).join("")}
+					<div class="ft-head">
+						<div class="ft-bar" role="radiogroup" aria-label="${esc(s.tabsAria)}">${TABS.map((key) => `<label for="ft-${key}" class="ft-tab ft-tab--${TAB_TONE[key]}"><i aria-hidden="true"></i>${esc(tabs[key].label)}</label>`).join("")}</div>
+						${toggle("demo-toggle", "data-demo-toggle", s.pause, s.play)}
 					</div>
-					<figcaption class="lp-caption">${esc(s.captionsCaption)}</figcaption>
-				</figure>` : ""}
+					${TABS.map(
+						(
+							key,
+						) => `<div class="ft-panel ft-panel--${key} tone--${TAB_TONE[key]}" id="ft-panel-${key}" role="group" aria-label="${esc(tabs[key].label)}">
+					<div class="stage">
+					${stage[key]()}
+					</div>
+					${tabCopy(tabs[key])}
+				</div>`,
+					).join("")}
+				</div>
 			</div>
 		</section>`;
 }
 
 const IMAGE_SIZES = "(max-width: 1000px) calc(100vw - 32px), 700px";
+
+/** The agents that speak MCP, in the order the chat header cycles through them. */
+const AGENTS = [
+	["Claude Code", "claude"],
+	["Codex", "codex"],
+	["Cursor", "cursor"],
+	["OpenCode", "opencode"],
+	["Antigravity", "antigravity"],
+	["Grok", "grok"],
+	["mvcode", null],
+];
+
+/** An agent's mark; mvcode's is its own picture. */
+const agentMark = (mark, size) =>
+	mark
+		? brandMark(mark, size)
+		: `<img class="agent-img" src="/media/mvcode-mark.png" width="24" height="24" alt="" loading="lazy" decoding="async">`;
+
+/**
+ * The agents section: a chat with a generic assistant on the left (its name and mark cycle through the agents),
+ * the real editor on the right, and the agents as a rail whose tile lights up with the chat header.
+ */
+function agentsSection(lang, copy, media) {
+	const s = copy.agents;
+	const names = AGENTS.map(([name]) => name);
+	const cycle = [...AGENTS, AGENTS[0]]
+		.map(
+			([name, mark]) =>
+				`<span class="aid-i"><span class="aid-ic">${agentMark(mark, 20)}</span>${esc(name)}</span>`,
+		)
+		.join("");
+	const tools = s.tools
+		.map(
+			([label, result], index) =>
+				`<li class="tool tl tl--${index + 2}"><span class="tool-dot" aria-hidden="true"></span>${esc(label)}<span class="ok">${esc(result)}</span></li>`,
+		)
+		.join("");
+	const rail = AGENTS.map(
+		([name, mark]) =>
+			`<li class="rail-t"><span class="ri">${agentMark(mark, 22)}</span><b>${esc(name)}</b><small>MCP</small></li>`,
+	).join("");
+	const clips = ["a", "b", "c"]
+		.map((look) => `<span class="ag-clip">${person(look)}</span>`)
+		.join("");
+	return `<section class="lp-section lp-agents" id="${SECTION_IDS[lang].agents}" aria-labelledby="agents-title">
+			<div class="lp-wrap" data-demo>
+				<div class="edit-head">
+					<div class="edit-copy">
+						${marker(s.marker, "record")}
+						<h2 class="lp-h2 lp-h2--wide" id="agents-title">${s.title.map(esc).join("<br>")}</h2>
+					</div>
+					<p class="lp-lede edit-lede">${esc(s.text)}</p>
+				</div>
+				<div class="ag-grid">
+					<div class="chat" role="group" aria-label="${esc(s.chatAria)}">
+						<div class="chat-head">
+							<span class="aid"><span class="sr-only">${esc(s.assistant)}: ${esc(names.join(", "))}</span><span class="aid-track" aria-hidden="true">${cycle}</span></span>
+							<span class="chat-live"><span class="chat-live-dot" aria-hidden="true"></span>${esc(s.connected)}</span>
+						</div>
+						<ul class="chat-body" role="list">
+							<li class="bub bub--user tl tl--1">${esc(s.ask)}</li>
+							<li class="bub tl tl--2">${esc(s.reply)}</li>
+							${tools}
+							<li class="bub tl tl--8">${esc(s.done)}</li>
+						</ul>
+					</div>
+					<figure class="ag-stage">
+						<div class="ag-screen">
+							<img src="${media.poster(VIDEOS.tour)}" width="1600" height="860" alt="${esc(s.editorAlt)}" loading="lazy" decoding="async">
+							<span class="ag-pills" aria-hidden="true"><span class="ag-pill ag-pill--1"></span><span class="ag-pill ag-pill--2"></span><span class="ag-pill ag-pill--3"></span></span>
+							<span class="ag-clips" aria-hidden="true">${clips}</span>
+						</div>
+						<figcaption class="lp-caption">${esc(s.caption)}</figcaption>
+					</figure>
+				</div>
+				<p class="ag-rail-title" id="agents-rail">${esc(s.railTitle)}</p>
+				<ul class="rail" role="list" aria-labelledby="agents-rail">${rail}</ul>
+				<div class="ag-foot">
+					<p class="ag-note">${esc(s.note)}</p>
+					${toggle("demo-toggle", "data-demo-toggle", s.pause, s.play)}
+				</div>
+			</div>
+		</section>`;
+}
+
+/** The face buttons of the controller, in the order they light up, with the symbol printed on each. */
+const PAD_BUTTONS = ["✕", "○", "□", "△"];
+
+/**
+ * Where the drawing lands on each language's board: the centre and half width of its Share button, in the card's
+ * 400 x 300 box (the 991 x 611 board covers the card from 85% of its width). The arrow ends at the circle's lower left.
+ */
+const DRAW_TARGET = {
+	"pt-BR": [328, 46, 30],
+	en: [338, 46, 24],
+	es: [330, 46, 28],
+};
+
+function drawPaths(lang) {
+	const [cx, cy, rx] = DRAW_TARGET[lang];
+	const [x, y] = [cx - rx - 4, cy + 10];
+	const line = `M64 236C120 170 ${x - 82} ${y + 42} ${x} ${y}`;
+	const head = `M${x - 18} ${(y - 0.3).toFixed(1)}L${x} ${y}L${(x - 10.3).toFixed(1)} ${(y + 14.8).toFixed(1)}`;
+	const ring = `cx="${cx}" cy="${cy}" rx="${rx}" ry="15"`;
+	return [
+		`<path class="dp dp--line halo" pathLength="100" d="${line}"/>`,
+		`<path class="dp dp--line ink" pathLength="100" d="${line}"/>`,
+		`<path class="dp dp--head halo" d="${head}"/>`,
+		`<path class="dp dp--head ink" d="${head}"/>`,
+		`<ellipse class="dp dp--ring halo" pathLength="100" ${ring}/>`,
+		`<ellipse class="dp dp--ring ink" pathLength="100" ${ring}/>`,
+	].join("");
+}
+
+const PAD_GAME_TITLES = {
+	session: "Session: Skate Sim",
+	mtg: "MTG – Motocross The Game",
+};
+
+/**
+ * Games, webcam and drawings: gameplay on a tilted stage with the controller overlay, then three cards that each show
+ * one overlay at work. The gameplay is third-party footage behind FLAGS.gamesFootage (see landing-media.mjs).
+ */
+function gamesSection(lang, copy, media) {
+	const s = copy.games;
+	const footage = FLAGS.gamesFootage && hasVideo(VIDEOS.games);
+	const pressed = (className) =>
+		PAD_BUTTONS.map(
+			(symbol, index) =>
+				`<span class="pad-lbl pad-lbl--${index + 1} ${className}" aria-hidden="true">${symbol} ${esc(s.pad.pressed)}</span>`,
+		).join("");
+	const credit = s.credit
+		.replace("{session}", `<i>${esc(PAD_GAME_TITLES.session)}</i>`)
+		.replace("{mtg}", `<i>${esc(PAD_GAME_TITLES.mtg)}</i>`);
+	const [chipForce, chipLit, chipStick] = s.pad.chips;
+	const [chipCorner, chipZoom] = s.cam.chips;
+	return `<section class="lp-section lp-games" id="${SECTION_IDS[lang].games}" aria-labelledby="games-title">
+			<div class="lp-wrap" data-demo>
+				<div class="games-grid">
+					<div class="games-copy">
+						${marker(s.marker, "publish")}
+						<h2 class="lp-h2 lp-h2--wide" id="games-title">${esc(s.title)}</h2>
+						<p class="lp-lede">${esc(s.text)}</p>
+						<ul class="also games-list" role="list">${s.list.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>
+					</div>
+					<div class="games-media">
+						<div class="g3d">
+							<div class="g3d-in">
+								<div class="g3d-screen">
+									${footage ? videoSlot(copy, media, VIDEOS.games, { label: s.videoLabel, lazy: true, className: "vslot--games" }) : `<span class="g3d-drawn">${gameScene()}</span>`}
+									<span class="g3d-rec" aria-hidden="true">● ${esc(s.rec)}</span>
+									<svg class="g3d-pad" aria-hidden="true" viewBox="0 0 240 150">${dualsense()}</svg>
+								</div>
+							</div>
+						</div>
+						<p class="games-keys"><span class="key">Ctrl</span>+<span class="key">Shift</span>+<span class="key">O</span><span class="games-keys-text">${esc(s.keys)}</span></p>
+						${footage ? `<p class="games-credit">${credit}</p>` : ""}
+					</div>
+				</div>
+				<div class="games-cards">
+					<figure class="gcard">
+						<div class="scene scene--left">
+							${footage ? `<img class="scene-bg scene-bg--dim" src="${VIDEOS.games.poster}" width="960" height="600" alt="" loading="lazy" decoding="async">` : `<span class="scene-bg scene-bg--dim">${gameScene()}</span>`}
+							<svg class="scene-art" aria-hidden="true" viewBox="0 0 400 300"><g class="scene-leaders" fill="none"><path d="M262 168L322 250"/><path d="M272 112L326 52"/><path d="M174 190L84 252"/></g><g transform="translate(80 98)">${dualsense()}</g></svg>
+							<span class="scene-chip scene-chip--tr">${esc(chipForce)}</span>
+							<span class="scene-chip scene-chip--br">${esc(chipLit)}</span>
+							<span class="scene-chip scene-chip--bl">${esc(chipStick)}</span>
+							${pressed("scene-pressed")}
+						</div>
+						<figcaption class="gcap"><b>${esc(s.pad.title)}</b><span>${esc(s.pad.body)}</span></figcaption>
+					</figure>
+					<figure class="gcard">
+						<div class="scene">
+							<span class="wz wz--${lang}">${media.img("ui-board", { alt: s.cam.alt, sizes: "(max-width: 640px) calc(100vw - 32px), 400px", className: "wz-img" })}</span>
+							<span class="wz-tap wz-tap--${lang}" aria-hidden="true"></span>
+							<span class="wp">${person("a")}</span>
+							<span class="scene-chip scene-chip--tl wz-c wz-c--a">${esc(chipCorner)}</span>
+							<span class="scene-chip scene-chip--tl scene-chip--on wz-c wz-c--b" aria-hidden="true">${esc(chipZoom)}</span>
+						</div>
+						<figcaption class="gcap"><b>${esc(s.cam.title)}</b><span>${esc(s.cam.body)}</span></figcaption>
+					</figure>
+					<figure class="gcard">
+						<div class="scene scene--right">
+							${media.img("ui-board", { alt: s.draw.alt, sizes: "(max-width: 640px) calc(100vw - 32px), 400px", className: "scene-bg scene-bg--board" })}
+							<svg class="scene-art draw-art" aria-hidden="true" viewBox="0 0 400 300" fill="none" stroke-linecap="round" stroke-linejoin="round">
+								${drawPaths(lang)}
+							</svg>
+							<span class="draw-label">${esc(s.draw.label)}</span>
+							<span class="draw-keys" aria-hidden="true"><span class="key dk dk--1">Ctrl</span><span class="key dk dk--2">C</span></span>
+						</div>
+						<figcaption class="gcap"><b>${esc(s.draw.title)}</b><span>${esc(s.draw.body)}</span></figcaption>
+					</figure>
+				</div>
+				<div class="games-foot">${toggle("demo-toggle", "data-demo-toggle", s.pause, s.play)}</div>
+			</div>
+		</section>`;
+}
 
 function publishSection(lang, copy, media) {
 	const s = copy.publish;
@@ -318,28 +715,36 @@ function publishSection(lang, copy, media) {
 		</section>`;
 }
 
-function phoneSection(lang, copy) {
+/**
+ * The phone remote. The phone shows the real screens (stills phone-portrait and phone-landscape) once FLAGS.phoneScreens
+ * is on; until then the phone and its rotate button are left out and the copy takes the card, so no placeholder frame
+ * is ever published.
+ */
+function phoneSection(lang, copy, media) {
 	const s = copy.phone;
+	const demo = FLAGS.phoneScreens
+		? `<div class="phone-demo">
+						<input type="checkbox" id="rotate-phone" class="rotate-input">
+						<label for="rotate-phone" class="rotate-btn">${ICON.rotate}${ICON.check}<span>${esc(s.rotate)}</span></label>
+						<div class="phone-stage" data-anim>
+							<div class="phone-float">
+								<div class="phone">
+									<div class="phone-face phone-face--portrait">${media.img("phone-portrait", { alt: s.portrait, sizes: "300px" })}</div>
+									<div class="phone-face phone-face--landscape">${media.img("phone-landscape", { alt: s.landscape, sizes: "620px" })}</div>
+								</div>
+							</div>
+						</div>
+					</div>`
+		: "";
 	return `<section class="lp-section lp-phone" id="${SECTION_IDS[lang].phone}" aria-labelledby="phone-title">
 			<div class="lp-wrap">
-				<div class="phone-card">
+				<div class="phone-card${demo ? "" : " phone-card--copy"}">
 					<div class="phone-copy">
 						${marker(s.marker, "record")}
 						<h2 class="lp-h2 lp-h2--card" id="phone-title">${esc(s.title)}</h2>
 						<p class="lp-lede">${esc(s.text)}</p>
 					</div>
-					<div class="phone-demo">
-						<input type="checkbox" id="rotate-phone" class="rotate-input">
-						<label for="rotate-phone" class="rotate-btn">${ICON.rotate}${ICON.check}<span>${esc(s.rotate)}</span></label>
-						<div class="phone-stage" data-anim aria-hidden="true">
-							<div class="phone-float">
-								<div class="phone">
-									<div class="phone-face phone-face--portrait">${esc(s.portrait)}</div>
-									<div class="phone-face phone-face--landscape"><span>${esc(s.landscape)}</span></div>
-								</div>
-							</div>
-						</div>
-					</div>
+					${demo}
 				</div>
 			</div>
 		</section>`;
@@ -406,8 +811,10 @@ export function renderLanding3(lang, { assets, alternates, jsonLd }) {
 		${compat(lang, copy)}
 		${recordSection(lang, copy, media)}
 		${editSection(lang, copy, media)}
+		${agentsSection(lang, copy, media)}
+		${gamesSection(lang, copy, media)}
 		${publishSection(lang, copy, media)}
-		${phoneSection(lang, copy)}
+		${phoneSection(lang, copy, media)}
 		${localSection(lang, copy, media)}
 		${downloadSection(lang, copy)}
 	</main>`;

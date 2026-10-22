@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import {
+	FLAGS,
 	MEDIA_FALLBACK_LOCALE,
 	pageMedia,
 	readMediaManifest,
@@ -11,6 +12,7 @@ import {
 	stillSet,
 	VIDEOS,
 	videoPoster,
+	videoSources,
 } from "../src/landing-media.mjs";
 
 const publicDir = path.resolve(
@@ -80,12 +82,35 @@ describe("landing media", () => {
 		for (const file of Object.keys(real.files))
 			expect(fs.existsSync(path.join(publicDir, "media", file)), file).toBe(true);
 		for (const video of Object.values(VIDEOS)) {
-			for (const [src] of video.sources)
-				expect(fs.existsSync(path.join(publicDir, src)), src).toBe(true);
-			for (const lang of ["pt-BR", "en", "es"])
+			for (const lang of ["pt-BR", "en", "es"]) {
+				// A slot without sources (the captions video, the games footage) is not rendered and names no file.
+				if (!videoSources(video, lang).length) continue;
+				for (const [src] of videoSources(video, lang))
+					expect(fs.existsSync(path.join(publicDir, src)), src).toBe(true);
 				expect(fs.existsSync(path.join(publicDir, videoPoster(real, video, lang)))).toBe(true);
+			}
 		}
-		expect(VIDEOS.tour.sources.map(([, type]) => type)).toEqual(["video/mp4", "video/webm"]);
+		for (const video of [...[VIDEOS.tour, VIDEOS.editTab].flatMap((slot) => Object.values(slot.sources).map((sources) => ({ sources })))])
+			expect(video.sources.map(([, type]) => type)).toEqual(["video/mp4", "video/webm"]);
+	});
+
+	it("ships no gameplay footage while its rights are not cleared", () => {
+		expect(FLAGS.gamesFootage).toBe(false);
+		expect(VIDEOS.games.sources).toEqual([]);
+		expect(Object.keys(readMediaManifest().files).filter((file) => file.startsWith("clipey-games"))).toEqual([]);
+		expect(fs.readdirSync(path.join(publicDir, "media")).filter((file) => file.startsWith("clipey-games"))).toEqual([]);
+	});
+
+	it("keeps every published video and poster under the 2 MB budget", () => {
+		const real = readMediaManifest();
+		for (const [file, { bytes }] of Object.entries(real.files))
+			if (/\.(mp4|webm|jpg)$/.test(file)) expect(bytes, file).toBeLessThanOrEqual(2_000_000);
+	});
+
+	it("records the Edit tab per language and falls back to pt-BR for a language without its own take", () => {
+		expect(videoSources(VIDEOS.editTab, "en")[0][0]).toBe("/media/clipey-tab-edit-en.mp4");
+		expect(videoSources(VIDEOS.editTab, "fr")[0][0]).toBe("/media/clipey-tab-edit-pt-BR.mp4");
+		expect(videoPoster(readMediaManifest(), VIDEOS.editTab, "es")).toBe("/media/clipey-tab-edit-es-poster.jpg");
 	});
 
 	it("records the real size of every file, and names each still after the width it was written at", () => {

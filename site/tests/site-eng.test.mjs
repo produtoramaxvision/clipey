@@ -787,7 +787,7 @@ describe("5. AEO/GEO: llms.txt and llms-full.txt", () => {
 		);
 		// Built from the v3 landing copy: its sections, its facts, and no section the page no longer has.
 		const v3 = LANDING["pt-BR"];
-		for (const text of [v3.hero.sub, v3.record.title, v3.edit.title, v3.publish.note, v3.phone.title, v3.local.title])
+		for (const text of [v3.hero.sub, v3.record.title, v3.edit.title.join(" "), v3.agents.note, v3.games.title, v3.publish.note, v3.phone.title, v3.local.title])
 			expect(full).toContain(text);
 		for (const button of v3.download.buttons) expect(full).toContain(button);
 		const landingPart = full.slice(0, full.indexOf("PERGUNTAS FREQUENTES (FAQ):"));
@@ -1041,9 +1041,12 @@ describe("12. SEO: hero statement and BYOK FAQ (S8)", () => {
 	it("says what Clipey does and on which systems right under the h1, in each locale", () => {
 		for (const lang of LANGUAGES) {
 			const html = files.get(fileForUrl(LANDING_PATH[lang]));
+			// The line under the h1 says what it does; the download buttons right under it name the three systems.
 			const sub = LANDING[lang].hero.sub;
-			expect(sub).toMatch(/Windows, macOS (?:ou|or|o) Linux/);
+			const [windows, others] = LANDING[lang].hero.cta;
+			expect(`${windows} ${others}`).toMatch(/Windows[\s\S]*macOS[\s\S]*Linux/);
 			expect(html.indexOf(sub), lang).toBeGreaterThan(html.indexOf("</h1>"));
+			expect(html.indexOf(`>${others}<`, html.indexOf(sub)), lang).toBeGreaterThan(html.indexOf(sub));
 		}
 	});
 

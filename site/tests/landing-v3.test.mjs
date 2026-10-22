@@ -10,7 +10,7 @@ import {
 } from "../src/blog/config.mjs";
 import { getCompletePosts } from "../src/blog/content.mjs";
 import { UI } from "../src/blog/i18n.mjs";
-import { readMediaManifest, stillLocale, VIDEOS } from "../src/landing-media.mjs";
+import { FLAGS, readMediaManifest, stillLocale, VIDEOS, videoPoster } from "../src/landing-media.mjs";
 import {
 	OWNER_LINK,
 	SECTION_IDS,
@@ -113,27 +113,78 @@ describe.each(LANGUAGES)("%s v3 landing", (lang) => {
 
 	it("preloads the editor tour poster first; the video has no autoplay, preloads nothing and keeps native controls for visitors without scripts", () => {
 		expect(page).toContain(
-			`<link rel="preload" as="image" href="${VIDEOS.tour.poster}" fetchpriority="high">`,
+			`<link rel="preload" as="image" href="${videoPoster(readMediaManifest(), VIDEOS.tour, lang)}" fetchpriority="high">`,
 		);
 		const video = between(main, '<video class="vslot-video"', "</video>");
 		expect(video).toContain('muted loop playsinline preload="none" controls');
 		expect(main).not.toContain("autoplay");
-		expect(video).toContain(`poster="${VIDEOS.tour.poster}"`);
+		expect(video).toContain(`poster="/media/clipey-editor-tour-${lang}-poster.jpg"`);
+		expect(video).toContain(`src="/media/clipey-editor-tour-${lang}.mp4"`);
 		expect(video).toContain('width="1600" height="860"');
 		expect(video.indexOf("video/mp4")).toBeLessThan(video.indexOf("video/webm"));
 		expect(main).toContain("data-vslot-toggle");
 	});
 
-	it("renders no captions figure until its recording exists, since the poster shows no captions", () => {
+	it("renders no captions video until its recording exists: the Captions tab shows its drawn demo instead", () => {
 		expect(VIDEOS.captions.sources).toEqual([]);
 		expect(main).not.toContain("captions-figure");
-		expect(main).not.toContain(copy.edit.captionsCaption);
 		expect(main).not.toContain("captions-poster");
-		expect(main.match(/data-vslot[\s>]/g)).toHaveLength(1);
+		expect(main).toContain('class="stage-in cap2"');
+		// The hero, the Edit tab and (while the footage flag is on) the games stage are the video slots.
+		expect(main.match(/data-vslot[\s>]/g)).toHaveLength(FLAGS.gamesFootage ? 3 : 2);
+	});
+
+	it("shows the features as radio tabs that work without scripts, one panel each, the first checked", () => {
+		const keys = ["edit", "clip", "cap", "voice", "cam"];
+		const radios = [...main.matchAll(/<input type="radio" name="ft" id="ft-(\w+)" class="ft-input" aria-controls="ft-panel-\w+"( checked)?>/g)];
+		expect(radios.map((m) => m[1])).toEqual(keys);
+		expect(radios.map((m) => Boolean(m[2]))).toEqual([true, false, false, false, false]);
+		for (const key of keys) {
+			expect(main).toContain(`<label for="ft-${key}" class="ft-tab`);
+			expect(main).toContain(`id="ft-panel-${key}"`);
+			expect(main).toContain(copy.edit.tabs[key].title.replace(/"/g, "&quot;"));
+		}
+		expect(main.match(/<ol class="steps">/g)).toHaveLength(5);
+		expect(main).toContain(`/media/clipey-tab-edit-${lang}.mp4`);
+	});
+
+	it("draws the Captions demo with this language's pane and target, and the transcript of the Auto Clip demo", () => {
+		expect(main).toContain(`/media/captions-pane-${lang}-756.webp`);
+		expect(main).toContain(`/media/captions-clean-${lang}-991.webp`);
+		expect(main).toContain(`class="cap2-p cap2-p--${lang === "pt-BR" ? "pt" : "es"}"`);
+		const clip = copy.edit.tabs.clip.stage;
+		for (const [, reason] of clip.lines.filter(([, reason]) => reason)) expect(main).toContain(`<em>${reason}</em>`);
+		expect(main).toContain(clip.apply);
+	});
+
+	it("lists the agents as a rail, with a pause button for every looping demo", () => {
+		const agents = sectionOf(page, ids.agents);
+		expect(agents.match(/<li class="rail-t">/g)).toHaveLength(7);
+		for (const name of ["Claude Code", "Codex", "Cursor", "OpenCode", "Antigravity", "Grok", "mvcode"])
+			expect(agents).toContain(`<b>${name}</b>`);
+		expect(agents).toContain('<img class="agent-img" src="/media/mvcode-mark.png"');
+		// The strip, the tabs, the agents and the games each move only with their own pause button.
+		expect(main.match(/ data-demo>/g)).toHaveLength(4);
+		expect(main.match(/data-demo-toggle/g)).toHaveLength(4);
+	});
+
+	it("credits the third-party gameplay whenever it is shown, and draws the controller over it", () => {
+		const games = sectionOf(page, ids.games);
+		expect(games).toContain('<svg class="g3d-pad" aria-hidden="true" viewBox="0 0 240 150">');
+		expect(games.includes("games-credit")).toBe(FLAGS.gamesFootage);
+		expect(games.includes("clipey-games")).toBe(FLAGS.gamesFootage);
+		if (!FLAGS.gamesFootage) expect(games.match(/<svg class="game-scene"/g)).toHaveLength(2);
+		if (FLAGS.gamesFootage) {
+			expect(games).toContain("<i>Session: Skate Sim</i>");
+			expect(games).toContain("<i>MTG – Motocross The Game</i>");
+			expect(games).toContain("/media/clipey-games.mp4");
+		}
+		expect(games.match(/<figure class="gcard">/g)).toHaveLength(3);
+		expect(games).toContain(`wz--${lang}`);
 	});
 
 	it("tours the recording bar with the app's own labels, decorative tips and a real list", () => {
-		const hud = between(main, '<figure class="hud"', "</figure>");
+		const hud = between(main, `<figure class="hud hud--${stillLocale(readMediaManifest(), "hud-bar", lang)}" data-hud>`, "</figure>");
 		const tips = [...hud.matchAll(/<span class="hud-tip hud-slot--(\d+)" aria-hidden="true">([^<]*)<\/span>/g)];
 		expect(tips.map((m) => Number(m[1]))).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 		expect(tips.map((m) => m[2])).toEqual(copy.record.hud.labels.map((label) => label.replace(/'/g, "&#39;")));
@@ -145,12 +196,20 @@ describe.each(LANGUAGES)("%s v3 landing", (lang) => {
 		expect(hud).toContain("data-hud-toggle");
 	});
 
-	it("rotates the phone with a real checkbox and its label", () => {
+	it("never publishes a placeholder phone frame: the phone appears only with its real screens", () => {
+		const phone = sectionOf(page, ids.phone);
+		expect(phone).not.toMatch(/captura real|real capture/);
+		expect(phone.includes('class="phone-demo"')).toBe(FLAGS.phoneScreens);
+		if (!FLAGS.phoneScreens) expect(phone).toContain('class="phone-card phone-card--copy"');
+	});
+
+	it.runIf(FLAGS.phoneScreens)("rotates the phone with a real checkbox and its label", () => {
 		const phone = sectionOf(page, ids.phone);
 		expect(phone).toContain('<input type="checkbox" id="rotate-phone" class="rotate-input">');
 		expect(phone).toContain(`<label for="rotate-phone" class="rotate-btn">`);
 		expect(phone).toContain(copy.phone.rotate);
-		expect(phone).toContain('class="phone-stage" data-anim aria-hidden="true"');
+		expect(phone).toContain('class="phone-stage" data-anim>');
+		expect(phone).toContain(`/media/phone-portrait-${stillLocale(readMediaManifest(), "phone-portrait", lang)}-`);
 		// The checked state shows a check mark in place of the rotate icon, not only a colour.
 		expect(phone).toContain('class="rotate-icon"');
 		expect(phone).toContain('class="rotate-check"');
@@ -209,11 +268,12 @@ describe("v3 landing captions slot", () => {
 		VIDEOS.captions.sources.push(["/media/captions.mp4", "video/mp4"]);
 		try {
 			const page = renderSite(getCompletePosts(), { landing: bundle, blog: bundle }).get("index.html");
-			const figure = between(page, '<figure class="captions-figure">', "</figure>");
+			const figure = between(page, '<div class="stage-in stage-in--video captions-figure">', "</video>");
 			expect(figure).toContain("data-vslot-lazy");
 			expect(figure).toContain('<source data-src="/media/captions.mp4" type="video/mp4">');
 			expect(figure).toContain(`poster="/media/captions-poster-pt-BR-1400.webp"`);
-			expect(figure).toContain(LANDING["pt-BR"].edit.captionsCaption);
+			expect(figure).toContain(`aria-label="${LANDING["pt-BR"].edit.captionsLabel}"`);
+			expect(page).not.toContain('class="stage-in cap2"');
 		} finally {
 			VIDEOS.captions.sources.length = 0;
 		}
@@ -287,7 +347,7 @@ describe("v3 landing copy", () => {
 		for (const lang of LANGUAGES) {
 			const all = strings(LANDING[lang]).join("\n");
 			for (const fact of facts[lang]) expect(all).toMatch(fact);
-			expect(LANDING[lang].hero.sub).toMatch(/Windows, macOS (ou|or|o) Linux/);
+			expect(`${LANDING[lang].hero.platforms} ${LANDING[lang].hero.cta.join(" ")}`).toMatch(/Windows[\s\S]*macOS[\s\S]*Linux/);
 		}
 	});
 

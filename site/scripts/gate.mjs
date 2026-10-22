@@ -160,7 +160,8 @@ const horizontalOverflow = (page) =>
 /**
  * Visible elements reaching outside the viewport. overflow-x: clip on the page would hide them from the scroll
  * check, so each element is measured. The phone recording bar (760 px, panned) overflows by design, and the
- * cursor track is an empty bar-wide layer moved by transform; the cursor inside it is measured instead.
+ * cursor track is an empty bar-wide layer moved by transform; the cursor inside it is measured instead. The platforms
+ * strip and the phone tab bar clip their own overflow (a loop and a sideways scroller), so their items are skipped.
  */
 const outOfBounds = (page) =>
 	page.evaluate(() => {
@@ -169,6 +170,12 @@ const outOfBounds = (page) =>
 		const out = [];
 		for (const element of document.querySelectorAll("header *, main *, footer *")) {
 			if (phone && element.closest(".hud-stage")) continue;
+			// The platforms strip loops sideways inside its own clipped box, and the phone tab bar scrolls sideways.
+			if (element.closest(".mq")) continue;
+			if (phone && element.closest(".ft-bar")) continue;
+			// Shapes inside an SVG are clipped by its viewport (the drawn game scene is sliced to cover its box): the
+			// <svg> itself is measured.
+			if (element instanceof SVGElement && !(element instanceof SVGSVGElement)) continue;
 			if (element.classList.contains("hud-cursor-track")) continue;
 			const style = getComputedStyle(element);
 			if (style.visibility === "hidden" || style.display === "none") continue;

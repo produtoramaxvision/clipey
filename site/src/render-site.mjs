@@ -143,8 +143,22 @@ ${section(
 
 ${section(
 	"EDITAR",
-	`${copy.edit.title} ${copy.edit.text}`,
-	...copy.edit.cards.map(([, , title, body]) => `- ${title}: ${body}`),
+	`${copy.edit.title.join(" ")} ${copy.edit.text}`,
+	...Object.values(copy.edit.tabs).map(
+		(tab) => `- ${tab.label}: ${tab.title} ${tab.steps.map(([title, text]) => `${title}: ${text}`).join(" ")} (${tab.also.join("; ")})`,
+	),
+)}
+
+${section(
+	"AGENTES (MCP)",
+	`${copy.agents.title.join(" ")} ${copy.agents.text}`,
+	copy.agents.note,
+)}
+
+${section(
+	"GAMES, WEBCAM E DESENHOS",
+	`${copy.games.title} ${copy.games.text}`,
+	...copy.games.list.map((item) => `- ${item}`),
 )}
 
 ${section("PUBLICAR", `${copy.publish.title} ${copy.publish.text}`, copy.publish.note)}
