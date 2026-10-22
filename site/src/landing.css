@@ -1333,8 +1333,11 @@ html {
 	border-radius: inherit;
 	content: "";
 	opacity: 0;
-	/* One pass when the card comes into view: the last highlight ends 4.2 s in (WCAG 2.2.2: stops within 5 s). */
-	animation: lang-pulse 6s ease-in-out 1 paused;
+	/*
+	 * One pass when the card comes into view. The last chip starts 3 s in and its 1.6 s pulse is back at opacity 0 at
+	 * 4.6 s (WCAG 2.2.2: stops within 5 s).
+	 */
+	animation: lang-pulse 1.6s ease-in-out 1 paused;
 	animation-delay: var(--d, 0s);
 }
 
@@ -1376,8 +1379,8 @@ html {
 		opacity: 0;
 	}
 
-	8%,
-	20% {
+	20%,
+	50% {
 		opacity: 1;
 	}
 }
