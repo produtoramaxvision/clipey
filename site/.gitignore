@@ -7,3 +7,6 @@ dist/
 .env*
 !.env.example
 node_modules
+
+# Browser gate screenshots (scripts/gate.mjs)
+tests/artifacts/
