@@ -8,6 +8,7 @@ import {
 	SITE_URL,
 } from "../src/blog/config.mjs";
 import { getCompletePosts } from "../src/blog/content.mjs";
+import { UI } from "../src/blog/i18n.mjs";
 import { readMediaManifest, stillLocale, VIDEOS } from "../src/landing-media.mjs";
 import {
 	OWNER_LINK,
@@ -68,6 +69,16 @@ describe.each(LANGUAGES)("%s v3 landing", (lang) => {
 		expect(header).toContain(`href="#${ids.download}"`);
 		expect(header).toContain('id="menu-toggle"');
 		expect(header).toContain('aria-controls="mobile-menu"');
+	});
+
+	it("offers the theme switch the blog has, since the page honours a saved light theme", () => {
+		const header = between(page, '<header class="lp-header">', "</header>");
+		const button = header.match(/<button type="button" class="icon-btn lp-theme-toggle" data-theme-toggle[^>]*>/)?.[0];
+		expect(button).toBeDefined();
+		expect(button).toContain(`data-label-light="${UI[lang].themeToLight}"`);
+		expect(button).toContain(`data-label-dark="${UI[lang].themeToDark}"`);
+		expect(header).toContain('class="theme-icon-dark"');
+		expect(header).toContain('class="theme-icon-light"');
 	});
 
 	it("switches language to the other landings and marks the current one", () => {

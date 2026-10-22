@@ -103,6 +103,12 @@ html {
 	color: var(--title);
 }
 
+/* The theme switch sits next to the language group (chrome.js wires it, base.css draws it, as on the blog). */
+.lp-theme-toggle {
+	flex-shrink: 0;
+	margin-left: -16px;
+}
+
 .lp-header-cta {
 	display: inline-flex;
 	align-items: center;
@@ -177,6 +183,10 @@ html {
 
 	.lp-header-bar {
 		gap: 10px;
+	}
+
+	.lp-theme-toggle {
+		margin-left: 0;
 	}
 
 	.lp-menu-toggle {

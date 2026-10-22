@@ -18,7 +18,7 @@ import {
 } from "./blog/config.mjs";
 import { escapeHtml as esc } from "./blog/content.mjs";
 import { UI } from "./blog/i18n.mjs";
-import { renderHead, renderPage } from "./blog/shell.mjs";
+import { icon, renderHead, renderPage } from "./blog/shell.mjs";
 import { pageMedia, readMediaManifest, VIDEOS } from "./landing-media.mjs";
 import { LANDING } from "./landing-v3-copy.mjs";
 
@@ -138,6 +138,7 @@ function header(lang, copy, alternates) {
 			<a class="lp-brand" href="#${ids.hero}" aria-label="${esc(ui.homeLabel)}"><img src="/clipey-256.png" width="28" height="28" alt=""><span>Clipey</span></a>
 			<nav class="lp-nav" aria-label="${esc(copy.nav.aria)}">${links}</nav>
 			${langGroup}
+			<button type="button" class="icon-btn lp-theme-toggle" data-theme-toggle aria-label="${esc(ui.themeToLight)}" data-label-light="${esc(ui.themeToLight)}" data-label-dark="${esc(ui.themeToDark)}">${icon("moon")}${icon("sun")}</button>
 			<a class="lp-header-cta" href="#${ids.download}">${ICON.download}<span class="lp-cta-long">${esc(copy.nav.download)}</span><span class="lp-cta-short">${esc(copy.nav.downloadShort)}</span></a>
 			<button type="button" class="lp-menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="${esc(ui.menu)}" data-label-menu="${esc(ui.menu)}" data-label-close="${esc(ui.closeMenu)}">${ICON.menu}</button>
 		</div>
