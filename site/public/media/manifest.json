@@ -1,0 +1,151 @@
+{
+	"stills": {
+		"hud-bar": [
+			"pt-BR"
+		],
+		"export": [
+			"pt-BR",
+			"en",
+			"es"
+		],
+		"settings-transcription": [
+			"pt-BR",
+			"en",
+			"es"
+		],
+		"captions-poster": [
+			"pt-BR"
+		]
+	},
+	"files": {
+		"hud-bar-pt-BR-800.webp": {
+			"width": 800,
+			"height": 72,
+			"bytes": 4002
+		},
+		"hud-bar-pt-BR-1400.webp": {
+			"width": 1400,
+			"height": 126,
+			"bytes": 6750
+		},
+		"hud-bar-pt-BR-1941.webp": {
+			"width": 1941,
+			"height": 174,
+			"bytes": 10368
+		},
+		"export-pt-BR-800.webp": {
+			"width": 800,
+			"height": 430,
+			"bytes": 11584
+		},
+		"export-pt-BR-1400.webp": {
+			"width": 1400,
+			"height": 753,
+			"bytes": 25998
+		},
+		"export-pt-BR-1920.webp": {
+			"width": 1920,
+			"height": 1032,
+			"bytes": 42842
+		},
+		"export-en-800.webp": {
+			"width": 800,
+			"height": 430,
+			"bytes": 11318
+		},
+		"export-en-1400.webp": {
+			"width": 1400,
+			"height": 753,
+			"bytes": 24682
+		},
+		"export-en-1920.webp": {
+			"width": 1920,
+			"height": 1032,
+			"bytes": 40688
+		},
+		"export-es-800.webp": {
+			"width": 800,
+			"height": 430,
+			"bytes": 11802
+		},
+		"export-es-1400.webp": {
+			"width": 1400,
+			"height": 753,
+			"bytes": 26298
+		},
+		"export-es-1920.webp": {
+			"width": 1920,
+			"height": 1032,
+			"bytes": 43498
+		},
+		"settings-transcription-pt-BR-800.webp": {
+			"width": 800,
+			"height": 430,
+			"bytes": 8806
+		},
+		"settings-transcription-pt-BR-1400.webp": {
+			"width": 1400,
+			"height": 753,
+			"bytes": 18162
+		},
+		"settings-transcription-pt-BR-1920.webp": {
+			"width": 1920,
+			"height": 1032,
+			"bytes": 29892
+		},
+		"settings-transcription-en-800.webp": {
+			"width": 800,
+			"height": 430,
+			"bytes": 8598
+		},
+		"settings-transcription-en-1400.webp": {
+			"width": 1400,
+			"height": 753,
+			"bytes": 17890
+		},
+		"settings-transcription-en-1920.webp": {
+			"width": 1920,
+			"height": 1032,
+			"bytes": 28864
+		},
+		"settings-transcription-es-800.webp": {
+			"width": 800,
+			"height": 430,
+			"bytes": 8658
+		},
+		"settings-transcription-es-1400.webp": {
+			"width": 1400,
+			"height": 753,
+			"bytes": 17868
+		},
+		"settings-transcription-es-1920.webp": {
+			"width": 1920,
+			"height": 1032,
+			"bytes": 29964
+		},
+		"captions-poster-pt-BR-800.webp": {
+			"width": 800,
+			"height": 430,
+			"bytes": 23670
+		},
+		"captions-poster-pt-BR-1400.webp": {
+			"width": 1400,
+			"height": 753,
+			"bytes": 47808
+		},
+		"captions-poster-pt-BR-1920.webp": {
+			"width": 1920,
+			"height": 1032,
+			"bytes": 78694
+		},
+		"clipey-editor-tour.mp4": {
+			"bytes": 1499011
+		},
+		"clipey-editor-tour.webm": {
+			"bytes": 4182772
+		},
+		"clipey-editor-tour-poster.jpg": {
+			"bytes": 135320
+		}
+	}
+}
