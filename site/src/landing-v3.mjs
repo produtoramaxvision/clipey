@@ -108,7 +108,9 @@ const ICON = {
 	alert:
 		'<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>',
 	rotate:
-		'<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M3 14a9 9 0 0 0 6 6"/><path d="m3 18 0-4 4 0"/></svg>',
+		'<svg class="rotate-icon" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M3 14a9 9 0 0 0 6 6"/><path d="m3 18 0-4 4 0"/></svg>',
+	check:
+		'<svg class="rotate-check" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>',
 	cursor:
 		'<svg class="hud-cursor" aria-hidden="true" viewBox="0 0 24 24"><path d="M5 3l14 8.2-6.1 1.4L10 19z"/></svg>',
 	menu: '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
@@ -320,7 +322,7 @@ function phoneSection(lang, copy) {
 					</div>
 					<div class="phone-demo">
 						<input type="checkbox" id="rotate-phone" class="rotate-input">
-						<label for="rotate-phone" class="rotate-btn">${ICON.rotate}<span>${esc(s.rotate)}</span></label>
+						<label for="rotate-phone" class="rotate-btn">${ICON.rotate}${ICON.check}<span>${esc(s.rotate)}</span></label>
 						<div class="phone-stage" data-anim aria-hidden="true">
 							<div class="phone-float">
 								<div class="phone">

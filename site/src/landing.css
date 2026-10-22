@@ -1599,8 +1599,27 @@ html {
 	outline-offset: 3px;
 }
 
+/*
+ * Checked is not told by colour alone: the rotate icon turns into a check mark. Border, icon and label use
+ * --accent-text on --accent-soft (light 7.8:1 against the white card and 6.5:1 against the fill; dark 10.3:1 and
+ * 9.1:1), above the 3:1 WCAG 1.4.11 asks of a state.
+ */
+.rotate-check {
+	display: none;
+}
+
 .rotate-input:checked + .rotate-btn {
-	border-color: var(--accent);
+	border-color: var(--accent-text);
+	background: var(--accent-soft);
+	color: var(--accent-text);
+}
+
+.rotate-input:checked + .rotate-btn .rotate-icon {
+	display: none;
+}
+
+.rotate-input:checked + .rotate-btn .rotate-check {
+	display: block;
 }
 
 .phone-stage {
