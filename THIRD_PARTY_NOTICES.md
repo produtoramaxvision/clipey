@@ -154,6 +154,20 @@ distributed by their own registries, not redistributed inside our binaries.
 the PipeWire helper (Linux) and the compositor addon are part of this repository
 and are covered by [LICENSE](LICENSE).
 
+## Website (`site/`) — brand marks
+
+The landing page names the platforms it publishes to and the AI agents that
+connect over MCP, each next to its mark (inlined as SVG in `site/src/landing-art.mjs`).
+
+- **simple-icons** 16.35.0 — Claude, Cursor, OpenCode, YouTube, TikTok,
+  Instagram, Facebook, Apple and Linux paths. **License**: CC0 1.0
+  (<https://github.com/simple-icons/simple-icons>).
+- **Lobe Icons** (`@lobehub/icons-static-svg` 1.97.0) — the Codex,
+  Antigravity and Grok marks. **License**: MIT
+  (<https://github.com/lobehub/lobe-icons>), text below.
+- The marks remain trademarks of their owners and are shown only to name the
+  product they stand for. mvcode's mark is MaxVision's own.
+
 ---
 
 To report an omission or request source for anything bundled here, open an issue

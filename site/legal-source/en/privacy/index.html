@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0c0d0b">
+<title>Privacy policy · Clipey</title>
+<meta name="description" content="Clipey privacy policy: the controller, local data, connected accounts (YouTube, Meta, TikTok), AI, legal bases, retention, the DPO and your rights under LGPD and GDPR.">
+<link rel="icon" href="/favicon.png">
+<link rel="stylesheet" href="/legal.css">
+</head>
+<body>
+<header><div class="bar"><a class="brand" href="/en/"><img src="/clipey-256.png" alt="" width="30" height="30">Clipey</a><nav><a href="/en/">Home</a><a href="/en/privacy/" aria-current=page>Privacy</a><a href="/en/terms/">Terms</a><a href="/en/data-deletion/">Data deletion</a><a href="/">Português</a></nav></div></header>
+<main>
+<h1>Privacy policy</h1>
+<p class="meta">Effective October 16, 2026 · Last updated: October 23, 2026</p>
+<h2>1. Who controls the data</h2>
+<p>Clipey is a free desktop app for Windows, macOS and Linux for recording, editing and publishing videos. No Clipey account is required. The controller of the personal data processed to operate the app, the clipey.com.br website and the services described here is <strong>Produtora MaxVision</strong>, Brazilian company registration (CNPJ) 38.386.434/0001-44, based in São Paulo, Brazil (“Clipey”, “we”).</p>
+<ul>
+<li><strong>Privacy and data subject requests</strong>: <a href="mailto:privacy@clipey.com.br">privacy@clipey.com.br</a></li>
+<li><strong>Data Protection Officer (DPO, “encarregado”)</strong>: Max Müller, <a href="mailto:maxmuller@clipey.com.br">maxmuller@clipey.com.br</a></li>
+<li><strong>General contact</strong>: <a href="mailto:contato@clipey.com.br">contato@clipey.com.br</a></li>
+</ul>
+<h2>2. What stays on your computer</h2>
+<p>Recordings, video files, projects and exports are created and saved locally, wherever you choose. Preferences, settings, operational data and credentials are kept in the app data directory defined by your operating system. Provider keys and OAuth tokens are stored locally with Electron <code>safeStorage</code>, which uses the operating system’s cryptographic protection when it is available. Security also depends on your device, your system account, backups and operating-system support; it is not a guarantee against every form of access.</p>
+<p>We do not maintain a Clipey user account and do not automatically receive your recordings or projects. When you use a connected feature, the data it needs leaves your device as described below, over the internet, and the receiving service processes it under its own terms and policies. Audio transcription runs locally on your device. Optional cloud AI features run directly from the app to the provider you choose, with your own API key (BYOK), under that provider’s policy, and only send content when you configure and use them; there are no credits in 1.15.</p>
+<h2>3. Keystroke Shortcut Capture &amp; Privacy</h2>
+<p><strong>Keyboard Shortcut Overlay (Windows):</strong> Clipey includes an optional Windows feature that displays shortcut combinations and navigation keys on screen during recording.</p>
+<p><strong>Anti-Keylogging Guarantee:</strong> This feature is disabled by default. When enabled, it is governed by an immutable hardware-level privacy filter (<code>keystroke_filter.cpp</code>). Clipey <strong>never records or stores ordinary text typing, passwords, or personal messages</strong>. The filter captures only combinations containing non-Shift modifier keys (<code>Ctrl</code>, <code>Alt</code>, or <code>Windows</code>) or non-text navigation keys (<code>Escape</code>, arrow keys, <code>Home</code>, <code>End</code>, <code>Page Up/Down</code>, and function keys <code>F1-F24</code>). Ordinary alphanumeric typing, punctuation, Space, Enter, Tab, Backspace, Delete, standalone Shift, and AltGr keys are permanently blocked and discarded before any event is logged or persisted.</p>
+<h2>4. Social Media Publishing &amp; Account Integrations</h2>
+<p><strong>Direct Social Publishing:</strong> Clipey enables you to export and publish video recordings directly to your connected YouTube, TikTok, Facebook Page, and Instagram accounts. A post only starts through an action of yours in the app.</p>
+<p><strong>Authentication &amp; Token Security:</strong> When you connect an account, authentication is performed via official OAuth authorization flows in your web browser.</p>
+<ul>
+<li><strong>Local Storage:</strong> Access and refresh tokens are encrypted on your computer using operating system encryption (<code>safeStorage</code> / DPAPI on Windows, Keychain on macOS, Secret Service on Linux). Tokens are stored locally on your device and are never stored on Produtora MaxVision servers.</li>
+<li><strong>Auth Broker (<code>api.clipey.com.br</code>):</strong> To protect confidential application credentials that cannot be embedded in open-source software, token exchange and refresh requests for TikTok and Meta are securely proxied through a stateless Cloudflare Worker broker at <code>https://api.clipey.com.br</code>. When Clipey cannot find any Facebook Page for your Meta account, it sends your Meta access token to the broker once so the broker can ask Meta (with the app credentials) which Pages and Instagram accounts you chose to share; the broker returns only their identifiers. The broker does not store tokens, authorization codes, user profile data, or media files. It does not write codes, tokens or account data to any database or other storage of its own. Cloudflare Worker edge request logs (Cloudflare Workers Logs, containing your IP address, timestamp, request method, and URL path, with all query strings and authorization codes redacted) are retained for up to 7 days strictly for network security and operational integrity, and then deleted automatically. URL query parameters (query string) are redacted before logging, so OAuth authorization codes are not stored.</li>
+<li><strong>Direct Uploads:</strong> Video files are streamed directly from your computer to the official upload servers of Google, TikTok, and Meta. Your video files never pass through Produtora MaxVision servers: the video is not hosted at any Clipey address. Videos and posts do not pass through this service.</li>
+</ul>
+<p><strong>Google API Services &amp; YouTube Limited Use:</strong> Clipey’s use and transfer to any other app of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements. We request only <code>https://www.googleapis.com/auth/youtube.readonly</code> (to identify your YouTube channel: name, identifier and custom URL) and <code>https://www.googleapis.com/auth/youtube.upload</code> (to upload the videos you publish). Clipey never uses Google user data for advertising, market research, profiling, or training machine learning models, and uses it only for the connection, lookup and publishing features you request. You also agree to be bound by the <a href="https://www.youtube.com/t/terms">YouTube Terms of Service</a> and <a href="https://policies.google.com/privacy">Google Privacy Policy</a>. You can revoke Clipey’s access at any time in your <a href="https://security.google.com/settings/security/permissions">Google Account security settings</a> (https://security.google.com/settings/security/permissions). On disconnect, the app also asks Google to revoke the token and deletes the token from your device; if Google does not confirm the revocation, the token stays encrypted on your device only so the revocation can be retried. Revoking access does not delete videos already published on YouTube, which you remove on YouTube itself.</p>
+<p><strong>TikTok Direct Post &amp; Policy Declarations:</strong> When posting to TikTok, you must configure your audience visibility, comment, duet, and stitch preferences. Scopes requested: <code>user.info.basic</code>, to identify your account, and <code>video.publish</code>, to publish the videos you choose (user.info.basic, to identify your account, and video.publish, to publish the videos you choose). In accordance with TikTok's Content Sharing Guidelines:</p>
+<ol>
+<li>By publishing, you agree to TikTok's <a href="https://www.tiktok.com/legal/page/global/music-usage-confirmation/en">Music Usage Confirmation</a> and <a href="https://www.tiktok.com/legal/page/global/terms-of-service/en">Terms of Service</a>, as well as its <a href="https://www.tiktok.com/legal/tik-tok-developer-terms-of-service?lang=en">Developer Terms</a> and <a href="https://www.tiktok.com/legal/privacy-policy">TikTok Privacy Policy</a>.</li>
+<li>If you disclose your video as commercial or branded content, you agree to TikTok's <a href="https://www.tiktok.com/legal/page/global/bc-policy/en">Branded Content Policy</a>. Branded content visibility cannot be set to private ("Only me").</li>
+</ol>
+<p><strong>Meta Publishing Requirements:</strong> When you connect Meta, the app retrieves the Facebook Pages and Instagram professional accounts you manage, with their identifiers and access tokens. Permissions requested: <code>pages_show_list</code>, <code>pages_read_engagement</code>, <code>pages_manage_posts</code>, <code>instagram_basic</code>, <code>instagram_content_publish</code> and <code>business_management</code>, used to list the destinations you manage and publish to them (pages_show_list, pages_read_engagement, pages_manage_posts, instagram_basic, instagram_content_publish and business_management,). <code>business_management</code> is used only to list the Pages that belong to a business portfolio you have access to, which Meta otherwise hides from the Page list; Clipey does not create, change or delete business assets, people, ad accounts or settings. Publishing to Facebook Pages and Instagram professional accounts requires that your Facebook account manages the Page, directly or through a business portfolio. Meta processes this data independently under its own terms and the <a href="https://www.facebook.com/privacy/policy">Meta Privacy Policy</a>. On disconnect, the app asks Meta to remove the permissions granted.</p>
+<p><strong>Disconnection &amp; Data Deletion:</strong> You can disconnect any publishing account at any time in Clipey under Settings → Accounts &amp; publishing. Disconnecting immediately removes local tokens and triggers server-side revocation with the respective provider. If offline, the revocation intent is queued locally and retried automatically. You can also request data deletion or view instructions at <a href="https://clipey.com.br/en/data-deletion/"><code>https://clipey.com.br/en/data-deletion/</code></a> (or via <a href="/en/data-deletion/">Data deletion</a>).</p>
+<h2>5. Mobile Companion &amp; Local Network Sync</h2>
+<p><strong>Mobile Companion Service:</strong> Clipey includes an optional Mobile Companion feature (Mobile and tablet companion) that allows you to connect a mobile device (via an Android APK or iOS Progressive Web App) to your desktop workstation over your local area network (LAN) or private Tailscale network. The Android app (an APK distributed by us) can record the phone screen with your per-session permission; on iPhone and iPad, access is via the web app (PWA).</p>
+<p><strong>Local Operation &amp; Zero Cloud Storage:</strong> The Mobile Companion host service is disabled by default and must be explicitly enabled by you in Settings. When enabled, the service runs strictly on your local computer (defaulting to TCP port 47822) using encrypted TLS (via Tailscale Let's Encrypt certificates or local self-signed certificates). All communication—including project synchronization, remote recording triggers, and camera video uploads (via the open tus protocol)—transfers directly between your mobile device and your computer. No mobile video recordings, project documents, or device data pass through or are stored on servers operated by Produtora MaxVision: data is not sent to Clipey or Produtora MaxVision servers.</p>
+<p><strong>Pairing &amp; Device Tokens:</strong> Pairing requires scanning an ephemeral QR code with a 120-second validity, using a per-device token. Upon successful pairing, a cryptographically secure random device token is generated. Clipey stores only a SHA-256 cryptographic hash of this token, along with your device's sanitized name and operating platform, locally on your desktop computer in <code>mobile-devices.json</code>. You can revoke paired devices at any time in Settings → Mobile companion or from the mobile client, which immediately terminates access and deletes authorization records.</p>
+<p><strong>Retention:</strong> Video clips uploaded from your mobile device are saved permanently on your computer in your local recordings directory as project assets until you explicitly delete them.</p>
+<h2>6. Cloud AI Services &amp; Bring-Your-Own-Key (BYOK)</h2>
+<p><strong>Optional Cloud AI Features:</strong> While core transcription (local Whisper) and face tracking (MediaPipe) run entirely on your device with zero cloud transmission, Clipey offers optional integrations with third-party artificial intelligence providers for automated editing assistance, transcript curation (Auto Clip), and synthesized voiceover (TTS). The speech recognition models are downloaded once from Hugging Face (huggingface.co), and the alignment models from Clipey’s releases on GitHub; after that, they stay on your computer.</p>
+<p><strong>Bring Your Own Key (BYOK) Model:</strong> Clipey does not sell AI credits or broker AI provider accounts; there are no credits in 1.15. To use cloud AI features, you must provide your own API key directly from the supported provider (own API key (BYOK)):</p>
+<ul>
+<li><strong>LLM / Assistant Providers:</strong> Anthropic (Claude), OpenAI (GPT-4o), Google (Gemini), Mistral AI, OpenRouter, MiniMax, or custom OpenAI-compatible endpoints.</li>
+<li><strong>Voiceover / TTS Providers:</strong> OpenAI, Google Gemini TTS, xAI (Grok), ElevenLabs, or Alibaba Cloud DashScope.</li>
+</ul>
+<p><strong>Data Transmitted to Providers:</strong> When you explicitly invoke an AI feature, Clipey connects directly from your workstation to the third-party provider's official API endpoint over HTTPS. Depending on the action requested, the transmission may include:</p>
+<ol>
+<li>Text prompts and conversation history you enter into the AI assistant.</li>
+<li>Project timeline metadata (clip timestamps, duration, marker labels, annotation text).</li>
+<li>Video transcript segments (when using Auto Clip or transcript summarization).</li>
+<li>Narration script text (when generating voiceover).</li>
+</ol>
+<p>Your API keys and project data are sent directly to the selected vendor and are never transmitted to, viewed by, or stored on Produtora MaxVision servers. Your API keys are encrypted at rest on your workstation using operating system encryption (<code>safeStorage</code> / DPAPI / Keychain).</p>
+<p><strong>International Data Transfers:</strong> Third-party AI providers operate servers globally, primarily in the United States. By entering your API key and initiating an AI request, you acknowledge that your prompt text and transcript excerpts will be transferred internationally and governed by the respective provider's Privacy Policy and Terms of Service.</p>
+<p><strong>Local Audio Caching:</strong> To avoid repeated API billing and latency, synthesized voiceover audio is cached locally on your hard drive in your application data directory (<code>tts-cache/</code>). These audio files remain on your computer until you delete the project or clear your application cache.</p>
+<h2>7. Link import and other services</h2>
+<ul>
+<li><strong>Link import</strong>: Link import uses a third-party component and downloads media directly from the source site to your computer. You are responsible for importing only content you own or are authorized to use, respecting copyright and the terms of the source site. Produtora MaxVision does not host, store or distribute imported content. The request with the URL is sent directly from your computer to the source site; no data goes to Clipey servers.</li>
+<li><strong>Other models and components</strong>: when you enable the relevant feature, the app may download other third-party models or components, and the feature screen identifies the service.</li>
+<li><strong>Local MCP server</strong>: available only when you enable and configure it, and it listens only on your own computer (<code>127.0.0.1</code>). An AI or automation client that you run and authorize locally can read or change projects and use the tools you enabled.</li>
+</ul>
+<h2>8. Software Updates &amp; In-App Announcements</h2>
+<p><strong>Automated Technical Requests:</strong> To ensure application stability, security, and integrity, Clipey initiates two minimal automated technical requests over HTTPS when connected to the internet:</p>
+<ol>
+<li><strong>Software Update Checks:</strong> The application periodically contacts GitHub Releases (<code>github.com/produtoramaxvision/clipey</code>) to check whether a newer version or security patch is available (<code>latest.yml</code> on Windows, <code>latest-linux.yml</code> on Linux). You can choose between the default stable channel and an opt-in beta channel in your system tray menu.</li>
+<li><strong>In-App Announcements &amp; Security Bulletins:</strong> Approximately 15 seconds after launch, Clipey makes a lightweight request to <code>https://clipey.com.br/announcements.json</code> (strictly capped at 64 KiB) to fetch product announcements, service notices, or critical release updates. Dismissed announcement IDs are saved locally on your computer in <code>dismissed-announcements.json</code>.</li>
+</ol>
+<p><strong>Data Processed:</strong> These requests transmit only standard technical HTTP client metadata (your IP address and User-Agent indicating your operating system and Clipey version) to Cloudflare and GitHub content delivery networks. No unique hardware identifiers, user account details, or telemetry metrics are collected or transmitted. These requests are processed under our legitimate interest in maintaining software security and stability.</p>
+<h2>9. Technical Diagnostics &amp; Crash Logs</h2>
+<p><strong>User-Initiated Diagnostic Bundles:</strong> Clipey does not automatically transmit crash dumps or error telemetry to our servers. If you encounter an issue, you may choose to generate a diagnostic bundle via the application menu or system tray ("Save Diagnostics").</p>
+<p><strong>Automated Secret Redaction:</strong> Prior to writing the diagnostic file to your computer, Clipey processes all logs, error stacks, and system metadata through an automated redaction engine (<code>redact.ts</code>). This engine scrubs:</p>
+<ol>
+<li>Windows and POSIX usernames within filesystem paths (e.g. <code>C:\Users\&lt;user&gt;\...</code>).</li>
+<li>Email addresses.</li>
+<li>API keys, Bearer tokens, OAuth tokens, and JWTs.</li>
+<li>Speech transcript blocks (redacted by default unless you explicitly opt in).</li>
+</ol>
+<p>Diagnostic files are saved locally to a JSON file of your choice. You maintain full control over whether to share this file with support. We use operating-system-protected storage for credentials when available and encrypted connections with compatible services. No measure removes every risk, and we do not claim independent certification or audit. To report a vulnerability, email <a href="mailto:security@clipey.com.br">security@clipey.com.br</a> or use <a href="https://github.com/produtoramaxvision/clipey/security/advisories/new">private vulnerability reporting on GitHub</a>.</p>
+<h2>10. Website and browser storage</h2>
+<p>The website uses your browser’s <code>localStorage</code> to remember your light or dark theme preference. The value stays on your device until you or your browser remove it. The site code sets no cookies and includes no analytics or advertising tools. The site is hosted on Cloudflare, which processes technical request data (such as IP address, time, user agent and URL) to deliver and protect the site, under its own policies.</p>
+<h2>11. Purposes, legal bases, recipients and transfers</h2>
+<p>We process local data to provide the features you request; credentials and account data to connect and publish when you ask; the content you choose to submit to perform an AI task; and minimal technical data to deliver the website, announcements and updates, keep things secure and answer requests. The legal bases, under the LGPD (Art. 7) and, where applicable, the GDPR (Art. 6), are:</p>
+<ul>
+<li><strong>Local features, mobile companion and AI tasks</strong>: performance of the service you request (LGPD Art. 7 V; GDPR Art. 6(1)(b)).</li>
+<li><strong>Account connection (OAuth) and publishing</strong>: performance of the service you request (LGPD Art. 7 V; GDPR Art. 6(1)(b)).</li>
+<li><strong>Diagnostics you decide to share</strong>: consent (LGPD Art. 7 I; GDPR Art. 6(1)(a)), which you may withdraw at any time.</li>
+<li><strong>Technical logs of the website, the authorization service and updates</strong>: legitimate interests in security and operation (LGPD Art. 7 IX; GDPR Art. 6(1)(f)).</li>
+<li><strong>Handling data subject requests</strong>: compliance with a legal obligation (LGPD Art. 7 II; GDPR Art. 6(1)(c)).</li>
+</ul>
+<p>You can stop using an optional feature or revoke an authorization at any time, without affecting processing already lawfully carried out.</p>
+<p>Recipients are the platform you choose, Clipey’s authorization service for Meta and TikTok flows, the AI provider you configure, Cloudflare (hosting of the website and the authorization service), GitHub (releases and models) and the source sites of imports. These recipients may be located in other countries. International transfers needed for a feature you request rely on LGPD Art. 33 IX. For Cloudflare, which runs the website and the authorization service on our behalf, the transfer relies on the contractual clauses of Cloudflare's data processing addendum (LGPD Art. 33 II). When you download releases and models from GitHub, you connect directly to GitHub, which processes that data under its own policy. If you are in the European Union, your data is processed by the controller in Brazil. We do not sell personal data and do not use or share it for advertising. Information about locations, sub-processors and safeguards is available on request at <a href="mailto:privacy@clipey.com.br">privacy@clipey.com.br</a>.</p>
+<h2>12. Retention and deletion</h2>
+<p>You control retention of the recordings, projects and exports you save. Data from the mobile companion (recordings and pairing tokens) is stored exclusively on your own devices until you delete it or unpair the device. Tokens and settings remain on the device until you disconnect the account, remove the setting or erase the app’s local data; pending revocation requests may stay on the device until they are processed. Third-party services control retention of the data they receive. The authorization service at <code>api.clipey.com.br</code> stores no videos and keeps no codes or tokens after completing the exchange, refresh or revocation; technical request logs stay in Cloudflare Workers logs for the platform’s retention period (up to 7 days). Website hosting logs follow Cloudflare’s policies. To delete a post, use the destination platform. See the step-by-step guide under <a href="/en/data-deletion/">Data deletion</a>.</p>
+<h2>13. Your Privacy Rights &amp; Data Deletion</h2>
+<p><strong>Your Legal Rights (LGPD &amp; GDPR):</strong> Under the Brazilian General Data Protection Law (LGPD, Law 13.709/2018, Art. 18) and European General Data Protection Regulation (GDPR), you possess rights regarding your personal data, including:</p>
+<ol>
+<li>Confirmation of the existence of data processing and access to your data.</li>
+<li>Correction of incomplete, inaccurate, or outdated data.</li>
+<li>Anonymization, blocking, or elimination of unnecessary or excessive data.</li>
+<li>Revocation of consent at any time.</li>
+<li>Information regarding the third parties with whom data is shared.</li>
+</ol>
+<p>Data subjects covered by the GDPR also have the right to erasure (Art. 17) and to restriction of processing. Exercising these rights is free. You may also turn to consumer protection bodies. You may lodge a complaint with Brazil’s National Data Protection Authority (ANPD) or, in the European Union, with your competent supervisory authority.</p>
+<p><strong>Exercising Your Rights &amp; Data Deletion:</strong></p>
+<ul>
+<li><strong>Local Data Deletion:</strong> Because Clipey stores your recordings, projects, and credentials locally on your personal device, you can delete your data at any time by:
+<ol>
+<li>Disconnecting connected accounts in <strong>Settings → Accounts &amp; publishing</strong> (which purges tokens and revokes access).</li>
+<li>Deleting project and recording files directly from your computer (<code>%APPDATA%\Clipey\</code> on Windows, <code>~/Library/Application Support/Clipey/</code> on macOS).</li>
+<li>Uninstalling the application.</li>
+</ol>
+</li>
+<li><strong>Network &amp; Broker Data:</strong> The auth broker at <code>api.clipey.com.br</code> does not store user data. Technical edge logs (IP, user agent) are purged automatically within 7 days.</li>
+<li><strong>Platform Revocation:</strong> You may also revoke Clipey's permissions directly in your <a href="https://security.google.com/settings/security/permissions">Google Security Settings</a> (https://security.google.com/settings/security/permissions), <a href="https://www.tiktok.com/setting">TikTok Account Settings</a>, or <a href="https://www.facebook.com/settings?tab=business_tools">Facebook Business Integrations</a>.</li>
+<li><strong>Detailed Instructions:</strong> Step-by-step instructions are available at <a href="https://clipey.com.br/en/data-deletion/"><code>https://clipey.com.br/en/data-deletion/</code></a> (or via <a href="/en/data-deletion/">Data deletion</a>).</li>
+</ul>
+<p><strong>Data Controller &amp; DPO Contact:</strong><br>
+Produtora MaxVision (São Paulo, Brazil; CNPJ 38.386.434/0001-44)<br>
+Data Protection Officer (DPO, “encarregado”): Max Müller, <a href="mailto:maxmuller@clipey.com.br">maxmuller@clipey.com.br</a><br>
+Privacy Requests: <a href="mailto:privacy@clipey.com.br">privacy@clipey.com.br</a></p>
+<p>If California law (CCPA/CPRA) applies to your case, you may request to know and access, delete and correct personal information, limit certain uses of sensitive information, and opt out of sale or sharing, which we do not do. We will not discriminate against you for exercising rights provided by law.</p>
+<h2>14. Children</h2>
+<p>Clipey is intended for adults and is not directed to children. We do not knowingly collect personal data from children. If you believe a child has given us data through a channel we operate, email <a href="mailto:privacy@clipey.com.br">privacy@clipey.com.br</a> so we can assess it and remove what is under our control.</p>
+<p>Users under 18 may use Clipey only with the assistance or representation of a parent or guardian, as set out in the Terms; their data stays on the device and is processed only for the features described in this policy. Connected accounts must meet each platform's minimum age.</p>
+<h2>15. Changes</h2>
+<p>We may update this policy to reflect actual changes in the app or the website. The revised version and date will be posted on this page, material changes will be announced in the app 30 days in advance and, where the law requires it, we will ask for renewed consent before any new use. Reference version: Clipey 1.15.</p>
+</main>
+<footer><div class="bar"><span>© 2026 Produtora MaxVision · CNPJ 38.386.434/0001-44 · São Paulo, Brazil. Site content: all rights reserved. App licensed under the MIT License.</span><a href="mailto:contato@clipey.com.br">contato@clipey.com.br</a></div></footer>
+</body>
+</html>
