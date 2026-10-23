@@ -1,6 +1,6 @@
 ---
 title: "Cómo programar publicaciones de vídeo en Clipey"
-description: "Programa un vídeo para TikTok, Instagram Reels o Facebook Reels, revisa la hora local y descubre por qué Clipey debe seguir abierto. La publicación en YouTube llega en la próxima versión."
+description: "Programa videos para TikTok, Instagram Reels y Facebook Reels en Clipey; la app debe seguir abierta. YouTube llega en la próxima versión."
 slug: "publicacion-programada-youtube-tiktok-instagram"
 lang: "es"
 translationKey: "publicacao-agendada-youtube-tiktok-instagram"

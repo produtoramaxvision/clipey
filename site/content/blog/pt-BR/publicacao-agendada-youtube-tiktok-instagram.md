@@ -1,6 +1,6 @@
 ---
 title: "Como agendar publicações de vídeo no Clipey"
-description: "Agende um vídeo para TikTok, Instagram Reels ou Facebook Reels, confira o horário local e saiba por que o Clipey precisa continuar aberto. Publicação no YouTube chega na próxima versão."
+description: "Agende vídeos para TikTok, Instagram Reels e Facebook Reels no Clipey e veja por que o app deve ficar aberto. YouTube chega na próxima versão."
 slug: "publicacao-agendada-youtube-tiktok-instagram"
 lang: "pt-BR"
 translationKey: "publicacao-agendada-youtube-tiktok-instagram"

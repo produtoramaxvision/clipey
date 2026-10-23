@@ -1,6 +1,6 @@
 ---
 title: "How to schedule video posts in Clipey"
-description: "Schedule a video for TikTok, Instagram Reels or Facebook Reels, check local time, and learn why Clipey must stay running. YouTube publishing arrives in the next version."
+description: "Schedule videos to TikTok, Instagram Reels and Facebook Reels in Clipey, and see why the app must stay open. YouTube arrives in the next version."
 slug: "scheduled-video-publishing-youtube-tiktok-instagram"
 lang: "en"
 translationKey: "publicacao-agendada-youtube-tiktok-instagram"
