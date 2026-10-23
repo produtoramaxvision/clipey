@@ -78,7 +78,7 @@ describe("1. Legal pages: copied verbatim, text pinned, no third-party origin (S
 		"privacidade/index.html": "45b20900f9246f2e14cb1c61727ca9393ba1a5bea537ace69177e45d340f78f0",
 		"termos/index.html": "0b22921f5000b030dc05e654202070ae063418a83441d9c274e017dfe1212369",
 		"exclusao-de-dados/index.html": "2662889a398d97b6a9e018ec2f2161a6694c89e4b390a1ade036f91536004667",
-		"en/privacy/index.html": "1c5d2a4722506ab1e30016695ad9db5a814cca4c161f3128893523d48cd47e2f",
+		"en/privacy/index.html": "6cbfc1df6d8ed1022e4ff006a073177c42088909735a281ec11b9f0f9972fdab",
 		"en/terms/index.html": "afecc9ccdd62677b8ad1d1b6db3a2ddc28a4b9e8007d151d77b9cfde20c4038b",
 		"en/data-deletion/index.html": "c17da80873b3238220a268fd39b7b4911ead054d0682885db6a812337b9efafc",
 		"404.html": "6f07a90177a8c92701c798de2af2466cfd8cd9a1c485e2e0fe0f10c4ed28925f",
