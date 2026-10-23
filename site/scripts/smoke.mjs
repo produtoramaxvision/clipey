@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const shotsDir = "/home/maxvision/clipey-site/evidence/site-eng-shots";
+const shotsDir = process.env.SMOKE_SHOTS_DIR ?? path.join(root, "tests/artifacts/smoke-shots");
 fs.mkdirSync(shotsDir, { recursive: true });
 
 const PAGES = [
