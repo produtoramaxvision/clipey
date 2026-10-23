@@ -67,12 +67,45 @@ body{margin:0;width:100vw;height:100vh;display:grid;grid-template-rows:auto 1fr 
 </body></html>`;
 }
 
-/** The landing card: the wordmark over the same timeline, with the address instead of an index. */
+/**
+ * The landing card: the app icon large next to the wordmark, so the brand reads at a glance in chat link previews,
+ * over the same timeline language as the articles, with the site address instead of an index.
+ */
 export function landingHtml() {
-	return artworkHtml({ kind: "og", key: "landing", order: 1, total: 1 })
-		.replace(
-			/<div class="index">[\s\S]*?<\/div>/,
-			'<div class="index">Clipey</div>',
+	const tracks = clipsFor("landing")
+		.map(
+			(clips, track) =>
+				`<div class="track">${clips
+					.map(
+						(clip, index) =>
+							`<span class="${track === 0 && index === 1 ? "clip clip-hot" : "clip"}" style="left:${clip.left}%;width:${clip.width}%"></span>`,
+					)
+					.join("")}</div>`,
 		)
-		.replace('<div class="tc">v1.15</div>', '<div class="tc">Windows</div>');
+		.join("");
+	return `<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:"Geist";src:url(data:font/woff2;base64,${FONT_SANS}) format("woff2");font-weight:100 900}
+@font-face{font-family:"Geist Mono";src:url(data:font/woff2;base64,${FONT_MONO}) format("woff2");font-weight:100 900}
+${DARK_TOKENS}
+*{box-sizing:border-box}
+body{margin:0;width:100vw;height:100vh;display:grid;grid-template-rows:1fr auto;gap:36px;padding:56px;background:radial-gradient(60% 80% at 22% 38%,var(--accent-soft),transparent 70%),var(--bg);color:var(--text);font-family:var(--font-sans)}
+.hero{display:flex;align-items:center;gap:44px}
+.logo{width:188px;height:188px;border-radius:44px;box-shadow:0 0 0 1px var(--line-strong),0 24px 60px rgba(0,0,0,.55)}
+.word{display:grid;gap:22px}
+.name{font:650 168px/.82 var(--font-sans);letter-spacing:-.07em}
+.tc{font:500 17px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.chips{display:flex;gap:10px}
+.chip{font:500 17px/1 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--text);border:1px solid var(--line-strong);border-radius:999px;padding:9px 16px;background:var(--surface)}
+.chip.hot{color:var(--accent);border-color:var(--accent)}
+.timeline{border:1px solid var(--line-strong);border-radius:14px;background:var(--surface);overflow:hidden}
+.ruler{height:22px;border-bottom:1px solid var(--line);background-image:repeating-linear-gradient(90deg,var(--line-strong) 0 1px,transparent 1px 12px);background-size:100% 50%;background-repeat:no-repeat}
+.tracks{display:grid;gap:8px;padding:12px 14px}
+.track{position:relative;height:16px;border-radius:5px;background:var(--surface-2)}
+.clip{position:absolute;top:0;bottom:0;border-radius:5px;background:var(--line-strong)}
+.clip-hot{background:var(--accent-soft);border:1px solid var(--accent)}
+.foot{display:flex;justify-content:space-between;padding:10px 14px;border-top:1px solid var(--line)}
+</style></head><body>
+<div class="hero"><img class="logo" src="data:image/png;base64,${ICON}" alt=""><div class="word"><div class="name">Clipey</div><div class="chips"><span class="chip hot">v1.15</span><span class="chip">Windows</span><span class="chip">Linux</span><span class="chip">Android</span></div></div></div>
+<div class="timeline"><div class="ruler"></div><div class="tracks">${tracks}</div><div class="foot"><span class="tc">00:00</span><span class="tc">clipey.com.br</span><span class="tc">01:15</span></div></div>
+</body></html>`;
 }
