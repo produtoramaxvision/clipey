@@ -75,10 +75,10 @@ describe("1. Legal pages: copied verbatim, text pinned, no third-party origin (S
 	// SHA-256 of visibleText() for each legal page. Any change to the wording of a policy changes its hash: update
 	// it only together with the "Última atualização" / "Last updated" date in the page.
 	const VISIBLE_TEXT_SHA256 = {
-		"privacidade/index.html": "d169fdbc88394fdc14a3e63fb03bb84a8fd464df4fcc79fa758b5206b1984911",
+		"privacidade/index.html": "45b20900f9246f2e14cb1c61727ca9393ba1a5bea537ace69177e45d340f78f0",
 		"termos/index.html": "0b22921f5000b030dc05e654202070ae063418a83441d9c274e017dfe1212369",
 		"exclusao-de-dados/index.html": "2662889a398d97b6a9e018ec2f2161a6694c89e4b390a1ade036f91536004667",
-		"en/privacy/index.html": "4e44f09496fc5dc2de82b0ad82143ff2fd200bffdd3292e54e4ca71562ef0128",
+		"en/privacy/index.html": "1c5d2a4722506ab1e30016695ad9db5a814cca4c161f3128893523d48cd47e2f",
 		"en/terms/index.html": "afecc9ccdd62677b8ad1d1b6db3a2ddc28a4b9e8007d151d77b9cfde20c4038b",
 		"en/data-deletion/index.html": "c17da80873b3238220a268fd39b7b4911ead054d0682885db6a812337b9efafc",
 		"404.html": "6f07a90177a8c92701c798de2af2466cfd8cd9a1c485e2e0fe0f10c4ed28925f",
@@ -215,8 +215,8 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 
 		it(`states its effective and last-updated date: ${fileName}`, () => {
 			const text = bodyText(files.get(fileName));
-			const expectedDate = kind === "deletion" ? "October 16, 2026" : "October 17, 2026";
-			const expectedDatePt = kind === "deletion" ? "16 de outubro de 2026" : "17 de outubro de 2026";
+			const expectedDate = kind === "deletion" ? "October 16, 2026" : kind === "privacy" ? "October 23, 2026" : "October 17, 2026";
+			const expectedDatePt = kind === "deletion" ? "16 de outubro de 2026" : kind === "privacy" ? "23 de outubro de 2026" : "17 de outubro de 2026";
 			expect(text).toContain(
 				lang === "en"
 					? `Effective October 16, 2026 · Last updated: ${expectedDate}`
@@ -288,7 +288,7 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			"https://www.googleapis.com/auth/youtube.upload",
 			"https://www.googleapis.com/auth/youtube.readonly",
 			"Ao desconectar a conta no Clipey, o aplicativo também solicita a revogação do token ao Google",
-			"pages_show_list, pages_read_engagement, pages_manage_posts, instagram_basic e instagram_content_publish,",
+			"pages_show_list, pages_read_engagement, pages_manage_posts, instagram_basic, instagram_content_publish e business_management,",
 			"user.info.basic",
 			"user.info.basic, para identificar a sua conta, e video.publish, para publicar os vídeos que você escolher",
 			"o vídeo não é hospedado em nenhum endereço do Clipey",
@@ -324,7 +324,7 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			"https://www.googleapis.com/auth/youtube.upload",
 			"https://www.googleapis.com/auth/youtube.readonly",
 			"On disconnect, the app also asks Google to revoke the token",
-			"pages_show_list, pages_read_engagement, pages_manage_posts, instagram_basic and instagram_content_publish,",
+			"pages_show_list, pages_read_engagement, pages_manage_posts, instagram_basic, instagram_content_publish and business_management,",
 			"user.info.basic",
 			"user.info.basic, to identify your account, and video.publish, to publish the videos you choose",
 			"the video is not hosted at any Clipey address",
@@ -423,7 +423,7 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			expect(text).not.toContain("router.produtoramaxvision.com.br");
 			expect(text).not.toContain("n8n.meuagente.api.br");
 			// Platform reviewers compare the policy with the scopes the app requests: never name one it does not.
-			expect(text).not.toMatch(/business_management|video\.upload|ads_management|ads_read/);
+			expect(text).not.toMatch(/video\.upload|ads_management|ads_read/);
 			expect(text).not.toMatch(/não é permitid[ao] para conteúdo|not permitted for content/i);
 			expect(text).not.toMatch(/servidor(?:es)? intermediário|intermediate server/i);
 		});
@@ -441,7 +441,7 @@ describe("1b. Legal pages: controller, DPO, contacts and platform-required claus
 			expect(text).not.toContain("router.produtoramaxvision.com.br");
 			expect(text).not.toContain("n8n.meuagente.api.br");
 			// Platform reviewers compare the policy with the scopes the app requests: never name one it does not.
-			expect(text).not.toMatch(/business_management|video\.upload|ads_management|ads_read/);
+			expect(text).not.toMatch(/video\.upload|ads_management|ads_read/);
 			expect(text).not.toMatch(/não é permitid[ao]/i);
 			expect(text).not.toMatch(/servidor(?:es)? intermediário/i);
 		}
