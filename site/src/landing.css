@@ -1462,10 +1462,13 @@ html {
 	display: block;
 	width: 100%;
 	height: 100%;
-	object-fit: cover;
+	/* The captures keep their own proportions (the cropped status bar changes them): contain, never crop the UI; the
+	   face background matches the app's own dark background, so the margin reads as screen. */
+	object-fit: contain;
 }
 
 .phone-face--landscape > img {
+	max-width: none;
 	inset: auto;
 	top: 50%;
 	left: 50%;
