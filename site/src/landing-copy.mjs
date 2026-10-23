@@ -27,7 +27,7 @@ export const STORY = {
 				["zoom", "00:02:14", "Zoom 1,8×", "O Clipey edita."],
 				["speed", "00:07:02", "Exportar", "Você publica."],
 			],
-			sub: "Gravador e editor de tela para Windows, macOS e Linux. Cortes de silêncio, zoom em cada clique, legendas e publicação no YouTube, TikTok, Instagram e Facebook, no mesmo app.",
+			sub: "Gravador e editor de tela para Windows, macOS e Linux. Cortes de silêncio, zoom em cada clique, legendas e publicação no Instagram, Facebook e TikTok, no mesmo app. YouTube na próxima versão.",
 			definition: "Clipey é um aplicativo de gravação e edição de vídeo de tela para Windows, macOS e Linux que reúne captura de cursor e cliques, edição com cortes e zooms automáticos e publicação em redes sociais.",
 			download: "Baixar o Clipey",
 			platform: "Windows, macOS e Linux · 64 bits",
@@ -123,8 +123,8 @@ export const STORY = {
 		},
 		publish: {
 			tc: "00:02:30 · Publicar",
-			title: "YouTube, TikTok, Instagram e Facebook.",
-			titleMuted: "Agora ou na hora que você marcar.",
+			title: "Instagram, Facebook e TikTok.",
+			titleMuted: "Depois de exportar, publique em cada rede — ou agende.",
 			notes: [
 				[
 					"Kit de publicação",
@@ -217,7 +217,7 @@ export const STORY = {
 				["zoom", "00:02:14", "Zoom 1.8×", "Clipey edits."],
 				["speed", "00:07:02", "Export", "You publish."],
 			],
-			sub: "A screen recorder and editor for Windows, macOS and Linux. Silence cuts, a zoom on every click, captions and publishing to YouTube, TikTok, Instagram and Facebook, all in one app.",
+			sub: "A screen recorder and editor for Windows, macOS and Linux. Silence cuts, a zoom on every click, captions and publishing to Instagram, Facebook and TikTok, all in one app. YouTube in the next version.",
 			definition: "Clipey is a screen recording and editing app for Windows, macOS and Linux that combines cursor and click capture, automatic cuts and zooms, and publishing to social media.",
 			download: "Download Clipey",
 			platform: "Windows, macOS and Linux · 64-bit",
@@ -310,8 +310,8 @@ export const STORY = {
 		},
 		publish: {
 			tc: "00:02:30 · Publish",
-			title: "YouTube, TikTok, Instagram and Facebook.",
-			titleMuted: "Now, or whenever you choose.",
+			title: "Instagram, Facebook and TikTok.",
+			titleMuted: "After export, publish on each network — or schedule.",
 			notes: [
 				[
 					"Publishing kit",
@@ -404,7 +404,7 @@ export const STORY = {
 				["zoom", "00:02:14", "Zoom 1,8×", "Clipey edita."],
 				["speed", "00:07:02", "Exportar", "Tú publicas."],
 			],
-			sub: "Grabador y editor de pantalla para Windows, macOS y Linux. Cortes de silencio, zoom en cada clic, subtítulos y publicación en YouTube, TikTok, Instagram y Facebook, en la misma app.",
+			sub: "Grabador y editor de pantalla para Windows, macOS y Linux. Cortes de silencio, zoom en cada clic, subtítulos y publicación en Instagram, Facebook y TikTok, en la misma app. YouTube en la próxima versión.",
 			definition: "Clipey es una aplicación de grabación y edición de video de pantalla para Windows, macOS y Linux que combina captura de cursor y clics, cortes y zooms automáticos y publicación en redes sociales.",
 			download: "Descargar Clipey",
 			platform: "Windows, macOS y Linux · 64 bits",
@@ -500,8 +500,8 @@ export const STORY = {
 		},
 		publish: {
 			tc: "00:02:30 · Publicar",
-			title: "YouTube, TikTok, Instagram y Facebook.",
-			titleMuted: "Ahora o a la hora que elijas.",
+			title: "Instagram, Facebook y TikTok.",
+			titleMuted: "Después de exportar, publica en cada red — o programa la hora.",
 			notes: [
 				[
 					"Kit de publicación",

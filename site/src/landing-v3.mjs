@@ -247,7 +247,7 @@ function hero(lang, copy, media) {
 
 /** The marks of the compatibility strip, by group and item position (the same in every language). */
 const COMPAT_MARKS = [
-	["youtube", "tiktok", "instagram", "facebook"],
+	["instagram", "facebook", "tiktok"],
 	[null, "apple", "linux"],
 	[null],
 ];

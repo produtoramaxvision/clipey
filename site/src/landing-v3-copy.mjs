@@ -1,8 +1,8 @@
 /**
  * Copy of the v3 landing, one object per site language. pt-BR is the owner-approved design text (Claude Design canvas,
  * Main.dc.html and Mobile.dc.html); en and es translate it without adding claims. Facts it relies on: interface in 15
- * languages, captions translated into 15 languages, Windows/macOS/Linux, installers unsigned in this version, YouTube
- * uploads private until Google's approval.
+ * languages, captions translated into 15 languages, Windows/macOS/Linux, installers unsigned in this version, publishing
+ * to Instagram, Facebook and TikTok in 1.15 with YouTube in the next version.
  *
  * `hud.labels` are the recording bar's own strings, copied verbatim from the app locale files
  * (src/i18n/locales/<lang>/launch.json), in the order of the buttons on the bar:
@@ -51,7 +51,7 @@ export const LANDING = {
 			aria: "Compatibilidade",
 			list: "Plataformas, sistemas e idiomas",
 			groups: [
-				["PUBLICA EM", ["YouTube", "TikTok", "Instagram", "Facebook"]],
+				["PUBLICA EM", ["Instagram", "Facebook", "TikTok"]],
 				["RODA EM", ["Windows 10 e 11", "macOS", "Linux"]],
 				["FALA", ["15 idiomas"]],
 			],
@@ -351,9 +351,9 @@ export const LANDING = {
 		},
 		publish: {
 			marker: "01:12 · PUBLICAR",
-			title: "YouTube, TikTok, Instagram e Facebook.",
-			text: "Exporte em MP4 ou GIF e envie para as suas redes agora ou na hora que você marcar. As contas ficam salvas só no seu computador.",
-			note: "Por enquanto o YouTube recebe os vídeos como privados, até a aprovação do Google.",
+			title: "Instagram, Facebook e TikTok.",
+			text: "Exporte em MP4 ou GIF e, quando a exportação terminar, clique em Publicar em cada rede que quiser usar — ou agende o horário. As contas ficam salvas só no seu computador.",
+			note: "YouTube na próxima versão.",
 			alt: "Janela Exportar e publicar do Clipey",
 		},
 		phone: {
@@ -427,7 +427,7 @@ export const LANDING = {
 			aria: "Compatibility",
 			list: "Platforms, systems and languages",
 			groups: [
-				["PUBLISHES TO", ["YouTube", "TikTok", "Instagram", "Facebook"]],
+				["PUBLISHES TO", ["Instagram", "Facebook", "TikTok"]],
 				["RUNS ON", ["Windows 10 and 11", "macOS", "Linux"]],
 				["SPEAKS", ["15 languages"]],
 			],
@@ -730,9 +730,9 @@ export const LANDING = {
 		},
 		publish: {
 			marker: "01:12 · PUBLISH",
-			title: "YouTube, TikTok, Instagram and Facebook.",
-			text: "Export as MP4 or GIF and send it to your accounts now or at the time you set. Your accounts are saved only on your computer.",
-			note: "For now, YouTube receives the videos as private, until Google's approval.",
+			title: "Instagram, Facebook and TikTok.",
+			text: "Export as MP4 or GIF and, when the export finishes, click Publish on each network you want to use — or schedule a time. Your accounts are saved only on your computer.",
+			note: "YouTube in the next version.",
 			alt: "The Clipey Export and publish window",
 		},
 		phone: {
@@ -803,7 +803,7 @@ export const LANDING = {
 			aria: "Compatibilidad",
 			list: "Plataformas, sistemas e idiomas",
 			groups: [
-				["PUBLICA EN", ["YouTube", "TikTok", "Instagram", "Facebook"]],
+				["PUBLICA EN", ["Instagram", "Facebook", "TikTok"]],
 				["FUNCIONA EN", ["Windows 10 y 11", "macOS", "Linux"]],
 				["HABLA", ["15 idiomas"]],
 			],
@@ -1108,9 +1108,9 @@ export const LANDING = {
 		},
 		publish: {
 			marker: "01:12 · PUBLICAR",
-			title: "YouTube, TikTok, Instagram y Facebook.",
-			text: "Exporta en MP4 o GIF y envíalo a tus redes ahora o a la hora que marques. Las cuentas quedan guardadas solo en tu computadora.",
-			note: "Por ahora, YouTube recibe los videos como privados, hasta la aprobación de Google.",
+			title: "Instagram, Facebook y TikTok.",
+			text: "Exporta en MP4 o GIF y, cuando termine la exportación, haz clic en Publicar en cada red que quieras usar — o programa la hora. Las cuentas quedan guardadas solo en tu computadora.",
+			note: "YouTube en la próxima versión.",
 			alt: "La ventana Exportar y publicar de Clipey",
 		},
 		phone: {

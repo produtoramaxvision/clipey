@@ -76,7 +76,7 @@ export function renderLlms(posts) {
 
 	return `# Clipey
 
-> Clipey é um aplicativo desktop para Windows, macOS e Linux que reúne gravação de tela com captura de cursor e cliques, edição assistida por IA na timeline e publicação para YouTube, TikTok e Instagram. Os projetos, arquivos de mídia e transcrições ficam guardados no computador do usuário.
+> Clipey é um aplicativo desktop para Windows, macOS e Linux que reúne gravação de tela com captura de cursor e cliques, edição assistida por IA na timeline e publicação para Instagram, Facebook e TikTok (YouTube na próxima versão). Os projetos, arquivos de mídia e transcrições ficam guardados no computador do usuário.
 
 Clipey funciona no Windows, macOS e Linux. O aplicativo é offline-first, sem telemetria de uso, com suporte a modelos Whisper locais para transcrição e conexão com ferramentas MCP para automação de tarefas de edição.
 

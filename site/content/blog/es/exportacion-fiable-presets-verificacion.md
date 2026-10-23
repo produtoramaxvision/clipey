@@ -8,7 +8,7 @@ category: "tutoriales"
 tags: ["Exportación", "Edición con IA"]
 author: "Equipo Clipey"
 date: "2026-10-15"
-updated: "2026-10-15"
+updated: "2026-10-22"
 featured: false
 order: 15
 cover: "/blog/covers/exportacao-confiavel-presets-e-verificacao.webp"
@@ -19,7 +19,7 @@ appliesTo: "1.15"
 
 > **Aplica a:** Clipey 1.15 para Windows.
 
-Para revisar y exportar un vídeo en Clipey, abre la ventana Exportar y selecciona un ajuste preestablecido optimizado para TikTok, YouTube Shorts, Instagram Reels o YouTube en horizontal (1080p/4K). Comprueba las estimaciones en tiempo real de tamaño, dimensiones y tasa de bits, mientras el programa evita que Windows entre en suspensión durante el proceso. Al terminar el renderizado, Clipey ejecuta una verificación de entrega completa para confirmar la integridad de los flujos de audio y video y garantizar que el archivo MP4 se decodifique sin errores.
+Para revisar y exportar un vídeo en Clipey, abre la ventana Exportar y selecciona un ajuste preestablecido optimizado para TikTok, YouTube Shorts, Instagram Reels o YouTube en horizontal (1080p/4K). Los ajustes de YouTube definen formato y dimensiones del archivo para subirlo manualmente; la publicación directa en YouTube desde Clipey llega en la próxima versión. Comprueba las estimaciones en tiempo real de tamaño, dimensiones y tasa de bits, mientras el programa evita que Windows entre en suspensión durante el proceso. Al terminar el renderizado, Clipey ejecuta una verificación de entrega completa para confirmar la integridad de los flujos de audio y video y garantizar que el archivo MP4 se decodifique sin errores. Terminar la exportación no publica en las redes: después, abre el panel de publicación y pulsa Publicar en cada destino.
 
 ## Elige un punto de partida
 

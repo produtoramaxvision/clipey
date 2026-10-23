@@ -1,6 +1,6 @@
 ---
 title: "Como salvar um kit de publicação de vídeo"
-description: "Reúna o vídeo exportado, textos por plataforma, legendas exportadas e uma capa existente em uma pasta ou arquivo ZIP."
+description: "Reúna o vídeo exportado, textos por plataforma, legendas exportadas e a capa que você escolher em uma pasta ou arquivo ZIP."
 slug: "kit-de-publicacao-video-capas-textos"
 lang: "pt-BR"
 translationKey: "kit-de-publicacao-video-capas-textos"
@@ -8,7 +8,7 @@ category: "tutoriais"
 tags: ["Publicação", "Exportação"]
 author: "Equipe Clipey"
 date: "2026-10-15"
-updated: "2026-10-15"
+updated: "2026-10-22"
 featured: false
 order: 14
 cover: "/blog/covers/kit-de-publicacao-video-capas-textos.webp"
@@ -19,18 +19,18 @@ appliesTo: "1.15"
 
 > **Aplica-se a:** Clipey 1.15 para Windows.
 
-Para salvar um kit de publicação de vídeo no Clipey, conclua a exportação do seu arquivo e acesse a seção Kit de publicação e copy no painel de publicação. O recurso empacota o vídeo finalizado, a arte de capa existente, legendas sidecar e arquivos com os textos formatados para cada rede social em uma pasta local ou em um arquivo ZIP consolidado. Você também pode gerar títulos e legendas com o botão Sugerir copy com base na transcrição do clipe antes de exportar o pacote.
+Para salvar um kit de publicação de vídeo no Clipey, conclua a exportação do seu arquivo e acesse a seção Kit de publicação e copy no painel de publicação. O recurso empacota o vídeo finalizado, a imagem de capa que você escolher, legendas sidecar e arquivos com os textos formatados para cada rede social em uma pasta local ou em um arquivo ZIP consolidado. Você também pode gerar títulos e legendas com o botão Sugerir copy com base na transcrição do clipe antes de salvar o pacote. A exportação não publica sozinha: depois dela, use Publicar em cada rede que quiser.
 
 ## O que entra no kit
 
-O ponto de partida é o vídeo exportado. O kit também pode incluir um arquivo `copy-<plataforma>.txt` para cada plataforma, além de um `copy.json` com os mesmos dados estruturados. Se você exportou um arquivo de legendas separado, ele acompanha o pacote. Uma capa só entra quando já existe no projeto: o Clipey não gera uma imagem de capa automaticamente.
+O ponto de partida é o vídeo exportado. O kit também pode incluir um arquivo `copy-<plataforma>.txt` para cada plataforma, além de um `copy.json` com os mesmos dados estruturados. Se você exportou um arquivo de legendas separado, ele acompanha o pacote. No painel, você escolhe qual imagem de capa incluir no kit quando houver opções disponíveis no projeto. O Clipey não gera capa por IA nesta versão; geração automática de capas está prevista para a próxima versão.
 
-Essa distinção evita uma surpresa comum: o kit organiza material pronto, mas não é um editor de capas. Se o projeto não tiver capa, não espere que o Clipey invente uma. E revise os textos antes de compartilhar: sugestões de copy ajudam a começar, mas continuam sendo editáveis.
+Essa distinção evita uma surpresa comum: o kit organiza material pronto, mas não é um editor de capas nem cria arte nova sozinho. Revise os textos antes de compartilhar: sugestões de copy ajudam a começar, mas continuam sendo editáveis.
 
 ## Salve uma pasta ou um ZIP
 
 1. Abra o projeto e finalize o vídeo. Use **Exportar** para criar o arquivo final antes de montar o pacote.
-2. Na seção **Kit de publicação e copy**, preencha e revise o título, a descrição e as hashtags disponíveis para cada rede social. Se preferir, clique em **Sugerir copy** para gerar propostas automáticas fundamentadas na transcrição do clipe.
+2. Na seção **Kit de publicação e copy**, escolha a capa quando aplicável, preencha e revise o título, a descrição e as hashtags disponíveis para cada rede social. Se preferir, clique em **Sugerir copy** para gerar propostas automáticas fundamentadas na transcrição do clipe.
 3. Clique em **Salvar kit de publicação**.
 4. No campo **Formato do kit**, selecione entre **Pasta** ou **Arquivo ZIP**. A pasta é a opção inicial para edição rápida; use ZIP quando quiser um único arquivo comprimido para transferir ou arquivar.
 5. Escolha o destino em **Escolher destino** e aguarde a indicação de progresso. Não feche o aplicativo enquanto o arquivo ZIP está sendo gravado.
@@ -54,7 +54,7 @@ Uma boa checagem é comparar cada frase factual com o que realmente aparece no v
 
 ## Limitações
 
-O kit não cria capas, não envia arquivos para redes sociais e não garante que cada rede aceite o vídeo ou o texto. A capa só é incluída quando já existe no projeto; legendas só acompanham quando foram exportadas como arquivo separado. O ZIP pode demorar porque contém o próprio vídeo e sua criação deve terminar antes de você mover ou fechar o destino.
+O kit não gera capas por IA, não envia arquivos para redes sociais e não garante que cada rede aceite o vídeo ou o texto. A capa entra apenas quando você a seleciona e há imagem disponível; legendas só acompanham quando foram exportadas como arquivo separado. O ZIP pode demorar porque contém o próprio vídeo e sua criação deve terminar antes de você mover ou fechar o destino.
 
 Para programar a publicação a partir do Clipey, consulte [como agendar vídeos](/blog/publicacao-agendada-youtube-tiktok-instagram/). Para preparar um vídeo com as dimensões e checagens adequadas, veja [presets e verificação da exportação](/blog/exportacao-confiavel-presets-e-verificacao/). Os [recursos de publicação](/#publicar) explicam o fluxo geral.
 
@@ -63,3 +63,4 @@ Depois de revisar o vídeo e os textos de cada destino, você pode entregar o ki
 ## Histórico desta página
 
 - 2026-10-15: publicado.
+- 2026-10-22: capa escolhida pelo usuário; sem geração automática nesta versão.

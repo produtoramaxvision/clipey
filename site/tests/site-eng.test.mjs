@@ -40,6 +40,10 @@ import {
 	LEGAL_OUTPUT_FILES,
 	renderSite,
 } from "../src/render-site.mjs";
+import {
+	findUnqualifiedYouTubePublishClaims,
+	hasObsoleteYouTubePrivateCopy,
+} from "./youtube-copy-guard.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const legalSourceDir = path.join(root, "legal-source");
@@ -761,6 +765,17 @@ describe("4b. Platform statements name Windows, macOS and Linux", () => {
 		expect(llms).toContain("aplicativo desktop para Windows, macOS e Linux");
 		expect(llms).toContain("Clipey funciona no Windows, macOS e Linux.");
 		expect(llms).not.toMatch(/Windows 10 e Windows 11/);
+	});
+
+	it("does not claim in-app YouTube publishing for 1.15 without a next-version qualifier", () => {
+		const landingVisible = (html) =>
+			html.match(/<body>([\s\S]*)<\/body>/)[1].replace(/<[^>]*>/g, " ");
+		for (const lang of LANGUAGES) {
+			const text = landingVisible(files.get(fileForUrl(LANDING_PATH[lang])));
+			expect(findUnqualifiedYouTubePublishClaims(text, lang)).toEqual([]);
+			expect(hasObsoleteYouTubePrivateCopy(text)).toBe(false);
+		}
+		expect(hasObsoleteYouTubePrivateCopy(files.get("llms.txt"))).toBe(false);
 	});
 });
 

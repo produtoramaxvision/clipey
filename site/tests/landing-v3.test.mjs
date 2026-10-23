@@ -19,6 +19,15 @@ import {
 } from "../src/landing-v3.mjs";
 import { LANDING } from "../src/landing-v3-copy.mjs";
 import { renderSite } from "../src/render-site.mjs";
+import {
+	findUnqualifiedYouTubePublishClaims,
+	hasObsoleteYouTubePrivateCopy,
+} from "./youtube-copy-guard.mjs";
+
+const YOUTUBE_SCOPE_BLOG_KEYS = new Set([
+	"publicacao-agendada-youtube-tiktok-instagram",
+	"kit-de-publicacao-video-capas-textos",
+]);
 
 const bundle = {
 	css: ["/assets/landing.css"],
@@ -338,16 +347,38 @@ describe("v3 landing copy", () => {
 		for (const lang of LANGUAGES) expect(shape(LANDING[lang])).toEqual(shape(LANDING["pt-BR"]));
 	});
 
-	it("keeps the facts: 15 languages, three systems, unsigned installers, private YouTube uploads", () => {
+	it("keeps the facts: 15 languages, three systems, unsigned installers, YouTube in the next version", () => {
 		const facts = {
-			"pt-BR": [/15 idiomas/, /sem assinatura/, /privados, até a aprovação do Google/],
-			en: [/15 languages/, /unsigned/, /private, until Google's approval/],
-			es: [/15 idiomas/, /sin firmar/, /privados, hasta la aprobación de Google/],
+			"pt-BR": [/15 idiomas/, /sem assinatura/, /próxima versão/],
+			en: [/15 languages/, /unsigned/, /next version/],
+			es: [/15 idiomas/, /sin firmar/, /próxima versión/],
 		};
 		for (const lang of LANGUAGES) {
 			const all = strings(LANDING[lang]).join("\n");
 			for (const fact of facts[lang]) expect(all).toMatch(fact);
+			expect(hasObsoleteYouTubePrivateCopy(all)).toBe(false);
 			expect(`${LANDING[lang].hero.platforms} ${LANDING[lang].hero.cta.join(" ")}`).toMatch(/Windows[\s\S]*macOS[\s\S]*Linux/);
+		}
+	});
+
+	it("does not claim YouTube publishing in 1.15 without a next-version qualifier", () => {
+		const posts = getCompletePosts();
+		for (const lang of ["pt-BR", "en", "es"]) {
+			const landingText = strings(LANDING[lang]).join("\n");
+			expect(findUnqualifiedYouTubePublishClaims(landingText, lang)).toEqual([]);
+			for (const post of posts) {
+				const entry = post.content[lang];
+				if (!entry) continue;
+				if (
+					!YOUTUBE_SCOPE_BLOG_KEYS.has(post.translationKey) &&
+					!entry.slug.includes("exportacao") &&
+					!entry.slug.includes("export") &&
+					!entry.slug.includes("exportacion")
+				)
+					continue;
+				const body = `${entry.title}\n${entry.description}\n${entry.markdown}`;
+				expect(findUnqualifiedYouTubePublishClaims(body, lang), `${lang}:${entry.slug}`).toEqual([]);
+			}
 		}
 	});
 

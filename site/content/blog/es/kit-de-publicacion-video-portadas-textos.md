@@ -1,6 +1,6 @@
 ---
 title: "Cómo guardar un kit de publicación de vídeo"
-description: "Agrupa el vídeo exportado, textos por plataforma, subtítulos exportados y una portada existente en una carpeta o un ZIP."
+description: "Agrupa el vídeo exportado, textos por plataforma, subtítulos exportados y la portada que elijas en una carpeta o un ZIP."
 slug: "kit-de-publicacion-video-portadas-textos"
 lang: "es"
 translationKey: "kit-de-publicacao-video-capas-textos"
@@ -8,7 +8,7 @@ category: "tutoriales"
 tags: ["Publicación", "Exportación"]
 author: "Equipo Clipey"
 date: "2026-10-15"
-updated: "2026-10-15"
+updated: "2026-10-22"
 featured: false
 order: 14
 cover: "/blog/covers/kit-de-publicacao-video-capas-textos.webp"
@@ -19,18 +19,18 @@ appliesTo: "1.15"
 
 > **Aplica a:** Clipey 1.15 para Windows.
 
-Para guardar un kit de publicación de vídeo en Clipey, finaliza la exportación de tu archivo y entra en la sección Kit de publicación y textos del panel de publicación. Esta función empaqueta tu video final, la portada existente, los subtítulos sidecar y los textos adaptados a cada red social en una carpeta local o un archivo ZIP comprimido. También puedes generar automáticamente títulos y descripciones pulsando Sugerir texto a partir de la transcripción antes de guardar el lote.
+Para guardar un kit de publicación de vídeo en Clipey, finaliza la exportación de tu archivo y entra en la sección Kit de publicación y textos del panel de publicación. Esta función empaqueta tu video final, la imagen de portada que elijas, los subtítulos sidecar y los textos adaptados a cada red social en una carpeta local o un archivo ZIP comprimido. También puedes generar títulos y descripciones pulsando Sugerir texto a partir de la transcripción antes de guardar el lote. La exportación no publica sola: después, usa Publicar en cada red que quieras.
 
 ## Qué incluye el kit
 
-El punto de partida es un vídeo exportado. El kit también puede incluir un archivo `copy-<plataforma>.txt` por cada plataforma y un `copy.json` con los mismos datos estructurados. Si exportaste un archivo de subtítulos por separado, también puede acompañar al paquete. La portada solo se incluye si ya existe en el proyecto: Clipey no genera una automáticamente.
+El punto de partida es un vídeo exportado. El kit también puede incluir un archivo `copy-<plataforma>.txt` por cada plataforma y un `copy.json` con los mismos datos estructurados. Si exportaste un archivo de subtítulos por separado, también puede acompañar al paquete. En el panel eliges qué imagen de portada incluir cuando hay opciones en el proyecto. Clipey no genera portadas con IA en esta versión; la generación automática de portadas llega en la próxima versión.
 
-La diferencia es importante: el kit organiza material preparado, pero no es un editor de portadas. Si el proyecto no tiene portada, no aparecerá una nueva. También revisa los textos antes de compartirlos; las sugerencias son un punto de partida y se pueden editar.
+La diferencia es importante: el kit organiza material preparado, pero no es un editor de portadas ni crea arte nuevo por sí solo. También revisa los textos antes de compartirlos; las sugerencias son un punto de partida y se pueden editar.
 
 ## Guarda una carpeta o un ZIP
 
 1. Abre el proyecto y termina el vídeo. Usa **Exportar** para crear el archivo final antes de preparar el kit.
-2. En la sección **Kit de publicación y textos**, completa y revisa el título, la descripción y los hashtags de cada red. Puedes pulsar **Sugerir texto** para generar propuestas automáticas fundamentadas en la transcripción del clip.
+2. En la sección **Kit de publicación y textos**, elige la portada cuando corresponda, completa y revisa el título, la descripción y los hashtags de cada red. Puedes pulsar **Sugerir texto** para generar propuestas fundamentadas en la transcripción del clip.
 3. Elige **Guardar kit de publicación**.
 4. En **Formato del kit**, selecciona **Carpeta** o **Paquete ZIP**. La carpeta es la opción predeterminada para edición inmediata; elige Paquete ZIP si quieres un solo archivo para adjuntar o transferir.
 5. Haz clic en **Elegir destino** y espera el indicador de progreso. Mantén abierta la aplicación mientras se escribe el ZIP.
@@ -54,7 +54,7 @@ Compara las afirmaciones con lo que realmente aparece en el vídeo. Si la transc
 
 ## Limitaciones
 
-El kit no crea portadas, no sube archivos a las redes y no garantiza que una plataforma acepte el vídeo o el texto. Solo incluye una portada si ya existe en el proyecto; los subtítulos se añaden únicamente cuando se exportan en un archivo aparte. Crear el ZIP puede tardar porque incluye el propio vídeo; espera a que termine antes de mover o cerrar el destino.
+El kit no genera portadas con IA, no sube archivos a las redes y no garantiza que una plataforma acepte el vídeo o el texto. Solo incluye una portada si la seleccionas y hay imagen disponible; los subtítulos se añaden únicamente cuando se exportan en un archivo aparte. Crear el ZIP puede tardar porque incluye el propio vídeo; espera a que termine antes de mover o cerrar el destino.
 
 Para programar desde Clipey, lee [cómo programar vídeos](/blog/es/publicacion-programada-youtube-tiktok-instagram/). Para preparar las dimensiones y revisar el archivo, consulta [presets y verificación de exportación](/blog/es/exportacion-fiable-presets-verificacion/). Las [funciones de publicación](/es/#publicar) explican el flujo general.
 
@@ -63,3 +63,4 @@ Después de revisar el vídeo y los textos de cada destino, entrega el kit a qui
 ## Historial de esta página
 
 - 2026-10-15: publicado.
+- 2026-10-22: portada elegida por el usuario; sin generación automática en esta versión.
