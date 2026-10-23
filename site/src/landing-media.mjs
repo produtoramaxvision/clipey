@@ -135,7 +135,7 @@ export const VIDEOS = {
  */
 export const FLAGS = {
 	gamesFootage: false,
-	phoneScreens: false,
+	phoneScreens: true,
 };
 
 /** The sources of a video slot on a page of one language (a slot keyed by locale falls back to pt-BR). */

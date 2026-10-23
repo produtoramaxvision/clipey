@@ -209,7 +209,22 @@ describe.each(LANGUAGES)("%s v3 landing", (lang) => {
 		const phone = sectionOf(page, ids.phone);
 		expect(phone).not.toMatch(/captura real|real capture/);
 		expect(phone.includes('class="phone-demo"')).toBe(FLAGS.phoneScreens);
-		if (!FLAGS.phoneScreens) expect(phone).toContain('class="phone-card phone-card--copy"');
+		if (FLAGS.phoneScreens) {
+			expect(phone).not.toContain('class="phone-card phone-card--copy"');
+		} else {
+			expect(phone).toContain('class="phone-card phone-card--copy"');
+		}
+	});
+
+	it.runIf(FLAGS.phoneScreens)("shows each locale's portrait and landscape stills with the right alt text", () => {
+		const phone = sectionOf(page, ids.phone);
+		const manifest = readMediaManifest();
+		const locale = stillLocale(manifest, "phone-portrait", lang);
+		expect(phone).toContain(`/media/phone-portrait-${locale}-`);
+		expect(phone).toContain(`/media/phone-landscape-${stillLocale(manifest, "phone-landscape", lang)}-`);
+		expect(phone).toContain(`alt="${copy.phone.portrait.replace(/"/g, "&quot;")}"`);
+		expect(phone).toContain(`alt="${copy.phone.landscape.replace(/"/g, "&quot;")}"`);
+		expect(locale).toBe(lang);
 	});
 
 	it.runIf(FLAGS.phoneScreens)("rotates the phone with a real checkbox and its label", () => {

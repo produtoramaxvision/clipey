@@ -3,7 +3,8 @@
  * alpha kept for the recording bar), the editor tour video and its poster copied as they are, and
  * public/media/manifest.json with the size of every file, which the page reads to reserve each box.
  *
- * Usage: MEDIA_SRC=<folder> node scripts/media/build-media.mjs, where <folder> holds mkt/<locale>/*.png, mkt2/ and tour4/ (see config.mjs).
+ * Usage: MEDIA_SRC=<folder> node scripts/media/build-media.mjs [--only <name,...>], where <folder> holds mkt/<locale>/*.png, mkt2/ and tour4/ (see config.mjs).
+ * With --only, only the named stills are encoded and the rest of public/media and the manifest are left unchanged.
  */
 import {
 	copyFileSync,
@@ -18,6 +19,7 @@ import encodeWebp from "@jsquash/webp/encode.js";
 import { PNG } from "pngjs";
 import { ensureWebp } from "../blog-images/common.mjs";
 import { fitWidth, resizeArea } from "../shots/geometry.mjs";
+import { parseOnlyArg, selectStills, stripStillFromManifest } from "./build-args.mjs";
 import {
 	ALPHA_QUALITY,
 	COPIES,
@@ -33,6 +35,9 @@ const source = process.env.MEDIA_SRC;
 if (!source || !existsSync(source))
 	throw new Error("set MEDIA_SRC to the folder with the marketing captures");
 
+const onlyNames = parseOnlyArg(process.argv);
+const toBuild = selectStills(STILLS, onlyNames);
+
 function readPng(file) {
 	const png = PNG.sync.read(readFileSync(file));
 	return {
@@ -45,11 +50,24 @@ function readPng(file) {
 mkdirSync(OUT_DIR, { recursive: true });
 await ensureWebp();
 
-const files = {};
-const stills = {};
+const manifestPath = path.join(OUT_DIR, "manifest.json");
+let files = {};
+let stills = {};
+
+if (onlyNames) {
+	if (!existsSync(manifestPath))
+		throw new Error("manifest.json is missing; run a full build before --only");
+	const existing = JSON.parse(readFileSync(manifestPath, "utf8"));
+	files = { ...existing.files };
+	stills = { ...existing.stills };
+	for (const still of toBuild) {
+		({ stills, files } = stripStillFromManifest({ stills, files }, still.name));
+	}
+}
+
 const missing = [];
 
-for (const still of STILLS) {
+for (const still of toBuild) {
 	stills[still.name] = [];
 	for (const locale of LOCALES) {
 		const file = path.join(source, still.source(locale));
@@ -89,15 +107,14 @@ for (const still of STILLS) {
 	}
 }
 
-for (const [from, to] of COPIES) {
-	copyFileSync(path.join(source, from), path.join(OUT_DIR, to));
-	files[to] = { bytes: statSync(path.join(OUT_DIR, to)).size };
-	console.log(`${to}: copied, ${files[to].bytes} B`);
+if (!onlyNames) {
+	for (const [from, to] of COPIES) {
+		copyFileSync(path.join(source, from), path.join(OUT_DIR, to));
+		files[to] = { bytes: statSync(path.join(OUT_DIR, to)).size };
+		console.log(`${to}: copied, ${files[to].bytes} B`);
+	}
 }
 
-writeFileSync(
-	path.join(OUT_DIR, "manifest.json"),
-	`${JSON.stringify({ stills, files }, null, "\t")}\n`,
-);
+writeFileSync(manifestPath, `${JSON.stringify({ stills, files }, null, "\t")}\n`);
 if (missing.length)
 	console.log(`not captured yet (pages fall back to pt-BR): ${missing.join(", ")}`);

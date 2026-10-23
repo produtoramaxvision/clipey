@@ -28,8 +28,16 @@
 			"en",
 			"es"
 		],
-		"phone-portrait": [],
-		"phone-landscape": [],
+		"phone-portrait": [
+			"pt-BR",
+			"en",
+			"es"
+		],
+		"phone-landscape": [
+			"pt-BR",
+			"en",
+			"es"
+		],
 		"captions-pane": [
 			"pt-BR",
 			"en",
@@ -318,6 +326,81 @@
 		},
 		"mvcode-mark.png": {
 			"bytes": 12304
+		},
+		"phone-portrait-pt-BR-800.webp": {
+			"width": 800,
+			"height": 1548,
+			"bytes": 31254
+		},
+		"phone-portrait-pt-BR-1080.webp": {
+			"width": 1080,
+			"height": 2090,
+			"bytes": 48590
+		},
+		"phone-portrait-en-800.webp": {
+			"width": 800,
+			"height": 1548,
+			"bytes": 32400
+		},
+		"phone-portrait-en-1080.webp": {
+			"width": 1080,
+			"height": 2090,
+			"bytes": 50378
+		},
+		"phone-portrait-es-800.webp": {
+			"width": 800,
+			"height": 1548,
+			"bytes": 32742
+		},
+		"phone-portrait-es-1080.webp": {
+			"width": 1080,
+			"height": 2090,
+			"bytes": 50916
+		},
+		"phone-landscape-pt-BR-800.webp": {
+			"width": 800,
+			"height": 340,
+			"bytes": 17780
+		},
+		"phone-landscape-pt-BR-1400.webp": {
+			"width": 1400,
+			"height": 594,
+			"bytes": 33742
+		},
+		"phone-landscape-pt-BR-1920.webp": {
+			"width": 1920,
+			"height": 815,
+			"bytes": 46852
+		},
+		"phone-landscape-en-800.webp": {
+			"width": 800,
+			"height": 340,
+			"bytes": 17578
+		},
+		"phone-landscape-en-1400.webp": {
+			"width": 1400,
+			"height": 594,
+			"bytes": 33150
+		},
+		"phone-landscape-en-1920.webp": {
+			"width": 1920,
+			"height": 815,
+			"bytes": 45994
+		},
+		"phone-landscape-es-800.webp": {
+			"width": 800,
+			"height": 340,
+			"bytes": 17810
+		},
+		"phone-landscape-es-1400.webp": {
+			"width": 1400,
+			"height": 594,
+			"bytes": 33600
+		},
+		"phone-landscape-es-1920.webp": {
+			"width": 1920,
+			"height": 815,
+			"bytes": 46508
 		}
 	}
 }

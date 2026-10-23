@@ -94,6 +94,16 @@ describe("landing media", () => {
 			expect(video.sources.map(([, type]) => type)).toEqual(["video/mp4", "video/webm"]);
 	});
 
+	it("shows the real phone screens on the landing", () => {
+		expect(FLAGS.phoneScreens).toBe(true);
+		const manifest = readMediaManifest();
+		for (const name of ["phone-portrait", "phone-landscape"]) {
+			expect(manifest.stills[name]).toEqual(["pt-BR", "en", "es"]);
+			for (const locale of ["pt-BR", "en", "es"])
+				expect(stillSet(manifest, name, locale).locale).toBe(locale);
+		}
+	});
+
 	it("ships no gameplay footage while its rights are not cleared", () => {
 		expect(FLAGS.gamesFootage).toBe(false);
 		expect(VIDEOS.games.sources).toEqual([]);
