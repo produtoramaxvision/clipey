@@ -1,6 +1,6 @@
 ---
 title: "Como agendar publicações de vídeo no Clipey"
-description: "Agende vídeos para TikTok, Instagram Reels e Facebook Reels no Clipey e veja por que o app deve ficar aberto. YouTube chega na próxima versão."
+description: "Agende vídeos para YouTube, TikTok, Instagram Reels e Facebook Reels no Clipey e veja por que o app deve ficar aberto."
 slug: "publicacao-agendada-youtube-tiktok-instagram"
 lang: "pt-BR"
 translationKey: "publicacao-agendada-youtube-tiktok-instagram"
@@ -19,7 +19,7 @@ appliesTo: "1.15"
 
 > **Aplica-se a:** Clipey 1.15 para Windows.
 
-Para agendar publicações de vídeo no Clipey, conclua a exportação do arquivo, abra o painel de publicação e escolha a rede desejada. Depois de revisar título e descrição, use a aba **Agendar** para TikTok, Instagram Reels ou Facebook Reels. Escolha um horário local com pelo menos dois minutos de antecedência e acompanhe o status na **Fila de agendamentos**. A exportação não publica sozinha: você inicia ou agenda cada rede depois que o arquivo estiver pronto. A publicação no YouTube não está disponível nesta versão; chega na próxima versão. Como a fila é gerenciada localmente no computador, o Clipey ou seu processo na bandeja do Windows deve estar em execução no momento programado para concluir o envio.
+Para agendar publicações de vídeo no Clipey, conclua a exportação do arquivo, abra o painel de publicação e escolha a rede desejada. Depois de revisar título e descrição, use a aba **Agendar** para YouTube, TikTok, Instagram Reels ou Facebook Reels. Escolha um horário local com pelo menos dois minutos de antecedência e acompanhe o status na **Fila de agendamentos**. A exportação não publica sozinha: você inicia ou agenda cada rede depois que o arquivo estiver pronto. Como a fila é gerenciada localmente no computador, o Clipey ou seu processo na bandeja do Windows deve estar em execução no momento programado para concluir o envio.
 
 ## Antes de marcar um horário
 
@@ -71,7 +71,7 @@ Não. A fila de agendamento do Clipey é estritamente local; o arquivo de vídeo
 O Clipey retém a publicação na fila com status "Falhou" ou "Reconexão necessária", permitindo reconectar a conta da rede social e tentar novamente com "Publicar agora" ou "Reagendar".
 
 ### E o YouTube?
-Nesta versão o YouTube aparece como indisponível no painel de publicação. A publicação no YouTube chega na próxima versão.
+O YouTube está disponível no Clipey 1.15. O envio usa a privacidade que você escolher (Público, Não listado ou Privado), e a linha publicada mostra um link para abrir o vídeo no YouTube. O YouTube, a Meta e o TikTok ainda estão revisando o app: ao conectar uma conta, pode aparecer um aviso de app não verificado. O app divide uma cota de 100 envios por dia ao YouTube entre todos os usuários do Clipey.
 
 Para preparar um pacote de arquivos antes de publicar, leia [como salvar um kit de publicação](/blog/kit-de-publicacao-video-capas-textos/). Para conferir o arquivo final antes de enviá-lo, veja [presets e verificação da exportação](/blog/exportacao-confiavel-presets-e-verificacao/). Consulte também os [recursos de publicação](/#publicar).
 
@@ -81,3 +81,4 @@ Quando tiver revisado a fila e a conta, mantenha o Clipey aberto e o computador 
 
 - 2026-10-15: publicado.
 - 2026-10-22: alinhado ao escopo de publicação do Clipey 1.15 (sem YouTube nesta versão).
+- 2026-10-24: a publicação no YouTube saiu no Clipey 1.15; incluído o aviso sobre a revisão das plataformas.

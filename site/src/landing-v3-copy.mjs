@@ -2,7 +2,7 @@
  * Copy of the v3 landing, one object per site language. pt-BR is the owner-approved design text (Claude Design canvas,
  * Main.dc.html and Mobile.dc.html); en and es translate it without adding claims. Facts it relies on: interface in 15
  * languages, captions translated into 15 languages, Windows/macOS/Linux, installers unsigned in this version, publishing
- * to Instagram, Facebook and TikTok in 1.15 with YouTube in the next version.
+ * to YouTube, Instagram, Facebook and TikTok in 1.15, with the platform reviews still pending (unverified-app warning).
  *
  * `hud.labels` are the recording bar's own strings, copied verbatim from the app locale files
  * (src/i18n/locales/<lang>/launch.json), in the order of the buttons on the bar:
@@ -351,9 +351,9 @@ export const LANDING = {
 		},
 		publish: {
 			marker: "01:12 · PUBLICAR",
-			title: "Instagram, Facebook e TikTok.",
+			title: "YouTube, Instagram, Facebook e TikTok.",
 			text: "Exporte em MP4 ou GIF e, quando a exportação terminar, clique em Publicar em cada rede que quiser usar — ou agende o horário. As contas ficam salvas só no seu computador.",
-			note: "YouTube na próxima versão.",
+			note: "O YouTube, a Meta e o TikTok ainda estão revisando o app: ao conectar uma conta, pode aparecer um aviso de app não verificado.",
 			alt: "Janela Exportar e publicar do Clipey",
 		},
 		phone: {
@@ -730,9 +730,9 @@ export const LANDING = {
 		},
 		publish: {
 			marker: "01:12 · PUBLISH",
-			title: "Instagram, Facebook and TikTok.",
+			title: "YouTube, Instagram, Facebook and TikTok.",
 			text: "Export as MP4 or GIF and, when the export finishes, click Publish on each network you want to use — or schedule a time. Your accounts are saved only on your computer.",
-			note: "YouTube in the next version.",
+			note: "YouTube, Meta and TikTok are still reviewing the app: connecting an account may show an unverified-app warning.",
 			alt: "The Clipey Export and publish window",
 		},
 		phone: {
@@ -1108,9 +1108,9 @@ export const LANDING = {
 		},
 		publish: {
 			marker: "01:12 · PUBLICAR",
-			title: "Instagram, Facebook y TikTok.",
+			title: "YouTube, Instagram, Facebook y TikTok.",
 			text: "Exporta en MP4 o GIF y, cuando termine la exportación, haz clic en Publicar en cada red que quieras usar — o programa la hora. Las cuentas quedan guardadas solo en tu computadora.",
-			note: "YouTube en la próxima versión.",
+			note: "YouTube, Meta y TikTok todavía están revisando la app: al conectar una cuenta puede aparecer un aviso de app no verificada.",
 			alt: "La ventana Exportar y publicar de Clipey",
 		},
 		phone: {

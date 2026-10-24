@@ -19,7 +19,7 @@ appliesTo: "1.15"
 
 > **Applies to:** Clipey 1.15 for Windows.
 
-To check and export a video in Clipey, open the Export dialog and select a platform preset tailored for TikTok, YouTube Shorts, Instagram Reels, or landscape YouTube (1080p/4K). YouTube presets set file format and dimensions for manual upload; in-app YouTube publishing arrives in the next version. Review the real-time estimates for file size, dimensions, and bitrate, while the app prevents Windows from sleeping during rendering. Once complete, Clipey runs automated delivery verification to validate audio and video streams and ensure the MP4 decodes cleanly without errors. Finishing export does not publish to social networks: open the publishing panel and click Publish on each destination you want.
+To check and export a video in Clipey, open the Export dialog and select a platform preset tailored for TikTok, YouTube Shorts, Instagram Reels, or landscape YouTube (1080p/4K). YouTube presets set file format and dimensions, and you can also publish to YouTube from the publishing panel. YouTube, Meta and TikTok are still reviewing the app, so connecting an account may show an unverified-app warning. Review the real-time estimates for file size, dimensions, and bitrate, while the app prevents Windows from sleeping during rendering. Once complete, Clipey runs automated delivery verification to validate audio and video streams and ensure the MP4 decodes cleanly without errors. Finishing export does not publish to social networks: open the publishing panel and click Publish on each destination you want.
 
 ## Pick a starting point
 
