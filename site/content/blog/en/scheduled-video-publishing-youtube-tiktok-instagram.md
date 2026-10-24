@@ -1,6 +1,6 @@
 ---
 title: "How to schedule video posts in Clipey"
-description: "Schedule videos to TikTok, Instagram Reels and Facebook Reels in Clipey, and see why the app must stay open. YouTube arrives in the next version."
+description: "Schedule videos to YouTube, TikTok, Instagram Reels and Facebook Reels in Clipey, and see why the app must stay open."
 slug: "scheduled-video-publishing-youtube-tiktok-instagram"
 lang: "en"
 translationKey: "publicacao-agendada-youtube-tiktok-instagram"
@@ -19,7 +19,7 @@ appliesTo: "1.15"
 
 > **Applies to:** Clipey 1.15 for Windows.
 
-To schedule video posts in Clipey, finish exporting your video, open the publishing panel, and choose the network you want. After reviewing title and description, use the **Schedule** tab for TikTok, Instagram Reels, or Facebook Reels. Set your desired local date and time at least two minutes ahead, and monitor delivery progress in the **Scheduled queue**. Export does not publish on its own: you publish or schedule each network after the file is ready. YouTube publishing is not available in this version; it arrives in the next version. Because scheduling runs through a local queue on your machine, Clipey or its Windows system tray icon must remain running when the post is due.
+To schedule video posts in Clipey, finish exporting your video, open the publishing panel, and choose the network you want. After reviewing title and description, use the **Schedule** tab for YouTube, TikTok, Instagram Reels, or Facebook Reels. Set your desired local date and time at least two minutes ahead, and monitor delivery progress in the **Scheduled queue**. Export does not publish on its own: you publish or schedule each network after the file is ready. Because scheduling runs through a local queue on your machine, Clipey or its Windows system tray icon must remain running when the post is due.
 
 ## Before you pick a time
 
@@ -71,7 +71,7 @@ No. Clipey's schedule queue is strictly local; the video file stays on your comp
 Clipey keeps the item in the queue with status "Failed" or "Reconnection required", so you can reconnect the account and try again with **Publish now** or **Reschedule**.
 
 ### What about YouTube?
-In this version YouTube shows as unavailable in the publishing panel. YouTube publishing arrives in the next version.
+YouTube is available in Clipey 1.15. Uploads use the privacy you choose (Public, Unlisted or Private), and a published row shows a link to open the video on YouTube. YouTube, Meta and TikTok are still reviewing the app: connecting an account may show an unverified-app warning. The app shares a quota of 100 YouTube uploads per day across all Clipey users.
 
 To prepare a file bundle before publishing, read [how to save a publish kit](/blog/en/video-cover-copy-publish-kit/). To check the final file before sending it, see [export presets and verification](/blog/en/reliable-export-presets-verification/). The [publishing features](/en/#publishing) explain the overall workflow.
 
@@ -81,3 +81,4 @@ When the queue and account look right, keep Clipey open and the computer availab
 
 - 2026-10-15: published.
 - 2026-10-22: aligned with Clipey 1.15 publishing scope (no YouTube in this version).
+- 2026-10-24: YouTube publishing shipped in Clipey 1.15; added the platform review caveat.

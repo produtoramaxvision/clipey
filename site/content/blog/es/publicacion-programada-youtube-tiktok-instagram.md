@@ -1,6 +1,6 @@
 ---
 title: "Cómo programar publicaciones de vídeo en Clipey"
-description: "Programa videos para TikTok, Instagram Reels y Facebook Reels en Clipey; la app debe seguir abierta. YouTube llega en la próxima versión."
+description: "Programa videos para YouTube, TikTok, Instagram Reels y Facebook Reels en Clipey; la app debe seguir abierta."
 slug: "publicacion-programada-youtube-tiktok-instagram"
 lang: "es"
 translationKey: "publicacao-agendada-youtube-tiktok-instagram"
@@ -19,7 +19,7 @@ appliesTo: "1.15"
 
 > **Aplica a:** Clipey 1.15 para Windows.
 
-Para programar publicaciones de vídeo en Clipey, termina la exportación del archivo, abre el panel de publicación y elige la red que quieras. Después de revisar título y descripción, usa la pestaña **Programar** para TikTok, Instagram Reels o Facebook Reels. Define la fecha y hora local con un margen mínimo de dos minutos y supervisa el estado en la **Cola de publicaciones programadas**. La exportación no publica sola: inicias o programas cada red cuando el archivo esté listo. La publicación en YouTube no está disponible en esta versión; llega en la próxima versión. Dado que la cola se gestiona de forma local en tu equipo, Clipey o su icono en la bandeja del sistema de Windows debe permanecer activo a la hora fijada para completar la subida.
+Para programar publicaciones de vídeo en Clipey, termina la exportación del archivo, abre el panel de publicación y elige la red que quieras. Después de revisar título y descripción, usa la pestaña **Programar** para YouTube, TikTok, Instagram Reels o Facebook Reels. Define la fecha y hora local con un margen mínimo de dos minutos y supervisa el estado en la **Cola de publicaciones programadas**. La exportación no publica sola: inicias o programas cada red cuando el archivo esté listo. Dado que la cola se gestiona de forma local en tu equipo, Clipey o su icono en la bandeja del sistema de Windows debe permanecer activo a la hora fijada para completar la subida.
 
 ## Antes de elegir la hora
 
@@ -71,7 +71,7 @@ No. La cola de Clipey es estrictamente local; el archivo permanece en tu equipo 
 Clipey conserva el elemento en la cola con estado "Fallido" o "Reconexión necesaria", para que reconectes la cuenta y reintentes con **Publicar ahora** o **Reprogramar**.
 
 ### ¿Y YouTube?
-En esta versión YouTube aparece como no disponible en el panel de publicación. La publicación en YouTube llega en la próxima versión.
+YouTube está disponible en Clipey 1.15. La subida usa la privacidad que elijas (Público, No listado o Privado), y la fila publicada muestra un enlace para abrir el video en YouTube. YouTube, Meta y TikTok todavía están revisando la app: al conectar una cuenta puede aparecer un aviso de app no verificada. La app comparte una cuota de 100 subidas diarias a YouTube entre todos los usuarios de Clipey.
 
 Para preparar un paquete antes de publicar, lee [cómo guardar un kit de publicación](/blog/es/kit-de-publicacion-video-portadas-textos/). Para revisar el archivo final, consulta [presets y verificación de exportación](/blog/es/exportacion-fiable-presets-verificacion/). Las [funciones de publicación](/es/#publicar) explican el flujo general.
 
@@ -81,3 +81,4 @@ Cuando la cola y la cuenta estén listas, mantén Clipey abierto y el equipo dis
 
 - 2026-10-15: publicado.
 - 2026-10-22: alineado con el alcance de publicación de Clipey 1.15 (sin YouTube en esta versión).
+- 2026-10-24: la publicación en YouTube salió en Clipey 1.15; se añadió el aviso sobre la revisión de las plataformas.

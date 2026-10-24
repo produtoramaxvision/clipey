@@ -767,7 +767,7 @@ describe("4b. Platform statements name Windows, macOS and Linux", () => {
 		expect(llms).not.toMatch(/Windows 10 e Windows 11/);
 	});
 
-	it("does not claim in-app YouTube publishing for 1.15 without a next-version qualifier", () => {
+	it("does not claim in-app YouTube publishing without the platform-review caveat", () => {
 		const landingVisible = (html) =>
 			html.match(/<body>([\s\S]*)<\/body>/)[1].replace(/<[^>]*>/g, " ");
 		for (const lang of LANGUAGES) {

@@ -362,11 +362,11 @@ describe("v3 landing copy", () => {
 		for (const lang of LANGUAGES) expect(shape(LANDING[lang])).toEqual(shape(LANDING["pt-BR"]));
 	});
 
-	it("keeps the facts: 15 languages, three systems, unsigned installers, YouTube in the next version", () => {
+	it("keeps the facts: 15 languages, three systems, unsigned installers, YouTube publishing with the review caveat", () => {
 		const facts = {
-			"pt-BR": [/15 idiomas/, /sem assinatura/, /próxima versão/],
-			en: [/15 languages/, /unsigned/, /next version/],
-			es: [/15 idiomas/, /sin firmar/, /próxima versión/],
+			"pt-BR": [/15 idiomas/, /sem assinatura/, /YouTube, Instagram, Facebook e TikTok/, /não verificado/],
+			en: [/15 languages/, /unsigned/, /YouTube, Instagram, Facebook and TikTok/, /unverified-app/],
+			es: [/15 idiomas/, /sin firmar/, /YouTube, Instagram, Facebook y TikTok/, /no verificada/],
 		};
 		for (const lang of LANGUAGES) {
 			const all = strings(LANDING[lang]).join("\n");
@@ -376,7 +376,7 @@ describe("v3 landing copy", () => {
 		}
 	});
 
-	it("does not claim YouTube publishing in 1.15 without a next-version qualifier", () => {
+	it("does not claim YouTube publishing without the platform-review caveat", () => {
 		const posts = getCompletePosts();
 		for (const lang of ["pt-BR", "en", "es"]) {
 			const landingText = strings(LANDING[lang]).join("\n");

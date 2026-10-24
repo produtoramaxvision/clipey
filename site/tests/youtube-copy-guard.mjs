@@ -1,7 +1,9 @@
-const QUALIFIER = {
-	"pt-BR": /próxima versão/i,
-	en: /next version/i,
-	es: /próxima versión/i,
+// YouTube publishing shipped in 1.15 while Google's OAuth review is still pending (release notes, Known
+// limitations). A page may claim YouTube publishing only if it also carries that review caveat.
+const CAVEAT = {
+	"pt-BR": /não verificad|ainda estão revisando/i,
+	en: /unverified|still reviewing/i,
+	es: /no verificad|todavía están revisando/i,
 };
 
 const LEGAL_OR_API = /youtube\.com\/t\/terms|youtube api|serviços de api do youtube|servicios de api de youtube/i;
@@ -40,12 +42,10 @@ function sentenceClaimsYouTubePublishing(sentence) {
  * @returns {string[]}
  */
 export function findUnqualifiedYouTubePublishClaims(text, lang) {
-	const bad = [];
-	for (const sentence of String(text).split(/(?<=[.!?])\s+/)) {
-		if (!sentenceClaimsYouTubePublishing(sentence)) continue;
-		if (!QUALIFIER[lang].test(sentence)) bad.push(sentence);
-	}
-	return bad;
+	const claims = String(text)
+		.split(/(?<=[.!?])\s+/)
+		.filter((sentence) => sentenceClaimsYouTubePublishing(sentence));
+	return CAVEAT[lang].test(String(text)) ? [] : claims;
 }
 
 /** @param {string} text */
